@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams Chat — Mockup</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* =====================
+       COLOUR TOKENS
+    ===================== */
+    :root {
+      --AIMblue: #4353A3;
+      --darkBlue: #38416D;
+      --teal: #5DC8B9;
+      --cream: #F1EEDE;
+      --grey: #e7e9ec;
+      --rust: #AF4510;
+      --navy: #12195C;
+      --white: #ffffff;
+      --lightBlue: #AEBAE4;
+      --bg-app:          #f0ede8;
+      --bg-sidebar:      #e8e4de;
+      --bg-activity-pane:#454545;
+      --bg-panel:        #ffffff;
+      --bg-message-head: #f5f3f0;
+      --bg-private-tag:  #fff0ee;
+      --bg-unread-dot:   #378add;
+      --bg-avatar-blue:  #b5d4f4;
+      --bg-avatar-teal:  #9fe1cb;
+      --bg-selected-row: #e6f1fb;
+      --bg-badge:        #d85a30;
+      --bg-input:        #f5f3f0;
+
+      --text-primary:    #1a1a1a;
+      --text-secondary:  #666660;
+      --text-muted:      #999994;
+      --text-avatar-blue:#0c447c;
+      --text-avatar-teal:#085041;
+      --text-private:    #993c1d;
+      --text-badge:      #ffffff;
+      --text-link:       #185fa5;
+
+      --border-subtle:   #dedad3;
+      --border-medium:   #ccc8c0;
+
+      --radius-sm:  6px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --radius-pill:99px;
+    }
+
+
+  :root {
+    --purple-dark: #464775;
+    --purple-mid:  #6264A7;
+    --purple-light:#9EA2D4;
+    --sidebar-bg:  #1b1b2e;
+    --channel-bg:  #252538;
+    --chat-bg:     #ffffff;
+    --text-primary:#1a1a1a;
+    --text-secondary:#555;
+    --text-muted:  #999;
+    --border:      rgba(0,0,0,0.1);
+    --bg-secondary:#f5f5f5;
+    --bg-primary:  #ffffff;
+    --online:      #6EBB8A;
+    --away:        #F4A540;
+    --busy:        #E04D4D;
+    --unread:      #D65B8E;
+    --radius-md:   8px;
+    --radius-lg:   12px;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    background: #f0ede8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* ── APP SHELL ── */
+  .teams-app {
+    display: flex;
+    width: 960px;
+    height: 600px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    background: var(--bg--app);
+  }
+
+  /* ── ACTIVITY BAR ── */
+  .activity-bar {
+    width: 65px;
+    flex-shrink: 0;
+    background: var(--bg-activity-pane);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 2px;
+  }
+
+  .activity-bar-top { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px; 
+    flex: 1; 
+    margin-top: 15px;
+  }
+
+  .activity-icon {
+    width: 36px; 
+    height: 36px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border-radius: 8px; 
+    cursor: pointer;
+    color: rgba(255,255,255,0.55); 
+    font-size: 18px;
+    position: relative; 
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .activity-icon:hover, .activity-icon.active {
+    background: rgba(255,255,255,0.13); 
+    color: #fff;
+  }
+
+  .activity-icon .badge {
+    position: absolute; 
+    top: 5px; 
+    right: 5px;
+    width: 7px; 
+    height: 7px; 
+    border-radius: 50%; 
+    background: var(--rust);
+    }
+
+  /* ── LEFT SIDEBAR ── */
+  .left-sidebar {
+    color: black;
+    width: 210px; 
+    flex-shrink: 0;
+    background: var(--bg-app);
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .sidebar-header {
+    padding: 14px 12px 8px;
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+  }
+
+  .sidebar-header-title { 
+    font-size: 14px; 
+    font-weight: 600; 
+    flex: 1; }
+
+  .sidebar-icon-btn {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 18px;
+    width: 28px; 
+    height: 28px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    border-radius: 6px;
+  }
+
+  .sidebar-icon-btn:hover { 
+    background: rgba(255,255,255,0.1); 
+    color: var(--teal); 
+  }
+
+  .section-label {
+    padding: 8px 12px 3px;
+    font-size: 11px; 
+    font-weight: 600;
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    cursor: pointer; 
+    user-select: none;
+  }
+
+  .dm-unread-dot {
+    width: 6px; 
+    height: 6px; 
+    border-radius: 50%;
+    background: var(--bg-unread-dot); 
+    margin-left: auto; 
+    flex-shrink: 0;
+  }
+
+  .dm-unread-count {
+    background: var(--bg-unread-dot); 
+    color: #fff;
+    font-size: 10px; 
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 10px; 
+    margin-left: auto;
+  }
+
+  .dm-item {
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    padding: 8px 12px; 
+    cursor: pointer;
+    border-radius: 5px; margin: 1px 5px;
+    transition: background 0.1s;
+  }
+
+  .dm-item:hover { 
+    color: var(--AIMblue);
+   }
+
+  .dm-item.active { 
+    background: white; 
+  }
+
+  .dm-avatar {
+    width: 24px;
+    height: 24px; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 9px; 
+    font-weight: 700; 
+    flex-shrink: 0; 
+    position: relative;
+  }
+
+  .status-dot {
+    position: absolute; 
+    bottom: -1px; 
+    right: -1px;
+    width: 7px; 
+    height: 7px; 
+    border-radius: 50%;
+    border: 1.5px solid var(--channel-bg);
+  }
+
+  .status-online { background: var(--online); }
+  .status-away   { background: var(--away); }
+  .status-busy   { background: var(--busy); }
+
+  .dm-name {
+    font-size: 12px; 
+    flex: 1;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  .dm-item.active .dm-name {
+    color: var(--navy);
+  } 
+  
+  .dm-item:hover .dm-name { 
+    color: var(--AIMblue); 
+  }
+
+  /* ── CHAT PANE ── */
+  .chat-pane {
+   flex: 1;
+   display: flex; 
+   flex-direction: column; 
+   background: var(--chat-bg); 
+   min-width: 0; 
+  }
+
+  .chat-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    background: var(--bg-message-head);
+  }
+
+  .chat-header-left { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    flex: 1; 
+    min-width: 0; 
+  }
+
+  .chat-header-icon { 
+    font-size: 17px; 
+    color: var(--purple-mid); 
+  }
+
+  .chat-header-name { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+    margin-bottom: 4px;
+  }
+
+  .chat-header-desc { 
+    font-size: 12px; 
+    color: var(--text-muted); 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  
+  /* ── MESSAGES ── */
+  .chat-body { 
+    flex: 1; 
+    overflow-y: auto;
+    padding: 12px 16px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+  }
+
+  .date-divider {
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    margin: 10px 0; 
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .date-divider::before, .date-divider::after {
+    content: ''; 
+    flex: 1;
+    height: 1px; 
+    background: var(--border);
+  }
+
+  .chat-group { 
+    display: flex; 
+    gap: 10px; 
+    padding: 3px 0; 
+    align-items: flex-start; 
+    border-radius: 6px; 
+  }
+  .chat-group:hover, .chat-cont:hover { 
+    background: var(--bg-secondary);
+    margin: 0 -8px; 
+    padding: 3px 8px; 
+  }
+  .chat-group:hover .chat-actions, .chat-cont:hover .chat-actions { opacity: 1; }
+
+  .chat-cont { 
+    display: flex; 
+    gap: 10px; 
+    padding: 2px 0; 
+    align-items: flex-start; 
+    border-radius: 6px;
+  }
+  .chat-spacer { 
+    width: 32px; 
+    flex-shrink: 0; 
+  }
+  .chat-avatar {
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    flex-shrink: 0;
+    margin-top: 2px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    font-size: 11px; 
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .chat-content { flex: 1; min-width: 0; }
+
+  .chat-meta { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 8px; 
+    margin-bottom: 2px; 
+  }
+  .chat-name { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+  }
+  .chat-time { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+  }
+  .chat-text { 
+    font-size: 13px; 
+    color: var(--text-primary); 
+    line-height: 1.55; 
+  }
+  .chat-text p + p { margin-top: 4px; }
+
+  .chat-actions {
+    opacity: 0; 
+    display: flex; 
+    gap: 2px; 
+    margin-left: auto; 
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .chat-act-btn {
+    background: var(--bg-primary); 
+    border: 1px solid var(--border);
+    border-radius: 6px; 
+    width: 28px; 
+    height: 28px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    font-size: 14px; 
+    color: var(--text-muted);
+  }
+  .chat-act-btn:hover {
+     background: var(--bg-secondary); 
+     color: var(--text-primary);
+    }
+
+  .mention {
+    color: var(--purple-mid); 
+    font-weight: 600; 
+    background: rgba(98,100,167,0.12); 
+    border-radius: 3px; 
+    padding: 0 2px; 
+  }
+  .thread-reply-btn { 
+    font-size: 11px;
+    color: var(--purple-mid);
+    cursor: pointer;
+    margin-top: 4px; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px; 
+  }
+  .thread-reply-btn:hover { text-decoration: underline; }
+
+  /* ── COMPOSE ── */
+  .compose-area { 
+    padding: 8px 16px 14px; 
+    border-top: 1px solid var(--border); 
+    background: var(--bg-primary); 
+  }
+
+  .compose-box {
+    display: flex; 
+    align-items: flex-end; 
+    gap: 6px;
+    background: var(--bg-secondary); 
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 8px; 
+  }
+
+  .compose-input {
+    flex: 1; 
+    background: none; 
+    border: none; 
+    outline: none;
+    font-size: 13px; 
+    color: var(--text-primary);
+    font-family: inherit; 
+    resize: none;
+    min-height: 22px;
+     max-height: 100px; 
+     line-height: 1.5;
+  }
+
+  .compose-input::placeholder { 
+    color: var(--text-muted); 
+  }
+
+  .compose-send {
+    width: 32px; 
+    height: 32px; 
+    background: var(--AIMblue);
+    border: none; 
+    border-radius: 7px; 
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: #fff; 
+    font-size: 16px; 
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .compose-send:hover { 
+    background: var(--navy); 
+  }
+
+
+  /* ── AVATAR COLOURS ── */
+  .av-blue   { background: #B5D4F4; color: #0C447C; }
+  .av-teal   { background: #9FE1CB; color: #085041; }
+  .av-coral  { background: #F5C4B3; color: #712B13; }
+  .av-purple { background: #9EA2D4; color: #3C3489; }
+  .av-green  { background: #C0DD97; color: #27500A; }
+  .av-pink   { background: #F4C0D1; color: #72243E; }
+  .av-nl     { background: var(--purple-mid); color: #fff; }
+
+
+.container {
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 2px;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: black;
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 5px 20px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+/* ── CALLS LIST ── */
+  .call-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+  }
+
+  .call-item:hover { background: #f5f3f0; }
+
+  .call-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .call-info { 
+    flex: 1;
+    min-width: 0;
+  }
+
+  .call-name {
+    font-size: 13px;
+    font-weight: 600; 
+    color: var(--text-primary);
+  }
+
+  .call-name.missed { color: #AF4510; }
+
+  .call-sub { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    margin-top: 2px; 
+    display: flex; 
+    align-items: center; 
+    gap: 4px; 
+  }
+
+  .call-time { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    flex-shrink: 0; 
+    text-align: right; 
+  }
+
+  .call-dir { font-size: 13px; }
+  .call-dir.incoming { color: #3B6D11; }
+  .call-dir.outgoing { color: #185FA5; }
+  .call-dir.missed    { color: #AF4510; }
+  .call-dir.noanswer  { color: #888780; }
+
+  .call-action {
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    border: none;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    font-size: 14px; 
+    background: #e8f0fb;
+    color: var(--AIMblue);
+    flex-shrink: 0;
+  }
+
+  .call-action:hover {
+    background: var(--AIMblue);
+    color: white;
+  }
+ 
+  /* ── CONTACTS ── */
+  .search-bar {
+    padding: 10px 16px; 
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .search-input {
+    width: 100%; 
+    background: #f0ede8; 
+    border: 1px solid rgba(0,0,0,0.1); 
+    border-radius: 6px;
+    padding: 6px 10px; 
+    font-size: 13px; 
+    outline: none; 
+    font-family: inherit; 
+    color: var(--text-primary);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .contact-group-label {
+    padding: 8px 16px 4px; 
+    font-size: 11px; 
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+    text-transform: uppercase; 
+    color: var(--text-muted); 
+    background: #faf9f7;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+    padding: 9px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04); 
+    cursor: pointer;
+  }
+
+  .contact-item:hover {
+    background: #f5f3f0;
+  }
+
+  .contact-avatar {
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    font-size: 11px; 
+    font-weight: 700; 
+    flex-shrink: 0; 
+    position: relative;
+  }
+
+  .contact-info { 
+    flex: 1; 
+    min-width: 0; 
+  }
+
+  .contact-name { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+  }
+
+  .contact-role { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    margin-top: 1px; 
+  }
+
+  .contact-actions {
+    display: flex; 
+    gap: 6px;
+  }
+
+  .contact-btn {
+    width: 28px; 
+    height: 28px; 
+    border-radius: 6px; 
+    border: 1px solid rgba(0,0,0,0.12);
+    background: white; 
+    cursor: pointer; 
+    font-size: 14px; 
+    color: var(--text-muted);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+
+  .contact-btn:hover { 
+    background: var(--bg-app); 
+    color: var(--AIMblue);
+  }
+ 
+  /* ── PANE HEADER (phone) ── */
+  .pane-header {
+    padding: 10px 16px; 
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    background: var(--bg-message-head);
+  }
+
+  .pane-header-name { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--text-primary);
+  }
+
+  .pane-header-desc { 
+    font-size: 12px; 
+    color: var(--text-muted);
+  }
+ 
+  .pane-body { 
+    flex: 1; 
+    overflow-y: auto;
+  }
+
+
+
+.dm-avatar > svg {
+  fill: black;
+}
+
+#chatSection {
+  display: flex;
+  width: 895px;
+}
+
+#phoneSection {
+  display: none;
+  width: 895px;
+}
+</style>
+</head>
+<body>
+
+<div class="teams-app">
+
+  <!-- ACTIVITY BAR -->
+  <div class="activity-bar">
+    <div class="activity-bar-top">
+      <div class="activity-icon active" title="Chat" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
+      </div>
+      <div class="activity-icon" title="Calls" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
+      </div>
+      <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
+      </div> -->
+    </div>
+  </div>
+<div id="chatSection">
+  <!-- LEFT SIDEBAR CHAT -->
+  <div class="left-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-title">Chats</span>
+    </div>
+    <div class="dm-item active" onclick="loadDM('general', this)">
+       <div class="dm-avatar av-blue">GEN<span class="status-dot status-online"></span></div>
+          <span class="dm-name">General</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('mark', this)">
+      <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Mark J</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('jordan', this)">
+      <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+      <span class="dm-name">Jordan S</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('audrey', this)">
+      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Audrey E</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('priya', this)">
+      <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
+      <span class="dm-name">Priya D</span>
+    </div>
+  </div>
+
+  <!-- CHAT PANE -->
+  <div class="chat-pane">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <i class="ti ti-hash chat-header-icon" id="header-icon"></i>
+        <div>
+          <div class="chat-header-name" id="chat-title">new-leaders</div>
+          <div class="chat-header-desc" id="chat-desc">Resources and discussion for new leaders — 4 members</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chat-body">
+      <!-- Populated by JS on load -->
+    </div>
+
+    <div class="compose-area">
+      <div class="compose-box">
+        <textarea class="compose-input" id="compose-input" placeholder="Message #new-leaders" rows="1"></textarea>
+        <button class="compose-send" onclick="sendChat()" title="Send (Enter)">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M245.53 410.5l-75 92.83c-14 17.1-42.5 7.8-42.5-15.8V358l280.26-252.77c5.5-4.9 13.3 2.6 8.6 8.3L191.72 387.87z" class="fa-secondary"/><path d="M511.59 28l-72 432a24.07 24.07 0 0 1-33 18.2l-214.87-90.33 225.17-274.34c4.7-5.7-3.1-13.2-8.6-8.3L128 358 14.69 313.83a24 24 0 0 1-2.2-43.2L476 3.23c17.29-10 39 4.6 35.59 24.77z" class="fa-primary"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ── PHONE SECTION ─────────────────────────────────────────── -->
+<div id="phoneSection">
+ 
+  <!-- Left sidebar -->
+  <div class="left-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-title">Calls</span>
+    </div>
+    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)">
+      <div class="dm-avatar av-blue">
+        <svg class="phoneSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 240a72 72 0 1 0 72 72 72 72 0 0 0-72-72zm250.18-117C436.76 65 347.38 32 256 32S75.24 65 5.82 123A16.45 16.45 0 0 0 0 135.64V192a16 16 0 0 0 16 16h70.11a16 16 0 0 0 14.31-8.85L128 128c39.9-17.28 83.2-24 128-24 44.77 0 88.07 6.72 128 24l27.58 71.15a16 16 0 0 0 14.31 8.85H496a16 16 0 0 0 16-16v-56.36a16.45 16.45 0 0 0-5.82-12.64z" class="fa-secondary"/><path d="M475.78 376.62L370.43 192.25A64 64 0 0 0 314.86 160H197.14a64 64 0 0 0-55.57 32.25L36.22 376.62A32 32 0 0 0 32 392.5V448a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32v-55.5a32 32 0 0 0-4.22-15.88zM256 384a72 72 0 1 1 72-72 72 72 0 0 1-72 72z" class="fa-primary"/></svg></div>
+      <span class="dm-name">Recent calls</span>
+    </div>
+    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)">
+      <div class="dm-avatar av-teal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M96 224a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64zm480 32h-64a63.81 63.81 0 0 0-45.1 18.6A146.27 146.27 0 0 1 542 384h66a32 32 0 0 0 32-32v-32a64.06 64.06 0 0 0-64-64zm-512 0a64.06 64.06 0 0 0-64 64v32a32 32 0 0 0 32 32h65.9a146.64 146.64 0 0 1 75.2-109.4A63.81 63.81 0 0 0 128 256zm480-32a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64z" class="fa-secondary"/><path d="M396.8 288h-8.3a157.53 157.53 0 0 1-68.5 16c-24.6 0-47.6-6-68.5-16h-8.3A115.23 115.23 0 0 0 128 403.2V432a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48v-28.8A115.23 115.23 0 0 0 396.8 288zM320 256a112 112 0 1 0-112-112 111.94 111.94 0 0 0 112 112z" class="fa-primary"/></svg></div>
+      <span class="dm-name">Contacts</span>
+    </div>
+  </div>
+ 
+  <!-- Main pane -->
+  <div class="chat-pane">
+ 
+    <!-- ── CALLS PANE ── -->
+    <div id="calls-pane">
+      <div class="pane-header">
+        <div>
+          <div class="pane-header-name">Recent calls</div>
+          <div class="pane-header-desc">All calls — today and earlier</div>
+        </div>
+      </div>
+      <div class="pane-body">
+ 
+        <div class="call-item">
+          <div class="call-avatar av-coral">AE</div>
+          <div class="call-info">
+            <div class="call-name missed">Audrey E</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-incoming call-dir missed" aria-hidden="true"></i>
+              <span>Missed &middot; 11:42 AM</span>
+            </div>
+          </div>
+          <div class="call-time">Today</div>
+          <button class="call-action" title="Call back"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-blue">MJ</div>
+          <div class="call-info">
+            <div class="call-name">Mark J</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-outgoing call-dir outgoing" aria-hidden="true"></i>
+              <span>Outgoing &middot; 10:55 AM &middot; 4 min</span>
+            </div>
+          </div>
+          <div class="call-time">Today</div>
+          <button class="call-action" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-teal">JS</div>
+          <div class="call-info">
+            <div class="call-name">Jordan S</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-incoming call-dir incoming" aria-hidden="true"></i>
+              <span>Incoming &middot; 9:30 AM &middot; 12 min</span>
+            </div>
+          </div>
+          <div class="call-time">Today</div>
+          <button class="call-action" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-purple">PD</div>
+          <div class="call-info">
+            <div class="call-name">Priya D</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-off call-dir noanswer" aria-hidden="true"></i>
+              <span>No answer &middot; 4:15 PM</span>
+            </div>
+          </div>
+          <div class="call-time">Yesterday</div>
+          <button class="call-action" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-blue">SH</div>
+          <div class="call-info">
+            <div class="call-name">Susan H</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-incoming call-dir incoming" aria-hidden="true"></i>
+              <span>Incoming &middot; 2:00 PM &middot; 8 min</span>
+            </div>
+          </div>
+          <div class="call-time">Yesterday</div>
+          <button class="call-action" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-coral">AE</div>
+          <div class="call-info">
+            <div class="call-name missed">Audrey E</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-incoming call-dir missed" aria-hidden="true"></i>
+              <span>Missed &middot; 10:05 AM</span>
+            </div>
+          </div>
+          <div class="call-time">Mon</div>
+          <button class="call-action" title="Call back"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-teal">JS</div>
+          <div class="call-info">
+            <div class="call-name">Jordan S</div>
+            <div class="call-sub">
+              <i class="ti ti-phone-outgoing call-dir outgoing" aria-hidden="true"></i>
+              <span>No answer &middot; 9:50 AM</span>
+            </div>
+          </div>
+          <div class="call-time">Mon</div>
+          <button class="call-action" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+        </div>
+ 
+      </div><!-- /pane-body -->
+    </div><!-- /calls-pane -->
+ 
+ 
+    <!-- ── CONTACTS PANE ── -->
+    <div id="contacts-pane" style="display: none; flex-direction: column; height: 100%;">
+      <div class="pane-header">
+        <div>
+          <div class="pane-header-name">Contacts</div>
+          <div class="pane-header-desc">4 contacts</div>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search contacts…" oninput="filterContacts(this.value)" />
+      </div>
+      <div class="pane-body" id="contacts-list">
+ 
+        <div class="contact-group-label">A</div>
+        <div class="contact-item" data-name="audrey e">
+          <div class="contact-avatar av-coral">AE<span class="status-dot status-online"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Audrey E</div>
+            <div class="contact-role">Senior Analyst &middot; Online</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">J</div>
+        <div class="contact-item" data-name="jordan s">
+          <div class="contact-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Jordan S</div>
+            <div class="contact-role">Project Lead &middot; Away</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">M</div>
+        <div class="contact-item" data-name="mark j">
+          <div class="contact-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Mark J</div>
+            <div class="contact-role">Operations Manager &middot; Online</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">P</div>
+        <div class="contact-item" data-name="priya d">
+          <div class="contact-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Priya D</div>
+            <div class="contact-role">HR Business Partner &middot; Busy</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+      </div><!-- /contacts-list -->
+    </div><!-- /contacts-pane -->
+ 
+  </div><!-- /chat-pane -->
+</div><!-- /phoneSection -->
+</div>
+
+<script>
+  // ── DATA ──────────────────────────────────────────────────────────────
+  const dms = {
+    'general': {
+      title: 'general',
+      avatar: '<div class="chat-avatar av-blue">GEN</div>',
+      desc: 'Company-wide announcements and discussion — 24 members',
+      placeholder: 'Message general',
+      html: `
+        <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-blue">SH</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Susan H</span><span class="chat-time">2:30 PM</span></div>
+            <div class="chat-text">Reminder: all-hands meeting is scheduled for Friday at 10am. Calendar invites are going out now — please accept so I can confirm numbers.</div>
+            </div>
+
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-cont">
+          <div class="chat-spacer"></div>
+          <div class="chat-content">
+            <div class="chat-text">Also — the Q3 report draft is in the shared drive. Give it a read before Friday if you can.</div>
+          </div>
+
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-group" style="margin-top:8px">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:45 PM</span></div>
+            <div class="chat-text">Got it, accepted. Thanks for the heads up!</div>
+          </div>
+
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">3:01 PM</span></div>
+            <div class="chat-text">Done! Will have some notes ready to share.</div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+      },
+    'mark': {
+      title: 'Mark J',
+      avatar: '<div class="chat-avatar av-blue">MJ</div>',
+      desc: 'Online · He/him · Joined 5 years ago',
+      placeholder: 'Message Mark J',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-blue">MJ</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Hey, congratulations again on the new role. Really looking forward to working with you — I have a few ideas I'd love to share when you're settled in.</div>
+          </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-cont">
+          <div class="chat-spacer"></div>
+          <div class="chat-content">
+            <div class="chat-text">I've been with the company long enough to know where the bodies are buried 😄 — happy to give you a proper lay of the land when you're ready.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'jordan': {
+      title: 'Jordan S',
+      avatar: '<div class="chat-avatar av-teal">JS</div>',
+      desc: 'Away · They/them · Joined 2 years ago',
+      placeholder: 'Message Jordan S',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">11:14 AM</span></div>
+            <div class="chat-text">Hi! Just sent that project status summary to the channel. Let me know if anything needs more detail — happy to walk you through any of them.</div>
+          </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'audrey': {
+      title: 'Audrey E',
+      avatar: '<div class="chat-avatar av-coral">AE</div>',
+      desc: 'Online · She/her · Joined 6 years ago',
+      placeholder: 'Message Audrey E',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">11:29 AM</span></div>
+            <div class="chat-text">Hey!! So exciting to be working together again 🎉 Come find me whenever you want to grab a coffee and debrief on everything.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'priya': {
+      title: 'Priya D',
+      avatar: '<div class="chat-avatar av-purple">PD</div>',
+      desc: 'Busy · She/her · Joined 3 years ago',
+      placeholder: 'Message Priya D',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-purple">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:29 AM</span></div>
+            <div class="chat-text">Congratulations on joining the team.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    }
+  };
+
+  // Phone section code 
+
+   function switchPhoneTab(tab, el) {
+    document.querySelectorAll('#phoneSection .dm-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('calls-pane').style.display    = tab === 'calls'    ? 'block' : 'none';
+    document.getElementById('contacts-pane').style.display = tab === 'contacts' ? 'flex'  : 'none';
+  }
+ 
+  function filterContacts(val) {
+    const query = val.toLowerCase();
+    document.querySelectorAll('#contacts-list .contact-item').forEach(item => {
+      item.style.display = item.dataset.name.includes(query) ? 'flex' : 'none';
+    });
+    document.querySelectorAll('#contacts-list .contact-group-label').forEach(label => {
+      const next = label.nextElementSibling;
+      label.style.display = (next && next.style.display !== 'none') ? 'block' : 'none';
+    });
+  }
+
+  // ── HELPERS ───────────────────────────────────────────────────────────
+  function clearActive() {
+    document.querySelectorAll('.dm-item').forEach(el => el.classList.remove('active'));
+  }
+
+  function setChat(data) {
+    document.getElementById('chat-title').textContent = data.title;
+    document.getElementById('chat-desc').textContent = data.desc;
+    
+    const headerIcon = document.getElementById('header-icon');
+    headerIcon.innerHTML = data.avatar;
+    headerIcon.className = 'chat-header-icon';
+    
+    document.querySelector('.compose-input').placeholder = data.placeholder;
+    document.getElementById('chat-body').innerHTML = data.html;
+    document.getElementById('chat-body').scrollTop = 99999;
+  }
+
+  function loadDM(name, el) {
+    clearActive();
+    el.classList.add('active');
+    setChat(dms[name]);
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.activity-icon').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    
+    const chatSection = document.getElementById('chatSection');
+    const phoneSection = document.getElementById('phoneSection');
+    
+    // Check which icon was clicked (0 = chat, 1 = calls)
+    const icons = document.querySelectorAll('.activity-icon');
+    const clickedIndex = Array.from(icons).indexOf(el);
+    
+    if (clickedIndex === 0) {
+      chatSection.style.display = 'flex';
+      phoneSection.style.display = 'none';
+    } else {
+      chatSection.style.display = 'none';
+      phoneSection.style.display = 'flex';
+    }
+  }
+
+  function sendChat() {
+    const input = document.getElementById('compose-input');
+    const text = input.value.trim();
+    if (!text) return;
+    const body = document.getElementById('chat-body');
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    body.insertAdjacentHTML('beforeend', `
+      <div class="chat-group" style="margin-top:8px">
+        <div class="chat-avatar av-nl">NL</div>
+        <div class="chat-content">
+          <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">${time}</span></div>
+          <div class="chat-text">${safe}</div>
+        </div>
+        <div class="chat-actions">
+          <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+        </div>
+      </div>`);
+    input.value = '';
+    input.style.height = 'auto';
+    body.scrollTop = body.scrollHeight;
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────
+  document.getElementById('compose-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+  });
+
+  // Auto-grow textarea
+  document.getElementById('compose-input').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+
+  // Load default channel on startup
+  setChat(dms['general']);
+
+</script>
+</body>
+</html>

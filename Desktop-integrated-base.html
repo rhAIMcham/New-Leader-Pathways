@@ -1,0 +1,2657 @@
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =====================
+    COLOUR TOKENS
+===================== */
+  :root {
+  --AIMblue: #4353A3;
+  --darkBlue: #38416D;
+  --teal: #5DC8B9;
+  --cream: #F1EEDE;
+  --grey: #e7e9ec;
+  --rust: #AF4510;
+  --navy: #12195C;
+  --white: #ffffff;
+  --lightBlue: #AEBAE4;
+  --bg-app:          #f0ede8;
+  --bg-sidebar:      #e8e4de;
+  --bg-activity-pane:#454545;
+  --bg-panel:        #ffffff;
+  --bg-message-head: #f5f3f0;
+  --bg-private-tag:  #fff0ee;
+  --bg-unread-dot:   #378add;
+  --bg-avatar-blue:  #b5d4f4;
+  --bg-avatar-teal:  #9fe1cb;
+  --bg-selected-row: #e6f1fb;
+  --bg-badge:        #d85a30;
+  --bg-input:        #f5f3f0;
+
+  --text-primary:    #1a1a1a;
+  --text-secondary:  #666660;
+  --text-muted:      #999994;
+  --text-avatar-blue:#0c447c;
+  --text-avatar-teal:#085041;
+  --text-private:    #993c1d;
+  --text-badge:      #ffffff;
+  --text-link:       #185fa5;
+
+  --border-subtle:   #dedad3;
+  --border-medium:   #ccc8c0;
+
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-pill:99px;
+
+      --purple-dark: #464775;
+  --purple-mid:  #6264A7;
+  --purple-light:#9EA2D4;
+  --sidebar-bg:  #1b1b2e;
+  --channel-bg:  #252538;
+  --chat-bg:     #ffffff;
+  --text-primary:#1a1a1a;
+  --text-secondary:#555;
+  --text-muted:  #999;
+  --border:      rgba(0,0,0,0.1);
+  --bg-secondary:#f5f5f5;
+  --bg-primary:  #ffffff;
+  --online:      #6EBB8A;
+  --away:        #F4A540;
+  --busy:        #E04D4D;
+  --unread:      #D65B8E;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  }
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.workspace {
+  width: 1300px;
+  margin: auto;
+}
+
+.laptopScreen {
+  border-radius: 8px;
+  border: solid 3px rgba(0, 0, 0, 0.376);
+  box-shadow: -1px 3px 18px 0px rgba(0,0,0,0.75);
+  display: flex;
+  flex-direction: column;
+}
+
+.desktop {
+  border:solid grey 2px;
+  background-image: url('https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/desktop_background.jpg');
+  min-height: 800px;
+  border-radius: 6px;
+  background-size: 120%;
+}
+
+svg {
+  fill: white;
+  cursor: pointer;
+  transition: 300ms ease;
+  width: 30px;
+  margin: 5px;
+}
+
+svg:hover {
+  fill: var(--teal);
+}
+.topBarDesktop {
+  display: flex;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  justify-content: space-evenly;
+  margin-bottom: 50px;
+}
+
+/*Login overlay*/
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: opacity 0.5s ease;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.lock-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(10, 10, 20, 0.35);
+  border-radius: 6px;
+}
+
+.lock-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.lock-time {
+  color: #fff;
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+
+.lock-date {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.lock-btn {
+  margin-top: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  color: #fff;
+  font-size: 22px;
+}
+
+.lock-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.06);
+}
+
+.lock-hint {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+#lockOpen {
+  display: none;
+}
+
+/*Work zones display controls*/
+
+#work1 {
+  position: relative;
+  display: block;
+}
+
+#work2 {
+  position: relative;
+   display: block;
+}
+
+#work3 {
+  position: relative;
+   display: block;
+}
+
+.hideMe {
+  opacity: 0;
+  position: relative;
+  left: 20px;
+  bottom: 30px;
+  transition: opacity, right 0.5s ease;
+  z-index: 999;
+  overflow: hidden;
+}
+
+/*email Alert*/
+.alertAppear { 
+  opacity: 1; 
+  position: relative;
+  left: 20px;
+  bottom: 30px;
+  transition: opacity 0.5s ease;
+  z-index: 999;
+}
+
+.desktopAlert {
+  position: absolute;
+  width: 300px;
+  height: 100px;
+  z-index: 999;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 15px;
+  text-align: center;
+  line-height: 2.5;
+}
+
+/*PH for now but will be generic black workspace*/
+
+.workArea1 {
+  color: white;
+  font-size: 4rem;
+}
+/*Import from mail widget*/
+
+.workArea2 {
+  font-size: 14px;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================
+    LAYOUT SHELL
+===================== */
+.mail-app {
+  display: flex;
+  width: 900px;
+  height: 580px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-panel);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* =====================
+    SIDEBAR
+===================== */
+.sidebar {
+  width: 100px;
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 16px 14px;
+  color: var(--text-primary);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.sidebar-item.active {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  font-size: 15px;
+  width: 16px;
+  text-align: center;
+}
+
+.sidebar-badge {
+  margin-left: auto;
+  background: var(--bg-badge);
+  color: var(--text-badge);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+}
+
+/* =====================
+    INBOX LIST
+===================== */
+.inbox-list {
+  width: 260px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  background: var(--bg-panel);
+}
+
+.inbox-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 8px;
+}
+
+.inbox-toolbar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.inbox-toolbar-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.email-row {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.email-row:first-of-type {
+  cursor: pointer;
+}
+
+.email-row.selected {
+  background: var(--bg-selected-row);
+  opacity: 1;
+}
+
+/* .email-row.dimmed {
+    background: var(--bg-sidebar);
+  opacity: 0.4;
+}  */
+
+.email-row-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.unread-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bg-unread-dot);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.email-sender {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.email-subject {
+  font-size: 12px;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-preview {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thread-count-pill {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-message-head);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 0 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* =====================
+    THREAD PANE
+===================== */
+.thread-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-panel);
+}
+
+.thread-header {
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.thread-subject {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.thread-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.tag-inbox {
+  background: var(--bg-message-head);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.tag-private {
+  background: var(--bg-private-tag);
+  color: var(--text-private);
+}
+
+.thread-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  background: none;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--bg-message-head);
+}
+
+/* =====================
+    FIRST THREAD HIDDEN
+===================== */
+#emailRow1 {
+  display: block;
+}
+/* =====================
+    MESSAGE CARDS
+===================== */
+.thread-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-card {
+  border: 1px solid var(--border-subtle);
+  /* border-radius: var(--radius-lg);
+  overflow: hidden; */
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-message-head);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.avatar > img {
+  width: 30px;
+}
+
+#NL_icon {
+  cursor: default;
+}
+
+.avatar-blue {
+  background: var(--AIMblue);
+  color: white;
+}
+
+.avatar-teal {
+  background: var(--teal);
+  color: var(--text-avatar-teal);
+}
+
+.avatar-navy {
+  background: var(--navy);
+  color: white;
+}
+
+.avatar-lightblue {
+  background: var(--lightBlue);
+  color: var(--text-avatar-blue)
+}
+
+.message-from {
+  flex: 1;
+}
+
+.message-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.message-name-to {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.message-address {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.private-badge {
+  font-size: 10px;
+  background: var(--bg-private-tag);
+  color: var(--text-private);
+  border-radius: var(--radius-pill);
+  padding: 2px 7px;
+}
+
+.message-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+.message-body {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+.message-body p + p {
+  margin-top: 8px;
+}
+
+.message-footer {
+  padding: 6px 14px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-message-head);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+
+/* =====================
+    COMPOSE BAR
+===================== */
+.compose-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.compose-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.compose-input:focus {
+  border-color: var(--border-medium);
+}
+
+.compose-send {
+  padding: 8px 16px;
+  font-size: 13px;
+  background: var(--text-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.compose-send:hover {
+  opacity: 0.85;
+}
+
+.messageHidden {
+  display: none;
+}
+.messageRevealed {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.85);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+position: absolute;
+width: 550px;
+min-height: 250px;
+display: block;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px var(--border-subtle);
+}
+.keyPoints {
+  margin: 15px;
+  padding: 10px;
+}
+
+.imageContainer > img {
+  width: 120px;
+  margin: 20px;
+}
+.description {
+  flex: 2;
+  margin: 10px;
+  padding: 10px;
+
+}
+.description > p{
+  margin: 5px;
+}
+
+#thread2, #thread3, #thread4 {
+    display: none;
+}
+
+#threadBody2, #threadBody3, #threadBody4 {
+    display: none;
+}
+
+ul, ol {
+    margin-left: 15px;
+}
+
+#replyBody {
+  display: none;
+}
+#learnerReply {
+  width:max-content;
+  height: 50px;
+}
+
+.workArea3 {
+font-size: 14px;
+display: flex;
+align-items: center;
+justify-content: center;
+/* min-height: 70vh; */
+padding: 20px;
+}
+
+
+  /* ── APP SHELL ── */
+  .teams-app {
+    display: flex;
+    width: 960px;
+    height: 600px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    background: var(--bg-panel);
+  }
+
+  /* ── ACTIVITY BAR ── */
+  .activity-bar {
+    width: 65px;
+    flex-shrink: 0;
+    background: var(--bg-activity-pane);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 2px;
+  }
+
+  .activity-bar-top { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px; 
+    flex: 1; 
+    margin-top: 15px;
+  }
+
+  .activity-icon {
+    width: 36px; 
+    height: 36px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border-radius: 8px; 
+    cursor: pointer;
+    color: rgba(255,255,255,0.55); 
+    font-size: 18px;
+    position: relative; 
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .activity-icon:hover, .activity-icon.active {
+    background: rgba(255,255,255,0.13); 
+    color: #fff;
+  }
+
+  .activity-icon .badge {
+    position: absolute; 
+    top: 5px; 
+    right: 5px;
+    width: 7px; 
+    height: 7px; 
+    border-radius: 50%; 
+    background: var(--rust);
+    }
+
+  /* ── LEFT SIDEBAR ── */
+  .left-sidebar {
+    color: black;
+    width: 210px; 
+    flex-shrink: 0;
+    background: var(--bg-app);
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .sidebar-header {
+    padding: 14px 12px 8px;
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+  }
+
+  .sidebar-header-title { 
+    font-size: 1.4rem; 
+    font-weight: 600; 
+    flex: 1; }
+
+  .sidebar-icon-btn {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 18px;
+    width: 28px; 
+    height: 28px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    border-radius: 6px;
+  }
+
+  .sidebar-icon-btn:hover { 
+    background: rgba(255,255,255,0.1); 
+    color: var(--teal); 
+  }
+
+  .section-label {
+    padding: 8px 12px 3px;
+    font-size: 11px; 
+    font-weight: 600;
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    cursor: pointer; 
+    user-select: none;
+  }
+
+  .dm-unread-dot {
+    width: 6px; 
+    height: 6px; 
+    border-radius: 50%;
+    background: var(--bg-unread-dot); 
+    margin-left: auto; 
+    flex-shrink: 0;
+  }
+
+  .dm-unread-count {
+    background: var(--bg-unread-dot); 
+    color: #fff;
+    font-size: 10px; 
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 10px; 
+    margin-left: auto;
+  }
+
+  .dm-item {
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    padding: 8px 12px; 
+    cursor: pointer;
+    border-radius: 5px; margin: 1px 5px;
+    transition: background 0.1s;
+  }
+
+  .dm-item:hover { 
+    color: var(--AIMblue);
+   }
+
+  .dm-item.active { 
+    background: white; 
+  }
+
+  .dm-avatar {
+    width: 24px;
+    height: 24px; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 9px; 
+    font-weight: 700; 
+    flex-shrink: 0; 
+    position: relative;
+  }
+
+  .status-dot {
+    position: absolute; 
+    bottom: -1px; 
+    right: -1px;
+    width: 7px; 
+    height: 7px; 
+    border-radius: 50%;
+    border: 1.5px solid var(--channel-bg);
+  }
+
+  .status-online { background: var(--online); }
+  .status-away   { background: var(--away); }
+  .status-busy   { background: var(--busy); }
+
+  .dm-name {
+    font-size: 12px; 
+    flex: 1;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  .dm-item.active .dm-name {
+    color: var(--navy);
+  } 
+  
+  .dm-item:hover .dm-name { 
+    color: var(--AIMblue); 
+  }
+
+  /* ── CHAT PANE ── */
+  .chat-pane {
+   flex: 1;
+   display: flex; 
+   flex-direction: column; 
+   background: var(--chat-bg); 
+   min-width: 0; 
+  }
+
+  .chat-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    background: var(--bg-message-head);
+  }
+
+  .chat-header-left { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    flex: 1; 
+    min-width: 0; 
+  }
+
+  .chat-header-icon { 
+    font-size: 17px; 
+    color: var(--purple-mid); 
+  }
+
+  .chat-header-name { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+    margin-bottom: 4px;
+  }
+
+  .chat-header-desc { 
+    font-size: 12px; 
+    color: var(--text-muted); 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  
+  /* ── MESSAGES ── */
+  .chat-body { 
+    flex: 1; 
+    overflow-y: auto;
+    padding: 12px 16px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+  }
+
+  .date-divider {
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    margin: 10px 0; 
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .date-divider::before, .date-divider::after {
+    content: ''; 
+    flex: 1;
+    height: 1px; 
+    background: var(--border);
+  }
+
+  .chat-group { 
+    display: flex; 
+    gap: 10px; 
+    padding: 3px 0; 
+    align-items: flex-start; 
+    border-radius: 6px; 
+  }
+  .chat-group:hover, .chat-cont:hover { 
+    background: var(--bg-secondary);
+    margin: 0 -8px; 
+    padding: 3px 8px; 
+  }
+  .chat-group:hover .chat-actions, .chat-cont:hover .chat-actions { opacity: 1; }
+
+  .chat-cont { 
+    display: flex; 
+    gap: 10px; 
+    padding: 2px 0; 
+    align-items: flex-start; 
+    border-radius: 6px;
+  }
+  .chat-spacer { 
+    width: 32px; 
+    flex-shrink: 0; 
+  }
+  .chat-avatar {
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    flex-shrink: 0;
+    margin-top: 2px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    font-size: 11px; 
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .chat-content { flex: 1; min-width: 0; }
+
+  .chat-meta { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 8px; 
+    margin-bottom: 2px; 
+  }
+  .chat-name { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+  }
+  .chat-time { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+  }
+  .chat-text { 
+    font-size: 13px; 
+    color: var(--text-primary); 
+    line-height: 1.55; 
+  }
+  .chat-text p + p { margin-top: 4px; }
+
+  .chat-actions {
+    opacity: 0; 
+    display: flex; 
+    gap: 2px; 
+    margin-left: auto; 
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .chat-act-btn {
+    background: var(--bg-primary); 
+    border: 1px solid var(--border);
+    border-radius: 6px; 
+    width: 28px; 
+    height: 28px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    font-size: 14px; 
+    color: var(--text-muted);
+  }
+  .chat-act-btn:hover {
+     background: var(--bg-secondary); 
+     color: var(--text-primary);
+    }
+.like-btn.liked {
+  background: #e8f0fb;
+  border-color: var(--AIMblue);
+  color: var(--AIMblue);
+}
+
+.like-btn .like-count {
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 3px;
+}
+
+  .mention {
+    color: var(--purple-mid); 
+    font-weight: 600; 
+    background: rgba(98,100,167,0.12); 
+    border-radius: 3px; 
+    padding: 0 2px; 
+  }
+  .thread-reply-btn { 
+    font-size: 11px;
+    color: var(--purple-mid);
+    cursor: pointer;
+    margin-top: 4px; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px; 
+  }
+  .thread-reply-btn:hover { text-decoration: underline; }
+
+  /* ── COMPOSE ── */
+  .compose-area { 
+    padding: 8px 16px 14px; 
+    border-top: 1px solid var(--border); 
+    background: var(--bg-primary); 
+  }
+
+  .compose-box {
+    display: flex; 
+    align-items: flex-end; 
+    gap: 6px;
+    background: var(--bg-secondary); 
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 8px; 
+  }
+
+  .compose-input-chat {
+    flex: 1; 
+    background: none; 
+    border: none; 
+    outline: none;
+    font-size: 13px; 
+    color: var(--text-primary);
+    font-family: inherit; 
+    resize: none;
+    min-height: 22px;
+     max-height: 100px; 
+     line-height: 1.5;
+  }
+
+  .compose-input-chat::placeholder { 
+    color: var(--text-muted); 
+  }
+
+  .compose-send-chat {
+    width: 32px; 
+    height: 32px; 
+    background: var(--AIMblue);
+    border: none; 
+    border-radius: 7px; 
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: #fff; 
+    font-size: 16px; 
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .compose-send-chat:hover { 
+    background: var(--navy); 
+  }
+
+
+  /* ── AVATAR COLOURS ── */
+  .av-blue   { background: #B5D4F4; color: #0C447C; }
+  .av-teal   { background: #9FE1CB; color: #085041; }
+  .av-coral  { background: #F5C4B3; color: #712B13; }
+  .av-purple { background: #9EA2D4; color: #3C3489; }
+  .av-green  { background: #C0DD97; color: #27500A; }
+  .av-pink   { background: #F4C0D1; color: #72243E; }
+  .av-nl     { background: var(--purple-mid); color: #fff; }
+
+
+.container {
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 2px;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: var(--bg-message-head);
+    border: 1px solid var(--border-subtle);
+    border-radius: 5px;
+    padding: 5px 20px;
+    color: var(--text-muted);
+    outline: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+/* ── CALLS LIST ── */
+  .call-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+  }
+
+  .call-item:hover { background: #f5f3f0; }
+
+  .call-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .call-info { 
+    flex: 1;
+    min-width: 0;
+  }
+
+  .call-name {
+    font-size: 13px;
+    font-weight: 600; 
+    color: var(--text-primary);
+  }
+
+  .call-name.missed { color: #AF4510; }
+
+  .call-sub { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    margin-top: 2px; 
+    display: flex; 
+    align-items: center; 
+    gap: 4px; 
+  }
+
+  .call-time { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    flex-shrink: 0; 
+    text-align: right; 
+  }
+
+  .call-dir { font-size: 13px; }
+  .call-dir.incoming { color: #3B6D11; }
+  .call-dir.outgoing { color: #185FA5; }
+  .call-dir.missed    { color: #AF4510; }
+  .call-dir.noanswer  { color: #888780; }
+
+  .call-action {
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    border: none;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    font-size: 14px; 
+    background: var(--purple-light);
+    color: var(--AIMblue);
+    flex-shrink: 0;
+  }
+
+  .call-action:hover {
+    background: var(--AIMblue);
+    color: white;
+  }
+ 
+  /* ── CONTACTS ── */
+  .search-bar {
+    padding: 10px 16px; 
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .search-input {
+    width: 100%; 
+    background: #f0ede8; 
+    border: 1px solid rgba(0,0,0,0.1); 
+    border-radius: 6px;
+    padding: 6px 10px; 
+    font-size: 13px; 
+    outline: none; 
+    font-family: inherit; 
+    color: var(--text-primary);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .contact-group-label {
+    padding: 8px 16px 4px; 
+    font-size: 11px; 
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+    text-transform: uppercase; 
+    color: var(--text-muted); 
+    background: #faf9f7;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+    padding: 9px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04); 
+    cursor: pointer;
+  }
+
+  .contact-item:hover {
+    background: #f5f3f0;
+  }
+
+  .contact-avatar {
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    font-size: 11px; 
+    font-weight: 700; 
+    flex-shrink: 0; 
+    position: relative;
+  }
+
+  .contact-info { 
+    flex: 1; 
+    min-width: 0; 
+  }
+
+  .contact-name { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+  }
+
+  .contact-role { 
+    font-size: 11px; 
+    color: var(--text-muted); 
+    margin-top: 1px; 
+  }
+
+  .contact-actions {
+    display: flex; 
+    gap: 6px;
+  }
+
+  .contact-btn {
+    width: 28px; 
+    height: 28px; 
+    border-radius: 6px; 
+    border: 1px solid rgba(0,0,0,0.12);
+    background: white; 
+    cursor: pointer; 
+    font-size: 14px; 
+    color: var(--text-muted);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+
+  .contact-btn:hover { 
+    background: var(--bg-app); 
+    color: var(--AIMblue);
+  }
+ 
+  /* ── PANE HEADER (phone) ── */
+  .pane-header {
+    padding: 10px 16px; 
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    background: var(--bg-message-head);
+  }
+
+  .pane-header-name { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--text-primary);
+  }
+
+  .pane-header-desc { 
+    font-size: 12px; 
+    color: var(--text-muted);
+  }
+ 
+  .pane-body { 
+    flex: 1; 
+    overflow-y: auto;
+  }
+
+audio {
+  margin: 10px;
+}
+
+.dm-avatar > svg {
+  fill: black;
+}
+
+#chatSection {
+  display: flex;
+  width: 895px;
+}
+
+#phoneSection {
+  display: none;
+  width: 895px;
+}
+
+/*Controls for message responses*/
+#mark-response-1 {
+  display: none;
+}
+</style>
+<body>
+<div class="workspace">
+    <div class="laptopScreen">
+      <div class="lock-overlay" id="lockOverlay">
+        <div class="lock-blur"></div>
+          <div class="lock-content">
+            <div class="lock-time" id="lockTime">--:--</div>
+            <div class="lock-date" id="lockDate">Loading…</div>
+            <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
+              <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
+            <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
+            </button>
+            <div class="lock-hint">click to unlock</div>
+          </div>
+        </div>
+        <div class="desktop">
+            <div class="topBarDesktop">
+              <a class="topBarIcon home" onclick="openApps(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M496 512H368a16 16 0 0 1-16-16V368a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v128a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V311c1.78-1.21 3.85-1.89 5.47-3.35L288 115l218.74 192.9c1.54 1.38 3.56 2 5.26 3.2V496a16 16 0 0 1-16 16z" class="fa-secondary"/><path d="M527.92 283.88L298.6 81.61a16 16 0 0 0-21.17 0L48.11 283.89a16 16 0 0 1-22.59-1.21L4.1 258.89a16 16 0 0 1 1.21-22.59l256-226a39.85 39.85 0 0 1 53.45 0L416 99.67V48a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v136.43l58.69 51.83a16 16 0 0 1 1.22 22.59l-21.4 23.82a16 16 0 0 1-22.59 1.21z" class="fa-primary"/></svg>
+              </a>
+              <a class="topBarIcon mail" onclick="openApps(2)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
+              </a>
+              <a class="topBarIcon teams" onclick="openApps(3)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
+              </a>
+            </div>
+            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()">
+              <div class="desktopAlert">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
+                <p>New Email</p>
+              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
+              </div>
+            </div>
+            <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertPhone()">
+              <div class="desktopAlert">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
+                <p>2 missed voice calls</p>
+              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
+              </div>
+            </div>
+<!--Work area 1 -->
+<div class="workArea1" id="work1">
+  <p>hello its area 1</p>
+</div>
+
+<!--Work area 2 Email-->
+<div class="workArea2" id="work2">
+<div class="mail-app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Mail</div>
+    <div class="sidebar-item active">
+      <span class="sidebar-icon">&#9711;</span> Inbox
+      <!-- <span class="sidebar-badge">1</span> -->
+    </div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
+  </nav>
+
+  <!-- INBOX LIST -->
+  <div class="inbox-list">
+    <div class="inbox-toolbar">
+      <span class="inbox-toolbar-title">Inbox</span>
+      <span class="inbox-toolbar-count">1 message</span>
+    </div>
+
+    <div class="email-row" id="emailRow1" onclick="swapEmails(1)">
+      <div class="email-row-top">
+        <span class="unread-dot"></span>
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">12:07 pm</span>
+      </div>
+      <div class="email-subject">
+      First day on the job
+      </div>
+      <div class="email-preview">Hey new leader! Welcome to your first day on the job. I hope you are settling in well, and have everything you need to succeed. </div>
+    </div>
+
+    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
+      <div class="email-row-top">
+        <span class="email-sender">New Leader</span>
+        <span class="email-time">10:42 am</span>
+      </div>
+      <div class="email-subject">
+       New Team Meeting
+        <span class="thread-count-pill">5</span>
+      </div>
+      <div class="email-preview">Hi all,  I would like to thank each of you for welcoming</div>
+    </div>
+
+    <div class="email-row" id="emailRow3" onclick="swapEmails(3)">
+      <div class="email-row-top">
+        <span class="email-sender">Newsletter</span>
+        <span class="email-time">Yesterday</span>
+      </div>
+      <div class="email-subject">Your weekly digest</div>
+      <div class="email-preview">Top stories curated for you…</div>
+    </div>
+
+    <div class="email-row" id="emailRow4" onclick="swapEmails(4)">
+      <div class="email-row-top">
+        <span class="email-sender">Eddie W</span>
+        <span class="email-time">Mon</span>
+      </div>
+      <div class="email-subject">Induction pack</div>
+      <div class="email-preview">Dear New Leader, Congratulations on </div>
+    </div>
+  </div>
+
+  <!-- THREAD PANE -->
+  <div class="thread-pane">
+    <div id="thread1" class="thread-header">
+      <div class="thread-subject">First day on the job</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn" onclick="reply()">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody1" class="thread-body">
+      <div id="replyBody">
+ <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="message-from">
+            <div class="message-name">New Leader <span class="message-name-to">to Susan H</span></div>
+            <div class="message-address">sh@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+             <button class="compose-send">Send</button>
+          <span class="message-time">1:30 pm</span>
+        </div>
+        <div class="message-body">
+        <div class="compose-bar">
+      <input class="compose-input" type="textarea" placeholder="Reply to Susan" />
+    
+    </div>
+</div>
+</div>
+</div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">12:07 pm</span>
+        </div>
+        <div class="message-body">
+          <p>Hey new leader! Welcome to your first day on the job. I hope you are settling in well, and have everything you need to succeed. As you get used to your new responsibilities, it might be helpful to consider what your goals are as a new leader. </p>
+          <p>Reflection is crucial to successfully transition into a new leadership role. There is a lot changing in your day to day, and thinking about what kind of leader you want to be is a really important step in this transition process. Some essentials steps are:</p>
+
+          <ul>
+            <li>Establish our identity within the confines of the role </li>
+            <li>Acquire new knowledge and hone new skills </li>
+            <li>Reframe existing work relationships and foster new alliances </li>
+            <li>Gain credibility and respect </li>
+            <li>Become the leader we aspire to be, and the leader our team requires. </li>
+          </ul>
+          <br>
+          <p>To help you through this process, answer these 3 questions and send them back to me, and I will make sure any extra resources or supports you need to achieve those goals are available to you.</p>
+          <br>
+          <ol>
+            <li>What excites you about your new role and what concerns you?</li>
+            <li>As you commence in the role, what are your priorities?</li>
+            <li>What challenges do you think you might face?</li>
+          </ol>
+          <br>
+          <p>Ok, talk soon.</p>
+          <p>Susan</p>
+          <br>
+          <p>Sent from my iPhone</p>
+        </div>
+      </div>
+</div>
+
+
+    <div id="thread2" class="thread-header">
+      <div class="thread-subject">New team meeting</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body">
+
+      <!-- Original email -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="message-from">
+            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
+          </div>
+          <span class="message-time">Today, 10:42 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi all,</p>
+          <p>I would like to thank each of you for welcoming me to this new role in the team. I look forward to collaborating with each of you as we work towards our shared goals and am confident we will achieve great results together.</p>
+          <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
+          <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
+          <p>Kind regards,</p>
+          <p>New Leader</p>
+        </div>
+      </div>
+
+      <!-- Private reply 1 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="MJ_icon" onclick="MJreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
+          <div class="message-from">
+            <div class="message-name">Mark J <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">10:58 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hello,</p>
+          <p>Thank you for your email and your kind words. I would also like to congratulate you on your new role, as I know the interview process is very intense and takes a lot of effort. I am also keen about the opportunity to work together and contribute to the success of this group. </p>
+          <p>During my time with the organisation, I have worked with several different teams and have a broad range of experience that I think will be applicable to our future projects. When scoping tasks, I am always prepared to assist in any way. I look forward to discussing this with you.</p>
+        <p>Thanks,</p> 
+      <p>Mark</p>
+        </div>
+      </div>
+
+      <!-- Private reply 2 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="JS_icon" onclick="JSreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
+          <div class="message-from">
+            <div class="message-name">Jordan S <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:14 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi,</p>
+          <p>Thanks for your email and congratulations on your new role. I appreciate your introduction and look forward to discussing our future tasks and workload.</p>
+          <p>I am committed to contributing where I can and am looking forward to learning more about the team’s goals during the meeting. </p>
+          <p>Thank you,</p>
+          <p>Jordan</p>
+        </div>
+    
+      </div>
+
+      <!-- Private reply 3 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="AE_icon" onclick="AEreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted"></div>
+          <div class="message-from">
+            <div class="message-name">Audrey E <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:29 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hey! </p>
+          <p>First of all, congratulations on the promotion – definitely well deserved! It’ll be great to work with you again. </p>
+          <p>I’m keen to see what we can build together, and I think the team is in good hands. We’ve got an awesome group of people here and I think we’re all going to do amazing things. As you adjust to your new role, I’m always here for a chat. </p>
+          <p>Cheers!</p>
+        </div>
+      </div>
+
+      <!-- Private reply 4 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
+          <div class="message-from">
+            <div class="message-name">Prida D <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:47 am</span>
+        </div>
+        <div class="message-body">
+          <p>Congratulations. Sounds great. See you then <span class="sidebar-icon">&#128077;</span> </p>
+        </div>
+      </div>
+
+    </div>
+
+        <div id="thread3" class="thread-header">
+      <div class="thread-subject">First day on the job</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody3" class="thread-body">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">NL</div>
+          <div class="message-from">
+            <div class="message-name">Newsletter <span class="message-name-to">to ALL STAFF</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">12:07 pm</span>
+        </div>
+<div class="message-body">
+          <p>Hello Team!</p>
+          <br>
+          <p>This week we’d like to start by thanking everyone for their professionalism, flexibility, and dedication through the restructure. Your positive attitude and commitment to supporting each other has been greatly appreciated and ensured a smooth transition for both staff and our clients.</p>
+          <br>
+          <p><strong>Congratulations</strong></p>
+          <p>A special congratulations to our newly appointed New Leader! We wish you every success in your new leadership role and look forward to seeing your team exceed expectations!</p>
+          <p><strong>Birthday Celebrations</strong></p>
+          <p>Happy Birthday to our team members celebrating this month:</p>
+          <ul>
+            <li>Kyle Q. (2nd)</li>
+            <li>Audrey E. (13th)</li>
+            <li>Kannika S. (27th)</li>
+          </ul>
+          <p>We hope you all have a wonderful day and enjoy your celebrations!</p>
+          <br>
+          <p><strong>Fun Fact of the Week</strong></p>
+          <p>Did you know? Honey never spoils. Archaeologists discovered posts of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!</p>
+          <p>Thank you all again for your hard work and commitment over the last several weeks. Together, we are building a stronger and more successful future for our company.</p>
+          <br>
+          <p>Talk to you soon!</p>
+        </div>
+      </div>
+</div>
+
+    <div id="thread4" class="thread-header">
+      <div class="thread-subject">First day on the job</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody4" class="thread-body">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SL</div>
+          <div class="message-from">
+            <div class="message-name">Eddie W. <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">9:07 am</span>
+        </div>
+           <div class="message-body">
+            <p>Dear New Leader,</p>
+            <p>Congratulations on your new role! We are excited to support this transition into your leadership role with the team. <br>To assist with your onboarding, we have prepared a short induction pack that contains key information, resources, and system access details required for your new position. While you will be familiar with some of the content, other processes may have been affected by the restructure.
+                <br>
+                The information pack includes:</p>
+                <ul>
+                    <li>Payroll information: Manager approval processes for timesheets and leave requests, payroll submission deadlines, and escalation contacts for payroll enquiries.</li>
+                    <li>Human Resources (HR) Resources: Employee relations guidelines, performance management framework, and workplace policies and requirement requirements</li>
+                    <li>System and work profiles: Manager access to relevant systems and applications, shared drives and folders, and security access</li>
+                    <li>People management resources: Team structure and employee profiles, meeting templates, and training and development resources</li>
+                    <li>Operational information: Department objectives, budget and approval authorities, and key stakeholder contacts.</li>
+                    <li>Please review the induction materials and reach out if you require any additional information or assistance. We look forward to watching your team work together!</li>
+                </ul>
+                <p>Kind regards,</p>
+
+                <p>Eddie W.</p>
+        </div>
+      </div>
+
+    </div><!-- end thread-body -->
+
+  </div><!-- end thread-pane -->
+
+</div><!-- end mail-app -->
+
+<div id="MJ_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy">
+  </div>
+  <div class="description">
+    <p>Mark J</p><p>He/him</p>
+    <p>Available 9am - 5pm, Monday to Friday.</p>
+    <p>Join date: 5 years, 4 months ago.</p>
+    <p>Dedicated and hard working.</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Mark recently applied for a promotion, but was unsuccessful. He has been with the company for some time, and is knowledgable about the functioning of other teams, as well as trends within the industry.</p>
+  </div>
+</div>
+
+<div id="JS_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera.">
+  </div>
+  <div class="description">
+    <p>Jordan S</p><p>They/them</p>
+    <p>Available 8am - 5pm, Monday to Friday.</p>
+    <p>Join date: 2 years, 5 months ago.</p>
+    <p>Quiet and resourceful.</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Jordan has been at the company for some time, in a single role they are very focused on. They are responsive and polite online, and very helpful to newer hires.</p>
+  </div>
+</div>
+
+
+<div id="AE_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted.">
+  </div>
+  <div class="description">
+    <p>Audrey E</p><p>She/her</p>
+    <p>Available 8am - 4pm, Monday to Friday.</p>
+    <p>Join date: 6 years, 2 months ago.</p>
+    <p>Energetic and collaborative</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Audrey was previously on your team, and she is excited you will be working together again.</p>
+  </div>
+</div>
+
+<div id="PD_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/PD_icon.png" alt="Icon of the letters PD.">
+  </div>
+  <div class="description">
+    <p>Priya D</p><p>She/her</p>
+    <p>Available 8am - 5:30pm, Monday to Friday.</p>
+    <p>Join date: 3 years ago.</p>
+    <p>High performer</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Priya is a hard working member of the team, excelling in her area and maintaining her focus through company changes.</p>
+  </div>
+</div>
+
+
+<div id="SH_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <div class="avatar avatar-lightblue">SH</div>
+  </div>
+  <div class="description">
+    <p>Susan H</p><p>She/her</p>
+    <p>Available 8am - 5:30pm, Monday to Friday.</p>
+    <p>Join date: 5 years ago.</p>
+    <p>Your manager</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Friendly and keen to help you. Very experienced.</p>
+  </div>
+
+<script>
+function reveal(cardId) {
+  const infocard = document.getElementById(cardId);
+  if (infocard) {
+    infocard.classList.toggle("messageRevealed");
+  }
+}
+
+function MJreveal() {
+  reveal("MJ_info_card");
+}
+
+function JSreveal() {
+  reveal("JS_info_card");
+}
+
+function PDreveal() {
+  reveal("PD_info_card");
+}
+
+function AEreveal() {
+  reveal("AE_info_card");
+}
+
+function SHreveal() {
+  reveal("SH_info_card");
+}
+
+// Close popups when clicking outside
+document.addEventListener("click", function(event) {
+  const infocards = document.querySelectorAll('[id$="_info_card"]');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
+      // Check if click is outside the card
+      if (!card.contains(event.target) && !event.target.closest('[onclick]')) {
+        card.classList.remove("messageRevealed");
+      }
+    }
+  });
+});
+
+
+//update number of emails by increasing cap for for loop you idiot
+function swapEmails(threadNumber) {
+    // Hide all thread headers and bodies
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById(`thread${i}`).style.display = 'none';
+        document.getElementById(`threadBody${i}`).style.display = 'none';
+        document.getElementById(`emailRow${i}`).classList.remove("selected");
+    }
+    
+    // Show selected thread header and body
+    document.getElementById(`thread${threadNumber}`).style.display = 'block';
+    document.getElementById(`threadBody${threadNumber}`).style.display = 'flex';
+    document.getElementById(`emailRow${threadNumber}`).classList.add("selected");
+
+}
+
+// Initialize - show first thread by default
+document.addEventListener('DOMContentLoaded', function() {
+    swapEmails(1);
+});
+
+//timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
+function emailArrives() {
+    document.getElementById('emailRow1').style.display = 'block';
+        // document.getElementById('emailRow1').classList.add("selected");
+        // document.getElementById('emailRow2').classList.remove("selected");
+}
+
+function reply() {
+  document.getElementById("replyBody").style.display = 'block';
+}
+</script>
+</div>
+</div>
+
+<!--Work area 3 Teams-->
+<div class="workArea3" id="work3">                
+<div class="teams-app">
+  <!-- ACTIVITY BAR -->
+  <div class="activity-bar">
+    <div class="activity-bar-top">
+      <div class="activity-icon active" title="Chat" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
+      </div>
+      <div class="activity-icon" title="Calls" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
+      </div>
+      <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
+      </div> -->
+    </div>
+  </div>
+<div id="chatSection">
+  <!-- LEFT SIDEBAR CHAT -->
+  <div class="left-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-title">Chats</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('general', this)">
+       <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
+          <span class="dm-name">General</span>
+    </div>
+      <div class="dm-item" onclick="loadDM('susan', this)">
+      <div class="dm-avatar av-teal">SH<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Susan H</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('mark', this)">
+      <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Mark J</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('jordan', this)">
+      <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+      <span class="dm-name">Jordan S</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('audrey', this)">
+      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Audrey E</span>
+    </div>
+    <div class="dm-item" onclick="loadDM('priya', this)">
+      <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
+      <span class="dm-name">Priya D</span>
+    </div>
+  </div>
+
+  <!-- CHAT PANE -->
+  <div class="chat-pane">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <i class="ti ti-hash chat-header-icon" id="header-icon"></i>
+        <div>
+          <div class="chat-header-name" id="chat-title">new-leaders</div>
+          <div class="chat-header-desc" id="chat-desc">Resources and discussion for new leaders — 4 members</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chat-body">
+      <!-- Populated by JS on load -->
+    </div>
+
+    <!-- <div class="compose-area">
+      <div class="compose-box">
+        <div class="chat-options">
+          <button>Option 1</button>
+          <button>O</button>
+        </div>
+       <textarea class="compose-input-chat"  placeholder="Message general" rows="1"></textarea> 
+      </div>
+    </div> -->
+  </div>
+</div>
+<!-- ── PHONE SECTION ─────────────────────────────────────────── -->
+<div id="phoneSection">
+ 
+  <!-- Left sidebar -->
+  <div class="left-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-title">Calls</span>
+    </div>
+    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)">
+      <div class="dm-avatar av-blue">
+        <svg class="phoneSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 240a72 72 0 1 0 72 72 72 72 0 0 0-72-72zm250.18-117C436.76 65 347.38 32 256 32S75.24 65 5.82 123A16.45 16.45 0 0 0 0 135.64V192a16 16 0 0 0 16 16h70.11a16 16 0 0 0 14.31-8.85L128 128c39.9-17.28 83.2-24 128-24 44.77 0 88.07 6.72 128 24l27.58 71.15a16 16 0 0 0 14.31 8.85H496a16 16 0 0 0 16-16v-56.36a16.45 16.45 0 0 0-5.82-12.64z" class="fa-secondary"/><path d="M475.78 376.62L370.43 192.25A64 64 0 0 0 314.86 160H197.14a64 64 0 0 0-55.57 32.25L36.22 376.62A32 32 0 0 0 32 392.5V448a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32v-55.5a32 32 0 0 0-4.22-15.88zM256 384a72 72 0 1 1 72-72 72 72 0 0 1-72 72z" class="fa-primary"/></svg></div>
+      <span class="dm-name">Recent calls</span>
+    </div>
+    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)">
+      <div class="dm-avatar av-teal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M96 224a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64zm480 32h-64a63.81 63.81 0 0 0-45.1 18.6A146.27 146.27 0 0 1 542 384h66a32 32 0 0 0 32-32v-32a64.06 64.06 0 0 0-64-64zm-512 0a64.06 64.06 0 0 0-64 64v32a32 32 0 0 0 32 32h65.9a146.64 146.64 0 0 1 75.2-109.4A63.81 63.81 0 0 0 128 256zm480-32a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64z" class="fa-secondary"/><path d="M396.8 288h-8.3a157.53 157.53 0 0 1-68.5 16c-24.6 0-47.6-6-68.5-16h-8.3A115.23 115.23 0 0 0 128 403.2V432a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48v-28.8A115.23 115.23 0 0 0 396.8 288zM320 256a112 112 0 1 0-112-112 111.94 111.94 0 0 0 112 112z" class="fa-primary"/></svg></div>
+      <span class="dm-name">Contacts</span>
+    </div>
+  </div>
+ 
+  <!-- Main pane -->
+  <div class="chat-pane">
+ 
+    <!-- ── CALLS PANE ── -->
+    <div id="calls-pane">
+      <div class="pane-header">
+        <div>
+          <div class="pane-header-name">Recent calls</div>
+          <div class="pane-header-desc">All calls — today and earlier</div>
+        </div>
+      </div>
+      <div class="pane-body">
+ 
+        <div class="call-item">
+          <div class="call-avatar av-coral">AE</div>
+          <div class="call-info">
+            <div class="call-name missed">Audrey E</div>
+            <div class="call-sub">
+             
+              <span>Missed &middot; 11:42 AM</span>
+              <audio controls>
+                <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Audrey_call_PH.mp3">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+          <div class="call-time">Today</div>
+          <button class="call-action" title="Call back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
+          </button>
+        </div>
+ 
+        <div class="call-item">
+          <div class="call-avatar av-blue">MJ</div>
+          <div class="call-info">
+            <div class="call-name missed">Mark J</div>
+            <div class="call-sub">
+              <span>Missed &middot; 11:05 AM</span>
+             <audio controls>
+            <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Mark_call_PH.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+          </audio>
+            </div>
+          </div>
+          <div class="call-time">Today</div>
+          <button class="call-action" title="Call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg></button>
+        </div>
+
+        <div class="call-item">
+          <div class="call-avatar av-teal">SH</div>
+          <div class="call-info">
+            <div class="call-name">Susan H</div>
+            <div class="call-sub">
+              <span>Incoming &middot; 2:00 PM &middot; 8 min</span>
+            </div>
+          </div>
+          <div class="call-time">Yesterday</div>
+          <button class="call-action" title="Call"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M144 16v64h64a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16h-64v64a16 16 0 0 1-16 16H96a16 16 0 0 1-16-16v-64H16a16 16 0 0 1-16-16V96a16 16 0 0 1 16-16h64V16A16 16 0 0 1 96 0h32a16 16 0 0 1 16 16z" class="fa-secondary"/><path d="M512 48c0 256.5-207.9 464-464 464a24 24 0 0 1-23.4-18.6l-24-104a24.29 24.29 0 0 1 14-27.6l112-48a24 24 0 0 1 28 6.9l49.6 60.6a370.61 370.61 0 0 0 177.2-177.2l-60.6-49.6a23.94 23.94 0 0 1-6.9-28l48-112A24.16 24.16 0 0 1 389.41.61l104 24A24 24 0 0 1 512 48z" class="fa-primary"/></svg></button>
+        </div>
+
+      </div><!-- /pane-body -->
+    </div><!-- /calls-pane -->
+ 
+    <!-- ── CONTACTS PANE ── -->
+    <div id="contacts-pane" style="display: none; flex-direction: column; height: 100%;">
+      <div class="pane-header">
+        <div>
+          <div class="pane-header-name">Contacts</div>
+          <div class="pane-header-desc">5 contacts</div>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search contacts…" oninput="filterContacts(this.value)" />
+      </div>
+      <div class="pane-body" id="contacts-list">
+ 
+        <div class="contact-group-label">A</div>
+        <div class="contact-item" data-name="audrey e">
+          <div class="contact-avatar av-coral">AE<span class="status-dot status-busy"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Audrey E</div>
+            <div class="contact-role">Senior Analyst &middot; Busy</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">J</div>
+        <div class="contact-item" data-name="jordan s">
+          <div class="contact-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Jordan S</div>
+            <div class="contact-role">Project Lead &middot; Away</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">M</div>
+        <div class="contact-item" data-name="mark j">
+          <div class="contact-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Mark J</div>
+            <div class="contact-role">Operations Manager &middot; Away</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">P</div>
+        <div class="contact-item" data-name="priya d">
+          <div class="contact-avatar av-purple">PD<span class="status-dot status-online"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Priya D</div>
+            <div class="contact-role">HR Business Partner &middot; Online</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+ 
+        <div class="contact-group-label">S</div>
+                <div class="contact-item" data-name="susan h">
+          <div class="contact-avatar av-teal">SH<span class="status-dot status-online"></span></div>
+          <div class="contact-info">
+            <div class="contact-name">Susan H</div>
+            <div class="contact-role">Your manager &middot; Online</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
+            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div><!-- /contacts-list -->
+    </div><!-- /contacts-pane -->
+ 
+  </div><!-- /chat-pane -->
+</div>
+<!-- /phoneSection -->
+</div>
+
+<script>
+  //Scripts for chat app
+  // ── DATA ──────────────────────────────────────────────────────────────
+  const dms = {
+    'general': {
+      title: 'general',
+      avatar: '<div class="chat-avatar av-coral">GEN</div>',
+      desc: 'Company-wide announcements and discussion — 24 members',
+      placeholder: 'Message general',
+      html: `
+        <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-blue">SH</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Susan H</span><span class="chat-time">2:30 PM</span></div>
+            <div class="chat-text">Reminder: all-hands meeting is scheduled for Friday at 10am. Calendar invites are going out now — please accept so I can confirm numbers.</div>
+            </div>
+
+         <div class="chat-actions">
+  <button class="chat-act-btn like-btn" title="Like" onclick="toggleLike(this)">
+    <i class="ti ti-mood-smile" aria-hidden="true"></i>
+  </button>
+</div>
+        </div>
+        <div class="chat-cont">
+          <div class="chat-spacer"></div>
+          <div class="chat-content">
+            <div class="chat-text">Also — the Q3 report draft is in the shared drive. Give it a read before Friday if you can.</div>
+          </div>
+
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-group" style="margin-top:8px">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:45 PM</span></div>
+            <div class="chat-text">Got it, accepted. Thanks for the heads up!</div>
+          </div>
+
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+        <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">3:01 PM</span></div>
+            <div class="chat-text">Done! Will have some notes ready to share.</div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+      },
+
+      'susan': {
+      title: 'Susan H',
+      avatar: '<div class="chat-avatar av-teal">SH</div>',
+      desc: 'Online · She/her · Joined 5 years ago',
+      placeholder: 'Message Susan H',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">SH</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Susan H</span><span class="chat-time">1:13 PM</span></div>
+            <div class="chat-text">I’ve sent through some questions to your inbox. Please respond when you have the time!</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+   'mark': {
+      title: 'Mark J',
+      avatar: '<div class="chat-avatar av-blue">MJ</div>',
+      desc: 'Away · He/him · Joined 5 years ago',
+      placeholder: 'Message Mark J',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-blue">MJ</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+          </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
+               <div class="compose-area">
+      <div class="compose-box">
+        <div class="chat-options">
+          <button onclick="testClickOption()">Option 1</button>
+          <button>Option 2</button>
+          <button>Option 3</button>
+        </div>
+      </div>
+    </div>
+        </div>
+        </div>`
+    },
+    'jordan': {
+      title: 'Jordan S',
+      avatar: '<div class="chat-avatar av-teal">JS</div>',
+      desc: 'Away · They/them · Joined 2 years ago',
+      placeholder: 'Message Jordan S',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
+            <div class="chat-text">Hi! Looking forward to getting to know you better, let me know if you need me to jump on anything.</div>
+          </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'audrey': {
+      title: 'Audrey E',
+      avatar: '<div class="chat-avatar av-coral">AE</div>',
+      desc: 'Busy · She/her · Joined 6 years ago',
+      placeholder: 'Message Audrey E',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:14 AM</span></div>
+            <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'priya': {
+      title: 'Priya D',
+      avatar: '<div class="chat-avatar av-purple">PD</div>',
+      desc: 'Online · She/her · Joined 3 years ago',
+      placeholder: 'Message Priya D',
+      html: `
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
+            <div class="chat-text">Congratulations on joining the team.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    }
+  };
+
+  function toggleLike(btn) {
+  const isLiked = btn.classList.toggle('liked');
+  const icon = btn.querySelector('i');
+  icon.className = isLiked ? 'ti ti-thumb-up' : 'ti ti-mood-smile';
+
+  let countEl = btn.querySelector('.like-count');
+  if (isLiked) {
+    if (!countEl) {
+      countEl = document.createElement('span');
+      countEl.className = 'like-count';
+      btn.appendChild(countEl);
+    }
+    countEl.textContent = '1';
+  } else {
+    if (countEl) countEl.remove();
+  }
+}
+
+  // Phone section code 
+   function switchPhoneTab(tab, el) {
+    document.querySelectorAll('#phoneSection .dm-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('calls-pane').style.display    = tab === 'calls'    ? 'block' : 'none';
+    document.getElementById('contacts-pane').style.display = tab === 'contacts' ? 'flex'  : 'none';
+  }
+ 
+  function filterContacts(val) {
+    const query = val.toLowerCase();
+    document.querySelectorAll('#contacts-list .contact-item').forEach(item => {
+      item.style.display = item.dataset.name.includes(query) ? 'flex' : 'none';
+    });
+    document.querySelectorAll('#contacts-list .contact-group-label').forEach(label => {
+      const next = label.nextElementSibling;
+      label.style.display = (next && next.style.display !== 'none') ? 'block' : 'none';
+    });
+  }
+
+  // ── HELPERS ───────────────────────────────────────────────────────────
+  function clearActive() {
+    document.querySelectorAll('.dm-item').forEach(el => el.classList.remove('active'));
+  }
+
+  function setChat(data) {
+    document.getElementById('chat-title').textContent = data.title;
+    document.getElementById('chat-desc').textContent = data.desc;
+    
+    const headerIcon = document.getElementById('header-icon');
+    headerIcon.innerHTML = data.avatar;
+    headerIcon.className = 'chat-header-icon';
+    
+    // document.querySelector('.compose-input-chat').placeholder = data.placeholder;
+    document.getElementById('chat-body').innerHTML = data.html;
+    document.getElementById('chat-body').scrollTop = 99999;
+  }
+
+  function loadDM(name, el) {
+    clearActive();
+    el.classList.add('active');
+    setChat(dms[name]);
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.activity-icon').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    
+    const chatSection = document.getElementById('chatSection');
+    const phoneSection = document.getElementById('phoneSection');
+    
+    // Check which icon was clicked (0 = chat, 1 = calls)
+    const icons = document.querySelectorAll('.activity-icon');
+    const clickedIndex = Array.from(icons).indexOf(el);
+    
+    if (clickedIndex === 0) {
+      chatSection.style.display = 'flex';
+      phoneSection.style.display = 'none';
+    } else {
+      chatSection.style.display = 'none';
+      phoneSection.style.display = 'flex';
+    }
+  }
+
+
+function testClickOption() {
+  // Add new messages to the mark DM data structure
+  const newMessages = `
+    <div class="chat-group" style="margin-top:8px">
+      <div class="chat-avatar av-blue">MJ</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">I'd be happy to help however I can. Looking forward to discussing those ideas!</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    <div class="chat-group" style="margin-top:8px">
+      <div class="chat-avatar av-blue">MJ</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:16 PM</span></div>
+        <div class="chat-text">When would be a good time for you to connect?</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+  `;
+
+  // Update the mark DM HTML (remove old messages and buttons, add new ones)
+  dms['mark'].html = `
+    <div class="date-divider">Today</div>
+    <div class="chat-group">
+      <div class="chat-avatar av-blue">MJ</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    ${newMessages}
+    `;
+
+  // Refresh the current chat display
+  const chatBody = document.getElementById('chat-body');
+  chatBody.innerHTML = dms['mark'].html;
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Load default channel on startup
+setChat(dms['general']);
+
+</script>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script>
+// Live clock
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours().toString().padStart(2, '0');
+  const m = now.getMinutes().toString().padStart(2, '0');
+  document.getElementById('lockTime').textContent = h + ':' + m;
+
+  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
+  const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  document.getElementById('lockDate').textContent =
+    days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+// Unlock button
+document.getElementById('unlockBtn').addEventListener('click', function () {
+  const overlay = document.getElementById('lockOverlay');
+  //  document.getElementById("lockClosed").style.display = 'none';
+  // document.getElementById("lockOpen").style.display = 'block';
+  overlay.classList.add('hidden');       // triggers opacity fade
+  setTimeout(() => overlay.style.display = 'none', 500); // removes it after fade
+});
+
+function openApps(appNumber) {
+    // Hide all work areas
+    for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById(`work${appNumber}`).style.display = 'flex';
+}
+
+// Initialize - show mail app by default
+document.addEventListener('DOMContentLoaded', function() {
+    openApps(3);
+});
+
+
+//--Alerts control area --//
+
+//Controls appearance of popup email
+function openEmail() {
+ document.getElementById("emailAlert").classList.add('alertAppear');
+  document.getElementById("emailAlert").classList.remove("hideMe");
+}
+
+function openTeams() {
+  document.getElementById("teamsAlert").classList.add('alertAppear');
+  document.getElementById("teamsAlert").classList.remove("hideMe");
+}
+
+//Ensure pop closes when clicked on or if desktop is clicked
+function closeAlert(alertId = "emailAlert") {
+  const alert = document.getElementById(alertId);
+  alert.classList.remove('alertAppear');
+  alert.classList.add("hideMe");
+}
+
+//Email alert functionality
+function clickEmailAlert() {
+   for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work2').style.display = 'flex';
+    swapEmails(1);
+    closeAlert("emailAlert");
+}
+
+//teams alert functionality for missed calls specifically
+function clickTeamsAlertPhone() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+     // Show phone section instead of chat
+    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
+    setActive(phoneIcon);
+
+    closeAlert("teamsAlert");
+}
+
+function clickTeamsAlertChat() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+    closeAlert("teamsAlert");
+}
+
+function initiate() {
+  openTeams();
+}
+</script>

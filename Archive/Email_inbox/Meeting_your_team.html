@@ -1,0 +1,794 @@
+<style>
+
+    /* =====================
+       GLOBAL / RESET
+    ===================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* =====================
+       COLOUR TOKENS
+    ===================== */
+    :root {
+      --AIMblue: #4353A3;
+      --darkBlue: #38416D;
+      --teal: #5DC8B9;
+      --cream: #F1EEDE;
+      --grey: #e7e9ec;
+      --rust: #AF4510;
+      --navy: #12195C;
+      --white: #ffffff;
+      --lightBlue: #AEBAE4;
+      --bg-app:          #f0ede8;
+      --bg-sidebar:      #e8e4de;
+      --bg-panel:        #ffffff;
+      --bg-message-head: #f5f3f0;
+      --bg-private-tag:  #fff0ee;
+      --bg-unread-dot:   #378add;
+      --bg-avatar-blue:  #b5d4f4;
+      --bg-avatar-teal:  #9fe1cb;
+      --bg-selected-row: #e6f1fb;
+      --bg-badge:        #d85a30;
+      --bg-input:        #f5f3f0;
+
+      --text-primary:    #1a1a1a;
+      --text-secondary:  #666660;
+      --text-muted:      #999994;
+      --text-avatar-blue:#0c447c;
+      --text-avatar-teal:#085041;
+      --text-private:    #993c1d;
+      --text-badge:      #ffffff;
+      --text-link:       #185fa5;
+
+      --border-subtle:   #dedad3;
+      --border-medium:   #ccc8c0;
+
+      --radius-sm:  6px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --radius-pill:99px;
+    }
+
+
+    /* =====================
+       LAYOUT SHELL
+    ===================== */
+    .mail-app {
+      display: flex;
+      width: 900px;
+      height: 580px;
+      border: 1px solid var(--border-medium);
+      background: var(--bg-panel);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+
+    /* =====================
+       SIDEBAR
+    ===================== */
+    .sidebar {
+      width: 100px;
+      flex-shrink: 0;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-subtle);
+      padding: 16px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 0 16px 14px;
+      color: var(--text-primary);
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sidebar-item.active {
+      background: var(--bg-panel);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .sidebar-icon {
+      font-size: 15px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .sidebar-badge {
+      margin-left: auto;
+      background: var(--bg-badge);
+      color: var(--text-badge);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: var(--radius-pill);
+    }
+
+
+    /* =====================
+       INBOX LIST
+    ===================== */
+    .inbox-list {
+      width: 260px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border-subtle);
+      overflow-y: auto;
+      background: var(--bg-panel);
+    }
+
+    .inbox-toolbar {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 8px;
+    }
+
+    .inbox-toolbar-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .inbox-toolbar-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .email-row {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: default;
+    }
+
+    .email-row:first-of-type {
+      cursor: pointer;
+    }
+
+    .email-row.selected {
+      background: var(--bg-selected-row);
+    }
+
+    .email-row.dimmed {
+      opacity: 0.4;
+    }
+
+    .email-row-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+
+    .unread-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--bg-unread-dot);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .email-sender {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .email-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .email-subject {
+      font-size: 12px;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .email-preview {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .thread-count-pill {
+      display: inline-block;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--bg-message-head);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 0 5px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+
+    /* =====================
+       THREAD PANE
+    ===================== */
+    .thread-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-panel);
+    }
+
+    .thread-header {
+      padding: 14px 20px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .thread-subject {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .thread-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .tag-inbox {
+      background: var(--bg-message-head);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tag-private {
+      background: var(--bg-private-tag);
+      color: var(--text-private);
+    }
+
+    .thread-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn {
+      background: none;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--bg-message-head);
+    }
+
+
+    /* =====================
+       MESSAGE CARDS
+    ===================== */
+    .thread-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message-card {
+      border: 1px solid var(--border-subtle);
+      /* border-radius: var(--radius-lg);
+      overflow: hidden; */
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg-message-head);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .avatar > img {
+      width: 30px;
+    }
+
+    #NL_icon {
+      cursor: default;
+    }
+
+    .avatar-blue {
+      background: var(--AIMblue);
+      color: white;
+    }
+
+    .avatar-teal {
+      background: var(--teal);
+      color: var(--text-avatar-teal);
+    }
+
+    .avatar-navy {
+      background: var(--navy);
+      color: white;
+    }
+
+    .avatar-lightblue {
+      background: var(--lightBlue);
+      color: var(--text-avatar-blue)
+    }
+
+    .message-from {
+      flex: 1;
+    }
+
+    .message-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .message-name-to {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .message-address {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .private-badge {
+      font-size: 10px;
+      background: var(--bg-private-tag);
+      color: var(--text-private);
+      border-radius: var(--radius-pill);
+      padding: 2px 7px;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+
+    .message-body {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+
+    .message-body p + p {
+      margin-top: 8px;
+    }
+
+    .message-footer {
+      padding: 6px 14px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-message-head);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+
+    /* =====================
+       COMPOSE BAR
+    ===================== */
+    .compose-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 20px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .compose-input {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 13px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .compose-input:focus {
+      border-color: var(--border-medium);
+    }
+
+    .compose-send {
+      padding: 8px 16px;
+      font-size: 13px;
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+
+    .compose-send:hover {
+      opacity: 0.85;
+    }
+
+    .messageHidden {
+      display: none;
+    }
+    .messageRevealed {
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: absolute;
+    width: 550px;
+    min-height: 250px;
+    display: block;
+    }
+
+    .topBar {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: solid 1px var(--border-subtle);
+    }
+    .keyPoints {
+      margin: 15px;
+      padding: 10px;
+    }
+
+    .imageContainer > img {
+      width: 120px;
+      margin: 20px;
+    }
+    .description {
+      flex: 2;
+      margin: 10px;
+      padding: 10px;
+
+    }
+    .description > p{
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mail-app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Mail</div>
+    <div class="sidebar-item active">
+      <span class="sidebar-icon">&#9711;</span> Inbox
+      <!-- <span class="sidebar-badge">1</span> -->
+    </div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
+  </nav>
+
+  <!-- INBOX LIST -->
+  <div class="inbox-list">
+    <div class="inbox-toolbar">
+      <span class="inbox-toolbar-title">Inbox</span>
+      <span class="inbox-toolbar-count">1 message</span>
+    </div>
+
+    <div class="email-row selected">
+      <div class="email-row-top">
+        <span class="unread-dot"></span>
+        <span class="email-sender">New Leader</span>
+        <span class="email-time">10:42 am</span>
+      </div>
+      <div class="email-subject">
+       New Team Meeting
+        <span class="thread-count-pill">5</span>
+      </div>
+      <div class="email-preview">Hi all,  I would like to thank each of you for welcoming</div>
+    </div>
+
+    <div class="email-row dimmed">
+      <div class="email-row-top">
+        <span class="email-sender">Newsletter</span>
+        <span class="email-time">Yesterday</span>
+      </div>
+      <div class="email-subject">Your weekly digest</div>
+      <div class="email-preview">Top stories curated for you…</div>
+    </div>
+
+    <div class="email-row dimmed">
+      <div class="email-row-top">
+        <span class="email-sender">Sam Liu</span>
+        <span class="email-time">Mon</span>
+      </div>
+      <div class="email-subject">Induction pack</div>
+      <div class="email-preview">Hi New Leader, and welcome to your new role...</div>
+    </div>
+  </div>
+
+  <!-- THREAD PANE -->
+  <div class="thread-pane">
+
+    <div class="thread-header">
+      <div class="thread-subject">New team meeting</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="thread-body">
+
+      <!-- Original email -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="message-from">
+            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
+          </div>
+          <span class="message-time">Today, 10:42 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi all,</p>
+          <p>I would like to thank each of you for welcoming me to this new role in the team. I look forward to collaborating with each of you as we work towards our shared goals and am confident we will achieve great results together.</p>
+          <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
+          <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
+          <p>Kind regards,</p>
+          <p>New Leader</p>
+        </div>
+      </div>
+
+      <!-- Private reply 1 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="MJ_icon" onclick="MJreveal()"><img src="Icons_character/MJ_icon.png" alt="Icon of business man looking happy"></div>
+          <div class="message-from">
+            <div class="message-name">Mark J <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">10:58 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hello,</p>
+          <p>Thank you for your email and your kind words. I would also like to congratulate you on your new role, as I know the interview process is very intense and takes a lot of effort. I am also keen about the opportunity to work together and contribute to the success of this group. </p>
+          <p>During my time with the organisation, I have worked with several different teams and have a broad range of experience that I think will be applicable to our future projects. When scoping tasks, I am always prepared to assist in any way. I look forward to discussing this with you.</p>
+        <p>Thanks,</p> 
+      <p>Mark</p>
+        </div>
+      </div>
+
+      <!-- Private reply 2 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="JS_icon" onclick="JSreveal()"><img src="Icons_character/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
+          <div class="message-from">
+            <div class="message-name">Jordan S <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:14 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi,</p>
+          <p>Thanks for your email and congratulations on your new role. I appreciate your introduction and look forward to discussing our future tasks and workload.</p>
+          <p>I am committed to contributing where I can and am looking forward to learning more about the team’s goals during the meeting. </p>
+          <p>Thank you,</p>
+          <p>Jordan</p>
+        </div>
+    
+      </div>
+
+      <!-- Private reply 3 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar" id="AE_icon" onclick="AEreveal()"><img src="Icons_character/AE_icon.png" alt="Icon of a dog being patted"></div>
+          <div class="message-from">
+            <div class="message-name">Audrey E <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:29 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hey! </p>
+          <p>First of all, congratulations on the promotion – definitely well deserved! It’ll be great to work with you again. </p>
+          <p>I’m keen to see what we can build together, and I think the team is in good hands. We’ve got an awesome group of people here and I think we’re all going to do amazing things. As you adjust to your new role, I’m always here for a chat. </p>
+          <p>Cheers!</p>
+        </div>
+      </div>
+
+      <!-- Private reply 4 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
+          <div class="message-from">
+            <div class="message-name">Prida D <span class="message-name-to">to New Leader</span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:47 am</span>
+        </div>
+        <div class="message-body">
+          <p>Congratulations. Sounds great. See you then <span class="sidebar-icon">&#128077;</span> </p>
+        </div>
+      </div>
+
+    </div><!-- end thread-body -->
+
+  </div><!-- end thread-pane -->
+
+</div><!-- end mail-app -->
+
+<div id="MJ_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="Icons_character/MJ_icon.png" alt="Icon of business man looking happy">
+  </div>
+  <div class="description">
+    <p>Mark J</p><p>He/him</p>
+    <p>Available 9am - 5pm, Monday to Friday.</p>
+    <p>Join date: 5 years, 4 months ago.</p>
+    <p>Dedicated and hard working.</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Mark recently applied for a promotion, but was unsuccessful. He has been with the company for some time, and is knowledgable about the functioning of other teams, as well as trends within the industry.</p>
+  </div>
+</div>
+
+<div id="JS_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="Icons_character/JS_icon.png" alt="Icon of someone hiking away from the camera.">
+  </div>
+  <div class="description">
+    <p>Jordan S</p><p>They/them</p>
+    <p>Available 8am - 5pm, Monday to Friday.</p>
+    <p>Join date: 2 years, 5 months ago.</p>
+    <p>Quiet and resourceful.</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Jordan has been at the company for some time, in a single role they are very focused on. They are responsive and polite online, and very helpful to newer hires.</p>
+  </div>
+</div>
+
+
+<div id="AE_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="Icons_character/AE_icon.png" alt="Icon of a dog being patted.">
+  </div>
+  <div class="description">
+    <p>Audrey E</p><p>She/her</p>
+    <p>Available 8am - 4pm, Monday to Friday.</p>
+    <p>Join date: 6 years, 2 months ago.</p>
+    <p>Energetic and collaborative</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Audrey was previously on your team, and she is excited you will be working together again.</p>
+  </div>
+</div>
+
+<div id="PD_info_card" class="messageHidden">
+  <div class="topBar">
+  <div class="imageContainer">
+    <img src="Icons_character/PD_icon.png" alt="Icon of the letters PD.">
+  </div>
+  <div class="description">
+    <p>Priya D</p><p>She/her</p>
+    <p>Available 8am - 5:30pm, Monday to Friday.</p>
+    <p>Join date: 3 years ago.</p>
+    <p>High performer</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Priya is a hard working member of the team, excelling in her area and maintaining her focus through company changes.</p>
+  </div>
+</div>
+
+</body>
+<script>
+function reveal(cardId) {
+  const infocard = document.getElementById(cardId);
+  if (infocard) {
+    infocard.classList.toggle("messageRevealed");
+  }
+}
+
+function MJreveal() {
+  reveal("MJ_info_card");
+}
+
+function JSreveal() {
+  reveal("JS_info_card");
+}
+
+function PDreveal() {
+  reveal("PD_info_card");
+}
+
+function AEreveal() {
+  reveal("AE_info_card");
+}
+
+// Close popups when clicking outside
+document.addEventListener("click", function(event) {
+  const infocards = document.querySelectorAll('[id$="_info_card"]');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
+      // Check if click is outside the card
+      if (!card.contains(event.target) && !event.target.closest('[onclick]')) {
+        card.classList.remove("messageRevealed");
+      }
+    }
+  });
+});
+</script>

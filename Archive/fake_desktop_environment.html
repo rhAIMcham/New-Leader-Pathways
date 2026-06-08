@@ -1,0 +1,796 @@
+<style>
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.workspace {
+    width: 1300px;
+    margin: auto;
+}
+
+.laptopScreen {
+        position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: solid 3px rgba(0, 0, 0, 0.376);
+    box-shadow: -1px 3px 18px 0px rgba(0,0,0,0.75);
+    display: flex;
+    flex-direction: column;
+}
+
+.desktop {
+    border:solid grey 2px;
+    background-image: url('https://images.pexels.com/photos/2949544/pexels-photo-2949544.jpeg?_gl=1*1m7bjma*_ga*MTQ5MzA3Mzk2Ny4xNzY0MDQ4MDg4*_ga_8JE65Q40S6*czE3Nzk5Mzg4Nzgkbzg3JGcxJHQxNzc5OTM4OTY5JGo1OSRsMCRoMA..');
+    min-height: 800px;
+    border-radius: 6px;
+    background-size: 120%;
+}
+
+svg {
+    fill: white;
+    cursor: pointer;
+    transition: 300ms ease;
+    width: 30px;
+    margin: 5px;
+}
+
+.topBarDesktop {
+    display: flex;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+}
+
+/*Login overlay*/
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: opacity 0.5s ease;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.lock-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(10, 10, 20, 0.35);
+  border-radius: 6px;
+}
+.lock-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.lock-time {
+  color: #fff;
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+
+.lock-date {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.lock-btn {
+  margin-top: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  color: #fff;
+  font-size: 22px;
+}
+
+.lock-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.06);
+}
+
+.lock-hint {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+#lockOpen {
+    display: none;
+}
+
+/*WorkArea*/
+
+.workArea {
+    font-size: 14px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =====================
+    LAYOUT SHELL
+===================== */
+
+.mail-app {
+    background: #f0ede8;
+    display: flex;
+    width: 900px;
+    height: 580px;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-panel);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* =====================
+    SIDEBAR
+===================== */
+.sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-subtle);
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 16px 14px;
+    color: var(--text-primary);
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar-item.active {
+    background: var(--bg-panel);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.sidebar-icon {
+    font-size: 15px;
+    width: 16px;
+    text-align: center;
+}
+
+.sidebar-badge {
+    margin-left: auto;
+    background: var(--bg-badge);
+    color: var(--text-badge);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: var(--radius-pill);
+}
+
+
+/* =====================
+    INBOX LIST
+===================== */
+.inbox-list {
+    width: 260px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-subtle);
+    overflow-y: auto;
+    background: var(--bg-panel);
+}
+
+.inbox-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 8px;
+}
+
+.inbox-toolbar-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.inbox-toolbar-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+.email-row {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+}
+
+.email-row.selected {
+    background: var(--bg-selected-row);
+}
+
+.email-row.dimmed {
+    opacity: 0.4;
+}
+
+.email-row-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+.unread-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--bg-unread-dot);
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.email-sender {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.email-subject {
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-preview {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.thread-count-pill {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--text-muted);
+    background: var(--bg-message-head);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 0 5px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+
+/* =====================
+    THREAD PANE
+===================== */
+.thread-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-panel);
+}
+
+.thread-header {
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.thread-subject {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.thread-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+}
+
+.tag-inbox {
+    background: var(--bg-message-head);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+}
+
+.tag-private {
+    background: var(--bg-private-tag);
+    color: var(--text-private);
+}
+
+.thread-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+}
+
+.btn {
+    background: none;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--bg-message-head);
+}
+
+
+/* =====================
+    MESSAGE CARDS
+===================== */
+.thread-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-message-head);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.avatar-blue {
+    background: var(--bg-avatar-blue);
+    color: var(--text-avatar-blue);
+}
+
+.avatar-teal {
+    background: var(--bg-avatar-teal);
+    color: var(--text-avatar-teal);
+}
+
+.message-from {
+    flex: 1;
+}
+
+.message-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.message-name-to {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.message-address {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.private-badge {
+    font-size: 10px;
+    background: var(--bg-private-tag);
+    color: var(--text-private);
+    border-radius: var(--radius-pill);
+    padding: 2px 7px;
+}
+
+.message-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 6px;
+}
+
+.message-body {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.65;
+}
+
+.message-body p + p {
+    margin-top: 8px;
+}
+
+.message-footer {
+    padding: 6px 14px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-message-head);
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+
+/* =====================
+    COMPOSE BAR
+===================== */
+.compose-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 20px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.compose-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 13px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    outline: none;
+}
+
+.compose-input:focus {
+    border-color: var(--border-medium);
+}
+
+.compose-send {
+    padding: 8px 16px;
+    font-size: 13px;
+    background: var(--text-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.compose-send:hover {
+    opacity: 0.85;
+}
+
+/* =====================
+    COLOUR TOKENS
+===================== */
+:root {
+    --bg-app:          #f0ede8;
+    --bg-sidebar:      #e8e4de;
+    --bg-panel:        #ffffff;
+    --bg-message-head: #f5f3f0;
+    --bg-private-tag:  #fff0ee;
+    --bg-unread-dot:   #378add;
+    --bg-avatar-blue:  #b5d4f4;
+    --bg-avatar-teal:  #9fe1cb;
+    --bg-selected-row: #e6f1fb;
+    --bg-badge:        #d85a30;
+    --bg-input:        #f5f3f0;
+
+    --text-primary:    #1a1a1a;
+    --text-secondary:  #666660;
+    --text-muted:      #999994;
+    --text-avatar-blue:#0c447c;
+    --text-avatar-teal:#085041;
+    --text-private:    #993c1d;
+    --text-badge:      #ffffff;
+    --text-link:       #185fa5;
+
+    --border-subtle:   #dedad3;
+    --border-medium:   #ccc8c0;
+
+    --radius-sm:  6px;
+    --radius-md:  8px;
+    --radius-lg:  12px;
+    --radius-pill:99px;
+}
+
+
+</style>
+<body>
+    <div class="workspace">
+        <div class="laptopScreen">
+            <div class="lock-overlay" id="lockOverlay">
+  <div class="lock-blur"></div>
+  <div class="lock-content">
+    <div class="lock-time" id="lockTime">--:--</div>
+    <div class="lock-date" id="lockDate">Loading…</div>
+    <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop">
+      <svg class="ti ti-lock" aria-hidden="true" id="lockClosed"
+     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
+     <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
+    </button>
+    <div class="lock-hint">click to unlock</div>
+  </div>
+</div>
+            <div class="desktop">
+                <div class="topBarDesktop">
+               <a class="topBarIcon home">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M496 512H368a16 16 0 0 1-16-16V368a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v128a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V311c1.78-1.21 3.85-1.89 5.47-3.35L288 115l218.74 192.9c1.54 1.38 3.56 2 5.26 3.2V496a16 16 0 0 1-16 16z" class="fa-secondary"/><path d="M527.92 283.88L298.6 81.61a16 16 0 0 0-21.17 0L48.11 283.89a16 16 0 0 1-22.59-1.21L4.1 258.89a16 16 0 0 1 1.21-22.59l256-226a39.85 39.85 0 0 1 53.45 0L416 99.67V48a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v136.43l58.69 51.83a16 16 0 0 1 1.22 22.59l-21.4 23.82a16 16 0 0 1-22.59 1.21z" class="fa-primary"/></svg>
+               </a>
+               <a class="topBarIcon mail">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
+               </a>
+                    <a class="topBarIcon teams">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
+                    </a>
+               </div>
+               <div class="workArea">
+
+<div class="mail-app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Mail</div>
+    <div class="sidebar-item active">
+      <span class="sidebar-icon">&#9711;</span> Inbox
+      <span class="sidebar-badge">1</span>
+    </div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#128274;</span> Private</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
+  </nav>
+
+  <!-- INBOX LIST -->
+  <div class="inbox-list">
+    <div class="inbox-toolbar">
+      <span class="inbox-toolbar-title">Inbox</span>
+      <span class="inbox-toolbar-count">1 message</span>
+    </div>
+
+    <div class="email-row selected">
+      <div class="email-row-top">
+        <span class="unread-dot"></span>
+        <span class="email-sender">Jordan Mercer</span>
+        <span class="email-time">10:42 am</span>
+      </div>
+      <div class="email-subject">
+        Q3 budget review — your thoughts?
+        <span class="thread-count-pill">5</span>
+      </div>
+      <div class="email-preview">Following up on last week's figures…</div>
+    </div>
+
+    <div class="email-row dimmed">
+      <div class="email-row-top">
+        <span class="email-sender">Newsletter</span>
+        <span class="email-time">Yesterday</span>
+      </div>
+      <div class="email-subject">Your weekly digest</div>
+      <div class="email-preview">Top stories curated for you…</div>
+    </div>
+
+    <div class="email-row dimmed">
+      <div class="email-row-top">
+        <span class="email-sender">Sam Liu</span>
+        <span class="email-time">Mon</span>
+      </div>
+      <div class="email-subject">Re: Team offsite planning</div>
+      <div class="email-preview">Sounds good, I can book the venue…</div>
+    </div>
+  </div>
+
+  <!-- THREAD PANE -->
+  <div class="thread-pane">
+
+    <div class="thread-header">
+      <div class="thread-subject">Q3 budget review — your thoughts?</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <span class="tag tag-private">&#128274; 4 private replies</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="thread-body">
+
+      <!-- Original email -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-blue">JM</div>
+          <div class="message-from">
+            <div class="message-name">Jordan Mercer <span class="message-name-to">to me</span></div>
+            <div class="message-address">jordan.mercer@example.com</div>
+          </div>
+          <span class="message-time">Today, 10:42 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi,</p>
+          <p>I've been going over the Q3 numbers and a few things stood out. Before I raise this in the full team meeting I'd love to hear your perspective — can we keep this between us for now?</p>
+          <p>Specifically I'm looking at the overspend in the travel line and whether it's worth flagging to leadership this quarter or waiting until we have the October actuals.</p>
+          <p>Let me know what you think.</p>
+          <p>— Jordan</p>
+        </div>
+      </div>
+
+      <!-- Private reply 1 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal">Me</div>
+          <div class="message-from">
+            <div class="message-name">Me <span class="message-name-to">to Jordan Mercer</span></div>
+            <div class="message-address">me@example.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">10:58 am</span>
+        </div>
+        <div class="message-body">
+          <p>Jordan — thanks for looping me in privately. I think you're right to be cautious. The travel overspend is real but there's context leadership may not have (the Barcelona trip was pre-approved at exec level). I'd sit on it until the October actuals are in.</p>
+        </div>
+        <div class="message-footer">Visible only to you and Jordan</div>
+      </div>
+
+      <!-- Private reply 2 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-blue">JM</div>
+          <div class="message-from">
+            <div class="message-name">Jordan Mercer <span class="message-name-to">to me</span></div>
+            <div class="message-address">jordan.mercer@example.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:14 am</span>
+        </div>
+        <div class="message-body">
+          <p>Good point on Barcelona — I forgot that was exec-approved. That changes the picture significantly. So our recommendation would be to wait and present a full Q3+Q4 view in November?</p>
+        </div>
+        <div class="message-footer">Visible only to you and Jordan</div>
+      </div>
+
+      <!-- Private reply 3 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal">Me</div>
+          <div class="message-from">
+            <div class="message-name">Me <span class="message-name-to">to Jordan Mercer</span></div>
+            <div class="message-address">me@example.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:29 am</span>
+        </div>
+        <div class="message-body">
+          <p>Exactly. A November consolidated view gives us cleaner numbers and more time to frame the narrative. I'd suggest we draft a one-pager together before that meeting — want to set up 30 mins next week?</p>
+        </div>
+        <div class="message-footer">Visible only to you and Jordan</div>
+      </div>
+
+      <!-- Private reply 4 -->
+      <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-blue">JM</div>
+          <div class="message-from">
+            <div class="message-name">Jordan Mercer <span class="message-name-to">to me</span></div>
+            <div class="message-address">jordan.mercer@example.com</div>
+          </div>
+          <span class="private-badge">&#128274; private reply</span>
+          <span class="message-time">11:47 am</span>
+        </div>
+        <div class="message-body">
+          <p>Perfect. Tuesday at 2pm works for me. I'll send a calendar invite — let's keep this thread off the shared project board for now. Really appreciate you thinking this through with me.</p>
+        </div>
+        <div class="message-footer">Visible only to you and Jordan</div>
+      </div>
+
+    </div><!-- end thread-body -->
+
+    <div class="compose-bar">
+      <input class="compose-input" type="text" placeholder="Reply privately to Jordan…" />
+      <button class="compose-send">Send</button>
+    </div>
+
+  </div><!-- end thread-pane -->
+
+</div><!-- end mail-app -->
+
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Live clock
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours().toString().padStart(2, '0');
+  const m = now.getMinutes().toString().padStart(2, '0');
+  document.getElementById('lockTime').textContent = h + ':' + m;
+
+  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
+  const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  document.getElementById('lockDate').textContent =
+    days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+// Unlock button
+document.getElementById('unlockBtn').addEventListener('click', function () {
+  const overlay = document.getElementById('lockOverlay');
+  document.getElementById("lockClosed").style.display = 'none';
+  document.getElementById("lockOpen").style.display = 'block';
+  overlay.classList.add('hidden');       // triggers opacity fade
+  setTimeout(() => overlay.style.display = 'none', 500); // removes it after fade
+});
+</script>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choosing a personal strategy for focus and flow</title>
+    <style>
+        :root {
+            --AIMblue: #4353A3;
+            --darkBlue: #38416D;
+            --teal: #5DC8B9;
+            --cream: #F1EEDE;
+            --grey: #e7e9ec;
+            --rust: #AF4510;
+            --navy: #12195C;
+            --white: #ffffff;
+            --lightBlue: #AEBAE4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: var(--darkBlue);
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--AIMblue);
+        }
+
+        .section h2 {
+            color: var(--darkBlue);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .instruction-box {
+            background: var(--cream);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: border-color 0.3s;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--darkBlue);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: border-color 0.3s;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--darkBlue);
+        }
+
+        .strategies-list {
+            background: var(--lightBlue);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .strategies-list h3 {
+            color: var(--darkBlue);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .strategy-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .optional-section {
+            background: var(--grey);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .optional-section h3 {
+            color: var(--darkBlue);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        button {
+            font-family: "IBM Plex Sans", sans-serif;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: var(--AIMblue);
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: var(--teal);
+            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(93, 200, 185, 0.4);
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Toast notification */
+        #toast {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--darkBlue);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            z-index: 9999;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            line-height: 1.5;
+        }
+
+        #toast.show {
+            display: block;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            button { display: none; }
+            #toast { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My focus & flow strategy commitment</h1>
+        <p class="subtitle">Review the strategies you have learnt throughout this course. Take note of those ideas which feel most relevant to your situation.</p>
+
+        <div class="section">
+            <div class="instruction-box">
+                <strong>Select your top 3 strategies from the dropdown menus below, then choose ONE strategy you will commit to for the next two weeks.</strong>
+            </div>
+
+            <div class="strategies-list">
+                <h3>My top strategies</h3>
+                <div class="form-group">
+                    <label for="strategy1">Strategy #1</label>
+                    <select id="strategy1">
+                        <option value="">Select a strategy...</option>
+                        <option value="Clarify goals and structure work blocks">Clarify goals and structure work blocks</option>
+                        <option value="Seek out feedback/clear communication">Seek out feedback/clear communication</option>
+                        <option value="Create a routine that matches your rhythms">Create a routine that matches your rhythms</option>
+                        <option value="Manage energy and incorporate rest">Manage energy and incorporate rest</option>
+                        <option value="Manage environment distractions">Manage environment distractions</option>
+                        <option value="Use attention anchors e.g. mindfulness practice">Use attention anchors e.g. mindfulness practice</option>
+                        <option value="Find motivation/curiosity/purpose/passion">Find motivation/curiosity/purpose/passion</option>
+                        <option value="Find risk/novelty/creativity/challenge">Find risk/novelty/creativity/challenge</option>
+                    </select>
+                </div>
+                <div id="strategyDescBox" style="display:none; background:white; padding:12px; border-radius:6px; margin-bottom:12px; font-size:0.88em; line-height:1.6; color:#444;">
+                    <p id="strategyDesc"></p>
+                </div>
+                <div class="form-group">
+                    <label for="strategy2">Strategy #2</label>
+                    <select id="strategy2">
+                        <option value="">Select a strategy...</option>
+                        <option value="Clarify goals and structure work blocks">Clarify goals and structure work blocks</option>
+                        <option value="Seek out feedback/clear communication">Seek out feedback/clear communication</option>
+                        <option value="Create a routine that matches your rhythms">Create a routine that matches your rhythms</option>
+                        <option value="Manage energy and incorporate rest">Manage energy and incorporate rest</option>
+                        <option value="Manage environment distractions">Manage environment distractions</option>
+                        <option value="Use attention anchors e.g. mindfulness practice">Use attention anchors e.g. mindfulness practice</option>
+                        <option value="Find motivation/curiosity/purpose/passion">Find motivation/curiosity/purpose/passion</option>
+                        <option value="Find risk/novelty/creativity/challenge">Find risk/novelty/creativity/challenge</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="strategy3">Strategy #3</label>
+                    <select id="strategy3">
+                        <option value="">Select a strategy...</option>
+                        <option value="Clarify goals and structure work blocks">Clarify goals and structure work blocks</option>
+                        <option value="Seek out feedback/clear communication">Seek out feedback/clear communication</option>
+                        <option value="Create a routine that matches your rhythms">Create a routine that matches your rhythms</option>
+                        <option value="Manage energy and incorporate rest">Manage energy and incorporate rest</option>
+                        <option value="Manage environment distractions">Manage environment distractions</option>
+                        <option value="Use attention anchors e.g. mindfulness practice">Use attention anchors e.g. mindfulness practice</option>
+                        <option value="Find motivation/curiosity/purpose/passion">Find motivation/curiosity/purpose/passion</option>
+                        <option value="Find risk/novelty/creativity/challenge">Find risk/novelty/creativity/challenge</option>
+                    </select>
+                </div>
+            </div>
+
+            <h2>My two-week commitment</h2>
+
+            <div class="form-group">
+                <label for="strategy">The strategy I am choosing is...</label>
+                <textarea id="strategy" placeholder="Write your chosen strategy here"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="reason">I am choosing it because...</label>
+                <textarea id="reason" placeholder="Explain why this strategy resonates with you"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="application">I will apply it specifically at these times or in these situations...</label>
+                <textarea id="application" placeholder="Describe when and where you'll use this strategy"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="success">I will consider it successful if I notice...</label>
+                <textarea id="success" placeholder="What outcomes or changes would indicate success?"></textarea>
+            </div>
+
+            <div class="optional-section">
+                <h3>Optional: Turn it into a simple if-then statement</h3>
+                <div class="form-group">
+                    <label for="ifThen1">If I begin a deep work block, then I will...</label>
+                    <textarea id="ifThen1" placeholder="Complete the statement"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ifThen2">If I feel the urge to check messages during that time, then I will...</label>
+                    <textarea id="ifThen2" placeholder="Complete the statement"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <button id="exportBtn" onclick="exportToPDF()">Download my strategy commitment</button>
+        <div id="toast"></div>
+    </div>
+
+    <!-- Load libraries from CDN; will gracefully handle if blocked -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        const strategySummaries = {
+            "Clarify goals and structure work blocks": "The human brain works best with limits. Research shows that attention operates within short cognitive cycles, processing a finite number of elements before fatigue sets in. When work is broken into blocks, you are cooperating with the brain's natural rhythm instead of fighting it. Breaking goals into defined blocks transforms ambition into progress. Having clear, specific goals and a plan to achieve them provides purpose and keeps you motivated. Each block isolates one coherent action or outcome. Together, they form a sequence that moves naturally toward completion.",
+            "Seek out feedback/clear communication": "Flow depends on real-time information about how things are going, and communication is one of the largest hidden contributors to interrupted workflow and cognitive overload. Messages arrive unpredictably, creating internal questions that may distract or demotivate, consuming energy before action can be taken. The structure of a flow-inducing activity provides clear goals and immediate feedback, which provides a clear sense of how well you are doing and allows you to adjust your actions to improve. With feedback you remain fully present in the moment and focus your attention on the nuances of the task. Without feedback, your work may become mechanical and detached.",
+            "Create a routine that matches your rhythms": "Routines form the behavioural scaffolding that supports deep work and flow. When routines become established, the brain no longer negotiates with itself about when, how or whether to start — it simply enters the expected pattern. Routines conserve mental energy, lower internal resistance, stabilise emotional state and create predictability in the attentional system. These benefits make flow more accessible and more repeatable.",
+            "Manage energy and incorporate rest": "Rest is not separate from productivity — it is part of the cognitive cycle that sustains deep focus, creativity and mental endurance. Fatigue, stress and sleep loss weaken the attentional, emotional and physiological systems that allow flow to emerge. Without adequate recovery, even simple tasks feel heavier, working memory becomes less efficient, and the mind struggles to maintain stability. Flow emerges when the nervous system has capacity, not when it is depleted. Rest restores depleted neural resources, resets emotional balance and supports the biological rhythms that govern attention. When rest is neglected, cognitive load increases dramatically and the likelihood of entering flow declines.",
+            "Manage environment distractions": "Different work settings can create shifting environmental conditions. Offices may introduce noise, movement and social cues that disrupt selective attention; while home environments may present domestic interruptions, inconsistent ergonomics or digital distractions. Digital clutter often creates more distraction than the physical environment. Every open tab, notification badge or background application acts as a competing priority. When the digital field is overloaded, working memory fragments and attention becomes scattered. For hybrid workers, consistency can be simple: a particular desk setup, repeated cues like arranging tools in the same order, or a digital workspace that remains visually stable.",
+            "Use attention anchors e.g. mindfulness practice": "Attention drifts for predictable cognitive reasons: internal chatter, emotional fluctuations, unresolved tasks or sensory interference. Mindfulness strengthens awareness of these shifts. Rather than removing distraction, mindfulness increases the ability to recognise drift early and to return attention without friction. Regular meditation helps quiet the internal chatter and makes sustained concentration easier to achieve.",
+            "Find motivation/curiosity/purpose/passion": "Sustained focus depends not only on managing distraction but also on maintaining motivation — the inner drive that keeps attention aligned with purpose. However, motivation is not constant; it fluctuates based on emotion, energy and the perceived distance between where you are and where you want to be. Passion stimulates reward pathways in the brain, especially dopamine circuits. These circuits enhance enjoyment, problem-solving innovation, willingness to try again after setbacks, resilience during complexity and absorption in detailed work. Tasks connected to passion feel less effortful because the emotional system reinforces focus rather than competing with it.",
+            "Find risk/novelty/creativity/challenge": "Novelty is one of the most reliable attentional catalysts available to the human mind. The brain is built to detect and prioritise change; anything new, surprising or unfamiliar triggers an automatic shift of attention known as the orienting response. This response evolved to help humans identify potential opportunities or threats in the environment, but in modern contexts it can be used deliberately to enhance engagement and support deeper states of focus and flow. Novelty does not have to be dramatic. Even subtle forms of freshness — a new challenge, a slightly altered environment, a different perspective — are enough to stimulate cognitive interest."
+        };
+
+        document.getElementById('strategy1').addEventListener('change', function () {
+            const sel = this.value;
+            const desc = document.getElementById('strategyDesc');
+            const box = document.getElementById('strategyDescBox');
+            if (sel && strategySummaries[sel]) {
+                desc.textContent = strategySummaries[sel];
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+                desc.textContent = '';
+            }
+        });
+
+        function showToast(msg, duration = 6000) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), duration);
+        }
+
+        function buildPageHTML(page) {
+            const strategy1 = document.getElementById('strategy1').value || 'Not selected';
+            const strategy2 = document.getElementById('strategy2').value || 'Not selected';
+            const strategy3 = document.getElementById('strategy3').value || 'Not selected';
+            const strategy  = document.getElementById('strategy').value || 'Not specified';
+            const reason      = document.getElementById('reason').value || 'Not specified';
+            const application = document.getElementById('application').value || 'Not specified';
+            const success     = document.getElementById('success').value || 'Not specified';
+            const ifThen1 = document.getElementById('ifThen1').value || 'Not completed';
+            const ifThen2 = document.getElementById('ifThen2').value || 'Not completed';
+
+            const s1 = strategySummaries[strategy1] || '';
+            const s2 = strategySummaries[strategy2] || '';
+            const s3 = strategySummaries[strategy3] || '';
+
+            const today = new Date().toLocaleDateString();
+
+            const baseStyle = `
+                position:absolute; left:-9999px; width:210mm;
+                padding:20mm; background:#ffffff;
+                font-family:Arial, sans-serif; color:#333;
+            `;
+
+            if (page === 1) {
+                const el = document.createElement('div');
+                el.style.cssText = baseStyle;
+                el.innerHTML = `
+                    <h1 style="color:#38416D;border-bottom:3px solid #38416D;padding-bottom:10px;margin-bottom:20px;font-size:32px;">My focus &amp; flow strategy commitment</h1>
+                    <h2 style="color:#38416D;margin-top:25px;margin-bottom:10px;font-size:24px;">My top 3 strategies</h2>
+                    ${strategy1 !== 'Not selected' ? `<div style="margin-bottom:20px;"><h3 style="color:#4353A3;font-size:18px;margin-bottom:8px;">1. ${strategy1}</h3><p style="font-size:13px;line-height:1.6;margin-left:20px;text-align:justify;">${s1}</p></div>` : '<p style="margin-left:20px;font-size:14px;">1. Not selected</p>'}
+                    ${strategy2 !== 'Not selected' ? `<div style="margin-bottom:20px;"><h3 style="color:#4353A3;font-size:18px;margin-bottom:8px;">2. ${strategy2}</h3><p style="font-size:13px;line-height:1.6;margin-left:20px;text-align:justify;">${s2}</p></div>` : '<p style="margin-left:20px;font-size:14px;">2. Not selected</p>'}
+                    ${strategy3 !== 'Not selected' ? `<div style="margin-bottom:20px;"><h3 style="color:#4353A3;font-size:18px;margin-bottom:8px;">3. ${strategy3}</h3><p style="font-size:13px;line-height:1.6;margin-left:20px;text-align:justify;">${s3}</p></div>` : '<p style="margin-left:20px;font-size:14px;">3. Not selected</p>'}
+                `;
+                return el;
+            } else {
+                const el = document.createElement('div');
+                el.style.cssText = baseStyle;
+                el.innerHTML = `
+                    <h2 style="color:#38416D;margin-top:0;margin-bottom:10px;font-size:24px;">My two-week commitment</h2>
+                    <h3 style="color:#38416D;margin-top:20px;margin-bottom:8px;font-size:18px;">The strategy I am choosing</h3>
+                    <p style="font-size:14px;line-height:1.6;margin-left:20px;background:#f8f9fa;padding:15px;border-radius:6px;border-left:4px solid #4353A3;">${strategy}</p>
+                    <h3 style="color:#38416D;margin-top:20px;margin-bottom:8px;font-size:18px;">Why I'm choosing it</h3>
+                    <p style="font-size:14px;line-height:1.6;margin-left:20px;">${reason}</p>
+                    <h3 style="color:#38416D;margin-top:20px;margin-bottom:8px;font-size:18px;">When and where I'll apply it</h3>
+                    <p style="font-size:14px;line-height:1.6;margin-left:20px;">${application}</p>
+                    <h3 style="color:#38416D;margin-top:20px;margin-bottom:8px;font-size:18px;">How I'll measure success</h3>
+                    <p style="font-size:14px;line-height:1.6;margin-left:20px;">${success}</p>
+                    <h3 style="color:#38416D;margin-top:20px;margin-bottom:8px;font-size:18px;">My if-then statements</h3>
+                    <div style="margin-left:20px;font-size:14px;line-height:1.8;">
+                        <p style="margin-bottom:15px;"><strong>If I begin a deep work block, then I will...</strong><br>${ifThen1}</p>
+                        <p><strong>If I feel the urge to check messages during that time, then I will...</strong><br>${ifThen2}</p>
+                    </div>
+                    <div style="margin-top:40px;padding:15px;background:#AEBAE4;border-radius:6px;">
+                        <p style="font-size:14px;line-height:1.6;color:#38416D;font-style:italic;margin:0;">
+                            <strong>Commitment period:</strong> Next two weeks starting ${today}
+                        </p>
+                    </div>
+                `;
+                return el;
+            }
+        }
+
+        async function exportToPDF() {
+            const btn = document.getElementById('exportBtn');
+
+            // Check libraries loaded
+            if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
+                showToast('⚠️ PDF libraries could not be loaded. If you\'re in a restricted environment, try opening this page directly in a browser tab.', 7000);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Generating your PDF…';
+
+            try {
+                const { jsPDF } = window.jspdf;
+
+                const p1El = buildPageHTML(1);
+                const p2El = buildPageHTML(2);
+                document.body.appendChild(p1El);
+                document.body.appendChild(p2El);
+
+                const canvas1 = await html2canvas(p1El, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+                const canvas2 = await html2canvas(p2El, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+
+                document.body.removeChild(p1El);
+                document.body.removeChild(p2El);
+
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfW = pdf.internal.pageSize.getWidth();
+                const pdfH = pdf.internal.pageSize.getHeight();
+
+                // Page 1
+                const img1 = canvas1.toDataURL('image/png');
+                const h1mm = (canvas1.height * pdfW) / canvas1.width;
+                pdf.addImage(img1, 'PNG', 0, 0, pdfW, h1mm);
+                let rem1 = h1mm - pdfH;
+                let pos1 = -pdfH;
+                while (rem1 > 0) {
+                    pdf.addPage();
+                    pdf.addImage(img1, 'PNG', 0, pos1, pdfW, h1mm);
+                    pos1 -= pdfH;
+                    rem1 -= pdfH;
+                }
+
+                // Page 2
+                pdf.addPage();
+                const img2 = canvas2.toDataURL('image/png');
+                const h2mm = (canvas2.height * pdfW) / canvas2.width;
+                pdf.addImage(img2, 'PNG', 0, 0, pdfW, h2mm);
+                let rem2 = h2mm - pdfH;
+                let pos2 = -pdfH;
+                while (rem2 > 0) {
+                    pdf.addPage();
+                    pdf.addImage(img2, 'PNG', 0, pos2, pdfW, h2mm);
+                    pos2 -= pdfH;
+                    rem2 -= pdfH;
+                }
+
+                // ── Rise-safe export ──────────────────────────────────────────
+                // 1. Try a direct download via anchor click (works outside sandbox)
+                // 2. Fall back to opening the data URI in a new tab (works in sandbox)
+                const dataUri = pdf.output('datauristring');
+                const today = new Date().toISOString().split('T')[0];
+                const filename = `Focus_Flow_Strategy_${today}.pdf`;
+
+                let downloaded = false;
+
+                // Attempt 1: blob + anchor download
+                try {
+                    const blob = pdf.output('blob');
+                    const blobUrl = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+                    downloaded = true;
+                } catch (e) {
+                    // Blob download blocked by sandbox — expected in Rise
+                }
+
+                // Attempt 2: open data URI in new tab
+                if (!downloaded) {
+                    const newTab = window.open('', '_blank');
+                    if (newTab) {
+                        newTab.document.write(`
+                            <!DOCTYPE html><html><head><title>${filename}</title></head>
+                            <body style="margin:0;background:#555;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;">
+                                <p style="color:white;margin-bottom:16px;font-size:1.1em;">
+                                    Your PDF is ready — use your browser's <strong>File &gt; Save</strong> or the embed toolbar to download it.
+                                </p>
+                                <embed src="${dataUri}" type="application/pdf" width="860" height="90%" style="border-radius:8px;min-height:80vh;">
+                            </body></html>
+                        `);
+                        newTab.document.close();
+                        showToast('✅ Your PDF has opened in a new tab. Use File → Save (or the download icon in the PDF viewer) to save it.', 8000);
+                    } else {
+                        // Pop-up blocked — last resort: navigate current window
+                        window.location.href = dataUri;
+                        showToast('📄 Your PDF should be downloading now. If nothing happens, check your browser\'s pop-up settings.', 7000);
+                    }
+                } else {
+                    showToast('✅ Your PDF is downloading!', 4000);
+                }
+
+            } catch (err) {
+                console.error('PDF export error:', err);
+                showToast('Something went wrong generating the PDF. Please try again or contact your course administrator.', 7000);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Download my strategy commitment';
+            }
+        }
+    </script>
+</body>
+</html>
