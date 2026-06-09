@@ -56,8 +56,8 @@
 <div class="container">
   <h3>Your name</h3>
 
-  <textarea id="notesInput"></textarea>
-  <textarea id="f"></textarea>
+  <textarea id="firstName" maxlength="10"></textarea>
+  <textarea id="lastInitial" maxlength="1"></textarea>
   <!-- Flexbox row: Saved! stays left, Save button stays right -->
   <div class="saveButtons">
     <p id="statusMsg">Saved!</p>
@@ -68,20 +68,23 @@
 </body>
 <script>
 (function() {
-  const textArea = document.getElementById('notesInput');
+  const firstName = document.getElementById('firstName');
+  const lastInitial = document.getElementById('lastInitial');
   const saveBtn = document.getElementById('saveBtn');
   const statusMsg = document.getElementById('statusMsg');
 
   // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
   const STORAGE_KEY = 'riseUserName';
+  const STORAGE_KEY_LI = 'lastInitialToken'
 
   // Load existing note (if any)
   const savedRUN = localStorage.getItem(STORAGE_KEY);
-  if (savedRUN) textArea.value = savedNote;
+  if (savedRUN) firstName.value = savedRUN;
 
   // Save on button click
   saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+    localStorage.setItem(STORAGE_KEY, firstName.value.trim());
+    localStorage.setItem(STORAGE_KEY_LI, lastInitial.value.trim());
 
     // Fade in "Saved!"
     statusMsg.style.opacity = '1';
@@ -89,8 +92,9 @@
   });
 
   // Optional: auto-save while typing
-  textArea.addEventListener('input', () => {
-    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+  firstName.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, firstName.value.trim());
+    localStorage.setItem(STORAGE_KEY_LI, lastInitial.value.trim());
   });
 })();
 </script>

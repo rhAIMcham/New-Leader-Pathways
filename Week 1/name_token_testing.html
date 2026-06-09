@@ -1623,8 +1623,7 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M400 144A144 144 0 1 1 256 0a144 144 0 0 1 144 144z" class="fa-secondary"/><path d="M384 320h-55.1a174.1 174.1 0 0 1-145.8 0H128A128 128 0 0 0 0 448v16a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48v-16a128 128 0 0 0-128-128z" class="fa-primary"/></svg>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span>
           </div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
@@ -1677,7 +1676,7 @@ audio {
          <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -1730,7 +1729,7 @@ audio {
   <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -1779,7 +1778,7 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -2503,19 +2502,20 @@ function initiate() {
     }
   }
 
-function loadIcon(storageKey, displayID) {
+function loadIcon(storageKey, storageKey2, displayID) {
     const icons = document.querySelectorAll('.' + displayID);
-    const saved = localStorage.getItem(storageKey);
-    const trimmed = saved.slice(0, 2); 
-    if (saved && saved.trim() !== '') {
+    const firstName = localStorage.getItem(storageKey);
+    const lastInitial = localStorage.getItem(storageKey2)?.toUpperCase(); 
+    const trimmed = firstName.slice(0, 1); 
+    if (firstName && firstName.trim() !== '') {
       icons.forEach(el => {
-        el.textContent = trimmed;
+        el.textContent = trimmed + lastInitial;
       });
     }
   }
 
   // ✏️ Add or change keys here to match your note-taking embeds
   loadNote('riseUserName', 'username');
-  loadIcon('riseUserName', 'NL_icon_fill')
+  loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill')
 })();
 </script>
