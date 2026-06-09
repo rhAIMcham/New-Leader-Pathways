@@ -252,6 +252,7 @@ svg:hover {
 .username {
   text-transform: capitalize
 }
+
 /*PH for now but will be generic black workspace*/
 
 .workArea1 {
@@ -1510,23 +1511,12 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">1 message</span>
+      <span class="inbox-toolbar-count">4 messages</span>
     </div>
 
-      <div class="email-row" id="emailRow1"  onclick="swapEmails(1)">
+    <div class="email-row" id="emailRow1"  onclick="swapEmails(1)">
       <div class="email-row-top">
          <span class="unread-dot"></span>
-        <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
-      </div>
-      <div class="email-subject">
-      First day on the job
-      </div>
-      <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
-    </div>
-  
-    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
-      <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">11:47 am</span>
       </div>
@@ -1536,9 +1526,10 @@ audio {
       </div>
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
-    
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)">
+
+    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
       <div class="email-row-top">
+         <span class="unread-dot"></span>
         <span class="email-sender">Jordan S</span>
         <span class="email-time">11:29 am</span>
       </div>
@@ -1549,8 +1540,9 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)">
+    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)">
       <div class="email-row-top">
+         <span class="unread-dot"></span>
         <span class="email-sender">Audrey E</span>
         <span class="email-time">11:14 am</span>
       </div>
@@ -1561,8 +1553,9 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)">
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)">
       <div class="email-row-top">
+         <span class="unread-dot"></span>
         <span class="email-sender">Priya D</span>
         <span class="email-time">10:58 am</span>
       </div>
@@ -1573,7 +1566,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow6" onclick="swapEmails(6)">
+    <div class="email-row" id="emailRow5" onclick="swapEmails(5)">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Yesterday</span>
@@ -1582,7 +1575,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)">
+    <div class="email-row" id="emailRow6" onclick="swapEmails(6)">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Mon</span>
@@ -1595,86 +1588,7 @@ audio {
   <!-- THREAD PANE -->
   <div class="thread-pane">
 
-        <div id="thread1" class="thread-header">
-      <div class="thread-subject">First day on the job</div>
-      <div class="thread-meta">
-        <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn" onclick="reply()">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="threadBody1" class="thread-body">
-      <div id="replyBody">
- <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
-          <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
-            <div class="message-address">sh@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send">Send</button>
-          <span class="message-time">1:30 pm</span>
-        </div>
-        <div class="message-body">
-        <div class="compose-bar">
-      <input class="compose-input" type="textarea" placeholder="Reply to Susan" />
-    
-    </div>
-</div>
-</div>
-</div>
-          <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
-          <div class="message-from">
-            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">12:03 pm</span>
-        </div>
-        <div class="message-body">
-          <p>Hey <span class="username">New Leader</span>! </p>
-            
-            <p>Congratulations on the first day in your new role. This is an exciting milestone and recognition of the commitment you have demonstrated so far. As you begin this transition, it is important to remember that moving from team member to leader is one of the most significant changes you will experience in your professional life. </p>
-
-          <p>It is normal for this period to feel disruptive, so reflection and growth will be crucial. Relationships will change, expectations will increase, and you may have to assess situations from a completely new perspective. Think about how you want to lead your new team and then answer the questions below. They will help me evaluate what assistance or other resources you may need during the first few weeks. Please be honest! </p>
-
-          <p>About you:</p>
-          <ul>
-            <li>What qualities do you want to incorporate into your own leadership style?</li>
-            <li>What excites you about this role, and what concerns you?</li>
-          </ul>
-          <br>
-          
-          <p>Your team:</p>
-          <ul>
-            <li>How might your colleagues feel about your role as a new leader?</li>
-            <li>How will you build trust with each team member?</li>
-          </ul>
-          <br>
-
-          <p>Potential challenges:</p>
-          <ul>
-            <li>What support might you need from your manager during this transition? </li>
-            <li>After reading about your team in the previous lesson, are there any problems that stand out?</li>
-          </ul>
-          <br>
-          <p>I look forward to supporting you throughout your leadership journey. </p>
-          <br>
-          <p>Talk soon.</p>
-          <p>Susan</p>
-          <br>
-          <p>Sent from my iPhone</p>
-        </div>
-      </div>
-</div>
-
-     <div id="thread2" class="thread-header">
+     <div id="thread1" class="thread-header">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1685,7 +1599,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body">
+    <div id="threadBody1" class="thread-body">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -1709,9 +1623,11 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M400 144A144 144 0 1 1 256 0a144 144 0 0 1 144 144z" class="fa-secondary"/><path d="M384 320h-55.1a174.1 174.1 0 0 1-145.8 0H128A128 128 0 0 0 0 448v16a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48v-16a128 128 0 0 0-128-128z" class="fa-primary"/></svg>
+          </div>
           <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1727,7 +1643,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread3" class="thread-header">
+     <div id="thread2" class="thread-header">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1738,7 +1654,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body">
+    <div id="threadBody2" class="thread-body">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -1761,9 +1677,9 @@ audio {
          <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</div>
           <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1781,7 +1697,7 @@ audio {
 
     </div>
 
-    <div id="thread4" class="thread-header">
+    <div id="thread3" class="thread-header">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1792,7 +1708,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body">
+    <div id="threadBody3" class="thread-body">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -1816,7 +1732,7 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-teal" id="NL_icon">NL</div>
           <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1833,7 +1749,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread5" class="thread-header">
+   <div id="thread4" class="thread-header">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1844,7 +1760,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body">
+    <div id="threadBody4" class="thread-body">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -1852,7 +1768,7 @@ audio {
           <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
           <div class="message-from">
             <div class="message-name">Prida D <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address"><span class="username">New Leader</span>@organisation.com</div>
           </div>
           <span class="message-time">Today, 10:58 am</span>
         </div>
@@ -1865,7 +1781,7 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-teal" id="NL_icon">NL</div>
           <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span><span class="message-name-to"> to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1881,7 +1797,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread6" class="thread-header">
+    <div id="thread5" class="thread-header">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1892,13 +1808,13 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body">
+    <div id="threadBody5" class="thread-body">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy">NL</div>
           <div class="message-from">
             <div class="message-name">Newsletter <span class="message-name-to">to ALL STAFF</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">12:07 pm</span>
@@ -1909,7 +1825,7 @@ audio {
           <p>This week we’d like to start by thanking everyone for their professionalism, flexibility, and dedication through the restructure. Your positive attitude and commitment to supporting each other has been greatly appreciated and ensured a smooth transition for both staff and our clients.</p>
           <br>
           <p><strong>Congratulations</strong></p>
-          <p>A special congratulations to our newly appointed <span class="username">New Leader</span>! We wish you every success in your new leadership role and look forward to seeing your team exceed expectations!</p>
+          <p>A special congratulations to our newly appointed New Leader! We wish you every success in your new leadership role and look forward to seeing your team exceed expectations!</p>
           <p><strong>Birthday Celebrations</strong></p>
           <p>Happy Birthday to our team members celebrating this month:</p>
           <ul>
@@ -1928,7 +1844,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread7" class="thread-header">
+    <div id="thread6" class="thread-header">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1939,12 +1855,12 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body">
+    <div id="threadBody6" class="thread-body">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
           <div class="message-from">
-            <div class="message-name">Eddie F <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-name">Eddie F to <span class="message-name-to"><span class="username">New Leader</span></span></div>
             <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
@@ -2106,7 +2022,7 @@ document.addEventListener("click", function(event) {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 6; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2563,6 +2479,18 @@ function initiate() {
   openEmail();
   emailArrives();
 }
+    // (function () {
+    //   function loadNote(storageKey, displayId) {
+    //     const el = document.querySelector(displayId);
+    //     const saved = localStorage.getItem(storageKey);
+    //     if (saved && saved.trim() !== '') {
+    //       el.textContent = saved;
+    //     }
+    //   }
+
+    //   // ✏️ Add or change keys here to match your note-taking embeds
+    //   loadNote('eNotes1', 'username');
+    // })();
 
 (function () {
   function loadNote(storageKey, displayClass) {
@@ -2575,7 +2503,19 @@ function initiate() {
     }
   }
 
+function loadIcon(storageKey, displayID) {
+    const icons = document.querySelectorAll('.' + displayID);
+    const saved = localStorage.getItem(storageKey);
+    const trimmed = saved.slice(0, 2); 
+    if (saved && saved.trim() !== '') {
+      icons.forEach(el => {
+        el.textContent = trimmed;
+      });
+    }
+  }
+
   // ✏️ Add or change keys here to match your note-taking embeds
   loadNote('riseUserName', 'username');
+  loadIcon('riseUserName', 'NL_icon_fill')
 })();
 </script>

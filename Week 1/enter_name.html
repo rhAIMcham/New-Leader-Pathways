@@ -1,0 +1,96 @@
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+       max-width: 700px;
+       margin: 0 auto;
+       padding: 1rem;
+       background: #f8f9fa;
+       border-radius: 12px;
+       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+       display: flex;
+    }
+
+    h3 {
+       margin-bottom: 0.5rem;
+    }
+    textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        resize: vertical;
+        font-size: 1rem;
+    }
+
+    .saveButtons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 0.5rem;
+    }
+
+    #statusMsg {
+        font-size: 0.9rem;
+        color: #28a745;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        margin: 0;
+        min-width: 60px; 
+    }
+
+    #saveBtn {
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    }
+</style>
+<body>
+<div class="container">
+  <h3>Your name</h3>
+
+  <textarea id="notesInput"></textarea>
+  <textarea id="f"></textarea>
+  <!-- Flexbox row: Saved! stays left, Save button stays right -->
+  <div class="saveButtons">
+    <p id="statusMsg">Saved!</p>
+    <button id="saveBtn"
+    >Save</button>
+  </div>
+</div>
+</body>
+<script>
+(function() {
+  const textArea = document.getElementById('notesInput');
+  const saveBtn = document.getElementById('saveBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
+  const STORAGE_KEY = 'riseUserName';
+
+  // Load existing note (if any)
+  const savedRUN = localStorage.getItem(STORAGE_KEY);
+  if (savedRUN) textArea.value = savedNote;
+
+  // Save on button click
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+
+    // Fade in "Saved!"
+    statusMsg.style.opacity = '1';
+    setTimeout(() => statusMsg.style.opacity = '0', 1500);
+  });
+
+  // Optional: auto-save while typing
+  textArea.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+  });
+})();
+</script>

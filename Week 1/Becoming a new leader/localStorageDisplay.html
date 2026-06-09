@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Screen styles ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #222;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-section {
+      text-align: left;
+      background: #f1f4f8;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .preview-section .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 0.4rem;
+    }
+
+    .preview-section .note-text {
+      font-size: 0.95rem;
+      color: #333;
+      white-space: pre-wrap;
+      min-height: 2rem;
+    }
+
+    .empty-note {
+      color: #bbb !important;
+      font-style: italic;
+    }
+
+    .btn {
+      background-color: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 2rem;
+      font-size: 1rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background-color: #0052cc; }
+
+    /* ── Print styles ── */
+    @media print {
+      @page {
+        size: A4;
+        margin: 25mm 20mm;
+      }
+
+      body {
+        background: white !important;
+        display: block;
+        padding: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .card h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .card > p {
+        display: none; /* hide the screen instructions */
+      }
+
+      .btn { display: none; }
+
+      .preview-section {
+        background: white !important;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        page-break-inside: avoid;
+      }
+
+      .preview-section .section-label {
+        color: #555;
+        font-size: 0.8rem;
+      }
+
+      .preview-section .note-text {
+        font-size: 1rem;
+        min-height: 5rem; /* ensures visible space even if empty */
+      }
+
+      .empty-note {
+        color: #ccc !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>📄 My Notes</h2>
+    <p>Your saved notes are shown below. Click <strong>Export as PDF</strong> to open the print dialog — then choose <em>Save as PDF</em>.</p>
+
+    <!-- Note 1 -->
+    <div class="preview-section">
+      <div class="section-label">Note Section 1 <!-- ✏️ Replace with your heading --></div>
+      <div class="note-text empty-note" id="display1">No note saved yet.</div>
+    </div>
+
+    <!-- Note 2 -->
+    <div class="preview-section">
+      <div class="section-label">Note Section 2 <!-- ✏️ Replace with your heading --></div>
+      <div class="note-text empty-note" id="display2">No note saved yet.</div>
+    </div>
+
+    <button class="btn" onclick="window.print()">Export as PDF</button>
+  </div>
+
+  <script>
+    (function () {
+      function loadNote(storageKey, displayId) {
+        const el = document.getElementById(displayId);
+        const saved = localStorage.getItem(storageKey);
+        if (saved && saved.trim() !== '') {
+          el.textContent = saved;
+          el.classList.remove('empty-note');
+        }
+      }
+
+      // ✏️ Add or change keys here to match your note-taking embeds
+      loadNote('eNotes1', 'display1');
+      loadNote('eNotes2', 'display2');
+    })();
+  </script>
+
+</body>
+</html>
