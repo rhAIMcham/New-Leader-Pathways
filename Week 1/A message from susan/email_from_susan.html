@@ -1283,6 +1283,14 @@ padding: 20px;
     text-align: right; 
   }
 
+  .no-calls {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
   .call-dir { font-size: 13px; }
   .call-dir.incoming { color: #3B6D11; }
   .call-dir.outgoing { color: #185FA5; }
@@ -1610,7 +1618,7 @@ audio {
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
             <div class="message-address">sh@organisation.com</div>
@@ -1709,7 +1717,7 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -1761,7 +1769,7 @@ audio {
          <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -1814,7 +1822,7 @@ audio {
   <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -1863,7 +1871,7 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
@@ -2235,7 +2243,7 @@ function reply() {
         </div>
       </div>
       <div class="pane-body">
-        <div class="call-time">
+        <div class="no-calls">
             <p>No calls to display</p>
         </div>
       </div><!-- /pane-body -->
@@ -2575,7 +2583,20 @@ function initiate() {
     }
   }
 
+function loadIcon(storageKey, storageKey2, displayID) {
+    const icons = document.querySelectorAll('.' + displayID);
+    const firstName = localStorage.getItem(storageKey);
+    const lastInitial = localStorage.getItem(storageKey2)?.toUpperCase(); 
+    const trimmed = firstName.slice(0, 1); 
+    if (firstName && firstName.trim() !== '') {
+      icons.forEach(el => {
+        el.textContent = trimmed + lastInitial;
+      });
+    }
+  }
+
   // ✏️ Add or change keys here to match your note-taking embeds
   loadNote('riseUserName', 'username');
+  loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill')
 })();
 </script>

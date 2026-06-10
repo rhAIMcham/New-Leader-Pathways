@@ -1284,6 +1284,14 @@ padding: 20px;
     text-align: right; 
   }
 
+  .no-calls {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
   .call-dir { font-size: 13px; }
   .call-dir.incoming { color: #3B6D11; }
   .call-dir.outgoing { color: #185FA5; }
@@ -2150,7 +2158,7 @@ function reply() {
         </div>
       </div>
       <div class="pane-body">
-        <div class="call-time">
+        <div class="no-calls">
             <p>No calls to display</p>
         </div>
       </div><!-- /pane-body -->
