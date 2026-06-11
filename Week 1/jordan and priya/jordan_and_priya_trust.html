@@ -515,6 +515,7 @@ svg:hover {
 #emailRow1 {
   display: block;
 }
+
 /* =====================
     MESSAGE CARDS
 ===================== */
@@ -637,7 +638,6 @@ svg:hover {
   color: var(--text-muted);
 }
 
-
 /* =====================
     COMPOSE BAR
 ===================== */
@@ -681,6 +681,7 @@ svg:hover {
 .messageHidden {
   display: none;
 }
+
 .messageRevealed {
 /* From https://css.glass */
 background: rgba(255, 255, 255, 0.85);
@@ -699,6 +700,7 @@ display: block;
   justify-content: space-between;
   border-bottom: solid 1px var(--border-subtle);
 }
+
 .keyPoints {
   margin: 15px;
   padding: 10px;
@@ -708,12 +710,13 @@ display: block;
   width: 120px;
   margin: 20px;
 }
+
 .description {
   flex: 2;
   margin: 10px;
   padding: 10px;
-
 }
+
 .description > p{
   margin: 5px;
 }
@@ -743,17 +746,19 @@ ul, ol {
 }
 
 .learnerOption {
-    border: solid 2px var(--border-medium);
+    border: solid 1px var(--border-medium);
     padding: 10px;
     border-radius: 8px;
     margin: 5px;
     cursor: pointer;
     transition: 300ms ease;
-    background-color: white;
+    background-color: var(--bg-selected-row);
+    color: var(--text-muted);
 }
 .learnerOption:hover {
-    background: var(--bg-secondary);
+    background: white;
     margin-left: 7px;
+    color: black;
 }
 
 .workArea3 {
@@ -1206,9 +1211,15 @@ padding: 20px;
   .chat-answers-box {
     border-radius: 8px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
   }
 
+  .explainerP {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+  }
   /* ── AVATAR COLOURS ── */
   .av-blue   { background: #B5D4F4; color: #0C447C; }
   .av-teal   { background: #9FE1CB; color: #085041; }
@@ -1523,7 +1534,7 @@ audio {
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
               </div>
             </div>
-            <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
+             <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
               <div class="desktopAlert">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
                 <p>2 new messages</p>
@@ -1567,7 +1578,7 @@ audio {
       <div class="email-subject">
       First day on the job
       </div>
-      <div class="email-preview">Hey new leader! Welcome to your fi...</div>
+      <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
     <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
@@ -1633,7 +1644,7 @@ audio {
         <span class="email-time">Mon</span>
       </div>
       <div class="email-subject">Induction pack</div>
-      <div class="email-preview">Dear New Leader, Congratulations on...</div>
+      <div class="email-preview">Dear <span class="username">New Leader</span>, Congratulations on...</div>
     </div>
   </div>
 
@@ -1655,9 +1666,9 @@ audio {
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name">New Leader <span class="message-name-to">to Susan H</span></div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
             <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
@@ -1676,14 +1687,14 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
           <div class="message-from">
-            <div class="message-name">Susan H <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">12:03 pm</span>
         </div>
         <div class="message-body">
-          <p>Hey new leader! Welcome to your first day on the job. I hope you are settling in well, and have everything you need to succeed. As you get used to your new responsibilities, it might be helpful to consider what your goals are as a new leader. </p>
+          <p>Hey <span class="username">New Leader</span>! Welcome to your first day on the job. I hope you are settling in well, and have everything you need to succeed. As you get used to your new responsibilities, it might be helpful to consider what your goals are as a new leader. </p>
           <p>Reflection is crucial to successfully transition into a new leadership role. There is a lot changing in your day to day, and thinking about what kind of leader you want to be is a really important step in this transition process. Some essentials steps are:</p>
 
           <ul>
@@ -1728,8 +1739,8 @@ audio {
         <div class="message-header">
           <div class="avatar" id="MJ_icon" onclick="MJreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
           <div class="message-from">
-            <div class="message-name">Mark J <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Mark J <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:47 am</span>
         </div>
@@ -1745,9 +1756,9 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1758,7 +1769,7 @@ audio {
           <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
           <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
           <p>Kind regards,</p>
-          <p>New Leader</p>
+          <p><span class="username">New Leader</span></p>
         </div>
       </div>
     </div>
@@ -1781,8 +1792,8 @@ audio {
         <div class="message-header">
           <div class="avatar" id="JS_icon" onclick="JSreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
           <div class="message-from">
-            <div class="message-name">Jordan S <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Jordan S <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:29 AM</span>
         </div>
@@ -1797,9 +1808,9 @@ audio {
          <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1810,7 +1821,7 @@ audio {
           <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
           <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
           <p>Kind regards,</p>
-          <p>New Leader</p>
+          <p><span class="username">New Leader</span></p>
         </div>
       </div>
       </div>
@@ -1835,8 +1846,8 @@ audio {
         <div class="message-header">
           <div class="avatar" id="AE_icon" onclick="AEreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted"></div>
           <div class="message-from">
-            <div class="message-name">Audrey E <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Audrey E <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:14 AM</span>
         </div>
@@ -1850,9 +1861,9 @@ audio {
   <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1863,7 +1874,7 @@ audio {
           <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
           <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
           <p>Kind regards,</p>
-          <p>New Leader</p>
+          <p><span class="username">New Leader</span></p>
         </div>
       </div>
       </div>
@@ -1887,8 +1898,8 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
           <div class="message-from">
-            <div class="message-name">Prida D <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Prida D <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <span class="message-time">Today, 10:58 am</span>
         </div>
@@ -1899,9 +1910,9 @@ audio {
       <!-- Original email -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon">NL</div>
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name">New Leader <span class="message-name-to">to </span></div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to </span></div>
             <div class="message-address">mj@organisation.com.au, js@organisation.com.au, ae@organisation.com.au, pd@organisation.com.au</div>
           </div>
           <span class="message-time">Today, 10:42 am</span>
@@ -1912,7 +1923,7 @@ audio {
           <p>I understand there has been a lot of change in the organisation recently, and I appreciate the hard work and commitment you have already demonstrated during this transition period.</p>
           <p>To get started, I will be organising our first team meeting this week to discuss our priorities, expectations, and plans moving forward. Further details will be sent shortly.</p>
           <p>Kind regards,</p>
-          <p>New Leader</p>
+          <p><span class="username">New Leader</span></p>
         </div>
       </div>
     </div>
@@ -1934,7 +1945,7 @@ audio {
           <div class="avatar avatar-navy">NL</div>
           <div class="message-from">
             <div class="message-name">Newsletter <span class="message-name-to">to ALL STAFF</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">12:07 pm</span>
@@ -1980,14 +1991,14 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
           <div class="message-from">
-            <div class="message-name">Eddie F <span class="message-name-to">to New Leader</span></div>
-            <div class="message-address">newleader@organisation.com</div>
+            <div class="message-name">Eddie F <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">9:07 am</span>
         </div>
         <div class="message-body">
-            <p>Dear New Leader,</p>
+            <p>Dear <span class="username">New Leader</span>,</p>
             <p>Congratulations on your new role! We are excited to support this transition into your leadership role with the team. <br>To assist with your onboarding, we have prepared a short induction pack that contains key information, resources, and system access details required for your new position. While you will be familiar with some of the content, other processes may have been affected by the restructure.
                 <br>
                 The information pack includes:</p>
@@ -2183,11 +2194,11 @@ function reply() {
       <div class="activity-icon active" title="Chat" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
       </div>
-       <span class="missed-teams-dot status-busy">2</span>
+      <span class="missed-teams-dot status-busy">2</span>
       <div class="activity-icon" title="Calls" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
       </div>
-     
+      
       <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
       </div> -->
@@ -2199,17 +2210,17 @@ function reply() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-    <div class="dm-item" onclick="loadDM('jordan', this)">
+        <div class="dm-item" onclick="loadDM('jordan', this)">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
       <span class="dm-unread-count">1</span>
     </div>
+
     <div class="dm-item" onclick="loadDM('priya', this)">
       <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
       <span class="dm-name">Priya D</span>
       <span class="dm-unread-count">1</span>
     </div>
-
     <div class="dm-item" onclick="loadDM('audrey', this)">
       <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
       <span class="dm-name">Audrey E</span>
@@ -2221,8 +2232,8 @@ function reply() {
       <div class="dm-item" onclick="loadDM('susan', this)">
       <div class="dm-avatar av-teal">SH<span class="status-dot status-online"></span></div>
       <span class="dm-name">Susan H</span>
-      </div>
-    
+    </div>
+
   </div>
 
   <!-- CHAT PANE -->
@@ -2442,7 +2453,26 @@ function reply() {
           </div>
         </div>`
     },
-   'mark': {
+    'audrey': {
+       title: 'Audrey E',
+      avatar: '<div class="chat-avatar av-coral">AE</div>',
+      desc: 'Busy · She/her · Joined 6 years ago',
+      placeholder: 'Message Audrey E',
+      html: `
+        
+        <div class="date-divider">Today</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+          </div>
+             <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>`
+    },
+    'mark': {
       title: 'Mark J',
       avatar: '<div class="chat-avatar av-blue">MJ</div>',
       desc: 'Away · He/him · Joined 5 years ago',
@@ -2458,130 +2488,97 @@ function reply() {
              <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
-          </div>
-       <div class="date-divider">1 missed call</div>
-               <div>
-        </div>
-        </div>`
+          </div>`
     },
-     'audrey': {
-      title: 'Audrey E',
-      avatar: '<div class="chat-avatar av-coral">AE</div>',
-      desc: 'Busy · She/her · Joined 6 years ago',
-      placeholder: 'Message Audrey E',
+   'jordan': {
+      title: 'Jordan S',
+      avatar: '<div class="chat-avatar av-teal">JS</div>',
+      desc: 'Away · They/them · Joined 2 years ago',
+      placeholder: 'Message Jordan S',
       html: `
-        
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Yesterday</div>
         <div class="chat-group">
-          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Aid</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
           </div>
              <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
           </div>
        
-<div class="date-divider">1 missed call</div>
-               <div>
-     
-        </div>
-      </div>
-    </div>
-        </div>
-        </div>`
-    },
-    'jordan': {
-      title: 'Jordan S',
-      avatar: '<div class="chat-avatar av-teal">JS</div>',
-      desc: 'Away · They/them · Joined 2 years ago',
-      placeholder: 'Message Jordan S',
-      html: `
-        <div class="date-divider">Tuesday</div>
+      <div class="date-divider">Today</div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
-            <div class="chat-text">Hi! Looking forward to getting to know you better, let me know if you need me to jump on anything.</div>
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">
+              <p>Hi,  
+                <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>
+                Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
+                <br><br>
+                Thanks,
+                <br><br>
+                Jordan.</p> </div>
           </div>
-          <div class="chat-actions">
+             <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
-          
           </div>
-           <div class="date-divider">Today</div>
-          <div class="chat-group">
-          <div class="chat-avatar av-teal">JS</div>
-          <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
-            <div class="chat-text">
-               Hi,  
-
-            I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
-
-            Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
-
-            Thanks, 
-
-            Jordan. 
+               <div>
+                <div class="explainerP">
+                <p>Select the option you would send in this scenario.</p>
                 </div>
-                </div>
-                </div>
-                 <div class="chat-answers-box">
+      <div class="chat-answers-box">
+        
         <div class="chat-options learnerOption">
           <div onclick="jordan1()">
             <p>
-                Hey Audrey, 
+               Hi Jordan, <br>
+               Thanks for reaching out. 
+              <br><br>
+              I’m still getting a feel for everything, so I’m trying not to make too many changes too quickly. For now, I’d suggest continuing with your current tasks and we’ll work through any adjustments as they come up. 
                 <br><br>
-                Good to hear from you. 
+               Happy to have a chat sometime if there are specific areas you’d like to discuss. 
                  <br><br>
-                 Things have been busy, but I’m settling in. The team seems great so far. 
-                  <br><br>
-                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
-                   <br><br>
-                   And yes, thankfully things are finally peaceful at home. 
-                    <br><br>
-                    Talk soon. 
+                Thanks. 
                 </p>
             </div>
             </div>
 
             <div class="chat-options learnerOption">
           <div onclick="jordan2()">
-            <p>
-                Hi Audrey, 
+            <p>Hi Jordan, 
+              <br>Thank you for raising this. 
+              <br><br>
+            Over the next week I’ll be reviewing team responsibilities and our priority workstreams. Until then, please continue leading the tasks assigned to you, and escalate any issues that may affect deadlines or delivery. 
                 <br><br>
-                Thanks for your message. 
-                <br><br>
-                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
-                <br><br>
-                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
-                <br><br>
-                I’m glad to hear things are going well at your end. 
-                <br><br>
-                Best regards. 
+                I am also scheduling one-on-one meetings this week to discuss workload, priorities and other areas where additional support or clarification may be needed. My goal is to ensure all responsibilities within the team are clearly defined and distributed appropriately.
+                <br><br>   Please let me know your availability. 
+                <br><br>Regards. 
                 </p>
             </div>
             </div>
 
          <div class="chat-options learnerOption">
           <div onclick="jordan3()">
-            <p>
-                Hi Audrey, 
+            <p>Hello Jordan, 
+              <br><br>Thank you for your message. 
+              <br><br>I’m currently reviewing team structure and priorities, to get a better understanding of where responsibilities and resources are best aligned. 
+              
+              <br><br>In the meantime, please continue to raise any questions or concerns as they arise. I appreciate your patience while the broader picture takes shape. 
                 <br><br>
-                Thanks for reaching out. 
-                <br><br>
-                It’s been an interesting first few days, and I’m slowly getting more familiar with the team and our new priorities. Hopefully there will be opportunities to catch up with the team in the future. 
-                <br><br>
-                Wishing you all the best, and we’ll organise time this week to discuss next steps. 
-                <br><br>
-                Regards. 
+               Regards. 
                 </p>
             </div>
             </div>
 
-          </div>
+        </div>
+      </div>
+    </div>
+        </div>
         </div>`
     },
     'priya': {
@@ -2590,7 +2587,7 @@ function reply() {
       desc: 'Online · She/her · Joined 3 years ago',
       placeholder: 'Message Priya D',
       html: `
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
@@ -2723,6 +2720,9 @@ function reply() {
     clearActive();
     el.classList.add('active');
     setChat(dms[name]);
+
+     // Reload the icon token after HTML is inserted
+  loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill');
   }
 
   function setActive(el) {
@@ -2754,206 +2754,13 @@ function playAudio() {
    }
 }
 
-//priya responses
-function priya1() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-        Hello, 
-        <br>
-        I understand you’re still getting settled; however I must admit I was hoping for a more concrete discussion given the substantial issues currently affecting the team. 
-        <br><br>
-        Several of these matters have been awaiting direction prior to the restructure, and postponing decisions may create additional complications. I’ve already compiled the relevant documentation and recommendations, so I’ll send them through.  
-        <br><br>
-        I trust they’ll receive the attention they require. 
-        <br><br>
-        priya </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    </div>
-  `;
+ const username = localStorage.getItem("riseUserName") || "nl test";
+ const lastInitial = localStorage.getItem("lastInitialToken") || "a";
+ const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
-  dms['priya'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>Hi Mark,
-                <br><br>
-                Thanks for reaching out. Things are still settling at the moment, but I’ll keep your notes in mind as I get up to speed. 
-                <br><br>
-                Let’s touch base sometime next week. In the meantime, if anything urgent comes up, feel free to send it over. 
-                <br><br>
-                Thanks. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    
-    ${newMessages}
-    `;
-
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-
-function priya2() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
-      <<div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Thank you for your response. 
-            <br><br>
-            I’ll forward the documentation this afternoon and can make myself available for a meeting later this week. The materials include the current procedures, outstanding action items, and recommendations regarding team responsibilities.
-            <br><br>
-            Preserving continuity during this period will be important, so I appreciate your perspective. 
-            <br><br>
-            priya </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    </div>
-  `;
-
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
-  dms['priya'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-     <div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>Thank you for your message. I’ll review the procedural updates, outstanding tasks and current reporting workflows as soon as possible.  
-                <br><br>
-                Please send me your documentation and availability for a meeting this week. My goal is to finalise team responsibilities within the next two weeks, so your input will be helpful during this process. 
-                <br><br>I appreciate your assistance during this transitionary period. 
-                <br><br>Regards. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    
-    ${newMessages}
-    `;
-
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function priya3() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Thank you for your reply. 
-            <br><br>
-            I understand there is a great deal to evaluate during a restructure period. Existing responsibilities and procedures must be adapted for the new team, so careful assessment is certainly appropriate before any significant decisions are made. 
-            <br><br>
-            I’ve retained detailed records of the current workflows, should they become useful as you continue your review. I am always available for advice, so please don’t hesitate to reach out if you find additional context would be helpful. 
-            <br><br>
-            Best regards, 
-            <br><br>
-            priya  </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    </div>
-  `;
-
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
-  dms['priya'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-purple">PD</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>
-                Thank you for reaching out. I understand there are several items that will need attention as the team moves forward. 
-                <br><br>
-                I’m currently reviewing priorities and assessing next steps. I’ll be in touch if additional information or discussion would be helpful as plans take shape. 
-                <br><br>
-               Thank you again for your message.  
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    
-    ${newMessages}
-    `;
-
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-//Jordan responses
+//jordan responses
 function jordan1() {
+
   // Add new messages to the jordan DM data structure
   const newMessages = `
     <div class="chat-group" style="margin-top:8px">
@@ -2961,13 +2768,17 @@ function jordan1() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hey, 
-            <br><br>
-            Glad to hear you’ve survived! No rush on the drinks – just let me know when things calm down. 
-            <br><br>
-            Take care, and don’t let management change you too much. 
-            <br><br>
-            jordan </div>
+        Hello, 
+        <br><br>
+        Thanks for getting back to me. 
+        <br><br>
+        I was hoping for a bit more clarity on immediate expectations, given current delivery timelines, but I understand you’re still settling in. 
+        <br><br>
+        Please let me know when you’re able to provide clearer direction.  
+       <br><br>
+        Thanks, 
+        <br><br>
+        Jordan</div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2978,34 +2789,50 @@ function jordan1() {
 
   // Update the jordan DM HTML (remove old messages and buttons, add new ones)
   dms['jordan'].html = `
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+          </div>
+             <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
     <div class="date-divider">Today</div>
     <div class="chat-group">
       <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+       <div class="chat-text">
+              <p>Hi,  
+               <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>
+                Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
+               <br><br>
+                Thanks,
+               <br><br>
+                Jordan.</p> </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
     <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
+      <div class="chat-avatar av-teal">${userIcon}</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-                      <p>
-                Hey Audrey, 
+           <p>
+               Hi Jordan, <br><br>
+               Thanks for reaching out. 
+              <br><br>
+              I’m still getting a feel for everything, so I’m trying not to make too many changes too quickly. For now, I’d suggest continuing with your current tasks and we’ll work through any adjustments as they come up. 
                 <br><br>
-                Good to hear from you. 
+               Happy to have a chat sometime if there are specific areas you’d like to discuss. 
                  <br><br>
-                 Things have been busy, but I’m settling in. The team seems great so far. 
-                  <br><br>
-                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
-                   <br><br>
-                   And yes, thankfully things are finally peaceful at home. 
-                    <br><br>
-                    Talk soon. 
+                Thanks. 
                 </p>
             </div>
       </div>
@@ -3023,7 +2850,6 @@ function jordan1() {
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-
 function jordan2() {
   // Add new messages to the jordan DM data structure
   const newMessages = `
@@ -3032,17 +2858,15 @@ function jordan2() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hi, 
+          <p>Hi,  
+            <br><br>Thank you for the clear outline and for scheduling time to discuss this further. 
             <br><br>
-            Thanks for the reply. 
+            I appreciate the intention to clarify ownership across the team, because it really will help to have a timeframe for when responsibilities will be reviewed. I did also want to mention that the workload has been quite high during the restructuring period, and there might have been some confusion over assigned tasks in the team.  
+            <br><br>I’ll send through my availability shortly. 
             <br><br>
-            I’m glad to hear it’s have been going well and that everyone else in the team has been welcoming. I understand things must be busy right now. 
+            Thanks again, 
             <br><br>
-            It’ll be interesting to see how our new workflow develops over the coming months. I look forward to working together and supporting the team’s success however I can. 
-            <br><br>
-            Don’t be a stranger, 
-            <br><br>
-            Audrey.  </div>
+            Jordan</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3053,34 +2877,51 @@ function jordan2() {
 
   // Update the jordan DM HTML (remove old messages and buttons, add new ones)
   dms['jordan'].html = `
-    <div class="date-divider">Today</div>
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+          </div>
+             <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
+   <div class="date-divider">Today</div>
     <div class="chat-group">
-           <div class="chat-avatar av-teal">JS</div>
+      <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+       <div class="chat-text">
+              <p>Hi,  
+                <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>
+                Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
+               <br><br>
+                Thanks,
+                <br><br>
+                Jordan.</p> </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
     <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
+      <div class="chat-avatar av-teal">${userIcon}</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-           <p>
-                Hi Jordan, 
-                <br><br>
-                Thanks for your message. 
-                <br><br>
-                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
-                <br><br>
-                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
-                <br><br>
-                I’m glad to hear things are going well at your end. 
-                <br><br>
-                Best regards. 
+           <p>Hi Jordan, 
+            <br>Thank you for raising this. 
+            <br><br>
+            Over the next week I’ll be reviewing team responsibilities and our priority workstreams. Until then, please continue leading the tasks assigned to you, and escalate any issues that may affect deadlines or delivery. 
+            <br><br>
+            I am also scheduling one-on-one meetings this week to discuss workload, priorities and other areas where additional support or clarification may be needed. My goal is to ensure all responsibilities within the team are clearly defined and distributed appropriately. 
+            <br><br>
+            Please let me know your availability. 
+             <br><br>
+             Regards. 
                 </p>
             </div>
       </div>
@@ -3106,15 +2947,17 @@ function jordan3() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hi, 
+            <p>Hi, 
+              <br><br>
+              Thank you for the update. I understand you’re still reviewing the new team structure, but I was hoping for a bit more clarity on immediate expectations, given current delivery timelines. 
+              <br><br>
+              Recently, it’s been challenging to assess what should take priority day-to-day, and I’m concern that important tasks may be overlocked in the intermediate period. 
+              <br><br>
+              I’ll continue to flag any issues as they arise and look forward to a moving in a concrete direction. 
+              <br><br>
+              Regards, 
             <br><br>
-            Thanks for getting back to me. It’s good to hear things are settling in. I imagine there’s a lot to take in with the new role.  
-            <br><br>
-            Hopefully we’ll get a chance to catch up at some point, whether it’s at a team event or otherwise. Until then, good luck with everything. 
-            <br><br>
-            Take care, 
-            <br><br>
-            Jordan.  </div>
+            Jordan</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3123,13 +2966,189 @@ function jordan3() {
     </div>
   `;
 
-  // Update the Jordan DM HTML (remove old messages and buttons, add new ones)
+  // Update the jordan DM HTML (remove old messages and buttons, add new ones)
   dms['jordan'].html = `
-    <div class="date-divider">Today</div>
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+          </div>
+             <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
+   <div class="date-divider">Today</div>
     <div class="chat-group">
-            <div class="chat-avatar av-teal">JS</div>
+      <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+       <div class="chat-text">
+              <p>Hi,  
+                <br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>
+                Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
+                <br><br>
+                Thanks,
+                <br><br>
+                Jordan.</p> </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    <div class="chat-group learner">
+      <div class="chat-avatar av-teal">${userIcon}</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-text">
+           <p>Hello Jordan, 
+            <br><br>
+            Thank you for your message. 
+            <br><br>
+            I’m currently reviewing team structure and priorities, to get a better understanding of where responsibilities and resources are best aligned. In the meantime, please continue to raise any questions or concerns as they arise. I appreciate your patience while the broader picture takes shape. 
+            <br><br>
+            Regards. 
+                </p>
+            </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    
+    ${newMessages}
+    `;
+
+  // Refresh the current chat display
+  const chatBody = document.getElementById('chat-body');
+  chatBody.innerHTML = dms['jordan'].html;
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+//priya responses
+function priya1() {
+  // Add new messages to the priya DM data structure
+  const newMessages = `
+    <div class="chat-group" style="margin-top:8px">
+      <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+            <p>Congratulations on joining the team.</p></div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    </div>
+  `;
+
+  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+  dms['priya'].html = `
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
+            <div class="chat-text">Congratulations on joining the team.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+</div>
+    <div class="date-divider">Today</div>
+    <div class="chat-group">
+       <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+            <p>Congratulations on joining the team.</p></div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    <div class="chat-group learner">
+      <div class="chat-avatar av-teal">${userIcon}</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-text">
+                      <p>
+                Hey Priya, 
+                <br><br>
+                Good to hear from you. 
+                 <br><br>
+                 Things have been busy, but I’m settling in. The team seems great so far. 
+                  <br><br>
+                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
+                   <br><br>
+                   And yes, thankfully things are finally peaceful at home. 
+                    <br><br>
+                    Talk soon. 
+                </p>
+            </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    
+    ${newMessages}
+    `;
+
+  // Refresh the current chat display
+  const chatBody = document.getElementById('chat-body');
+  chatBody.innerHTML = dms['priya'].html;
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function priya2() {
+  // Add new messages to the priya DM data structure
+  const newMessages = `
+    <div class="chat-group" style="margin-top:8px">
+      <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+            Hi, 
+            <br><br>
+            Thanks for the reply. 
+            <br><br>
+            I’m glad to hear it’s have been going well and that everyone else in the team has been welcoming. I understand things must be busy right now. 
+            <br><br>
+            It’ll be interesting to see how our new workflow develops over the coming months. I look forward to working together and supporting the team’s success however I can. 
+            <br><br>
+            Don’t be a stranger, 
+            <br><br>
+            Priya.</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    </div>
+  `;
+
+  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+  dms['priya'].html = `
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
+            <div class="chat-text">Congratulations on joining the team.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+</div>
+    <div class="date-divider">Today</div>
+    <div class="chat-group">
+           <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
       </div>
       <div class="chat-actions">
@@ -3137,12 +3156,95 @@ function jordan3() {
       </div>
     </div>
     <div class="chat-group learner">
-      <div class="chat-avatar av-teal">NL</div>
+      <div class="chat-avatar av-teal">${userIcon}</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">New Leader</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
            <p>
-               Hi Jordan, 
+                Hi Priya, 
+                <br><br>
+                Thanks for your message. 
+                <br><br>
+                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
+                <br><br>
+                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
+                <br><br>
+                I’m glad to hear things are going well at your end. 
+                <br><br>
+                Best regards. 
+                </p>
+            </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    
+    ${newMessages}
+    `;
+
+  // Refresh the current chat display
+  const chatBody = document.getElementById('chat-body');
+  chatBody.innerHTML = dms['priya'].html;
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function priya3() {
+  // Add new messages to the priya DM data structure
+  const newMessages = `
+    <div class="chat-group" style="margin-top:8px">
+      <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+            Hi, 
+            <br><br>
+            Thanks for getting back to me. It’s good to hear things are settling in. I imagine there’s a lot to take in with the new role.  
+            <br><br>
+            Hopefully we’ll get a chance to catch up at some point, whether it’s at a team event or otherwise. Until then, good luck with everything. 
+            <br><br>
+            Take care, 
+            <br><br>
+            Priya.</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    </div>
+  `;
+
+  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+  dms['priya'].html = `
+  <div class="date-divider">Yesterday</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
+            <div class="chat-text">Congratulations on joining the team.</div>
+            </div>
+          <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+</div>
+    <div class="date-divider">Today</div>
+    <div class="chat-group">
+            <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
+    </div>
+    <div class="chat-group learner">
+      <div class="chat-avatar av-teal">${userIcon}</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
+        <div class="chat-text">
+           <p>
+               Hi Priya, 
                 <br><br>
                 Thanks for reaching out. 
                 <br><br>
@@ -3164,10 +3266,9 @@ function jordan3() {
 
   // Refresh the current chat display
   const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['jordan'].html;
+  chatBody.innerHTML = dms['priya'].html;
   chatBody.scrollTop = chatBody.scrollHeight;
 }
-
 
 // Load default channel on startup
 setChat(dms['jordan']);
@@ -3281,4 +3382,34 @@ function clickTeamsAlertChat() {
 function initiate() {
   openTeams();
 }
+
+
+
+(function () {
+  function loadNote(storageKey, displayClass) {
+    const elements = document.querySelectorAll('.' + displayClass);
+    const saved = localStorage.getItem(storageKey);
+    if (saved && saved.trim() !== '') {
+      elements.forEach(el => {
+        el.textContent = saved;
+      });
+    }
+  }
+
+function loadIcon(storageKey, storageKey2, displayID) {
+    const icons = document.querySelectorAll('.' + displayID);
+    const firstName = localStorage.getItem(storageKey);
+    const lastInitial = localStorage.getItem(storageKey2)?.toUpperCase(); 
+    const trimmed = firstName.slice(0, 1); 
+    if (firstName && firstName.trim() !== '') {
+      icons.forEach(el => {
+        el.textContent = trimmed + lastInitial;
+      });
+    }
+  }
+
+  // ✏️ Add or change keys here to match your note-taking embeds
+  loadNote('riseUserName', 'username');
+  loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill')
+})();
 </script>
