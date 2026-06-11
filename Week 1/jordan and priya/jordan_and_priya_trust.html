@@ -2210,7 +2210,7 @@ function reply() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-        <div class="dm-item" onclick="loadDM('jordan', this)">
+        <div class="dm-item active" onclick="loadDM('jordan', this)">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
       <span class="dm-unread-count">1</span>
@@ -2605,13 +2605,14 @@ function reply() {
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">10:37 AM</span></div>
             <div class="chat-text">
                 <p>Hello, 
-                    <br>
+                    <br>  <br>
                     Just follow up on how you’re planning to assign tasks across the new team. I’m currently working through my existing list of projects and have a workflow that’s been effective so far. I’d prefer to keep things as consistent as possible. 
-                    <br>
+                    <br>  <br>
                     Let me know how you want to approach oversight of tasks moving forward. 
-                    <br>
+                    <br>  <br>
                     Thanks, 
-                    <br>Priya.</p> 
+                    <br>  <br>
+                    Priya.</p> 
                 </div>
              </div>
              <div class="chat-actions">
@@ -2621,10 +2622,11 @@ function reply() {
           <div class="chat-answers-box">
         <div class="chat-options learnerOption">
           <div onclick="priya1()">
-            <p>
-                Thanks for reaching out. Things are still settling at the moment, but I’ll keep your notes in mind as I get up to speed. 
+            <p>Thanks for the note. 
+               <br><br>
+               That sounds fine for now – no need to shake things up too much at this stage. I’m still getting across everything, so I’ll keep tasks as they are and step in when needed. 
                 <br><br>
-                Let’s touch base sometime next week. In the meantime, if anything urgent comes up, feel free to send it over. 
+               We can sync up later if anything needs adjusting. 
                 <br><br>
                 Thanks. 
                 </p>
@@ -2633,23 +2635,30 @@ function reply() {
 
             <div class="chat-options learnerOption">
           <div onclick="priya2()">
-            <p>Thank you for your message. I’ll review the procedural updates, outstanding tasks and current reporting workflows as soon as possible.  
-                <br><br>
-                Please send me your documentation and availability for a meeting this week. My goal is to finalise team responsibilities within the next two weeks, so your input will be helpful during this process. 
-                <br><br>I appreciate your assistance during this transitionary period. 
-                <br><br>Regards. 
+            <p>Thanks for your message. 
+              <br><br>
+              I’ll be reviewing team responsibilities over the next week, so expect some communication from me at the end of that period. 
+              <br><br>
+              In the meantime, I’d like you to provide a detailed breakdown of what you’re currently working on, including active tasks, upcoming deadlines, timeframes and any stakeholders involved.  
+              <br><br>
+              For now, continue with your current workload, but please prioritise sharing updates proactively so I can maintain visibility on progress and dependencies. I’ll be overseeing task progress and may request updates or clarification when needed to ensure alignment with team priorities. 
+              <br><br>
+              If there are any risks to delivery, please highlight them immediately. 
+              <br><br>
+              Regards. 
                 </p>
             </div>
             </div>
 
          <div class="chat-options learnerOption">
           <div onclick="priya3()">
-            <p>
-                Thank you for reaching out. I understand there are several items that will need attention as the team moves forward. 
-                <br><br>
-                I’m currently reviewing priorities and assessing next steps. I’ll be in touch if additional information or discussion would be helpful as plans take shape. 
-                <br><br>
-               Thank you again for your message.  
+            <p>Thanks for your message. 
+              <br><br>
+              I’m currently reviewing how best to align responsibilities and workflows across the team to ensure everything continues running smoothly. As part of that, I’ll be observing how current processes operate before making any decisions about broader structure. 
+              <br><br>
+              In the meantime, please continue with your current approach and flag anything that may require attention. 
+              <br><br>
+              Regards. 
                 </p>
             </div>
             </div>
@@ -3036,7 +3045,17 @@ function priya1() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            <p>Congratulations on joining the team.</p></div>
+          <p>Hello, 
+                <br><br>
+                Thanks for the update. 
+                <br><br>
+                I understand you’re still getting across the role, and I appreciate the intention to avoid unnecessary changes. At the same time, I’d value a clearer understanding of expectations, priorities and how you’d like to stay informed on progress as you settle in. 
+                <br><br>
+                I’ve been managing my work fairly independently, so some guidance on your preferred approach would be helpful to ensure we’re aligned and avoid assumptions on either side. 
+                <br><br>
+                Thanks, 
+                <br><br>
+                Priya</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3052,7 +3071,8 @@ function priya1() {
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Congratulations on joining the team.</div>
+            <div class="chat-text">
+            <p>Congratulations on joining the team.</p></div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3063,8 +3083,18 @@ function priya1() {
        <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            <p>Congratulations on joining the team.</p></div>
+         <div class="chat-text">
+        <p>
+          Hello, 
+          <br><br>
+          Just follow up on how you’re planning to assign tasks across the new team. I’m currently working through my existing list of projects and have a workflow that’s been effective so far. I’d prefer to keep things as consistent as possible. 
+           <br><br>
+           Let me know how you want to approach oversight of tasks moving forward. 
+            <br><br>
+            Thanks, 
+             <br><br>
+             Priya. </p>
+      </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3075,18 +3105,14 @@ function priya1() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-                      <p>
-                Hey Priya, 
+                      <p>Hi Priya, 
+              <br><br>Thanks for the note. 
+               <br><br>
+               That sounds fine for now – no need to shake things up too much at this stage. I’m still getting across everything, so I’ll keep tasks as they are and step in when needed. 
                 <br><br>
-                Good to hear from you. 
-                 <br><br>
-                 Things have been busy, but I’m settling in. The team seems great so far. 
-                  <br><br>
-                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
-                   <br><br>
-                   And yes, thankfully things are finally peaceful at home. 
-                    <br><br>
-                    Talk soon. 
+               We can sync up later if anything needs adjusting. 
+                <br><br>
+                Thanks. 
                 </p>
             </div>
       </div>
@@ -3108,21 +3134,22 @@ function priya2() {
   // Add new messages to the priya DM data structure
   const newMessages = `
     <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hi, 
-            <br><br>
-            Thanks for the reply. 
-            <br><br>
-            I’m glad to hear it’s have been going well and that everyone else in the team has been welcoming. I understand things must be busy right now. 
-            <br><br>
-            It’ll be interesting to see how our new workflow develops over the coming months. I look forward to working together and supporting the team’s success however I can. 
-            <br><br>
-            Don’t be a stranger, 
-            <br><br>
-            Priya.</div>
+            <p>Hi, 
+              <br><br>
+              I’ve noted your request for a detailed breakdown of current work. 
+              <br><br>
+              I’ll put something together, though I do want to flag that I’m already tracking my workload and deliverables effectively through existing systems. A full breakdown feels quite excessive and may affect my ability to complete current tasks. 
+              <br><br>
+              I also want to be clear that I have always been accountable for my work, and increased monitoring does not reflect how I’ve been successfully operating to date. 
+              <br><br>
+              Regards, 
+              <br><br>
+              Priya 
+              </p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3138,7 +3165,8 @@ function priya2() {
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Congratulations on joining the team.</div>
+            <div class="chat-text">
+            <p>Congratulations on joining the team.</p></div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3146,10 +3174,21 @@ function priya2() {
 </div>
     <div class="date-divider">Today</div>
     <div class="chat-group">
-           <div class="chat-avatar av-coral">AE</div>
+       <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+        <p>
+          Hello, 
+          <br><br>
+          Just follow up on how you’re planning to assign tasks across the new team. I’m currently working through my existing list of projects and have a workflow that’s been effective so far. I’d prefer to keep things as consistent as possible. 
+           <br><br>
+           Let me know how you want to approach oversight of tasks moving forward. 
+            <br><br>
+            Thanks, 
+             <br><br>
+             Priya. </p>
+      </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3160,18 +3199,18 @@ function priya2() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-           <p>
-                Hi Priya, 
-                <br><br>
-                Thanks for your message. 
-                <br><br>
-                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
-                <br><br>
-                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
-                <br><br>
-                I’m glad to hear things are going well at your end. 
-                <br><br>
-                Best regards. 
+                    <p>Hi Priya,
+                      <br><br>Thanks for your message. 
+              <br><br>
+              I’ll be reviewing team responsibilities over the next week, so expect some communication from me at the end of that period. 
+              <br><br>
+              In the meantime, I’d like you to provide a detailed breakdown of what you’re currently working on, including active tasks, upcoming deadlines, timeframes and any stakeholders involved.  
+              <br><br>
+              For now, continue with your current workload, but please prioritise sharing updates proactively so I can maintain visibility on progress and dependencies. I’ll be overseeing task progress and may request updates or clarification when needed to ensure alignment with team priorities. 
+              <br><br>
+              If there are any risks to delivery, please highlight them immediately. 
+              <br><br>
+              Regards. 
                 </p>
             </div>
       </div>
@@ -3193,19 +3232,25 @@ function priya3() {
   // Add new messages to the priya DM data structure
   const newMessages = `
     <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-coral">AE</div>
+      <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hi, 
+           <p>Hello, 
             <br><br>
-            Thanks for getting back to me. It’s good to hear things are settling in. I imagine there’s a lot to take in with the new role.  
+            Thanks for your reply. 
             <br><br>
-            Hopefully we’ll get a chance to catch up at some point, whether it’s at a team event or otherwise. Until then, good luck with everything. 
+            That approach works for me. I’m comfortable with my current workflow while things are being reviewed, and I appreciate not making any immediate changes while you get across everything. 
             <br><br>
-            Take care, 
+            I’ll continue flagging any issues that come up, but otherwise run things as they are on my end. 
             <br><br>
-            Priya.</div>
+            Let me know if you need anything further. 
+            <br><br>
+            Regards, 
+            <br><br>
+            Priya 
+            </p>
+            </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3216,12 +3261,13 @@ function priya3() {
 
   // Update the priya DM HTML (remove old messages and buttons, add new ones)
   dms['priya'].html = `
-  <div class="date-divider">Yesterday</div>
+ <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Congratulations on joining the team.</div>
+            <div class="chat-text">
+            <p>Congratulations on joining the team.</p></div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3229,10 +3275,21 @@ function priya3() {
 </div>
     <div class="date-divider">Today</div>
     <div class="chat-group">
-            <div class="chat-avatar av-coral">AE</div>
+       <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">priya E</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+       <div class="chat-text">
+        <p>
+          Hello, 
+          <br><br>
+          Just follow up on how you’re planning to assign tasks across the new team. I’m currently working through my existing list of projects and have a workflow that’s been effective so far. I’d prefer to keep things as consistent as possible. 
+           <br><br>
+           Let me know how you want to approach oversight of tasks moving forward. 
+            <br><br>
+            Thanks, 
+             <br><br>
+             Priya. </p>
+      </div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -3243,16 +3300,15 @@ function priya3() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-           <p>
-               Hi Priya, 
-                <br><br>
-                Thanks for reaching out. 
-                <br><br>
-                It’s been an interesting first few days, and I’m slowly getting more familiar with the team and our new priorities. Hopefully there will be opportunities to catch up with the team in the future. 
-                <br><br>
-                Wishing you all the best, and we’ll organise time this week to discuss next steps. 
-                <br><br>
-                Regards.
+                     <p>Hi Priya,
+                      <br><br>
+                      Thanks for your message. 
+              <br><br>
+              I’m currently reviewing how best to align responsibilities and workflows across the team to ensure everything continues running smoothly. As part of that, I’ll be observing how current processes operate before making any decisions about broader structure. 
+              <br><br>
+              In the meantime, please continue with your current approach and flag anything that may require attention. 
+              <br><br>
+              Regards. 
                 </p>
             </div>
       </div>
