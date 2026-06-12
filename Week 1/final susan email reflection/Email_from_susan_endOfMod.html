@@ -73,7 +73,7 @@ body {
 }
 
 .workspace {
-  width: 1300px;
+  max-width: 1300px;
   margin: auto;
 }
 
@@ -329,6 +329,11 @@ svg:hover {
   padding: 1px 6px;
   border-radius: var(--radius-pill);
 }
+/*Inbox nd thread box */
+
+.emailInboxThread {
+  display: flex;
+}
 
 /* =====================
     INBOX LIST
@@ -339,6 +344,7 @@ svg:hover {
   border-right: 1px solid var(--border-subtle);
   overflow-y: auto;
   background: var(--bg-panel);
+  height: auto;
 }
 
 .inbox-toolbar {
@@ -482,6 +488,16 @@ svg:hover {
   background: var(--bg-message-head);
   color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
+}
+
+.btn:focus {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
 }
 
 .tag-private {
@@ -1133,6 +1149,7 @@ padding: 20px;
 
   /* ── COMPOSE ── */
   .compose-area { 
+    display: none;
     padding: 8px 16px 14px; 
     border-top: 1px solid var(--border); 
     background: var(--bg-primary); 
@@ -1278,6 +1295,14 @@ padding: 20px;
     color: var(--text-muted); 
     flex-shrink: 0; 
     text-align: right; 
+  }
+
+  .no-calls {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
   }
 
   .call-dir { font-size: 13px; }
@@ -1449,6 +1474,96 @@ audio {
   display: none;
   width: 895px;
 }
+
+
+@media only screen and (max-width: 767px) {
+ .workspace {
+    width: auto;
+}
+
+.desktop {
+    background-size: 500%;
+}
+
+.mail-app {
+  width: auto;
+  height: auto;
+  flex-direction: column;
+}
+
+.inbox-list {
+  width: 150px;
+  max-height: 500px;
+}
+.sidebar {
+  width: auto;
+  flex-direction: row;
+}
+
+.thread-pane {
+  max-height: 500px;
+}
+
+.messagedRevealed {
+    width: auto;
+}
+
+.teams-app {
+    flex-direction: column;
+    height: auto;
+}
+
+.activity-bar {
+    width: auto;
+    flex-direction: row;
+}
+
+.messages-waiting {
+  display: flex;
+}
+
+.activity-bar-top {
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0;
+}
+
+#chatSection {
+  display: flex;
+  width: auto;
+
+}
+
+.left-sidebar {
+  width: 80px;
+  flex-direction: column;
+}
+
+.dm-item {
+    flex-direction: column;
+}
+.chat-pane {
+    width: auto;
+    overflow: auto;
+}
+.chat-body {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 300px;
+  overflow-x: hidden;
+}
+
+.chat-answers-box {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+}
 </style>
 <body>
 <div class="workspace">
@@ -1467,18 +1582,18 @@ audio {
         </div>
         <div class="desktop">
             <div class="topBarDesktop">
-              <a class="topBarIcon home" onclick="openApps(1)">
+              <a class="topBarIcon home" onclick="openApps(1)" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M496 512H368a16 16 0 0 1-16-16V368a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v128a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V311c1.78-1.21 3.85-1.89 5.47-3.35L288 115l218.74 192.9c1.54 1.38 3.56 2 5.26 3.2V496a16 16 0 0 1-16 16z" class="fa-secondary"/><path d="M527.92 283.88L298.6 81.61a16 16 0 0 0-21.17 0L48.11 283.89a16 16 0 0 1-22.59-1.21L4.1 258.89a16 16 0 0 1 1.21-22.59l256-226a39.85 39.85 0 0 1 53.45 0L416 99.67V48a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v136.43l58.69 51.83a16 16 0 0 1 1.22 22.59l-21.4 23.82a16 16 0 0 1-22.59 1.21z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon mail" onclick="openApps(2)">
+              <a class="topBarIcon mail" onclick="openApps(2)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon teams" onclick="openApps(3)">
+              <a class="topBarIcon teams" onclick="openApps(3)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()">
-              <div class="emailAlert">
+            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
+              <div class="emailAlert" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
                 <p>New Email</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
@@ -1502,14 +1617,14 @@ audio {
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
   </nav>
-
+<div class="emailInboxThread">
   <!-- INBOX LIST -->
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
       <span class="inbox-toolbar-count">1 message</span>
     </div>
-  <div class="email-row" id="emailRow1"  onclick="swapEmails(1)">
+  <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
          <span class="unread-dot"></span>
         <span class="email-sender">Susan H</span>
@@ -1521,7 +1636,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
+      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">12:03 pm</span>
@@ -1532,7 +1647,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)">
+    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">11:47 am</span>
@@ -1544,7 +1659,7 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)">
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">11:29 am</span>
@@ -1556,7 +1671,7 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">11:14 am</span>
@@ -1568,7 +1683,7 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">10:58 am</span>
@@ -1580,7 +1695,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)">
+    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Yesterday</span>
@@ -1589,7 +1704,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow8" onclick="swapEmails(8)">
+    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Mon</span>
@@ -1601,8 +1716,8 @@ audio {
 
   <!-- THREAD PANE -->
   <div class="thread-pane">
-     <div id="thread1" class="thread-header">
-      <div class="thread-subject">First day on the job</div>
+     <div id="thread1" class="thread-header" tabindex="0">
+      <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
@@ -1612,7 +1727,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody1" class="thread-body">
+    <div id="threadBody1" class="thread-body" tabindex="0">
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
@@ -1667,7 +1782,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread2" class="thread-header">
+     <div id="thread2" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1678,7 +1793,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body">
+    <div id="threadBody2" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -1729,7 +1844,7 @@ audio {
     </div>
 
 
-     <div id="thread3" class="thread-header">
+     <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1740,7 +1855,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body">
+    <div id="threadBody3" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -1782,7 +1897,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread4" class="thread-header">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1793,7 +1908,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body">
+    <div id="threadBody4" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -1836,7 +1951,7 @@ audio {
 
     </div>
 
-    <div id="thread5" class="thread-header">
+    <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1847,7 +1962,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -1888,7 +2003,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread6" class="thread-header">
+   <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1899,7 +2014,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body">
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -1936,7 +2051,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread7" class="thread-header">
+    <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1947,7 +2062,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body">
+    <div id="threadBody7" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -1983,7 +2098,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread8" class="thread-header">
+    <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1994,7 +2109,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body">
+    <div id="threadBody8" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2027,10 +2142,10 @@ audio {
     </div><!-- end thread-body -->
 
   </div><!-- end thread-pane -->
-
+</div>
 </div><!-- end mail-app -->
 
-<div id="MJ_info_card" class="messageHidden">
+<div id="MJ_info_card" class="messageHidden"  tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy">
@@ -2047,7 +2162,7 @@ audio {
   </div>
 </div>
 
-<div id="JS_info_card" class="messageHidden">
+<div id="JS_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera.">
@@ -2064,8 +2179,7 @@ audio {
   </div>
 </div>
 
-
-<div id="AE_info_card" class="messageHidden">
+<div id="AE_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted.">
@@ -2082,7 +2196,7 @@ audio {
   </div>
 </div>
 
-<div id="PD_info_card" class="messageHidden">
+<div id="PD_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/PD_icon.png" alt="Icon of the letters PD.">
@@ -2099,8 +2213,7 @@ audio {
   </div>
 </div>
 
-
-<div id="SH_info_card" class="messageHidden">
+<div id="SH_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <div class="avatar avatar-lightblue">SH</div>
@@ -2145,11 +2258,38 @@ function SHreveal() {
 }
 
 // Close popups when clicking outside
-document.addEventListener("click", function(event) {
+// ── Keyboard trigger on buttons/toggles ──────────────────────────────
+document.addEventListener("keydown", function (event) {
+  const trigger = event.target.closest('[onclick], [data-card-trigger]');
+  if (!trigger) return;
+
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();          // stop Space from scrolling the page
+    trigger.click();                 // reuse your existing click logic
+  }
+});
+
+// ── Close on Escape ───────────────────────────────────────────────────
+document.addEventListener("keydown", function (event) {
+  if (event.key !== "Escape") return;
+
   const infocards = document.querySelectorAll('[id$="_info_card"]');
   infocards.forEach(card => {
     if (card.classList.contains("messageRevealed")) {
-      // Check if click is outside the card
+      card.classList.remove("messageRevealed");
+
+      // Return focus to the trigger that opened it
+      const trigger = document.querySelector(`[aria-controls="${card.id}"]`);
+      if (trigger) trigger.focus();
+    }
+  });
+});
+
+// ── Close on outside click ───────────
+document.addEventListener("click", function (event) {
+  const infocards = document.querySelectorAll('[id$="_info_card"]');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
       if (!card.contains(event.target) && !event.target.closest('[onclick]')) {
         card.classList.remove("messageRevealed");
       }
@@ -2157,7 +2297,45 @@ document.addEventListener("click", function(event) {
   });
 });
 
+function revealCard(cardId) {
+  const card = document.getElementById(cardId);
+  const trigger = document.querySelector(`[aria-controls="${cardId}"]`);
 
+  card.classList.toggle("messageRevealed");
+
+  // Keep aria-expanded in sync so screen readers announce the state
+  if (trigger) {
+    trigger.setAttribute("aria-expanded", card.classList.contains("messageRevealed"));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const emailRows = document.querySelectorAll('.email-row');
+    
+    emailRows.forEach(row => {
+        row.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                // Get the thread number from the row's ID (emailRow1 -> 1)
+                const threadNum = this.id.replace('emailRow', '');
+                swapEmails(threadNum);
+            }
+        });
+    });
+    
+    // Also add keyboard support to thread headers
+    const threadHeaders = document.querySelectorAll('.thread-header');
+    threadHeaders.forEach(header => {
+        header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                // Trigger reply button or other action
+                const replyBtn = this.querySelector('.btn');
+                if (replyBtn) replyBtn.click();
+            }
+        });
+    });
+});
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
@@ -2192,15 +2370,16 @@ function reply() {
 </script>
 </div>
 </div>
+
 <div class="workArea3" id="work3">                
 <div class="teams-app">
   <!-- ACTIVITY BAR -->
   <div class="activity-bar">
     <div class="activity-bar-top">
-      <div class="activity-icon active" title="Chat" onclick="setActive(this)">
+      <div class="activity-icon active" title="Chat" onclick="setActive(this)" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
       </div>
-      <div class="activity-icon" title="Calls" onclick="setActive(this)">
+      <div class="activity-icon" title="Calls" onclick="setActive(this)" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
       </div>
       <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
@@ -2214,23 +2393,23 @@ function reply() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-     <div class="dm-item active" onclick="loadDM('general', this)">
+     <div class="dm-item active" onclick="loadDM('general', this)" tabindex="0">
        <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
           <span class="dm-name">General</span>
     </div>
-    <div class="dm-item" onclick="loadDM('mark', this)">
+    <div class="dm-item" onclick="loadDM('mark', this)" tabindex="0">
       <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
       <span class="dm-name">Mark J</span>
     </div>
-    <div class="dm-item" onclick="loadDM('jordan', this)">
+    <div class="dm-item" onclick="loadDM('jordan', this)" tabindex="0">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
     </div>
-    <div class="dm-item" onclick="loadDM('audrey', this)">
+    <div class="dm-item" onclick="loadDM('audrey', this)" tabindex="0">
       <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
       <span class="dm-name">Audrey E</span>
     </div>
-    <div class="dm-item" onclick="loadDM('priya', this)">
+    <div class="dm-item" onclick="loadDM('priya', this)" tabindex="0">
       <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
       <span class="dm-name">Priya D</span>
     </div>
@@ -2270,12 +2449,12 @@ function reply() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Calls</span>
     </div>
-    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)">
+    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)" tabindex="0">
       <div class="dm-avatar av-blue">
         <svg class="phoneSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 240a72 72 0 1 0 72 72 72 72 0 0 0-72-72zm250.18-117C436.76 65 347.38 32 256 32S75.24 65 5.82 123A16.45 16.45 0 0 0 0 135.64V192a16 16 0 0 0 16 16h70.11a16 16 0 0 0 14.31-8.85L128 128c39.9-17.28 83.2-24 128-24 44.77 0 88.07 6.72 128 24l27.58 71.15a16 16 0 0 0 14.31 8.85H496a16 16 0 0 0 16-16v-56.36a16.45 16.45 0 0 0-5.82-12.64z" class="fa-secondary"/><path d="M475.78 376.62L370.43 192.25A64 64 0 0 0 314.86 160H197.14a64 64 0 0 0-55.57 32.25L36.22 376.62A32 32 0 0 0 32 392.5V448a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32v-55.5a32 32 0 0 0-4.22-15.88zM256 384a72 72 0 1 1 72-72 72 72 0 0 1-72 72z" class="fa-primary"/></svg></div>
       <span class="dm-name">Recent calls</span>
     </div>
-    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)">
+    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)" tabindex="0">
       <div class="dm-avatar av-teal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M96 224a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64zm480 32h-64a63.81 63.81 0 0 0-45.1 18.6A146.27 146.27 0 0 1 542 384h66a32 32 0 0 0 32-32v-32a64.06 64.06 0 0 0-64-64zm-512 0a64.06 64.06 0 0 0-64 64v32a32 32 0 0 0 32 32h65.9a146.64 146.64 0 0 1 75.2-109.4A63.81 63.81 0 0 0 128 256zm480-32a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64z" class="fa-secondary"/><path d="M396.8 288h-8.3a157.53 157.53 0 0 1-68.5 16c-24.6 0-47.6-6-68.5-16h-8.3A115.23 115.23 0 0 0 128 403.2V432a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48v-28.8A115.23 115.23 0 0 0 396.8 288zM320 256a112 112 0 1 0-112-112 111.94 111.94 0 0 0 112 112z" class="fa-primary"/></svg></div>
       <span class="dm-name">Contacts</span>
@@ -2294,7 +2473,7 @@ function reply() {
         </div>
       </div>
       <div class="pane-body">
-        <div class="call-time">
+        <div class="no-calls">
             <p>No calls to display</p>
         </div>
       </div><!-- /pane-body -->
@@ -2314,67 +2493,47 @@ function reply() {
       <div class="pane-body" id="contacts-list">
  
         <div class="contact-group-label">A</div>
-        <div class="contact-item" data-name="audrey e">
+        <div class="contact-item" data-name="audrey e" tabindex="0">
           <div class="contact-avatar av-coral">AE<span class="status-dot status-busy"></span></div>
           <div class="contact-info">
             <div class="contact-name">Audrey E</div>
             <div class="contact-role">Senior Analyst &middot; Busy</div>
           </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
-          </div>
         </div>
  
         <div class="contact-group-label">J</div>
-        <div class="contact-item" data-name="jordan s">
+        <div class="contact-item" data-name="jordan s" tabindex="0">
           <div class="contact-avatar av-teal">JS<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Jordan S</div>
             <div class="contact-role">Project Lead &middot; Away</div>
           </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
-          </div>
         </div>
  
         <div class="contact-group-label">M</div>
-        <div class="contact-item" data-name="mark j">
+        <div class="contact-item" data-name="mark j" tabindex="0">
           <div class="contact-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Mark J</div>
             <div class="contact-role">Operations Manager &middot; Away</div>
           </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
-          </div>
         </div>
  
         <div class="contact-group-label">P</div>
-        <div class="contact-item" data-name="priya d">
+        <div class="contact-item" data-name="priya d" tabindex="0">
           <div class="contact-avatar av-purple">PD<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Priya D</div>
             <div class="contact-role">HR Business Partner &middot; Online</div>
           </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
-          </div>
         </div>
  
         <div class="contact-group-label">S</div>
-                <div class="contact-item" data-name="susan h">
+                <div class="contact-item" data-name="susan h" tabindex="0">
           <div class="contact-avatar av-teal">SH<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Susan H</div>
             <div class="contact-role">Your manager &middot; Online</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
       </div><!-- /contacts-list -->
@@ -2479,7 +2638,7 @@ function reply() {
       placeholder: 'Message Audrey E',
       html: `
        <div class="date-divider">Older chats</div>
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Wednesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-coral">AE</div>
           <div class="chat-content">

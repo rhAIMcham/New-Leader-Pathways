@@ -73,7 +73,7 @@ body {
 }
 
 .workspace {
-  width: 1300px;
+  max-width: 1300px;
   margin: auto;
 }
 
@@ -328,6 +328,12 @@ svg:hover {
   font-weight: 600;
   padding: 1px 6px;
   border-radius: var(--radius-pill);
+}
+
+/*Inbox nd thread box */
+
+.emailInboxThread {
+  display: flex;
 }
 
 /* =====================
@@ -1471,9 +1477,7 @@ audio {
 }
 
 .missed-teams-dot {
-    position: relative;
-    bottom: 25px;
-    right: -14px;
+    position: absolute;
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -1481,6 +1485,10 @@ audio {
     font-size: 11px;
     color: white;
     text-align: center;
+}
+
+.messages-waiting {
+    display: flex;
 }
 
 .dm-avatar > svg {
@@ -1495,6 +1503,96 @@ audio {
 #phoneSection {
   display: none;
   width: 895px;
+}
+
+
+@media only screen and (max-width: 767px) {
+ .workspace {
+    width: auto;
+}
+
+.desktop {
+    background-size: 500%;
+}
+
+.mail-app {
+  width: auto;
+  height: auto;
+  flex-direction: column;
+}
+
+.inbox-list {
+  width: 150px;
+   max-height: 500px;
+}
+.sidebar {
+  width: auto;
+  flex-direction: row;
+}
+
+.thread-pane {
+  max-height: 500px;
+}
+
+.messagedRevealed {
+    width: auto;
+}
+
+.teams-app {
+    flex-direction: column;
+    height: auto;
+}
+
+.activity-bar {
+    width: auto;
+    flex-direction: row;
+}
+
+.messages-waiting {
+  display: flex;
+}
+
+.activity-bar-top {
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0;
+}
+
+#chatSection {
+  display: flex;
+  width: auto;
+
+}
+
+.left-sidebar {
+  width: 80px;
+  flex-direction: column;
+}
+
+.dm-item {
+    flex-direction: column;
+}
+.chat-pane {
+    width: auto;
+    overflow: auto;
+}
+.chat-body {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 300px;
+  overflow-x: hidden;
+}
+
+.chat-answers-box {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
 }
 
 /*Controls for message responses*/
@@ -1562,7 +1660,7 @@ audio {
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
   </nav>
-
+<div class="emailInboxThread">
   <!-- INBOX LIST -->
   <div class="inbox-list">
     <div class="inbox-toolbar">
@@ -2019,7 +2117,7 @@ audio {
     </div><!-- end thread-body -->
 
   </div><!-- end thread-pane -->
-
+</div>
 </div><!-- end mail-app -->
 
 <div id="MJ_info_card" class="messageHidden">
@@ -2194,6 +2292,7 @@ function reply() {
       <div class="activity-icon active" title="Chat" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
       </div>
+          <div class="messages-waiting">
       <div class="activity-icon" title="Calls" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
       </div>
@@ -2201,6 +2300,7 @@ function reply() {
       <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
       </div> -->
+      </div>
     </div>
   </div>
 <div id="chatSection">
