@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MCQ Single Screen</title>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<style>
+ :root{
+    --AIMblue: #4353A3;
+    --darkBlue: #38416D;
+    --teal: #5DC8B9;
+    --cream: #F1EEDE;
+    --grey: #ebebeb;
+    --rust: #AF4510;
+    --navy: #12195C;
+    --white: #ffffff;
+    --lightBlue: #AEBAE4;
+    }
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+   font-family: "IBM-Plex-Sans", sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); */
+}
+
+h1 {
+    color: var(--darkBlue);
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.legend {
+    margin-bottom: 30px;
+    padding: 30px;
+    background: #f7fafc;
+    border-radius: 8px;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.legend-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--darkBlue);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: var(--darkBlue);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+tr:nth-child(even) {
+    background-color: var(--grey); /*Grey of torment!*/
+}
+
+td:first-child {
+    font-weight: 500;
+    color: #2d3748;
+    max-width: 300px;
+}
+
+.rating-cell {
+    text-align: center;
+}
+
+.rating-btn {
+    width: 40px;
+      font-family: "IBM Plex Sans", sans-serif;
+    height: 40px;
+    border: 2px solid var(--lightBlue);
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    color:  var(--AIMblue);
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.rating-btn:hover {
+    border-color: var(--AIMblue);
+    transform: scale(1.1);
+    background: #edf2f7;
+}
+
+.rating-btn.selected {
+  background-color: #12195C;
+    border-color: #12195C;
+    color: white;
+    transform: scale(1.15);
+}
+
+
+button {
+
+
+  position: relative;
+  color: white;
+  width: 200px;
+  border: solid 2px var(--cream);
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: var(--lightBlue);
+  color: #12195C;
+  border: solid 2px #12195C;
+}
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 8px;
+    display: none;
+}
+
+.results.show {
+    display: block;
+}
+
+.results h2 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.result-item {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-label {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.result-value {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 18px;
+}
+
+.average {
+    text-align: left;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+td > h4 {
+  margin-bottom: 10px;
+}
+.firstTD {
+    width: 10px;
+}
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .rating-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">       
+        <div class="legend">
+            <div class="legend-title">Leadership self reflection</div>
+            <p>Reflecting on your leadership style, rate how accurately each statement describes you:</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question class</th>
+                    <th>1 is least accurate, 5 is most accurate.</th>
+                    <th class="rating-cell">1</th>
+                    <th class="rating-cell">2</th>
+                    <th class="rating-cell">3</th>
+                    <th class="rating-cell">4</th>
+                    <th class="rating-cell">5</th>
+                </tr>
+            </thead>
+            <tbody id="assessmentBody">
+            
+                <tr data-area="quesion1">
+                    <td rowspan="3" class="firstTD">Critical Thinking</td>
+                    <td>I switch between tasks frequently, even when I intend to focus on just one.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion2">
+                    <td>Notifications from my phone, email, or apps regularly interrupt my workflow.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion3">
+                    <td>I regularly must complete tasks which feel boring or repetitive. I find it hard to stay focused on them as a result.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion4">
+                    <td rowspan="3" class="firstTD">Critical Thinking</td>
+                    <td>I feel stressed most of the time which can affect my ability to concentrate on tasks.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion5">
+                    <td>I feel tired or have not slept well most of the time which makes it harder for me to focus or think clearly.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion6">
+                <td>My eating habits, hydration or general physical health often affect my concentration.</td>
+                <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+            </tr>
+                <tr data-area="quesion7">
+                    <td rowspan="3" class="firstTD">Critical Thinking</td>
+                    <td>My mind wanders easily, even during tasks that require sustained attention.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion8">
+                    <td>I often feel overwhelmed by competing tasks and struggle to decide where to start.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion9">
+                    <td>I sometimes need extra time to absorb information, instructions or complex ideas.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion10">
+                    <td rowspan="3" class="firstTD">Critical Thinking</td>
+                    <td>My physical or digital workspace is cluttered or chaotic in a way that disrupts my focus.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="results" id="results">
+            <div id="resultsList"></div>
+            <div class="average" id="average"></div>
+        </div>
+    </div>
+
+    <script>
+        const ratings = {};
+        const questionList = [
+            'q1',
+            'q2',
+            'q3',
+            'q4',
+            'q5',
+            'q6',
+            'q7',
+            'q8',
+            'q9',
+            'q10'
+        ];
+
+        document.querySelectorAll('.rating-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const area = row.dataset.area;
+                const value = parseInt(this.dataset.value);
+
+                row.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+
+                ratings[area] = value;
+                updateResults();
+            });
+        });
+
+        function updateResults() {
+            const ratingCount = Object.keys(ratings).length;
+            
+            if (ratingCount > 0) {
+                document.getElementById('results').classList.add('show');
+                
+                const resultsList = document.getElementById('resultsList');
+                resultsList.innerHTML = '';
+                
+                let total = 0;
+                let index = 0;
+                
+                for (const [area, value] of Object.entries(ratings)) {
+                    total += value;
+                    index++;
+                }
+
+                if (ratingCount === 10 && total < 23) {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You typically maintain strong concentration and manage distractions effectively. You likely have good systems for managing tasks, prioritising and controlling your environment. Digital interruptions and task-switching don’t easily derail you. You may still benefit from fine-tuning productivity habits or stress-management techniques, but overall you operate with clarity and consistency.</p></div>
+                    `;
+                } else if (ratingCount === 10 && total > 22 && total < 37){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You can focus well at times, but your attention fluctuates depending on context or energy levels. Digital distractions, stress or fatigue may interfere on busy days. You may struggle to prioritise or stay engaged with less interesting tasks. With a few targeted strategies you can significantly improve your consistency.</p></div>
+
+                    `;
+                }  else if  (ratingCount === 10 && total > 37){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are currently experiencing frequent challenges with sustaining attention. Multitasking, overwhelm, stress or environmental distractions may be significantly affecting your performance. You may find certain tasks harder to begin or complete due to boredom, fatigue or cognitive overload. With structured approaches you can build strong focus habits.</p></div>
+                    `;
+                }  else {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 16px;">Complete all ratings to see your total score</div>
+                        <div style="margin-top: 8px; font-size: 14px; opacity: 0.9;">${ratingCount} of 10 completed</div>
+                    `;
+                }
+            } else {
+                document.getElementById('results').classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -674,6 +674,7 @@ svg:hover {
   border-radius: var(--radius-md);
   color: var(--text-primary);
   outline: none;
+  min-height: 300px;
 }
 
 .compose-input:focus {
@@ -692,6 +693,12 @@ svg:hover {
 
 .compose-send:hover {
   opacity: 0.85;
+}
+
+.sent {
+  color: grey;
+  background-color: var(--text-muted);
+  cursor: not-allowed;
 }
 
 .messageHidden {
@@ -1737,12 +1744,12 @@ audio {
             <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send">Send</button>
+             <button class="compose-send"  id="sendBtn">Send</button>
           <span class="message-time">1:30 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <input class="compose-input" type="textarea" placeholder="Reply to Susan" />
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
     </div>
 </div>
 </div>
@@ -1759,9 +1766,9 @@ audio {
         </div>
         <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
-          <p>I wanted to check in on how your first week has gone leading the team. Still feeling good, I hope. </p>
-            <p>As you reflect on the week, it would be useful to hear what you’ve learned so far about the team, and any early patterns you’ve noticed that you might want to change or adjust in the future. </p>
-            <p>Using your completed DISC profile, answer the questions below: </p>
+          <p>I wanted to check in on how your first week has gone leading the team. Still feeling good, I hope.</p>
+          <p>As you reflect on the week, it would be useful to hear what you’ve learned so far about the team, and any early patterns you’ve noticed that you might want to change or adjust in the future.</p>
+          <p>Using your completed DISC profile, answer the questions below: </p>
             
             <ul>
                 <li>How confident did you feel leading the team?</li>
@@ -1770,10 +1777,11 @@ audio {
                 <li>Where might there need to be more structure or attention to detail?</li>
                 <li>Did you notice your natural leadership style appear when completing the activities? How might you adapt your approach to meet the different needs of your team?</li>
             </ul><br>
-            <p>Finally, is there anything you’ve observed so far that suggests what may be needed in how responsibilities are structured or communicated within the team?</p>
-          <br><p>By the way, in your own time it could be useful to go through this reflective quiz. Have a think about the questions and be sure to let me know how you went! <a href="https://rhaimcham.github.io/adaptive-leadership-techniques/adaptive_leadership_ability_diagnostic.html" target="_blank">Leadership</a></p>
+            <p>For our next one-on-one meeting, remember to fill out the self-reflection activity I’ve linked below. Be honest! This will be useful for us to discuss in the future.</p>
             <br>
             <p>Thanks, and I look forward to hearing from you. Have a good weekend!</p>
+            <a href="https://rhaimcham.github.io/adaptive-leadership-techniques/adaptive_leadership_ability_diagnostic.html" target="_blank">Self-reflection activity</a>
+            <br><br>
             <p>Thanks, </p>
           <p>Susan</p>
           <br>
@@ -2367,6 +2375,16 @@ function emailArrives() {
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
+
+const learnerReply = document.getElementById('learnerReplyTwo');  // ✅ Matches your input id
+const saveBtn = document.getElementById('sendBtn');
+
+const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
+
+saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+    saveBtn.classList.add('sent');
+});
 </script>
 </div>
 </div>

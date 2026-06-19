@@ -676,6 +676,7 @@ svg:hover {
   border-radius: var(--radius-md);
   color: var(--text-primary);
   outline: none;
+  min-height: 300px;
 }
 
 .compose-input:focus {
@@ -691,7 +692,11 @@ svg:hover {
   border-radius: var(--radius-md);
   cursor: pointer;
 }
-
+.sent {
+  color: grey;
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+}
 .compose-send:hover {
   opacity: 0.85;
 }
@@ -1731,12 +1736,12 @@ audio {
             <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send">Send</button>
+             <button class="compose-send" id="sendBtn">Send</button>
           <span class="message-time">1:30 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <input tabindex="0" class="compose-input" type="textarea" placeholder="Reply to Susan" />
+      <textarea tabindex="0" class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyOne" maxlength="50000"></textarea>
     
     </div>
 </div>
@@ -2314,6 +2319,16 @@ function emailArrives() {
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
+
+const learnerReply = document.getElementById('learnerReplyOne');  // ✅ Matches your input id
+const saveBtn = document.getElementById('sendBtn');
+
+const STORAGE_KEY_REPLY_1 = 'learnerReplyOne';
+
+saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY_REPLY_1, learnerReply.value.trim());
+     saveBtn.classList.add('sent');
+});
 </script>
 </div>
 </div>

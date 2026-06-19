@@ -1,0 +1,55 @@
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<div style="font-family: 'Quicksand', sans-serif; max-width: 700px; margin: 0 auto; padding: 1rem; background: #f8f9fa; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+  <h3 style="margin-bottom: 0.5rem;">📝 Your Notes</h3>
+
+  <textarea id="notesInput" rows="8"
+    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #ccc;
+    resize: vertical; font-size: 1rem; font-family: 'Quicksand', sans-serif;"></textarea>
+
+  <!-- Flexbox row: Saved! stays left, Save button stays right -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+    <p id="statusMsg"
+      style="
+        font-size: 0.9rem;
+        color: #28a745;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        margin: 0;
+        min-width: 60px;   /* ✅ reserves space so button doesn't move */
+      ">Saved!</p>
+    <button id="saveBtn"
+      style="background-color: #0066ff; color: white; border: none; border-radius: 6px;
+      padding: 0.5rem 1.25rem; font-size: 1rem; cursor: pointer;
+      font-family: 'Quicksand', sans-serif;">Save</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const textArea = document.getElementById('notesInput');
+  const saveBtn = document.getElementById('saveBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
+  const STORAGE_KEY = 'eNotes1';
+
+  // Load existing note (if any)
+  const savedNote = localStorage.getItem(STORAGE_KEY);
+  if (savedNote) textArea.value = savedNote;
+
+  // Save on button click
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+
+    // Fade in "Saved!"
+    statusMsg.style.opacity = '1';
+    setTimeout(() => statusMsg.style.opacity = '0', 1500);
+  });
+
+  // Optional: auto-save while typing
+  textArea.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+  });
+})();
+</script>
