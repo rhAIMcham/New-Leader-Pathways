@@ -457,89 +457,89 @@ td > h4 {
         // selected answers, and the results/score section). The Save
         // buttons are hidden just for the snapshot so they don't appear in
         // the exported image, then restored straight after.
-        async function captureQuizSnapshot() {
-            const container = document.querySelector('.container');
-            const saveBtns = [
-                document.getElementById('savePngBtn'),
-                document.getElementById('savePdfBtn')
-            ].filter(Boolean);
+        // async function captureQuizSnapshot() {
+        //     const container = document.querySelector('.container');
+        //     const saveBtns = [
+        //         document.getElementById('savePngBtn'),
+        //         document.getElementById('savePdfBtn')
+        //     ].filter(Boolean);
 
-            saveBtns.forEach(b => b.style.visibility = 'hidden');
-            try {
-                return await html2canvas(container, {
-                    backgroundColor: '#ffffff',
-                    scale: 2,
-                    useCORS: true,
-                    allowTaint: true,  // ← Add this
-                    logging: false,    // ← Suppress console warnings
-                    windowWidth: container.scrollWidth,
-                    windowHeight: container.scrollHeight
-                });
-            } finally {
-                saveBtns.forEach(b => b.style.visibility = 'visible');
-            }
-        }
+        //     saveBtns.forEach(b => b.style.visibility = 'hidden');
+        //     try {
+        //         return await html2canvas(container, {
+        //             backgroundColor: '#ffffff',
+        //             scale: 2,
+        //             useCORS: true,
+        //             allowTaint: true,  // ← Add this
+        //             logging: false,    // ← Suppress console warnings
+        //             windowWidth: container.scrollWidth,
+        //             windowHeight: container.scrollHeight
+        //         });
+        //     } finally {
+        //         saveBtns.forEach(b => b.style.visibility = 'visible');
+        //     }
+        // }
 
-        async function saveTableAsPNG() {
-            try {
-                const canvas = await captureQuizSnapshot();
-                canvas.toBlob(blob => {
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-                }, 'image/png');
-            } catch (err) {
-                console.error('PNG export failed:', err);
-                alert('Sorry, something went wrong creating the PNG. Please try again.');
-            }
-        }
+        // async function saveTableAsPNG() {
+        //     try {
+        //         const canvas = await captureQuizSnapshot();
+        //         canvas.toBlob(blob => {
+        //             const url = URL.createObjectURL(blob);
+        //             const link = document.createElement('a');
+        //             link.href = url;
+        //             link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
+        //             document.body.appendChild(link);
+        //             link.click();
+        //             document.body.removeChild(link);
+        //             URL.revokeObjectURL(url);
+        //         }, 'image/png');
+        //     } catch (err) {
+        //         console.error('PNG export failed:', err);
+        //         alert('Sorry, something went wrong creating the PNG. Please try again.');
+        //     }
+        // }
 
-        async function saveTableAsPDF() {
-            try {
-                const { jsPDF } = window.jspdf;
-                const canvas = await captureQuizSnapshot();
+        // async function saveTableAsPDF() {
+        //     try {
+        //         const { jsPDF } = window.jspdf;
+        //         const canvas = await captureQuizSnapshot();
                 
-                canvas.toBlob(blob => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        const imgData = reader.result;
-                        const pdf = new jsPDF('p', 'mm', 'a4');
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight = pdf.internal.pageSize.getHeight();
+        //         canvas.toBlob(blob => {
+        //             const reader = new FileReader();
+        //             reader.onload = () => {
+        //                 const imgData = reader.result;
+        //                 const pdf = new jsPDF('p', 'mm', 'a4');
+        //                 const pdfWidth = pdf.internal.pageSize.getWidth();
+        //                 const pdfHeight = pdf.internal.pageSize.getHeight();
 
-                        const imgProps = pdf.getImageProperties(imgData);
-                        const imgWidthMm = pdfWidth;
-                        const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
+        //                 const imgProps = pdf.getImageProperties(imgData);
+        //                 const imgWidthMm = pdfWidth;
+        //                 const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
 
-                        if (imgHeightMm <= pdfHeight) {
-                            pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
-                        } else {
-                            let position = 0;
-                            let remainingHeight = imgHeightMm;
-                            pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-                            remainingHeight -= pdfHeight;
-                            while (remainingHeight > 0) {
-                                position -= pdfHeight;
-                                pdf.addPage();
-                                pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-                                remainingHeight -= pdfHeight;
-                            }
-                        }
+        //                 if (imgHeightMm <= pdfHeight) {
+        //                     pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
+        //                 } else {
+        //                     let position = 0;
+        //                     let remainingHeight = imgHeightMm;
+        //                     pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+        //                     remainingHeight -= pdfHeight;
+        //                     while (remainingHeight > 0) {
+        //                         position -= pdfHeight;
+        //                         pdf.addPage();
+        //                         pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+        //                         remainingHeight -= pdfHeight;
+        //                     }
+        //                 }
 
-                        pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
-                    };
-                    reader.readAsDataURL(blob);
-                }, 'image/png');
-            } catch (err) {
-                console.error('PDF export failed:', err);
-                alert('Sorry, something went wrong creating the PDF. Please try again.');
-            }
-        }
+        //                 pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
+        //             };
+        //             reader.readAsDataURL(blob);
+        //         }, 'image/png');
+        //     } catch (err) {
+        //         console.error('PDF export failed:', err);
+        //         alert('Sorry, something went wrong creating the PDF. Please try again.');
+        //     }
+        // }
     </script>
 </body>
 </html>
