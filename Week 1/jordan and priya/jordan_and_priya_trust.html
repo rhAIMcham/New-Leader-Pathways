@@ -1520,6 +1520,7 @@ audio {
 
 .inbox-list {
   width: 150px;
+   max-height: 500px;
 }
 .sidebar {
   width: auto;
@@ -1537,6 +1538,8 @@ audio {
 .teams-app {
     flex-direction: column;
     height: auto;
+    width: 100%;
+    max-width: 100%;;
 }
 
 .activity-bar {
@@ -1556,8 +1559,11 @@ audio {
 
 #chatSection {
   display: flex;
-  width: auto;
+  width: 100%;
+}
 
+#phoneSection {
+   width: 100%;
 }
 
 .left-sidebar {
@@ -1589,15 +1595,6 @@ audio {
   flex-direction: column;
 }
 
-}
-
-@media only screen and (max-width: 467px) {
-  .mail-app {
-    color: red !important;
-  width: auto;
-  height: auto;
-  flex-direction: column;
-}
 }
 
 /*Controls for message responses*/
@@ -2468,11 +2465,6 @@ function reply() {
           <div class="contact-avatar av-coral">AE<span class="status-dot status-busy"></span></div>
           <div class="contact-info">
             <div class="contact-name">Audrey E</div>
-            <div class="contact-role">Senior Analyst &middot; Busy</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
  
@@ -2481,11 +2473,6 @@ function reply() {
           <div class="contact-avatar av-teal">JS<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Jordan S</div>
-            <div class="contact-role">Project Lead &middot; Away</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
  
@@ -2494,11 +2481,6 @@ function reply() {
           <div class="contact-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Mark J</div>
-            <div class="contact-role">Operations Manager &middot; Away</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
  
@@ -2507,11 +2489,6 @@ function reply() {
           <div class="contact-avatar av-purple">PD<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Priya D</div>
-            <div class="contact-role">HR Business Partner &middot; Online</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
  
@@ -2520,11 +2497,6 @@ function reply() {
           <div class="contact-avatar av-teal">SH<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Susan H</div>
-            <div class="contact-role">Your manager &middot; Online</div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn" title="Call"><i class="ti ti-phone" aria-hidden="true"></i></button>
-            <button class="contact-btn" title="Chat"><i class="ti ti-message" aria-hidden="true"></i></button>
           </div>
         </div>
       </div><!-- /contacts-list -->

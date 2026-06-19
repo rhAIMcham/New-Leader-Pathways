@@ -479,10 +479,16 @@ td > h4 {
         async function saveTableAsPNG() {
             try {
                 const canvas = await captureQuizSnapshot();
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
-                link.click();
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
             } catch (err) {
                 console.error('PNG export failed:', err);
                 alert('Sorry, something went wrong creating the PNG. Please try again.');
@@ -493,33 +499,38 @@ td > h4 {
             try {
                 const { jsPDF } = window.jspdf;
                 const canvas = await captureQuizSnapshot();
-                const imgData = canvas.toDataURL('image/png');
+                
+                canvas.toBlob(blob => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const imgData = reader.result;
+                        const pdf = new jsPDF('p', 'mm', 'a4');
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
 
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
+                        const imgProps = pdf.getImageProperties(imgData);
+                        const imgWidthMm = pdfWidth;
+                        const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
 
-                const imgProps = pdf.getImageProperties(imgData);
-                const imgWidthMm = pdfWidth;
-                const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
+                        if (imgHeightMm <= pdfHeight) {
+                            pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
+                        } else {
+                            let position = 0;
+                            let remainingHeight = imgHeightMm;
+                            pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+                            remainingHeight -= pdfHeight;
+                            while (remainingHeight > 0) {
+                                position -= pdfHeight;
+                                pdf.addPage();
+                                pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+                                remainingHeight -= pdfHeight;
+                            }
+                        }
 
-                if (imgHeightMm <= pdfHeight) {
-                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
-                } else {
-                    // If long, tile image across pages
-                    let position = 0;
-                    let remainingHeight = imgHeightMm;
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-                    remainingHeight -= pdfHeight;
-                    while (remainingHeight > 0) {
-                        position -= pdfHeight;
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-                        remainingHeight -= pdfHeight;
-                    }
-                }
-
-                pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
+                        pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
+                    };
+                    reader.readAsDataURL(blob);
+                }, 'image/png');
             } catch (err) {
                 console.error('PDF export failed:', err);
                 alert('Sorry, something went wrong creating the PDF. Please try again.');
