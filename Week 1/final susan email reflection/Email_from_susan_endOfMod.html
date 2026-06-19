@@ -2381,10 +2381,14 @@ function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
 
+const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
 const learnerReply = document.getElementById('learnerReplyTwo');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
-const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
+
+// Load existing note (if any)
+  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
+  if (savedRUN) learnerReply.value = savedRUN;
 
 saveBtn.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
@@ -2569,7 +2573,7 @@ saveBtn.addEventListener('click', () => {
      'general': {
       title: 'general',
       avatar: '<div class="chat-avatar av-coral">GEN</div>',
-      desc: 'Company-wide announcements and discussion — 24 members',
+      desc: 'Team-wide announcements and discussion — 5 members',
       placeholder: 'Message general',
       html: `
         <div class="date-divider">Yesterday</div>

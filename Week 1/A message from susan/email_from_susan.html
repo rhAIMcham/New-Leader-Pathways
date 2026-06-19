@@ -2325,15 +2325,20 @@ function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
 
+const STORAGE_KEY_REPLY_1 = 'learnerReplyOne';
 const learnerReply = document.getElementById('learnerReplyOne');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
-const STORAGE_KEY_REPLY_1 = 'learnerReplyOne';
+// Load existing note (if any)
+  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_1);
+  if (savedRUN) learnerReply.value = savedRUN;
+
 
 saveBtn.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY_REPLY_1, learnerReply.value.trim());
      saveBtn.classList.add('sent');
 });
+
 </script>
 </div>
 </div>
