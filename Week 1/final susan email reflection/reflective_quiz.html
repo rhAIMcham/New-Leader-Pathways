@@ -469,7 +469,11 @@ td > h4 {
                 return await html2canvas(container, {
                     backgroundColor: '#ffffff',
                     scale: 2,
-                    useCORS: true
+                    useCORS: true,
+                    allowTaint: true,  // ← Add this
+                    logging: false,    // ← Suppress console warnings
+                    windowWidth: container.scrollWidth,
+                    windowHeight: container.scrollHeight
                 });
             } finally {
                 saveBtns.forEach(b => b.style.visibility = 'visible');
