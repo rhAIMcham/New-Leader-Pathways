@@ -100,10 +100,10 @@ svg {
   width: 30px;
   margin: 5px;
 }
-
 svg:hover {
   fill: var(--teal);
 }
+
 .topBarDesktop {
   display: flex;
   /* From https://css.glass */
@@ -223,7 +223,7 @@ svg:hover {
 }
 
 /*email Alert*/
-.alertAppear { 
+.emailAppear { 
   opacity: 1; 
   position: relative;
   left: 20px;
@@ -232,7 +232,7 @@ svg:hover {
   z-index: 999;
 }
 
-.desktopAlert {
+.emailAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -329,7 +329,6 @@ svg:hover {
   padding: 1px 6px;
   border-radius: var(--radius-pill);
 }
-
 /*Inbox nd thread box */
 
 .emailInboxThread {
@@ -345,6 +344,7 @@ svg:hover {
   border-right: 1px solid var(--border-subtle);
   overflow-y: auto;
   background: var(--bg-panel);
+  height: auto;
 }
 
 .inbox-toolbar {
@@ -371,7 +371,7 @@ svg:hover {
   padding: 11px 14px;
   border-bottom: 1px solid var(--border-subtle);
   cursor: pointer;
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .email-row:first-of-type {
@@ -490,6 +490,16 @@ svg:hover {
   border: 1px solid var(--border-subtle);
 }
 
+.btn:focus {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
+}
+
 .tag-private {
   background: var(--bg-private-tag);
   color: var(--text-private);
@@ -521,7 +531,6 @@ svg:hover {
 #emailRow1 {
   display: block;
 }
-
 /* =====================
     MESSAGE CARDS
 ===================== */
@@ -644,6 +653,7 @@ svg:hover {
   color: var(--text-muted);
 }
 
+
 /* =====================
     COMPOSE BAR
 ===================== */
@@ -664,6 +674,7 @@ svg:hover {
   border-radius: var(--radius-md);
   color: var(--text-primary);
   outline: none;
+  min-height: 300px;
 }
 
 .compose-input:focus {
@@ -684,10 +695,15 @@ svg:hover {
   opacity: 0.85;
 }
 
+.sent {
+  color: grey;
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+}
+
 .messageHidden {
   display: none;
 }
-
 .messageRevealed {
 /* From https://css.glass */
 background: rgba(255, 255, 255, 0.85);
@@ -706,7 +722,6 @@ display: block;
   justify-content: space-between;
   border-bottom: solid 1px var(--border-subtle);
 }
-
 .keyPoints {
   margin: 15px;
   padding: 10px;
@@ -716,22 +731,21 @@ display: block;
   width: 120px;
   margin: 20px;
 }
-
 .description {
   flex: 2;
   margin: 10px;
   padding: 10px;
-}
 
+}
 .description > p{
   margin: 5px;
 }
 
-#thread2, #thread3, #thread4 {
+#thread2, #thread3, #thread4, #thread5, #thread6 {
     display: none;
 }
 
-#threadBody2, #threadBody3, #threadBody4 {
+#threadBody2, #threadBody3, #threadBody4 , #thread5, #thread6 {
     display: none;
 }
 
@@ -745,26 +759,6 @@ ul, ol {
 #learnerReply {
   width:max-content;
   height: 50px;
-}
-
-.learner {
-    border: solid grey 0px;
-}
-
-.learnerOption {
-    border: solid 1px var(--border-medium);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 5px;
-    cursor: pointer;
-    transition: 300ms ease;
-    background-color: var(--bg-selected-row);
-    color: var(--text-muted);
-}
-.learnerOption:hover {
-    background: white;
-    margin-left: 7px;
-    color: black;
 }
 
 .workArea3 {
@@ -1046,13 +1040,14 @@ padding: 20px;
   .chat-group { 
     display: flex; 
     gap: 10px; 
-    padding: 3px; 
+    padding: 3px 0; 
     align-items: flex-start; 
     border-radius: 6px; 
-    margin-top: 7px;
   }
   .chat-group:hover, .chat-cont:hover { 
     background: var(--bg-secondary);
+    margin: 0 -8px; 
+    padding: 3px 8px; 
   }
   .chat-group:hover .chat-actions, .chat-cont:hover .chat-actions { opacity: 1; }
 
@@ -1158,35 +1153,11 @@ padding: 20px;
     gap: 4px; 
   }
   .thread-reply-btn:hover { text-decoration: underline; }
-.new-message {
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-.new-message.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.typing-dots span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-right: 3px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  animation: typingBounce 1s infinite ease-in-out;
-}
-.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes typingBounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40% { transform: translateY(-3px); opacity: 1; }
-}
   /* ── COMPOSE ── */
   .compose-area { 
-    padding: 8px 0; 
+    display: none;
+    padding: 8px 16px 14px; 
     border-top: 1px solid var(--border); 
     background: var(--bg-primary); 
   }
@@ -1239,18 +1210,7 @@ padding: 20px;
     background: var(--navy); 
   }
 
-  .chat-answers-box {
-    border-radius: 8px;
-    display: flex;
-    /* flex-direction: column; */
-  }
 
-  .explainerP {
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-  }
   /* ── AVATAR COLOURS ── */
   .av-blue   { background: #B5D4F4; color: #0C447C; }
   .av-teal   { background: #9FE1CB; color: #085041; }
@@ -1342,6 +1302,14 @@ padding: 20px;
     color: var(--text-muted); 
     flex-shrink: 0; 
     text-align: right; 
+  }
+
+  .no-calls {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
   }
 
   .call-dir { font-size: 13px; }
@@ -1498,22 +1466,6 @@ padding: 20px;
 
 audio {
   margin: 10px;
-  height: 20px;
-}
-
-.missed-teams-dot {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1.5px solid white;
-    font-size: 11px;
-    color: white;
-    text-align: center;
-}
-
-.messages-waiting {
-    display: flex;
 }
 
 .dm-avatar > svg {
@@ -1548,7 +1500,7 @@ audio {
 
 .inbox-list {
   width: 150px;
-   max-height: 500px;
+  max-height: 500px;
 }
 .sidebar {
   width: auto;
@@ -1567,7 +1519,7 @@ audio {
     flex-direction: column;
     height: auto;
     width: 100%;
-    max-width: 100%;;
+    max-width: 100%;
 }
 
 .activity-bar {
@@ -1590,9 +1542,9 @@ audio {
   width: 100%;
 }
 
-#phoneSection {
-   width: 100%;
-}
+  #phoneSection {
+    width: 100%;  /* ← Add this */
+  }
 
 .left-sidebar {
   width: 80px;
@@ -1624,9 +1576,6 @@ audio {
 }
 
 }
-
-/*Controls for message responses*/
-
 </style>
 <body>
 <div class="workspace">
@@ -1645,36 +1594,26 @@ audio {
         </div>
         <div class="desktop">
             <div class="topBarDesktop">
-              <a class="topBarIcon home" onclick="openApps(1)" tabindex="0">
+              <a class="topBarIcon home" onclick="openApps(1)" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M496 512H368a16 16 0 0 1-16-16V368a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v128a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V311c1.78-1.21 3.85-1.89 5.47-3.35L288 115l218.74 192.9c1.54 1.38 3.56 2 5.26 3.2V496a16 16 0 0 1-16 16z" class="fa-secondary"/><path d="M527.92 283.88L298.6 81.61a16 16 0 0 0-21.17 0L48.11 283.89a16 16 0 0 1-22.59-1.21L4.1 258.89a16 16 0 0 1 1.21-22.59l256-226a39.85 39.85 0 0 1 53.45 0L416 99.67V48a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v136.43l58.69 51.83a16 16 0 0 1 1.22 22.59l-21.4 23.82a16 16 0 0 1-22.59 1.21z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon mail" onclick="openApps(2)" tabindex="0">
+              <a class="topBarIcon mail" onclick="openApps(2)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon teams" onclick="openApps(3)" tabindex="0">
+              <a class="topBarIcon teams" onclick="openApps(3)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" tabindex="0">
-              <div class="desktopAlert">
+            <!-- <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
+              <div class="emailAlert" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
                 <p>New Email</p>
-              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
+            
               </div>
+            </div> -->
+            <div class="workArea1" id="work1">
+              <p></p>
             </div>
-            <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertPhone()" tabindex="0">
-              <div class="desktopAlert" tabindex="0">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
-                <p>2 missed voice calls</p>
-              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
-              </div>
-            </div>
-<!--Work area 1 -->
-<div class="workArea1" id="work1">
-  <p></p>
-</div>
-
-<!--Work area 2 Email-->
 <div class="workArea2" id="work2">
 <div class="mail-app">
 
@@ -1695,12 +1634,21 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">1 message</span>
+      <span class="inbox-toolbar-count">No new messages</span>
+    </div>
+  <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
+      <div class="email-row-top">
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">12:03 pm</span>
+      </div>
+      <div class="email-subject">
+      First week wrap-up
+      </div>
+      <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
+      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
       <div class="email-row-top">
-         <span class="unread-dot"></span>
         <span class="email-sender">Susan H</span>
         <span class="email-time">12:03 pm</span>
       </div>
@@ -1710,7 +1658,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">11:47 am</span>
@@ -1722,7 +1670,7 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">11:29 am</span>
@@ -1734,7 +1682,7 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">11:14 am</span>
@@ -1746,7 +1694,7 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">10:58 am</span>
@@ -1758,7 +1706,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow6" onclick="swapEmails(6)" tabindex="0">
+    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Yesterday</span>
@@ -1767,7 +1715,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Mon</span>
@@ -1779,19 +1727,18 @@ audio {
 
   <!-- THREAD PANE -->
   <div class="thread-pane">
-
-        <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">First day on the job</div>
+     <div id="thread1" class="thread-header" tabindex="0">
+      <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" onclick="reply()" tabindex="0">&#8617; Reply</button>
+          <button class="btn" onclick="reply()">&#8617; Reply</button>
           <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody1" class="thread-body" tabindex=0>
+    <div id="threadBody1" class="thread-body" tabindex="0">
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
@@ -1801,23 +1748,72 @@ audio {
             <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send">Send</button>
+             <button class="compose-send"  id="sendBtn">Send</button>
           <span class="message-time">1:30 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <input tabindex="0" class="compose-input" type="textarea" placeholder="Reply to Susan" />
-    
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
     </div>
 </div>
 </div>
 </div>
           <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()" tabindex="0">SH</div>
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
           <div class="message-from">
             <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">12:03 pm</span>
+        </div>
+        <div class="message-body">
+          <p>Hi <span class="username">New Leader</span>, </p>
+          <p>I wanted to check in on how your first week has gone leading the team. Still feeling good, I hope.</p>
+          <p>As you reflect on the week, it would be useful to hear what you’ve learned so far about the team, and any early patterns you’ve noticed that you might want to change or adjust in the future.</p>
+          <p>Using your completed DISC profile, answer the questions below: </p>
+            
+            <ul>
+                <li>How confident did you feel leading the team?</li>
+                <li>How effectively did you communicate with others, and how did your team members respond to your approach?</li>
+                <li>How was stability and trust built within the team during this period? Where do you think the team might need more reassurance?</li>
+                <li>Where might there need to be more structure or attention to detail?</li>
+                <li>Did you notice your natural leadership style appear when completing the activities? How might you adapt your approach to meet the different needs of your team?</li>
+            </ul><br>
+            <p>For our next one-on-one meeting, remember to fill out the self-reflection activity I’ve linked below. Be honest! This will be useful for us to discuss in the future.</p>
+            <br>
+            <p>Thanks, and I look forward to hearing from you. Have a good weekend!</p>
+            <a href="https://rhaimcham.github.io/New-Leader-Pathways/Week%201/final%20susan%20email%20reflection/reflective_quiz.html" target="_blank">Self-reflection activity</a>
+            <br><br>
+            <p>Thanks, </p>
+          <p>Susan</p>
+          <br>
+          <p>Sent from my iPhone</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">First day on the job</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+
+      <!-- Private reply 1 -->
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">12:03 pm</span>
@@ -1857,9 +1853,10 @@ audio {
           <p>Sent from my iPhone</p>
         </div>
       </div>
-</div>
+    </div>
 
-     <div id="thread2" class="thread-header" tabindex="0">
+
+     <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1870,15 +1867,15 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex=0>
+    <div id="threadBody3" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar" id="MJ_icon" onclick="MJreveal()" tabindex="0"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
+          <div class="avatar" id="MJ_icon" onclick="MJreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
           <div class="message-from">
             <div class="message-name">Mark J <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:47 am</span>
         </div>
@@ -1912,7 +1909,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1923,15 +1920,15 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex=0>
+    <div id="threadBody4" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar" id="JS_icon" onclick="JSreveal()" tabindex="0"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
+          <div class="avatar" id="JS_icon" onclick="JSreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
           <div class="message-from">
             <div class="message-name">Jordan S <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:29 AM</span>
         </div>
@@ -1966,7 +1963,7 @@ audio {
 
     </div>
 
-    <div id="thread4" class="thread-header" tabindex="0">
+    <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1977,7 +1974,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex=0>
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -1985,7 +1982,7 @@ audio {
           <div class="avatar" id="AE_icon" onclick="AEreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted"></div>
           <div class="message-from">
             <div class="message-name">Audrey E <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <span class="message-time">Today, 11:14 AM</span>
         </div>
@@ -2018,7 +2015,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread5" class="thread-header" tabindex="0">
+   <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2029,15 +2026,15 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex=0>
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()" tabindex="0">PD</div>
+          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
           <div class="message-from">
             <div class="message-name">Prida D <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <span class="message-time">Today, 10:58 am</span>
         </div>
@@ -2066,7 +2063,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread6" class="thread-header" tabindex="0">
+    <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2077,10 +2074,10 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex=0>
+    <div id="threadBody7" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-navy">NL</div>
+          <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
             <div class="message-name">Newsletter <span class="message-name-to">to ALL STAFF</span></div>
             <div class="message-address">newleader@organisation.com</div>
@@ -2113,7 +2110,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread7" class="thread-header" tabindex="0">
+    <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2124,13 +2121,13 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex=0>
+    <div id="threadBody8" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
           <div class="message-from">
             <div class="message-name">Eddie F <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">9:07 am</span>
@@ -2160,7 +2157,7 @@ audio {
 </div>
 </div><!-- end mail-app -->
 
-<div id="MJ_info_card" class="messageHidden">
+<div id="MJ_info_card" class="messageHidden"  tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy">
@@ -2177,7 +2174,7 @@ audio {
   </div>
 </div>
 
-<div id="JS_info_card" class="messageHidden">
+<div id="JS_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera.">
@@ -2194,8 +2191,7 @@ audio {
   </div>
 </div>
 
-
-<div id="AE_info_card" class="messageHidden">
+<div id="AE_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/AE_icon.png" alt="Icon of a dog being patted.">
@@ -2212,7 +2208,7 @@ audio {
   </div>
 </div>
 
-<div id="PD_info_card" class="messageHidden">
+<div id="PD_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/PD_icon.png" alt="Icon of the letters PD.">
@@ -2229,8 +2225,7 @@ audio {
   </div>
 </div>
 
-
-<div id="SH_info_card" class="messageHidden">
+<div id="SH_info_card" class="messageHidden" tabindex="0">
   <div class="topBar">
   <div class="imageContainer">
     <div class="avatar avatar-lightblue">SH</div>
@@ -2356,7 +2351,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 8; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2371,7 +2366,7 @@ function swapEmails(threadNumber) {
 
 // Initialize - show first thread by default
 document.addEventListener('DOMContentLoaded', function() {
-    swapEmails(2);
+    swapEmails(1);
 });
 
 //timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
@@ -2384,11 +2379,24 @@ function emailArrives() {
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
+
+const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
+const learnerReply = document.getElementById('learnerReplyTwo');  // ✅ Matches your input id
+const saveBtn = document.getElementById('sendBtn');
+
+
+// Load existing note (if any)
+  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
+  if (savedRUN) learnerReply.value = savedRUN;
+
+saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+    saveBtn.classList.add('sent');
+});
 </script>
 </div>
 </div>
 
-<!--Work area 3 Teams-->
 <div class="workArea3" id="work3">                
 <div class="teams-app">
   <!-- ACTIVITY BAR -->
@@ -2397,15 +2405,12 @@ function reply() {
       <div class="activity-icon active" title="Chat" onclick="setActive(this)" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
       </div>
-          <div class="messages-waiting">
       <div class="activity-icon" title="Calls" onclick="setActive(this)" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M336.23 167.12L406 4.43 389.41.61a24.16 24.16 0 0 0-27.5 13.9l-48 112a23.9 23.9 0 0 0 6.91 28zM154.6 320.71a24 24 0 0 0-28-6.91l-112 48a24.3 24.3 0 0 0-14 27.61l3.8 16.49 162.81-69.77zm338.81-296.1l-55.75-12.87L362 188.23l19.39 15.87A370.59 370.59 0 0 1 204.2 381.3l-15.88-19.4-176.6 75.69 12.89 55.82A24 24 0 0 0 48 512c256.1 0 464-207.49 464-464a24 24 0 0 0-18.59-23.39z" class="fa-secondary"/><path d="M406 4.43l-69.77 162.69L362 188.23l75.66-176.49zM4.41 405.9l7.31 31.69 176.6-75.69-21.1-25.77z" class="fa-primary"/></svg>
       </div>
-      <span class="missed-teams-dot status-busy">2</span>
       <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
       </div> -->
-      </div>
     </div>
   </div>
 <div id="chatSection">
@@ -2414,23 +2419,22 @@ function reply() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-    <div class="dm-item" onclick="loadDM('audrey', this)" tabindex="0">
-      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
-      <span class="dm-name">Audrey E</span>
+     <div class="dm-item active" onclick="loadDM('general', this)" tabindex="0">
+       <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
+          <span class="dm-name">General</span>
     </div>
     <div class="dm-item" onclick="loadDM('mark', this)" tabindex="0">
       <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
       <span class="dm-name">Mark J</span>
     </div>
-      <div class="dm-item" onclick="loadDM('susan', this)" tabindex="0">
-      <div class="dm-avatar av-teal">SH<span class="status-dot status-online"></span></div>
-      <span class="dm-name">Susan H</span>
-    </div>
     <div class="dm-item" onclick="loadDM('jordan', this)" tabindex="0">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
     </div>
-
+    <div class="dm-item" onclick="loadDM('audrey', this)" tabindex="0">
+      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Audrey E</span>
+    </div>
     <div class="dm-item" onclick="loadDM('priya', this)" tabindex="0">
       <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
       <span class="dm-name">Priya D</span>
@@ -2453,15 +2457,14 @@ function reply() {
       <!-- Populated by JS on load -->
     </div>
 
-    <!-- <div class="compose-area">
+    <div class="compose-area">
       <div class="compose-box">
         <div class="chat-options">
-          <button>Option 1</button>
-          <button>O</button>
+
         </div>
-       <textarea class="compose-input-chat"  placeholder="Message general" rows="1"></textarea> 
+       
       </div>
-    </div> -->
+    </div>
   </div>
 </div>
 <!-- ── PHONE SECTION ─────────────────────────────────────────── -->
@@ -2496,54 +2499,9 @@ function reply() {
         </div>
       </div>
       <div class="pane-body">
- 
-        <div class="call-item">
-          <div class="call-avatar av-coral">AE</div>
-          <div class="call-info">
-            <div class="call-name missed">Audrey E</div>
-            <div class="call-sub">
-             
-              <span>Missed &middot; 11:42 AM</span>
-              <audio controls id="audreyVM" tabindex="0">
-                <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Audrey_voicemail_NL_mod1.mp3">
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          </div>
-          <div class="call-time">Today</div>
-          <button class="call-action" title="Call back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
-          </button>
+        <div class="no-calls">
+            <p>No calls to display</p>
         </div>
- 
-        <div class="call-item">
-          <div class="call-avatar av-blue">MJ</div>
-          <div class="call-info">
-            <div class="call-name missed">Mark J</div>
-            <div class="call-sub">
-              <span>Missed &middot; 11:05 AM</span>
-             <audio controls id="markVM" tabindex="0">
-            <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Mark_voice_generation_NL_module_1.mp3" type="audio/mp3">
-          Your browser does not support the audio element.
-          </audio>
-            </div>
-          </div>
-          <div class="call-time">Today</div>
-          <button class="call-action" title="Call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg></button>
-        </div>
-
-        <div class="call-item">
-          <div class="call-avatar av-teal">SH</div>
-          <div class="call-info">
-            <div class="call-name">Susan H</div>
-            <div class="call-sub">
-              <span>Incoming &middot; 2:00 PM &middot; 8 min</span>
-            </div>
-          </div>
-          <div class="call-time">Yesterday</div>
-          <button class="call-action" title="Call"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M144 16v64h64a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16h-64v64a16 16 0 0 1-16 16H96a16 16 0 0 1-16-16v-64H16a16 16 0 0 1-16-16V96a16 16 0 0 1 16-16h64V16A16 16 0 0 1 96 0h32a16 16 0 0 1 16 16z" class="fa-secondary"/><path d="M512 48c0 256.5-207.9 464-464 464a24 24 0 0 1-23.4-18.6l-24-104a24.29 24.29 0 0 1 14-27.6l112-48a24 24 0 0 1 28 6.9l49.6 60.6a370.61 370.61 0 0 0 177.2-177.2l-60.6-49.6a23.94 23.94 0 0 1-6.9-28l48-112A24.16 24.16 0 0 1 389.41.61l104 24A24 24 0 0 1 512 48z" class="fa-primary"/></svg></button>
-        </div>
-
       </div><!-- /pane-body -->
     </div><!-- /calls-pane -->
  
@@ -2611,87 +2569,66 @@ function reply() {
   //Scripts for chat app
   // ── DATA ──────────────────────────────────────────────────────────────
   const dms = {
-          'susan': {
-      title: 'Susan H',
-      avatar: '<div class="chat-avatar av-teal">SH</div>',
-      desc: 'Online · She/her · Joined 5 years ago',
-      placeholder: 'Message Susan H',
+     'general': {
+      title: 'general',
+      avatar: '<div class="chat-avatar av-coral">GEN</div>',
+      desc: 'Team-wide announcements and discussion — 5 members',
+      placeholder: 'Message general',
       html: `
-        <div class="date-divider">Today</div>
-        <div class="chat-group">
-          <div class="chat-avatar av-teal">SH</div>
+        <div class="date-divider">Yesterday</div>
+        <div class="chat-group" style="margin-top:8px">
+          <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Susan H</span><span class="chat-time">1:13 PM</span></div>
-            <div class="chat-text">I’ve sent through some questions to your inbox. Please respond when you have the time!</div>
-            </div>
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:45 PM</span></div>
+            <div class="chat-text">Thanks for making a group messaging space.</div>
+          </div>
+
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
-        </div>`
-    },
-   'mark': {
+        </div>
+        <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">3:01 PM</span></div>
+            <div class="chat-text">Agreed! so convenient.</div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+         <div class="date-divider">Today</div>
+         <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:15 AM</span></div>
+            <div class="chat-text">
+                <p>Agreed, good to keep up to date.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
+         `
+      },
+    'mark': {
       title: 'Mark J',
       avatar: '<div class="chat-avatar av-blue">MJ</div>',
       desc: 'Away · He/him · Joined 5 years ago',
       placeholder: 'Message Mark J',
       html: `
+      <div class="date-divider">Older chats</div>
         <div class="date-divider">Today</div>
         <div class="chat-group">
           <div class="chat-avatar av-blue">MJ</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">3:58 PM</span></div>
+            <div class="chat-text">Sent those files through, let me know if they don't arrive.</div>
           </div>
-             <div class="chat-actions">
+          <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
-          </div>
-       
-<div class="date-divider">1 missed call</div>
-               <div>
-                <div class="explainerP">
-                <p>Select the option you would send in this scenario.</p>
-                </div>
-      <div class="chat-answers-box">
-        
-        <div class="chat-options learnerOption">
-          <div onclick="mark1()" tabindex="0">
-            <p>
-                Thanks for reaching out. Things are still settling at the moment, but I’ll keep your notes in mind as I get up to speed. 
-                <br><br>
-                Let’s touch base sometime next week. In the meantime, if anything urgent comes up, feel free to send it over. 
-                <br><br>
-                Thanks. 
-                </p>
-            </div>
-            </div>
-
-            <div class="chat-options learnerOption">
-          <div onclick="mark2()" tabindex="0">
-            <p>Thank you for your message. I’ll review the procedural updates, outstanding tasks and current reporting workflows as soon as possible.  
-                <br><br>
-                Please send me your documentation and availability for a meeting this week. My goal is to finalise team responsibilities within the next two weeks, so your input will be helpful during this process. 
-                <br><br>I appreciate your assistance during this transitionary period. 
-                <br><br>Regards. 
-                </p>
-            </div>
-            </div>
-
-         <div class="chat-options learnerOption">
-          <div onclick="mark3()" tabindex="0">
-            <p>
-                Thank you for reaching out. I understand there are several items that will need attention as the team moves forward. 
-                <br><br>
-                I’m currently reviewing priorities and assessing next steps. I’ll be in touch if additional information or discussion would be helpful as plans take shape. 
-                <br><br>
-               Thank you again for your message.  
-                </p>
-            </div>
-            </div>
-
-        </div>
-      </div>
-    </div>
         </div>
         </div>`
     },
@@ -2701,12 +2638,13 @@ function reply() {
       desc: 'Away · They/them · Joined 2 years ago',
       placeholder: 'Message Jordan S',
       html: `
-        <div class="date-divider">Today</div>
+       <div class="date-divider">Older chats</div>
+        <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
-            <div class="chat-text">Hi! Looking forward to getting to know you better, let me know if you need me to jump on anything.</div>
+            <div class="chat-text">Sorry running late for our call, be on in a moment.</div>
           </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2719,81 +2657,17 @@ function reply() {
       desc: 'Busy · She/her · Joined 6 years ago',
       placeholder: 'Message Audrey E',
       html: `
-        
-        <div class="date-divider">Today</div>
+       <div class="date-divider">Older chats</div>
+        <div class="date-divider">Wednesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-coral">AE</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Audrey</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
-          </div>
-             <div class="chat-actions">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:14 AM</span></div>
+            <div class="chat-text">Saw this and thought of you! <a href="https://www.msn.com/en-au/lifestyle/lifestylegeneral/the-surprising-signs-your-cat-actually-likes-you/ar-AA1Iki4f?ocid=entnewsntp&pc=U531&cvid=6a2a2eb650114f30a6e34ed3d4af4baa&ei=22" target="_blank">Signs your cat loves you</a></div>
+            </div>
+          <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
-          </div>
-       
-<div class="date-divider">1 missed call</div>
-               <div>
-                <div class="explainerP">
-                <p>Select the option you would send in this scenario.</p>
-                </div>
-      <div class="chat-answers-box">
-        <div class="chat-options learnerOption">
-          <div onclick="audrey1()" tabindex="0">
-            <p>
-                Hey Audrey, 
-                <br><br>
-                Good to hear from you. 
-                 <br><br>
-                 Things have been busy, but I’m settling in. The team seems great so far. 
-                  <br><br>
-                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
-                   <br><br>
-                   And yes, thankfully things are finally peaceful at home. 
-                    <br><br>
-                    Talk soon. 
-                </p>
-            </div>
-            </div>
-
-            <div class="chat-options learnerOption">
-          <div onclick="audrey2()" tabindex="0">
-            <p>
-                Hi Audrey, 
-                <br><br>
-                Thanks for your message. 
-                <br><br>
-                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
-                <br><br>
-                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
-                <br><br>
-                I’m glad to hear things are going well at your end. 
-                <br><br>
-                Best regards. 
-                </p>
-            </div>
-            </div>
-
-         <div class="chat-options learnerOption">
-          <div onclick="audrey3()" tabindex="0">
-            <p>
-                Hi Audrey, 
-                <br><br>
-                Thanks for reaching out. 
-                <br><br>
-                It’s been an interesting first few days, and I’m slowly getting more familiar with the team and our new priorities. Hopefully there will be opportunities to catch up with the team in the future. 
-                <br><br>
-                Wishing you all the best, and we’ll organise time this week to discuss next steps. 
-                <br><br>
-                Regards. 
-                </p>
-            </div>
-            </div>
-
-        </div>
-      </div>
-    </div>
-        </div>
         </div>`
     },
     'priya': {
@@ -2802,12 +2676,13 @@ function reply() {
       desc: 'Online · She/her · Joined 3 years ago',
       placeholder: 'Message Priya D',
       html: `
-        <div class="date-divider">Today</div>
+      <div class="date-divider">Older chats</div>
+        <div class="date-divider">Wednesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Congratulations on joining the team.</div>
+            <div class="chat-text">Sent through those tables you asked for.</div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2875,9 +2750,6 @@ function reply() {
     clearActive();
     el.classList.add('active');
     setChat(dms[name]);
-
-     // Reload the icon token after HTML is inserted
-  loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill');
   }
 
   function setActive(el) {
@@ -2896,538 +2768,17 @@ function reply() {
       phoneSection.style.display = 'none';
     } else {
       chatSection.style.display = 'none';
-      phoneSection.style.display = 'flex';
+        phoneSection.style.display = 'flex';
     }
   }
-
-function playAudio() {
-   const audio = document.getElementById("audreyVM");
-   if (audio) {
-     audio.play().catch(error => console.log("Audio play failed:", error));
-   } else {
-     console.log("Audio element not found");
-   }
-}
-
- const username = localStorage.getItem("riseUserName") || "nl test";
- const lastInitial = localStorage.getItem("lastInitialToken") || "a";
- const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
-
-//Mark responses
-//Mark responses
-function mark1() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['mark'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>Hi Mark,
-                <br><br>
-                Thanks for reaching out. Things are still settling at the moment, but I’ll keep your notes in mind as I get up to speed. 
-                <br><br>
-                Let’s touch base sometime next week. In the meantime, if anything urgent comes up, feel free to send it over. 
-                <br><br>
-                Thanks. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['mark'].html + `
-    <div class="chat-group typing-indicator" id="typing-mark">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  setTimeout(() => {
-    const indicator = document.getElementById('typing-mark');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-        Hello, 
-        <br>
-        I understand you’re still getting settled; however I must admit I was hoping for a more concrete discussion given the substantial issues currently affecting the team. 
-        <br><br>
-        Several of these matters have been awaiting direction prior to the restructure, and postponing decisions may create additional complications. I’ve already compiled the relevant documentation and recommendations, so I’ll send them through.  
-        <br><br>
-        I trust they’ll receive the attention they require. 
-        <br><br>
-        Mark</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-
-function mark2() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['mark'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>Thank you for your message. I’ll review the procedural updates, outstanding tasks and current reporting workflows as soon as possible.  
-                <br><br>
-                Please send me your documentation and availability for a meeting this week. My goal is to finalise team responsibilities within the next two weeks, so your input will be helpful during this process. 
-                <br><br>I appreciate your assistance during this transitionary period. 
-                <br><br>Regards. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['mark'].html + `
-    <div class="chat-group typing-indicator" id="typing-mark">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  setTimeout(() => {
-    const indicator = document.getElementById('typing-mark');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Thank you for your response. 
-            <br><br>
-            I’ll forward the documentation this afternoon and can make myself available for a meeting later this week. The materials include the current procedures, outstanding action items, and recommendations regarding team responsibilities.
-            <br><br>
-            Preserving continuity during this period will be important, so I appreciate your perspective. 
-            <br><br>
-            Mark</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-
-function mark3() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['mark'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>
-                Thank you for reaching out. I understand there are several items that will need attention as the team moves forward. 
-                <br><br>
-                I’m currently reviewing priorities and assessing next steps. I’ll be in touch if additional information or discussion would be helpful as plans take shape. 
-                <br><br>
-               Thank you again for your message.  
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['mark'].html + `
-    <div class="chat-group typing-indicator" id="typing-mark">
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-setTimeout(() => {
-    const indicator = document.getElementById('typing-mark');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-blue">MJ</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Thank you for your reply. 
-            <br><br>
-            I understand there is a great deal to evaluate during a restructure period. Existing responsibilities and procedures must be adapted for the new team, so careful assessment is certainly appropriate before any significant decisions are made. 
-            <br><br>
-            I’ve retained detailed records of the current workflows, should they become useful as you continue your review. I am always available for advice, so please don’t hesitate to reach out if you find additional context would be helpful. 
-            <br><br>
-            Best regards, 
-            <br><br>
-            Mark</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-//Audrey responses
-function audrey1() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['audrey'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-                      <p>
-                Hey Audrey, 
-                <br><br>
-                Good to hear from you. 
-                 <br><br>
-                 Things have been busy, but I’m settling in. The team seems great so far. 
-                  <br><br>
-                  Catch-up drinks sound nice. Things are a bit hectic at the moment, but we’ll figure something out one of these days. 
-                   <br><br>
-                   And yes, thankfully things are finally peaceful at home. 
-                    <br><br>
-                    Talk soon. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['audrey'].html + `
-    <div class="chat-group typing-indicator" id="typing-audrey">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  setTimeout(() => {
-    const indicator = document.getElementById('typing-audrey');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Hey, 
-            <br><br>
-            Glad to hear you’ve survived! No rush on the drinks – just let me know when things calm down. 
-            <br><br>
-            Take care, and don’t let management change you too much. 
-            <br><br>
-            Audrey</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-
-function audrey2() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['audrey'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>
-                Hi Audrey, 
-                <br><br>
-                Thanks for your message. 
-                <br><br>
-                I appreciate you checking in. The transition has been going well, and of course the team has been very welcoming. 
-                <br><br>
-                As for drinks, I’d be happy to join a team social event in the future, though my schedule is pretty full at the moment. In the meantime, I look forward to working together as we settle into our new roles.
-                <br><br>
-                I’m glad to hear things are going well at your end. 
-                <br><br>
-                Best regards. 
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['audrey'].html + `
-    <div class="chat-group typing-indicator" id="typing-audrey">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  setTimeout(() => {
-    const indicator = document.getElementById('typing-audrey');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Hi, 
-            <br><br>
-            Thanks for the reply. 
-            <br><br>
-            I’m glad to hear it’s have been going well and that everyone else in the team has been welcoming. I understand things must be busy right now. 
-            <br><br>
-            It’ll be interesting to see how our new workflow develops over the coming months. I look forward to working together and supporting the team’s success however I can. 
-            <br><br>
-            Don’t be a stranger, 
-            <br><br>
-            Audrey.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-
-function audrey3() {
-  const chatBody = document.getElementById('chat-body');
-
-  dms['audrey'].html = `
-    <div class="date-divider">Today</div>
-    <div class="chat-group">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    <div class="chat-group learner">
-      <div class="chat-avatar av-teal">${userIcon}</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">
-           <p>
-               Hi Audrey, 
-                <br><br>
-                Thanks for reaching out. 
-                <br><br>
-                It’s been an interesting first few days, and I’m slowly getting more familiar with the team and our new priorities. Hopefully there will be opportunities to catch up with the team in the future. 
-                <br><br>
-                Wishing you all the best, and we’ll organise time this week to discuss next steps. 
-                <br><br>
-                Regards.
-                </p>
-            </div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-  `;
-
-  chatBody.innerHTML = dms['audrey'].html + `
-    <div class="chat-group typing-indicator" id="typing-audrey">
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-  `;
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  setTimeout(() => {
-    const indicator = document.getElementById('typing-audrey');
-    if (indicator) indicator.remove();
-
-    const newMsgHTML = `
-      <div class="chat-avatar av-coral">AE</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-            Hi, 
-            <br><br>
-            Thanks for getting back to me. It’s good to hear things are settling in. I imagine there’s a lot to take in with the new role.  
-            <br><br>
-            Hopefully we’ll get a chance to catch up at some point, whether it’s at a team event or otherwise. Until then, good luck with everything. 
-            <br><br>
-            Take care, 
-            <br><br>
-            Audrey.</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    `;
-
-    const newMsgEl = document.createElement('div');
-    newMsgEl.className = 'chat-group new-message';
-    newMsgEl.style.marginTop = '8px';
-    newMsgEl.innerHTML = newMsgHTML;
-    chatBody.appendChild(newMsgEl);
-
-    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
-  }, 1400);
-}
-// Load default channel on startup
-setChat(dms['susan']);
+  // Load default channel on startup
+  setChat(dms['general']);
 
 </script>
-</div>
-</div>
-</div>
-</div>
+               </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
 // Live clock
@@ -3466,31 +2817,24 @@ function openApps(appNumber) {
 
 // Initialize - show mail app by default
 document.addEventListener('DOMContentLoaded', function() {
-    openApps(3);
+    openApps(2);
 });
 
 
-//--Alerts control area --//
+//Email alert functions
 
-//Controls appearance of popup email
+//Controls appearance of popup
 function openEmail() {
- document.getElementById("emailAlert").classList.add('alertAppear');
+ document.getElementById("emailAlert").classList.add('emailAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
-function openTeams() {
-  document.getElementById("teamsAlert").classList.add('alertAppear');
-  document.getElementById("teamsAlert").classList.remove("hideMe");
-}
-
 //Ensure pop closes when clicked on or if desktop is clicked
-function closeAlert(alertId = "emailAlert") {
-  const alert = document.getElementById(alertId);
-  alert.classList.remove('alertAppear');
-  alert.classList.add("hideMe");
+function closeEmail() {
+  document.getElementById("emailAlert").classList.remove('emailAppear');
+  document.getElementById("emailAlert").classList.add("hideMe");
 }
 
-//Email alert functionality
 function clickEmailAlert() {
    for (let i = 1; i <= 3; i++) {
         document.getElementById(`work${i}`).style.display = 'none';
@@ -3499,41 +2843,12 @@ function clickEmailAlert() {
     // Show selected work area
     document.getElementById('work2').style.display = 'flex';
     swapEmails(1);
-    closeAlert("emailAlert");
+    closeEmail();
 }
-
-//teams alert functionality for missed calls specifically
-function clickTeamsAlertPhone() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-     // Show phone section instead of chat
-    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
-    setActive(phoneIcon);
-
-    closeAlert("teamsAlert");
-}
-
-function clickTeamsAlertChat() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-    closeAlert("teamsAlert");
-}
-
 function initiate() {
-  openTeams();
+  openEmail();
+  emailArrives();
 }
-
-
 
 (function () {
   function loadNote(storageKey, displayClass) {
