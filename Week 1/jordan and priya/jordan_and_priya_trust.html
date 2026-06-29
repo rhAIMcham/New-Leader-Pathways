@@ -1503,6 +1503,35 @@ audio {
   width: 895px;
 }
 
+
+/*Typing delay styling*/
+.new-message {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.new-message.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.typing-dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 3px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typingBounce 1s infinite ease-in-out;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+
 @media only screen and (max-width: 767px) {
  .workspace {
     width: auto;
@@ -2301,7 +2330,7 @@ function reply() {
       </div>
       
       <!-- <div class="activity-icon" title="Apps" onclick="setActive(this)">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M306.67 352H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 192H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 32H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zM125.33 192H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24z" class="fa-secondary"/><path d="M488 352H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM306.67 192H205.33a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.34a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24zM488 32H386.67a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24H488a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm-362.67 0H24A24 24 0 0 0 0 56v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24V56a24 24 0 0 0-24-24zm0 320H24a24 24 0 0 0-24 24v80a24 24 0 0 0 24 24h101.33a24 24 0 0 0 24-24v-80a24 24 0 0 0-24-24z" class="fa-primary"/></svg>
       </div> -->
     </div>
   </div>
@@ -2429,7 +2458,7 @@ function reply() {
             </div>
           </div>
           <div class="call-time">Today</div>
-          <button class="call-action" title="Call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg></button>
+          <button class="call-action" title="Call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.9-28l48-112A24.16 24.16 0 0 1 389.41.61l104 24A24 24 0 0 1 512 48z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg></button>
         </div>
 
         <div class="call-item">
@@ -2577,7 +2606,8 @@ function reply() {
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+            <div class="chat-text">
+              <p>Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in.</p> </div>
           </div>
              <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2630,10 +2660,10 @@ function reply() {
               <br>Thank you for raising this. 
               <br><br>
             Over the next week I’ll be reviewing team responsibilities and our priority workstreams. Until then, please continue leading the tasks assigned to you, and escalate any issues that may affect deadlines or delivery. 
-                <br><br>
-                I am also scheduling one-on-one meetings this week to discuss workload, priorities and other areas where additional support or clarification may be needed. My goal is to ensure all responsibilities within the team are clearly defined and distributed appropriately.
-                <br><br>   Please let me know your availability. 
-                <br><br>Regards. 
+              <br><br>
+              I am also scheduling one-on-one meetings this week to discuss workload, priorities and other areas where additional support or clarification may be needed. My goal is to ensure all responsibilities within the team are clearly defined and distributed appropriately.
+              <br><br>   Please let me know your availability. 
+              <br><br>Regards. 
                 </p>
             </div>
             </div>
@@ -2642,11 +2672,13 @@ function reply() {
           <div onclick="jordan3()">
             <p>Hello Jordan, 
               <br><br>Thank you for your message. 
-              <br><br>I’m currently reviewing team structure and priorities, to get a better understanding of where responsibilities and resources are best aligned. 
+              <br><br>
+              I’m currently reviewing team structure and priorities, to get a better understanding of where responsibilities and resources are best aligned. 
               
-              <br><br>In the meantime, please continue to raise any questions or concerns as they arise. I appreciate your patience while the broader picture takes shape. 
-                <br><br>
-               Regards. 
+              <br><br>
+              In the meantime, please continue to raise any questions or concerns as they arise. I appreciate your patience while the broader picture takes shape. 
+              <br><br>
+              Regards. 
                 </p>
             </div>
             </div>
@@ -2844,35 +2876,10 @@ function playAudio() {
  const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
 //jordan responses
+//jordan responses
 function jordan1() {
+  const chatBody = document.getElementById('chat-body');
 
-  // Add new messages to the jordan DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-teal">JS</div>
-      <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
-        <div class="chat-text">
-        Hello, 
-        <br><br>
-        Thanks for getting back to me. 
-        <br><br>
-        I was hoping for a bit more clarity on immediate expectations, given current delivery timelines, but I understand you’re still settling in. 
-        <br><br>
-        Please let me know when you’re able to provide clearer direction.  
-       <br><br>
-        Thanks, 
-        <br><br>
-        Jordan</div>
-      </div>
-      <div class="chat-actions">
-        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-      </div>
-    </div>
-    </div>
-  `;
-
-  // Update the jordan DM HTML (remove old messages and buttons, add new ones)
   dms['jordan'].html = `
   <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -2892,12 +2899,12 @@ function jordan1() {
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
        <div class="chat-text">
               <p>Hi,  
-               <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
                 <br><br>
                 Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
-               <br><br>
+                <br><br>
                 Thanks,
-               <br><br>
+                <br><br>
                 Jordan.</p> </div>
       </div>
       <div class="chat-actions">
@@ -2925,42 +2932,60 @@ function jordan1() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
-    `;
+  `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['jordan'].html;
+  chatBody.innerHTML = dms['jordan'].html + `
+    <div class="chat-group typing-indicator" id="typing-jordan">
+      <div class="chat-avatar av-teal">JS</div>
+      <div class="chat-content">
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
   chatBody.scrollTop = chatBody.scrollHeight;
-}
 
-function jordan2() {
-  // Add new messages to the jordan DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-jordan');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
       <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-          <p>Hi,  
-            <br><br>Thank you for the clear outline and for scheduling time to discuss this further. 
-            <br><br>
-            I appreciate the intention to clarify ownership across the team, because it really will help to have a timeframe for when responsibilities will be reviewed. I did also want to mention that the workload has been quite high during the restructuring period, and there might have been some confusion over assigned tasks in the team.  
-            <br><br>I’ll send through my availability shortly. 
-            <br><br>
-            Thanks again, 
-            <br><br>
-            Jordan</p></div>
+        Hello, 
+        <br><br>
+        Thanks for getting back to me. 
+        <br><br>
+        I was hoping for a bit more clarity on immediate expectations, given current delivery timelines, but I understand you’re still settling in. 
+        <br><br>
+        Please let me know when you’re able to provide clearer direction.  
+       <br><br>
+        Thanks, 
+        <br><br>
+        Jordan</div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
-    </div>
-    </div>
-  `;
+    `;
 
-  // Update the jordan DM HTML (remove old messages and buttons, add new ones)
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
+
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
+
+function jordan2() {
+  const chatBody = document.getElementById('chat-body');
+
   dms['jordan'].html = `
   <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -2983,7 +3008,7 @@ function jordan2() {
                 <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
                 <br><br>
                 Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
-               <br><br>
+                <br><br>
                 Thanks,
                 <br><br>
                 Jordan.</p> </div>
@@ -3014,44 +3039,59 @@ function jordan2() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
-    `;
+  `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['jordan'].html;
+  chatBody.innerHTML = dms['jordan'].html + `
+    <div class="chat-group typing-indicator" id="typing-jordan">
+      <div class="chat-avatar av-teal">JS</div>
+      <div class="chat-content">
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
   chatBody.scrollTop = chatBody.scrollHeight;
-}
 
-function jordan3() {
-  // Add new messages to the jordan DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-jordan');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
       <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            <p>Hi, 
-              <br><br>
-              Thank you for the update. I understand you’re still reviewing the new team structure, but I was hoping for a bit more clarity on immediate expectations, given current delivery timelines. 
-              <br><br>
-              Recently, it’s been challenging to assess what should take priority day-to-day, and I’m concern that important tasks may be overlocked in the intermediate period. 
-              <br><br>
-              I’ll continue to flag any issues as they arise and look forward to a moving in a concrete direction. 
-              <br><br>
-              Regards, 
+          <p>Hi,  
+            <br><br>Thank you for the clear outline and for scheduling time to discuss this further. 
+            <br><br>
+            I appreciate the intention to clarify ownership across the team, because it really will help to have a timeframe for when responsibilities will be reviewed. I did also want to mention that the workload has been quite high during the restructuring period, and there might have been some confusion over assigned tasks in the team.  
+            <br><br>
+            I’ll send through my availability shortly. 
+            <br><br>
+            Thanks again, 
             <br><br>
             Jordan</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
-    </div>
-    </div>
-  `;
+    `;
 
-  // Update the jordan DM HTML (remove old messages and buttons, add new ones)
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
+
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
+
+function jordan3() {
+  const chatBody = document.getElementById('chat-body');
+
   dms['jordan'].html = `
   <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -3071,7 +3111,7 @@ function jordan3() {
         <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
        <div class="chat-text">
               <p>Hi,  
-                <br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
+                <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
                 <br><br>
                 Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
                 <br><br>
@@ -3102,45 +3142,59 @@ function jordan3() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
-    `;
+  `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['jordan'].html;
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-//priya responses
-function priya1() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
-      <div class="chat-avatar av-purple">PD</div>
+  chatBody.innerHTML = dms['jordan'].html + `
+    <div class="chat-group typing-indicator" id="typing-jordan">
+      <div class="chat-avatar av-teal">JS</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-jordan');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
+      <div class="chat-avatar av-teal">JS</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-          <p>Hello, 
-                <br><br>
-                Thanks for the update. 
-                <br><br>
-                I understand you’re still getting across the role, and I appreciate the intention to avoid unnecessary changes. At the same time, I’d value a clearer understanding of expectations, priorities and how you’d like to stay informed on progress as you settle in. 
-                <br><br>
-                I’ve been managing my work fairly independently, so some guidance on your preferred approach would be helpful to ensure we’re aligned and avoid assumptions on either side. 
-                <br><br>
-                Thanks, 
-                <br><br>
-                Priya</p></div>
+            <p>Hi, 
+              <br><br>
+              Thank you for the update. I understand you’re still getting across the role, and I appreciate the intention to avoid unnecessary changes. At the same time, I’d value a clearer understanding of expectations, priorities and how you’d like to stay informed on progress as you settle in. 
+              <br><br>
+              I’ve been managing my work fairly independently, so some guidance on your preferred approach would be helpful to ensure we’re aligned and avoid assumptions on either side. 
+              <br><br>
+              Thanks, 
+              <br><br>
+              Jordan</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
-    </div>
-    </div>
-  `;
+    `;
 
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
+
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
+
+//priya responses
+function priya1() {
+  const chatBody = document.getElementById('chat-body');
+
   dms['priya'].html = `
   <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -3159,7 +3213,7 @@ function priya1() {
        <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
-         <div class="chat-text">
+        <div class="chat-text">
         <p>
           Hello, 
           <br><br>
@@ -3182,7 +3236,8 @@ function priya1() {
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
                       <p>Hi Priya, 
-              <br><br>Thanks for the note. 
+              <br><br>
+              Thanks for the note. 
                <br><br>
                That sounds fine for now – no need to shake things up too much at this stage. I’m still getting across everything, so I’ll keep tasks as they are and step in when needed. 
                 <br><br>
@@ -3196,45 +3251,60 @@ function priya1() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
-    `;
+  `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
+  chatBody.innerHTML = dms['priya'].html + `
+    <div class="chat-group typing-indicator" id="typing-priya">
+      <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
   chatBody.scrollTop = chatBody.scrollHeight;
-}
 
-function priya2() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-priya');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
       <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            <p>Hi, 
-              <br><br>
-              I’ve noted your request for a detailed breakdown of current work. 
-              <br><br>
-              I’ll put something together, though I do want to flag that I’m already tracking my workload and deliverables effectively through existing systems. A full breakdown feels quite excessive and may affect my ability to complete current tasks. 
-              <br><br>
-              I also want to be clear that I have always been accountable for my work, and increased monitoring does not reflect how I’ve been successfully operating to date. 
-              <br><br>
-              Regards, 
-              <br><br>
-              Priya 
-              </p></div>
+          <p>Hello, 
+                <br><br>
+                Thanks for the update. 
+                <br><br>
+                I understand you’re still getting across the role, and I appreciate the intention to avoid unnecessary changes. At the same time, I’d value a clearer understanding of expectations, priorities and how you’d like to stay informed on progress as you settle in. 
+                <br><br>
+                I’ve been managing my work fairly independently, so some guidance on your preferred approach would be helpful to ensure we’re aligned and avoid assumptions on either side. 
+                <br><br>
+                Thanks, 
+                <br><br>
+                Priya</p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
-    </div>
-    </div>
-  `;
+    `;
 
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
+
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
+
+function priya2() {
+  const chatBody = document.getElementById('chat-body');
+
   dms['priya'].html = `
   <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -3276,7 +3346,8 @@ function priya2() {
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
                     <p>Hi Priya,
-                      <br><br>Thanks for your message. 
+                      <br><br>
+                      Thanks for your message. 
               <br><br>
               I’ll be reviewing team responsibilities over the next week, so expect some communication from me at the end of that period. 
               <br><br>
@@ -3294,48 +3365,61 @@ function priya2() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
-    `;
+  `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
+  chatBody.innerHTML = dms['priya'].html + `
+    <div class="chat-group typing-indicator" id="typing-priya">
+      <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
   chatBody.scrollTop = chatBody.scrollHeight;
-}
 
-function priya3() {
-  // Add new messages to the priya DM data structure
-  const newMessages = `
-    <div class="chat-group" style="margin-top:8px">
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-priya');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
       <div class="chat-avatar av-purple">PD</div>
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-           <p>Hello, 
-            <br><br>
-            Thanks for your reply. 
-            <br><br>
-            That approach works for me. I’m comfortable with my current workflow while things are being reviewed, and I appreciate not making any immediate changes while you get across everything. 
-            <br><br>
-            I’ll continue flagging any issues that come up, but otherwise run things as they are on my end. 
-            <br><br>
-            Let me know if you need anything further. 
-            <br><br>
-            Regards, 
-            <br><br>
-            Priya 
-            </p>
-            </div>
+            <p>Hi, 
+              <br><br>
+              I’ve noted your request for a detailed breakdown of current work. 
+              <br><br>
+              I’ll put something together, though I do want to flag that I’m already tracking my workload and deliverables effectively through existing systems. A full breakdown feels quite excessive and may affect my ability to complete current tasks. 
+              <br><br>
+              I also want to be clear that I have always been accountable for my work, and increased monitoring does not reflect how I’ve been successfully operating to date. 
+              <br><br>
+              Regards, 
+              <br><br>
+              Priya 
+              </p></div>
       </div>
       <div class="chat-actions">
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
-    </div>
-    </div>
-  `;
+    `;
 
-  // Update the priya DM HTML (remove old messages and buttons, add new ones)
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
+
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
+
+function priya3() {
+  const chatBody = document.getElementById('chat-body');
+
   dms['priya'].html = `
  <div class="date-divider">Yesterday</div>
         <div class="chat-group">
@@ -3392,16 +3476,60 @@ function priya3() {
         <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
       </div>
     </div>
-    
-    ${newMessages}
+  `;
+
+  chatBody.innerHTML = dms['priya'].html + `
+    <div class="chat-group typing-indicator" id="typing-priya">
+      <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-text typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    const indicator = document.getElementById('typing-priya');
+    if (indicator) indicator.remove();
+
+    const newMsgHTML = `
+      <div class="chat-avatar av-purple">PD</div>
+      <div class="chat-content">
+        <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">2:15 PM</span></div>
+        <div class="chat-text">
+           <p>Hello, 
+            <br><br>
+            Thanks for your reply. 
+            <br><br>
+            That approach works for me. I’m comfortable with my current workflow while things are being reviewed, and I appreciate not making any immediate changes while you get across everything. 
+            <br><br>
+            I’ll continue flagging any issues that come up, but otherwise run things as they are on my end. 
+            <br><br>
+            Let me know if you need anything further. 
+            <br><br>
+            Regards, 
+            <br><br>
+            Priya 
+            </p>
+            </div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+      </div>
     `;
 
-  // Refresh the current chat display
-  const chatBody = document.getElementById('chat-body');
-  chatBody.innerHTML = dms['priya'].html;
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
+    const newMsgEl = document.createElement('div');
+    newMsgEl.className = 'chat-group new-message';
+    newMsgEl.style.marginTop = '8px';
+    newMsgEl.innerHTML = newMsgHTML;
+    chatBody.appendChild(newMsgEl);
 
+    requestAnimationFrame(() => newMsgEl.classList.add('visible'));
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
+  }, 1400);
+}
 // Load default channel on startup
 setChat(dms['jordan']);
 
