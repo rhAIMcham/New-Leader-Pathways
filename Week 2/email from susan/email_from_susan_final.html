@@ -232,8 +232,7 @@ svg:hover {
   z-index: 999;
 }
 
-
-.desktopAlert {
+.emailAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -249,7 +248,6 @@ svg:hover {
   text-align: center;
   line-height: 2.5;
 }
-
 
 /*PH for now but will be generic black workspace*/
 
@@ -531,7 +529,7 @@ svg:hover {
     FIRST THREAD HIDDEN
 ===================== */
 #emailRow1 {
-  display: block;
+  display: none;
 }
 /* =====================
     MESSAGE CARDS
@@ -1585,8 +1583,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">10:30</div>
-            <div class="lock-date" id="lockDate">Tuesday</div>
+            <div class="lock-time" id="lockTime">13:50</div>
+            <div class="lock-date" id="lockDate">Friday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1606,12 +1604,13 @@ audio {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-<div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
-              <div class="desktopAlert">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
-                <p>1 new message</p>
+            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
+              <div class="emailAlert" tabindex=0>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
+                <p>New Email</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
-              </div>            </div>
+              </div>
+            </div>
             <div class="workArea1" id="work1">
               <p></p>
             </div>
@@ -1635,12 +1634,24 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">No new messages</span>
+      <span class="inbox-toolbar-count">1 message</span>
     </div>
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
+         <span class="unread-dot"></span>
         <span class="email-sender">Susan H</span>
-        <span class="email-time">Friday</span>
+        <span class="email-time">1:15 pm</span>
+      </div>
+      <div class="email-subject">
+      Second week check-in
+      </div>
+      <div class="email-preview">Hey <span class="username">New Leader</span>. Just wanted to check...</div>
+    </div>
+
+      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
       First week wrap-up
@@ -1648,10 +1659,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">Wednesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
       First day on the job
@@ -1659,10 +1670,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
-        <span class="email-time">Wednesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1671,10 +1682,10 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
-        <span class="email-time">Wednesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1683,10 +1694,10 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
-        <span class="email-time">Wednesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1695,10 +1706,10 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
-        <span class="email-time">Wednesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1707,19 +1718,19 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
-        <span class="email-time">Tuesday</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">Your weekly digest</div>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
+    <div class="email-row" id="emailRow9" onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
-        <span class="email-time">Mon</span>
+        <span class="email-time">Last week</span>
       </div>
       <div class="email-subject">Induction pack</div>
       <div class="email-preview">Dear <span class="username">New Leader</span>, Congratulations on...</div>
@@ -1729,11 +1740,11 @@ audio {
   <!-- THREAD PANE -->
   <div class="thread-pane">
      <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">First week wrap-up</div>
+      <div class="thread-subject">Second week check-in</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
+          <button class="btn" onclick="reply()">&#8617; Reply</button>
           <button class="btn">&#8943;</button>
         </div>
       </div>
@@ -1750,11 +1761,66 @@ audio {
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
              <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:30 pm</span>
+          <span class="message-time">1:15 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwoWeek2" maxlength="50000"></textarea>
+    </div>
+</div>
+</div>
+</div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">1:46 pm</span>
+        </div>
+        <div class="message-body">
+          <p>Hi <span class="username">New Leader</span>, </p>
+          <p>Just wanted to check in and make sure you second week has gone well. I know we had a couple of difficult days, but you got the team through it. </p>
+          <br>
+          <p>Reflecting on the stresses of the week, think about how you might improve or evolve the team culture. What about your team dynamic works well? What are elements you've seen or experienced in other teams you would want to introduce here? How would you account for the variety of personality types and communication styles?</p>
+          <br>
+          <p>Enjoy your weekend and see you on Monday,</p>
+          <p>Susan</p>
+          <br>
+          <p>Sent from my iPhone</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">First week wrap-up</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          <button class="btn" ">&#8617; Reply</button>
+          <button class="btn">&#8943;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+      <div id="replyBody">
+ <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+          <div class="message-from">
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
+            <div class="message-address">sh@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+             <button class="compose-send"  id="sendBtn">Send</button>
+          <span class="message-time">1:50 pm</span>
+        </div>
+        <div class="message-body">
+        <div class="compose-bar">
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan"  maxlength="50000"></textarea>
     </div>
 </div>
 </div>
@@ -1794,8 +1860,7 @@ audio {
         </div>
       </div>
 </div>
-
-     <div id="thread2" class="thread-header" tabindex="0">
+     <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1806,7 +1871,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex="0">
+    <div id="threadBody3" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -1857,7 +1922,7 @@ audio {
     </div>
 
 
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1868,7 +1933,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex="0">
+    <div id="threadBody4" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -1910,7 +1975,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread4" class="thread-header" tabindex="0">
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1921,7 +1986,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -1964,7 +2029,7 @@ audio {
 
     </div>
 
-    <div id="thread5" class="thread-header" tabindex="0">
+    <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1975,7 +2040,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2016,7 +2081,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread6" class="thread-header" tabindex="0">
+   <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2027,7 +2092,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -2064,7 +2129,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread7" class="thread-header" tabindex="0">
+    <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2075,7 +2140,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2111,7 +2176,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread8" class="thread-header" tabindex="0">
+    <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2122,7 +2187,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody9" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2352,7 +2417,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 9; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2367,7 +2432,7 @@ function swapEmails(threadNumber) {
 
 // Initialize - show first thread by default
 document.addEventListener('DOMContentLoaded', function() {
-    swapEmails(1);
+    swapEmails(2);
 });
 
 //timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
@@ -2381,8 +2446,8 @@ function reply() {
   document.getElementById("replyBody").style.display = 'block';
 }
 
-const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
-const learnerReply = document.getElementById('learnerReplyTwo');  // ✅ Matches your input id
+const STORAGE_KEY_REPLY_2 = 'learnerReplyTwoWeek2';
+const learnerReply = document.getElementById('learnerReplyTwoWeek2');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
 
@@ -2397,6 +2462,7 @@ saveBtn.addEventListener('click', () => {
 </script>
 </div>
 </div>
+
 
 <div class="workArea3" id="work3">                
 <div class="teams-app">
@@ -2420,28 +2486,28 @@ saveBtn.addEventListener('click', () => {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-        <div class="dm-item" onclick="loadDM('jordan', this)" tabindex="0">
-      <div class="dm-avatar av-teal">JS<span class="status-dot status-online"></span></div>
-      <span class="dm-name">Jordan S</span>
-            <span class="dm-unread-count">1</span>
+        <div class="dm-item" onclick="loadDM('priya', this)" tabindex="0">
+      <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
+      <span class="dm-name">Priya D</span>
     </div>
      <div class="dm-item active" onclick="loadDM('general', this)" tabindex="0">
        <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
           <span class="dm-name">General</span>
-                <span class="dm-unread-count">1</span>
     </div>
-    <div class="dm-item" onclick="loadDM('mark', this)" tabindex="0">
-      <div class="dm-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
-      <span class="dm-name">Mark J</span>
-    </div>
-    <div class="dm-item" onclick="loadDM('audrey', this)" tabindex="0">
-      <div class="dm-avatar av-coral">AE<span class="status-dot status-busy"></span></div>
+        <div class="dm-item" onclick="loadDM('audrey', this)" tabindex="0">
+      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
       <span class="dm-name">Audrey E</span>
     </div>
-    <div class="dm-item" onclick="loadDM('priya', this)" tabindex="0">
-      <div class="dm-avatar av-purple">PD<span class="status-dot status-online"></span></div>
-      <span class="dm-name">Priya D</span>
+    <div class="dm-item" onclick="loadDM('mark', this)" tabindex="0">
+      <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Mark J</span>
     </div>
+    <div class="dm-item" onclick="loadDM('jordan', this)" tabindex="0">
+      <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+      <span class="dm-name">Jordan S</span>
+    </div>
+
+
   </div>
 
   <!-- CHAT PANE -->
@@ -2613,7 +2679,7 @@ saveBtn.addEventListener('click', () => {
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
           </div>
-                   <div class="date-divider">Yesterday</div>
+                   <div class="date-divider">Monday</div>
                    <div class="chat-group" style="margin-top:4px">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
@@ -2648,7 +2714,7 @@ saveBtn.addEventListener('click', () => {
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
           </div>
-          <div class="date-divider">Today</div>
+          <div class="date-divider">Tuesday</div>
            <div class="chat-group" style="margin-top:4px">
          <div class="chat-avatar av-teal">NL</div>
           <div class="chat-content">
@@ -2671,6 +2737,29 @@ saveBtn.addEventListener('click', () => {
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
         </div>
+         <div class="date-divider">Thursday</div>
+           <div class="chat-group" style="margin-top:4px">
+         <div class="chat-avatar av-teal">NL</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name"><span class="username">New Leader</span></span><span class="chat-time">09:35 AM</span></div>
+            <div class="chat-text">
+               <p>Running late today, but will be in soon.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
+          <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-blue">MJ</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">11:08 AM</span></div>
+            <div class="chat-text">Thanks for keeping us in the loop.</div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+        </div>
         </div>
          `
       },
@@ -2681,12 +2770,12 @@ saveBtn.addEventListener('click', () => {
       placeholder: 'Message Mark J',
       html: `
       <div class="date-divider">Older chats</div>
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Tuesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-blue">MJ</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">3:58 PM</span></div>
-            <div class="chat-text">Sent those files through, let me know if they don't arrive.</div>
+            <div class="chat-text">Sorry I was in another meeting when you called. I'll put some time in the calendar asap.</div>
           </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2701,7 +2790,7 @@ saveBtn.addEventListener('click', () => {
       placeholder: 'Message Jordan S',
       html: `
        <div class="date-divider">Older chats</div>
-        <div class="date-divider">Yesterday</div>
+        <div class="date-divider">Monday</div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
@@ -2712,12 +2801,18 @@ saveBtn.addEventListener('click', () => {
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
         </div>
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Tuesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
-            <div class="chat-text">Hi <span class="username">New Leader</span>, I'm sorry I just saw your message in the group chat, but I have just had a call - Timmy has fallen down a well and I need to leave right now to go and collect him. I will let you know when I know more but I don't know when I will be back, I might be out for the rest of the week.</div>
+            <div class="chat-text">
+              <p>Hey boss,</p>
+              <p>I'm sorry I just saw your message in the group chat, but I have just had a call. There's been a medical emergency and I have got to leave basically right now - I know this is horrible timing.</p>
+              
+              <p>I will message when I know more but I'm not sure when I will be back, I might be out for the rest of the week.</p>
+              <p>So so sorry for the sudden nature of this,</p>
+              <p>Jordan</p></div>
           </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2737,7 +2832,7 @@ saveBtn.addEventListener('click', () => {
           <div class="chat-avatar av-coral">AE</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:14 AM</span></div>
-            <div class="chat-text">Saw this and thought of you! <a href="https://www.msn.com/en-au/lifestyle/lifestylegeneral/the-surprising-signs-your-cat-actually-likes-you/ar-AA1Iki4f?ocid=entnewsntp&pc=U531&cvid=6a2a2eb650114f30a6e34ed3d4af4baa&ei=22" target="_blank">Signs your cat loves you</a></div>
+            <div class="chat-text">I've got a couple of questions about something, mind if we call in 5?</div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2751,12 +2846,12 @@ saveBtn.addEventListener('click', () => {
       placeholder: 'Message Priya D',
       html: `
       <div class="date-divider">Older chats</div>
-        <div class="date-divider">Wednesday</div>
+        <div class="date-divider">Today</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Sent through those tables you asked for.</div>
+            <div class="chat-text">Hey, I haven't heard back from Andrew. Do you know if he's in today?</div>
             </div>
           <div class="chat-actions">
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
@@ -2855,7 +2950,7 @@ saveBtn.addEventListener('click', () => {
     </div>
 </body>
 <script>
-// // Live clock
+// Live clock
 // function updateClock() {
 //   const now = new Date();
 //   const h = now.getHours().toString().padStart(2, '0');
@@ -2891,32 +2986,21 @@ function openApps(appNumber) {
 
 // Initialize - show mail app by default
 document.addEventListener('DOMContentLoaded', function() {
-    openApps(2);
+    openApps(3);
 });
 
-
-
-//--Alerts control area --//
-
-//Controls appearance of popup email
+//Controls appearance of popup
 function openEmail() {
- document.getElementById("emailAlert").classList.add('alertAppear');
+ document.getElementById("emailAlert").classList.add('emailAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
-function openTeams() {
-  document.getElementById("teamsAlert").classList.add('alertAppear');
-  document.getElementById("teamsAlert").classList.remove("hideMe");
-}
-
 //Ensure pop closes when clicked on or if desktop is clicked
-function closeAlert(alertId = "emailAlert") {
-  const alert = document.getElementById(alertId);
-  alert.classList.remove('alertAppear');
-  alert.classList.add("hideMe");
+function closeEmail() {
+  document.getElementById("emailAlert").classList.remove('emailAppear');
+  document.getElementById("emailAlert").classList.add("hideMe");
 }
 
-//Email alert functionality
 function clickEmailAlert() {
    for (let i = 1; i <= 3; i++) {
         document.getElementById(`work${i}`).style.display = 'none';
@@ -2925,40 +3009,12 @@ function clickEmailAlert() {
     // Show selected work area
     document.getElementById('work2').style.display = 'flex';
     swapEmails(1);
-    closeAlert("emailAlert");
+    closeEmail();
 }
-
-//teams alert functionality for missed calls specifically
-function clickTeamsAlertPhone() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-     // Show phone section instead of chat
-    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
-    setActive(phoneIcon);
-
-    closeAlert("teamsAlert");
-}
-
-function clickTeamsAlertChat() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-    closeAlert("teamsAlert");
-}
-
 function initiate() {
-  openTeams();
+  openEmail();
+  emailArrives();
 }
-
 
 (function () {
   function loadNote(storageKey, displayClass) {
