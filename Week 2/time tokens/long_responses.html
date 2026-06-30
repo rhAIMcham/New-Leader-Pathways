@@ -1,0 +1,132 @@
+<style>
+
+  :root {
+  --AIMblue: #4353A3;
+  --darkBlue: #38416D;
+  --teal: #5DC8B9;
+  --cream: #F1EEDE;
+  --grey: #e7e9ec;
+  --rust: #AF4510;
+  --navy: #12195C;
+  --white: #ffffff;
+  --lightBlue: #AEBAE4;
+  }
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.notesBox {
+ max-width: 700px; 
+ margin: 20px auto; 
+ padding: 1rem; 
+ background: #f8f9fa; 
+ border-radius: 12px; 
+ box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+textarea {
+width: 95%;
+padding: 0.75rem;
+border-radius: 8px;
+border: 1px solid #ccc;
+resize: vertical;
+font-size: 1rem; 
+}
+ .saved {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 0.5rem;
+ }
+
+ .savedMsg {
+ font-size: 0.9rem;
+color: var(--lightBlue);
+ opacity: 0;
+ transition: opacity 0.4s ease;
+ margin: 0;
+ min-width: 60px;   
+ }
+
+ .saveBtn {
+background-color: var(--navy); 
+color: white; 
+border: none; 
+border-radius: 6px;
+      padding: 0.5rem 1.25rem; 
+      font-size: 1rem; 
+      cursor: pointer;
+
+ }
+
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<div class="notesBox">
+  <h3 style="margin-bottom: 0.5rem;">Question text</h3>
+
+  <textarea id="notesInput1" rows="8"
+    ></textarea>
+
+  <!-- Flexbox row: Saved! stays left, Save button stays right -->
+  <div class="saved" >
+    <p id="statusMsg" class="savedMsg">Saved!</p>
+    <button id="saveBtn" class="saveBtn">Save</button>
+  </div>
+</div>
+
+
+<div class="notesBox">
+  <h3 style="margin-bottom: 0.5rem;">Question text</h3>
+
+  <textarea id="notesInput2" rows="8"
+    ></textarea>
+
+  <!-- Flexbox row: Saved! stays left, Save button stays right -->
+  <div class="saved" >
+    <p id="statusMsg" class="savedMsg">Saved!</p>
+    <button id="saveBtn" class="saveBtn">Save</button>
+  </div>
+</div>
+
+<div class="notesBox">
+  <h3 style="margin-bottom: 0.5rem;">Question text</h3>
+
+  <textarea id="notesInput3" rows="8"
+    ></textarea>
+
+  <!-- Flexbox row: Saved! stays left, Save button stays right -->
+  <div class="saved" >
+    <p id="statusMsg" class="savedMsg">Saved!</p>
+    <button id="saveBtn" class="saveBtn">Save</button>
+  </div>
+</div>
+<script>
+(function() {
+  const textArea = document.getElementById('notesInput');
+  const saveBtn = document.getElementById('saveBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
+  const STORAGE_KEY = 'eNotes1';
+
+  // Load existing note (if any)
+  const savedNote = localStorage.getItem(STORAGE_KEY);
+  if (savedNote) textArea.value = savedNote;
+
+  // Save on button click
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+
+    // Fade in "Saved!"
+    statusMsg.style.opacity = '1';
+    setTimeout(() => statusMsg.style.opacity = '0', 1500);
+  });
+
+  // Optional: auto-save while typing
+  textArea.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+  });
+})();
+</script>

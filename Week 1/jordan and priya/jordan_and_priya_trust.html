@@ -1635,8 +1635,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">--:--</div>
-            <div class="lock-date" id="lockDate">Loading…</div>
+            <div class="lock-time" id="lockTime">16:04</div>
+            <div class="lock-date" id="lockDate">Thursday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1676,6 +1676,7 @@ audio {
 </div>
 
 <!--Work area 2 Email-->
+<!--Work area 2 Email-->
 <div class="workArea2" id="work2">
 <div class="mail-app">
 
@@ -1696,13 +1697,13 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">1 message</span>
+      <span class="inbox-toolbar-count">No new messages</span>
     </div>
 
-      <div class="email-row" id="emailRow1"  onclick="swapEmails(1)">
+      <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
       First day on the job
@@ -1710,10 +1711,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)">
+    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
-        <span class="email-time">11:47 am</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1722,10 +1723,10 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)">
+    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
-        <span class="email-time">11:29 am</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1734,10 +1735,10 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)">
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
-        <span class="email-time">11:14 am</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1746,10 +1747,10 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
-        <span class="email-time">10:58 am</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1758,16 +1759,16 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow6" onclick="swapEmails(6)">
+    <div class="email-row" id="emailRow6" onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
-        <span class="email-time">Yesterday</span>
+        <span class="email-time">Tuesday</span>
       </div>
       <div class="email-subject">Your weekly digest</div>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)">
+    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Mon</span>
@@ -1780,18 +1781,18 @@ audio {
   <!-- THREAD PANE -->
   <div class="thread-pane">
 
-        <div id="thread1" class="thread-header">
+        <div id="thread1" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" onclick="reply()">&#8617; Reply</button>
+          <button class="btn">&#8617; Reply</button>
           <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody1" class="thread-body">
+    <div id="threadBody1" class="thread-body" tabindex=0>
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
@@ -1806,7 +1807,7 @@ audio {
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <input class="compose-input" type="textarea" placeholder="Reply to Susan" />
+      <input tabindex="0" class="compose-input" type="textarea" placeholder="Reply to Susan" />
     
     </div>
 </div>
@@ -1814,7 +1815,7 @@ audio {
 </div>
           <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()" tabindex="0">SH</div>
           <div class="message-from">
             <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
             <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
@@ -1823,26 +1824,35 @@ audio {
           <span class="message-time">12:03 pm</span>
         </div>
         <div class="message-body">
-          <p>Hey <span class="username">New Leader</span>! Welcome to your first day on the job. I hope you are settling in well, and have everything you need to succeed. As you get used to your new responsibilities, it might be helpful to consider what your goals are as a new leader. </p>
-          <p>Reflection is crucial to successfully transition into a new leadership role. There is a lot changing in your day to day, and thinking about what kind of leader you want to be is a really important step in this transition process. Some essentials steps are:</p>
+          <p>Hey <span class="username">New Leader</span>! </p>
+            
+            <p>Congratulations on the first day in your new role. This is an exciting milestone and recognition of the commitment you have demonstrated so far. As you begin this transition, it is important to remember that moving from team member to leader is one of the most significant changes you will experience in your professional life. </p>
 
+          <p>It is normal for this period to feel disruptive, so reflection and growth will be crucial. Relationships will change, expectations will increase, and you may have to assess situations from a completely new perspective. Think about how you want to lead your new team and then answer the questions below. They will help me evaluate what assistance or other resources you may need during the first few weeks. Please be honest! </p>
+
+          <p>About you:</p>
           <ul>
-            <li>Establish our identity within the confines of the role </li>
-            <li>Acquire new knowledge and hone new skills </li>
-            <li>Reframe existing work relationships and foster new alliances </li>
-            <li>Gain credibility and respect </li>
-            <li>Become the leader we aspire to be, and the leader our team requires. </li>
+            <li>What qualities do you want to incorporate into your own leadership style?</li>
+            <li>What excites you about this role, and what concerns you?</li>
           </ul>
           <br>
-          <p>To help you through this process, answer these 3 questions and send them back to me, and I will make sure any extra resources or supports you need to achieve those goals are available to you.</p>
+          
+          <p>Your team:</p>
+          <ul>
+            <li>How might your colleagues feel about your role as a new leader?</li>
+            <li>How will you build trust with each team member?</li>
+          </ul>
           <br>
-          <ol>
-            <li>What excites you about your new role and what concerns you?</li>
-            <li>As you commence in the role, what are your priorities?</li>
-            <li>What challenges do you think you might face?</li>
-          </ol>
+
+          <p>Potential challenges:</p>
+          <ul>
+            <li>What support might you need from your manager during this transition? </li>
+            <li>After reading about your team in the previous lesson, are there any problems that stand out?</li>
+          </ul>
           <br>
-          <p>Ok, talk soon.</p>
+          <p>I look forward to supporting you throughout your leadership journey. </p>
+          <br>
+          <p>Talk soon.</p>
           <p>Susan</p>
           <br>
           <p>Sent from my iPhone</p>
@@ -1850,7 +1860,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread2" class="thread-header">
+     <div id="thread2" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1861,12 +1871,12 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body">
+    <div id="threadBody2" class="thread-body" tabindex=0>
 
       <!-- Private reply 1 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar" id="MJ_icon" onclick="MJreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
+          <div class="avatar" id="MJ_icon" onclick="MJreveal()" tabindex="0"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/MJ_icon.png" alt="Icon of business man looking happy"></div>
           <div class="message-from">
             <div class="message-name">Mark J <span class="message-name-to">to <span class="username">New Leader</span></span></div>
             <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
@@ -1903,7 +1913,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread3" class="thread-header">
+     <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1914,12 +1924,12 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body">
+    <div id="threadBody3" class="thread-body" tabindex=0>
 
       <!-- Private reply 2 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar" id="JS_icon" onclick="JSreveal()"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
+          <div class="avatar" id="JS_icon" onclick="JSreveal()" tabindex="0"><img src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/JS_icon.png" alt="Icon of someone hiking away from the camera into the distance"></div>
           <div class="message-from">
             <div class="message-name">Jordan S <span class="message-name-to">to <span class="username">New Leader</span></span></div>
             <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
@@ -1957,7 +1967,7 @@ audio {
 
     </div>
 
-    <div id="thread4" class="thread-header">
+    <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1968,7 +1978,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body">
+    <div id="threadBody4" class="thread-body" tabindex=0>
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2009,7 +2019,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread5" class="thread-header">
+   <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2020,12 +2030,12 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body">
+    <div id="threadBody5" class="thread-body" tabindex=0>
 
       <!-- Private reply 4 -->
       <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
+          <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()" tabindex="0">PD</div>
           <div class="message-from">
             <div class="message-name">Prida D <span class="message-name-to">to <span class="username">New Leader</span></span></div>
             <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
@@ -2057,7 +2067,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread6" class="thread-header">
+    <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2068,13 +2078,13 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body">
+    <div id="threadBody6" class="thread-body" tabindex=0>
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy">NL</div>
           <div class="message-from">
             <div class="message-name">Newsletter <span class="message-name-to">to ALL STAFF</span></div>
-            <div class="message-address"><span class="username">newleader</span>@organisation.com</div>
+            <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">12:07 pm</span>
@@ -2085,7 +2095,7 @@ audio {
           <p>This week we’d like to start by thanking everyone for their professionalism, flexibility, and dedication through the restructure. Your positive attitude and commitment to supporting each other has been greatly appreciated and ensured a smooth transition for both staff and our clients.</p>
           <br>
           <p><strong>Congratulations</strong></p>
-          <p>A special congratulations to our newly appointed New Leader! We wish you every success in your new leadership role and look forward to seeing your team exceed expectations!</p>
+          <p>A special congratulations to our newly appointed <span class="username">New Leader</span>! We wish you every success in your new leadership role and look forward to seeing your team exceed expectations!</p>
           <p><strong>Birthday Celebrations</strong></p>
           <p>Happy Birthday to our team members celebrating this month:</p>
           <ul>
@@ -2104,7 +2114,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread7" class="thread-header">
+    <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2115,7 +2125,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body">
+    <div id="threadBody7" class="thread-body" tabindex=0>
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2266,11 +2276,38 @@ function SHreveal() {
 }
 
 // Close popups when clicking outside
-document.addEventListener("click", function(event) {
+// ── Keyboard trigger on buttons/toggles ──────────────────────────────
+document.addEventListener("keydown", function (event) {
+  const trigger = event.target.closest('[onclick], [data-card-trigger]');
+  if (!trigger) return;
+
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();          // stop Space from scrolling the page
+    trigger.click();                 // reuse your existing click logic
+  }
+});
+
+// ── Close on Escape ───────────────────────────────────────────────────
+document.addEventListener("keydown", function (event) {
+  if (event.key !== "Escape") return;
+
   const infocards = document.querySelectorAll('[id$="_info_card"]');
   infocards.forEach(card => {
     if (card.classList.contains("messageRevealed")) {
-      // Check if click is outside the card
+      card.classList.remove("messageRevealed");
+
+      // Return focus to the trigger that opened it
+      const trigger = document.querySelector(`[aria-controls="${card.id}"]`);
+      if (trigger) trigger.focus();
+    }
+  });
+});
+
+// ── Close on outside click ───────────
+document.addEventListener("click", function (event) {
+  const infocards = document.querySelectorAll('[id$="_info_card"]');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
       if (!card.contains(event.target) && !event.target.closest('[onclick]')) {
         card.classList.remove("messageRevealed");
       }
@@ -2278,7 +2315,45 @@ document.addEventListener("click", function(event) {
   });
 });
 
+function revealCard(cardId) {
+  const card = document.getElementById(cardId);
+  const trigger = document.querySelector(`[aria-controls="${cardId}"]`);
 
+  card.classList.toggle("messageRevealed");
+
+  // Keep aria-expanded in sync so screen readers announce the state
+  if (trigger) {
+    trigger.setAttribute("aria-expanded", card.classList.contains("messageRevealed"));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const emailRows = document.querySelectorAll('.email-row');
+    
+    emailRows.forEach(row => {
+        row.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                // Get the thread number from the row's ID (emailRow1 -> 1)
+                const threadNum = this.id.replace('emailRow', '');
+                swapEmails(threadNum);
+            }
+        });
+    });
+    
+    // Also add keyboard support to thread headers
+    const threadHeaders = document.querySelectorAll('.thread-header');
+    threadHeaders.forEach(header => {
+        header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                // Trigger reply button or other action
+                const replyBtn = this.querySelector('.btn');
+                if (replyBtn) replyBtn.click();
+            }
+        });
+    });
+});
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
@@ -2313,6 +2388,7 @@ function reply() {
 </script>
 </div>
 </div>
+
 
 <!--Work area 3 Teams-->
 <div class="workArea3" id="work3">                
@@ -2565,7 +2641,7 @@ function reply() {
       placeholder: 'Message Audrey E',
       html: `
         
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-coral">AE</div>
           <div class="chat-content">
@@ -2583,7 +2659,7 @@ function reply() {
       desc: 'Away · He/him · Joined 5 years ago',
       placeholder: 'Message Mark J',
       html: `
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-blue">MJ</div>
           <div class="chat-content">
@@ -2875,6 +2951,30 @@ function playAudio() {
  const lastInitial = localStorage.getItem("lastInitialToken") || "a";
  const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
+const JORDAN_RESPONSE = 'Jordan_Response';
+const PRIYA_RESPONSE = 'Priya_Response';
+
+function saveResponse(key, value) {
+  const cleanValue = typeof value === 'string' ? value.trim() : String(value ?? '');
+  localStorage.setItem(key, cleanValue);
+}
+
+function saveInteractionChoice(person, choiceId, responseText) {
+  let saved = {};
+  try {
+    saved = JSON.parse(localStorage.getItem('interactionChoices') || '{}');
+  } catch (e) {
+    saved = {};
+  }
+
+  saved[person] = {
+    choiceId,
+    responseText: (responseText || '').toString().trim(),
+    savedAt: new Date().toISOString()
+  };
+
+  localStorage.setItem('interactionChoices', JSON.stringify(saved));
+}
 //jordan responses
 //jordan responses
 function jordan1() {
@@ -2943,6 +3043,8 @@ function jordan1() {
     </div>
   `;
   chatBody.scrollTop = chatBody.scrollHeight;
+
+
 
   setTimeout(() => {
     const indicator = document.getElementById('typing-jordan');
@@ -3541,19 +3643,19 @@ setChat(dms['jordan']);
 </body>
 <script>
 // Live clock
-function updateClock() {
-  const now = new Date();
-  const h = now.getHours().toString().padStart(2, '0');
-  const m = now.getMinutes().toString().padStart(2, '0');
-  document.getElementById('lockTime').textContent = h + ':' + m;
+// function updateClock() {
+//   const now = new Date();
+//   const h = now.getHours().toString().padStart(2, '0');
+//   const m = now.getMinutes().toString().padStart(2, '0');
+//   document.getElementById('lockTime').textContent = h + ':' + m;
 
-  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
-  const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  document.getElementById('lockDate').textContent =
-    days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
-}
-updateClock();
-setInterval(updateClock, 10000);
+//   const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
+//   const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+//   document.getElementById('lockDate').textContent =
+//     days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+// }
+// updateClock();
+// setInterval(updateClock, 10000);
 
 // Unlock button
 document.getElementById('unlockBtn').addEventListener('click', function () {

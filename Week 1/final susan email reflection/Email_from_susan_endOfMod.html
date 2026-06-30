@@ -1583,8 +1583,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">--:--</div>
-            <div class="lock-date" id="lockDate">Loading…</div>
+            <div class="lock-time" id="lockTime">13:50</div>
+            <div class="lock-date" id="lockDate">Friday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1640,7 +1640,7 @@ audio {
       <div class="email-row-top">
          <span class="unread-dot"></span>
         <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
+        <span class="email-time">1:46 pm</span>
       </div>
       <div class="email-subject">
       First week wrap-up
@@ -1651,7 +1651,7 @@ audio {
       <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
       First day on the job
@@ -1662,7 +1662,7 @@ audio {
     <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
-        <span class="email-time">11:47 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1674,7 +1674,7 @@ audio {
     <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
-        <span class="email-time">11:29 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1686,7 +1686,7 @@ audio {
     <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
-        <span class="email-time">11:14 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1698,7 +1698,7 @@ audio {
     <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
-        <span class="email-time">10:58 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1710,7 +1710,7 @@ audio {
     <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
-        <span class="email-time">Yesterday</span>
+        <span class="email-time">Tuesday</span>
       </div>
       <div class="email-subject">Your weekly digest</div>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
@@ -1750,7 +1750,7 @@ audio {
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
              <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:30 pm</span>
+          <span class="message-time">1:50 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
@@ -1767,7 +1767,7 @@ audio {
             <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">12:03 pm</span>
+          <span class="message-time">1:46 pm</span>
         </div>
         <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
@@ -2783,19 +2783,19 @@ saveBtn.addEventListener('click', () => {
 </body>
 <script>
 // Live clock
-function updateClock() {
-  const now = new Date();
-  const h = now.getHours().toString().padStart(2, '0');
-  const m = now.getMinutes().toString().padStart(2, '0');
-  document.getElementById('lockTime').textContent = h + ':' + m;
+// function updateClock() {
+//   const now = new Date();
+//   const h = now.getHours().toString().padStart(2, '0');
+//   const m = now.getMinutes().toString().padStart(2, '0');
+//   document.getElementById('lockTime').textContent = h + ':' + m;
 
-  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
-  const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  document.getElementById('lockDate').textContent =
-    days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
-}
-updateClock();
-setInterval(updateClock, 10000);
+//   const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
+//   const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+//   document.getElementById('lockDate').textContent =
+//     days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+// }
+// updateClock();
+// setInterval(updateClock, 10000);
 
 // Unlock button
 document.getElementById('unlockBtn').addEventListener('click', function () {

@@ -232,7 +232,8 @@ svg:hover {
   z-index: 999;
 }
 
-.emailAlert {
+
+.desktopAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -248,6 +249,7 @@ svg:hover {
   text-align: center;
   line-height: 2.5;
 }
+
 
 /*PH for now but will be generic black workspace*/
 
@@ -1583,8 +1585,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">--:--</div>
-            <div class="lock-date" id="lockDate">Loading…</div>
+            <div class="lock-time" id="lockTime">09:20</div>
+            <div class="lock-date" id="lockDate">Monday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1604,13 +1606,12 @@ audio {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-            <!-- <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
-              <div class="emailAlert" tabindex=0>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
-                <p>New Email</p>
-            
-              </div>
-            </div> -->
+<div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
+              <div class="desktopAlert">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
+                <p>1 new message</p>
+              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
+              </div>            </div>
             <div class="workArea1" id="work1">
               <p></p>
             </div>
@@ -1639,7 +1640,7 @@ audio {
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
+        <span class="email-time">Friday</span>
       </div>
       <div class="email-subject">
       First week wrap-up
@@ -1650,7 +1651,7 @@ audio {
       <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">12:03 pm</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
       First day on the job
@@ -1661,7 +1662,7 @@ audio {
     <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
-        <span class="email-time">11:47 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1673,7 +1674,7 @@ audio {
     <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
-        <span class="email-time">11:29 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1685,7 +1686,7 @@ audio {
     <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
-        <span class="email-time">11:14 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1697,7 +1698,7 @@ audio {
     <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
-        <span class="email-time">10:58 am</span>
+        <span class="email-time">Wednesday</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1709,7 +1710,7 @@ audio {
     <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
-        <span class="email-time">Yesterday</span>
+        <span class="email-time">Tuesday</span>
       </div>
       <div class="email-subject">Your weekly digest</div>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
@@ -1732,7 +1733,7 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" onclick="reply()">&#8617; Reply</button>
+          <button class="btn">&#8617; Reply</button>
           <button class="btn">&#8943;</button>
         </div>
       </div>
@@ -1766,7 +1767,7 @@ audio {
             <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">12:03 pm</span>
+          <span class="message-time">1:46 pm</span>
         </div>
         <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
@@ -2575,7 +2576,7 @@ saveBtn.addEventListener('click', () => {
       desc: 'Team-wide announcements and discussion — 5 members',
       placeholder: 'Message general',
       html: `
-        <div class="date-divider">Yesterday</div>
+        <div class="date-divider">Friday</div>
         <div class="chat-group" style="margin-top:8px">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
@@ -2597,13 +2598,47 @@ saveBtn.addEventListener('click', () => {
             <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
         </div>
-         <div class="date-divider">Today</div>
+
          <div class="chat-group" style="margin-top:4px">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:15 AM</span></div>
             <div class="chat-text">
                 <p>Agreed, good to keep up to date.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+          </div>
+          </div>
+                   <div class="date-divider">Today</div>
+                   <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:15 AM</span></div>
+            <div class="chat-text">
+                <h4>Minutes</h4>
+                <p>First weekly team meeting</p>
+                  <h5>Attendees</h5>
+                  <ul>
+                    <li>Audrey
+                      <li>Mark
+                        <li> <span class="username">New Leader</span>
+                          <li>Jordan
+                            <li>Priya
+                              </ul>
+                              <h5>Agenda</h5>
+                              <ol>
+                                <li>Review of responsibilities and tasks underway
+                                  <li>Review of task tracking practices
+                                    <li>Concern from team that review process will take too long
+                                      <li>Discussion of ideal roles for each team member
+                                        </ol>
+                                        <h5>Next steps</h5>
+                                        <ul>
+                                          <li>Assign tasks clearly based on skill set and capacity, not previous convention
+                                            <li>Review task assignments in weekly check ins
+                                              </ul>
                     </div>
             </div>
                     <div class="chat-actions">
@@ -2781,20 +2816,20 @@ saveBtn.addEventListener('click', () => {
     </div>
 </body>
 <script>
-// Live clock
-function updateClock() {
-  const now = new Date();
-  const h = now.getHours().toString().padStart(2, '0');
-  const m = now.getMinutes().toString().padStart(2, '0');
-  document.getElementById('lockTime').textContent = h + ':' + m;
+// // Live clock
+// function updateClock() {
+//   const now = new Date();
+//   const h = now.getHours().toString().padStart(2, '0');
+//   const m = now.getMinutes().toString().padStart(2, '0');
+//   document.getElementById('lockTime').textContent = h + ':' + m;
 
-  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
-  const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  document.getElementById('lockDate').textContent =
-    days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
-}
-updateClock();
-setInterval(updateClock, 10000);
+//   const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
+//   const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+//   document.getElementById('lockDate').textContent =
+//     days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+// }
+// updateClock();
+// setInterval(updateClock, 10000);
 
 // Unlock button
 document.getElementById('unlockBtn').addEventListener('click', function () {
@@ -2821,20 +2856,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-//Email alert functions
 
-//Controls appearance of popup
+//--Alerts control area --//
+
+//Controls appearance of popup email
 function openEmail() {
- document.getElementById("emailAlert").classList.add('emailAppear');
+ document.getElementById("emailAlert").classList.add('alertAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
-//Ensure pop closes when clicked on or if desktop is clicked
-function closeEmail() {
-  document.getElementById("emailAlert").classList.remove('emailAppear');
-  document.getElementById("emailAlert").classList.add("hideMe");
+function openTeams() {
+  document.getElementById("teamsAlert").classList.add('alertAppear');
+  document.getElementById("teamsAlert").classList.remove("hideMe");
 }
 
+//Ensure pop closes when clicked on or if desktop is clicked
+function closeAlert(alertId = "emailAlert") {
+  const alert = document.getElementById(alertId);
+  alert.classList.remove('alertAppear');
+  alert.classList.add("hideMe");
+}
+
+//Email alert functionality
 function clickEmailAlert() {
    for (let i = 1; i <= 3; i++) {
         document.getElementById(`work${i}`).style.display = 'none';
@@ -2843,12 +2886,40 @@ function clickEmailAlert() {
     // Show selected work area
     document.getElementById('work2').style.display = 'flex';
     swapEmails(1);
-    closeEmail();
+    closeAlert("emailAlert");
 }
+
+//teams alert functionality for missed calls specifically
+function clickTeamsAlertPhone() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+     // Show phone section instead of chat
+    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
+    setActive(phoneIcon);
+
+    closeAlert("teamsAlert");
+}
+
+function clickTeamsAlertChat() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+    closeAlert("teamsAlert");
+}
+
 function initiate() {
-  openEmail();
-  emailArrives();
+  openTeams();
 }
+
 
 (function () {
   function loadNote(storageKey, displayClass) {

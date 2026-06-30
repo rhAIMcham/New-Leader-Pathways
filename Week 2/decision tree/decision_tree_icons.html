@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workload Scenario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-50: #EEEDFE;
+    --purple-200: #AFA9EC;
+    --purple-600: #534AB7;
+    --purple-800: #3C3489;
+    --purple-900: #26215C;
+    --teal-50: #E1F5EE;
+    --teal-600: #0F6E56;
+    --teal-800: #085041;
+    --coral-50: #FAECE7;
+    --coral-600: #993C1D;
+    --gray-50: #F1EFE8;
+    --gray-100: #D3D1C7;
+    --gray-200: #B4B2A9;
+    --gray-400: #888780;
+    --gray-600: #5F5E5A;
+    --gray-800: #444441;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "IBM Plex Sans", sans-serif; background: white; min-height: 100vh; color: var(--gray-800); }
+
+  .page-header {
+    background: var(--white);
+    border-bottom: 0.5px solid var(--gray-100);
+    padding: 24px 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-text h1 { font-size: 22px; font-weight: 500; color: var(--purple-900); margin-bottom: 4px; }
+  .header-text p { font-size: 14px; color: var(--gray-600); max-width: 560px; line-height: 1.6; }
+  .reset-link {
+    display: inline-block; margin-top: 10px; font-size: 12px; color: var(--gray-400);
+    background: none; border: none; cursor: pointer; font-family: inherit; text-decoration: underline;
+  }
+  .reset-link:hover { color: var(--coral-600); }
+
+  .step-summary {
+    background: var(--purple-50);
+    border: 0.5px solid var(--purple-200);
+    border-radius: 12px;
+    padding: 14px 20px;
+    min-width: 200px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .step-summary .big-num { font-size: 36px; font-weight: 500; color: var(--purple-600); line-height: 1; }
+  .step-summary .label { font-size: 12px; color: var(--purple-800); margin-top: 4px; letter-spacing: 0.04em; }
+  .pip-track { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .pip { width: 12px; height: 12px; border-radius: 50%; background: var(--gray-100); transition: background 0.2s; }
+  .pip.on { background: var(--purple-600); }
+
+  .main { max-width: 760px; margin: 0 auto; padding: 32px 24px; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--gray-400);
+    text-transform: uppercase; margin-bottom: 12px; display:flex; align-items:center; justify-content:space-between;
+  }
+
+  .scene-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-100);
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ---- Icon badge (replaces photo placeholder) ---- */
+  .icon-wrap {
+    width: 100%;
+    min-height: 140px;
+    border-radius: 8px;
+    background: var(--gray-50);
+    border: 0.5px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .icon-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--purple-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-badge.tone-warning { background: var(--coral-50); }
+  .icon-badge.tone-positive { background: var(--teal-50); }
+  .icon-badge svg {
+    width: 34px;
+    height: 34px;
+    stroke: var(--purple-600);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-badge.tone-warning svg { stroke: var(--coral-600); }
+  .icon-badge.tone-positive svg { stroke: var(--teal-600); }
+
+  .image-placeholder-label {
+    color: var(--gray-400);
+    font-size: 12px;
+    font-family: "IBM Plex Sans", sans-serif;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .scene-text {
+    font-size: 15px;
+    color: var(--gray-800);
+    line-height: 1.7;
+  }
+
+  .sub-label {
+    font-size: 11px; font-weight: 500; color: var(--gray-400); letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .opt-col { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    font-size: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 0.5px solid var(--gray-200);
+    background: transparent;
+    color: var(--gray-800);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .opt-btn:hover { background: var(--purple-50); border-color: var(--purple-600); color: var(--purple-800); }
+
+  .opt-btn.restart-btn {
+    color: var(--coral-600);
+    border-color: var(--coral-50);
+    background: var(--coral-50);
+    text-align: center;
+    font-weight: 500;
+  }
+  .opt-btn.restart-btn:hover { border-color: var(--coral-600); }
+
+  @media (max-width: 640px) {
+    .page-header { flex-direction: column; }
+    .step-summary { min-width: auto; width: 100%; }
+    .main { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+<!-- 
+<div class="page-header">
+  <div class="header-text">
+    <h1>Workload Scenario</h1>
+    <p>Work through the scenario by choosing how you'd respond at each step. There's no single right answer — see where your choices lead.</p>
+    <button class="reset-link" onclick="startGame()">Reset and start over</button>
+  </div>
+  <div class="step-summary">
+    <div class="big-num" id="bigCount">1</div>
+    <div class="label">step</div>
+    <div class="pip-track" id="pipTrack"></div>
+  </div>
+</div> -->
+
+<div class="main">
+  <div class="section-eyebrow">Scenario</div>
+  <div class="scene-card">
+    <div id="image-area" class="icon-wrap"></div>
+    <div id="text" class="scene-text">Text</div>
+    <div>
+      <div class="sub-label">What do you do?</div>
+      <div id="option-buttons" class="opt-col"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const textElement = document.getElementById('text')
+const optionButtonsElement = document.getElementById('option-buttons')
+const imageElement = document.getElementById('image-area')
+const bigCountElement = document.getElementById('bigCount')
+const pipTrackElement = document.getElementById('pipTrack')
+
+let state = {}
+let stepCount = 1
+
+/* ---- Icon library ----
+   Each entry: simple inline SVG (no external assets/network calls needed)
+   and a "tone" used to tint the badge (default purple, "warning" coral, "positive" teal). */
+const ICONS = {
+    decision: { tone: 'default', svg: '<path d="M24 6v16"/><path d="M24 22l-12 14"/><path d="M24 22l12 14"/><circle cx="24" cy="4" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="40" r="2" fill="currentColor" stroke="none"/><circle cx="38" cy="40" r="2" fill="currentColor" stroke="none"/>' },
+    stress: { tone: 'warning', svg: '<circle cx="24" cy="24" r="16"/><path d="M16 28c2 3 6 4 8 4s6-1 8-4"/><line x1="16" y1="18" x2="20" y2="20"/><line x1="32" y1="18" x2="28" y2="20"/>' },
+    clock: { tone: 'default', svg: '<circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 5"/>' },
+    chat: { tone: 'default', svg: '<path d="M10 12h28a2 2 0 012 2v16a2 2 0 01-2 2H20l-8 6v-6h-2a2 2 0 01-2-2V14a2 2 0 012-2z"/>' },
+    team: { tone: 'default', svg: '<circle cx="16" cy="16" r="5"/><circle cx="32" cy="16" r="5"/><path d="M6 38c0-7 5-11 10-11s10 4 10 11"/><path d="M22 38c0-7 5-11 10-11s10 4 10 11"/>' },
+    handshake: { tone: 'positive', svg: '<path d="M6 22l8-6 8 6 4-4 8 6v6l-6 6-6-4-6 4-10-8z"/><path d="M22 22l4 4"/>' },
+    warning: { tone: 'warning', svg: '<path d="M24 8l18 32H6z"/><line x1="24" y1="20" x2="24" y2="28"/><circle cx="24" cy="33" r="1.6" fill="currentColor" stroke="none"/>' },
+    phone: { tone: 'default', svg: '<path d="M14 8c2 0 4 1 4 3 0 2-2 3-2 5s4 8 8 10 7-2 9-2 3 2 3 4-4 6-7 6c-8 0-19-11-19-19 0-3 2-7 4-7z"/>' },
+    restart: { tone: 'positive', svg: '<path d="M10 24a14 14 0 1 1 4 10"/><path d="M10 16v8h8"/>' }
+};
+
+function renderIcon(iconKey) {
+    while (imageElement.firstChild) {
+        imageElement.removeChild(imageElement.firstChild)
+    }
+    const icon = ICONS[iconKey]
+    if (icon) {
+        const badge = document.createElement('div')
+        badge.className = 'icon-badge tone-' + (icon.tone === 'default' ? '' : icon.tone)
+        badge.innerHTML = `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">${icon.svg}</svg>`
+        imageElement.appendChild(badge)
+    } else {
+        const label = document.createElement('div')
+        label.classList.add('image-placeholder-label')
+        label.innerText = `[ icon placeholder ]`
+        imageElement.appendChild(label)
+    }
+}
+
+function startGame() {
+    state = {}
+    stepCount = 1
+    showTextNode(1)
+}
+
+function showTextNode(textNodeIndex) {
+    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
+    textElement.innerText = textNode.text
+
+    renderIcon(textNode.icon)
+
+    while (optionButtonsElement.firstChild) {
+        optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+    }
+
+    const isEnding = textNode.options.length === 1 && textNode.options[0].nextText <= 0
+
+    textNode.options.forEach(option => {
+        if (showOption(option)) {
+            const button = document.createElement('button')
+            button.innerText = option.text
+            button.classList.add('opt-btn')
+            if (isEnding) button.classList.add('restart-btn')
+            button.addEventListener('click', () => selectOption(option))
+            optionButtonsElement.appendChild(button)
+        }
+    })
+
+    renderProgress()
+}
+
+function renderProgress() {
+    bigCountElement.textContent = stepCount
+    pipTrackElement.innerHTML = ''
+    const total = textNodes.length
+    for (let i = 0; i < Math.min(stepCount, total); i++) {
+        const d = document.createElement('div')
+        d.className = 'pip on'
+        pipTrackElement.appendChild(d)
+    }
+}
+
+
+function showOption(option) {
+    return option.requiredState == null || option.requiredState(state)
+}
+
+function selectOption(option){
+    const nextTextNodeId = typeof option.nextText === "function"
+    ? option.nextText()
+    : option.nextText;
+
+    if (nextTextNodeId <= 0) {
+        return startGame();
+    }
+    state = Object.assign(state, option.setState)
+    stepCount += 1
+    showTextNode(nextTextNodeId);
+}
+
+const textNodes = [
+    {
+        id: 1,
+        icon: 'decision',
+        text: 'Based on the reduced capacity of your team, you need to decide how to handle all the additional tasks with your available resources.',
+        options: [
+            {
+                text: 'Take on all the additional tasks yourself, even if this means working late.',
+                nextText:2
+            },
+            {
+                text: 'Delegate the remaining tasks to your team members.',
+                nextText: 9
+            },
+            {
+                text: 'Call Jordan and ask them to return to the office as soon as possible.',
+                nextText: 16
+            }
+        ]
+    },
+    {
+        id: 2,
+        icon: 'stress',
+        text: 'Stressed and overworked. Feeling resentment for Audrey and Jordan',
+        options:  [
+            {
+                text: 'Arrive early and leave work late during the week to complete the tasks.',
+                nextText: 3
+            },
+            {
+                text: 'Hurry through the tasks to complete them as quickly as possible.',
+                nextText: 4
+            }
+        ]
+    },
+    {
+        id: 3,
+        icon: 'stress',
+        text: 'Progressively more stressed, starting to get short with coworkers asking you for assistance. Office gets quieter as people talk to you less. Audrey is sad + feels guilty for taking leave',
+        options:[
+            {
+                text: 'Continue working independently, prioritising your new responsibilities',
+                nextText:5
+            },
+            {
+                text: 'Speak to Susan about your workload. Susan explains coworkers are feeling neglected.',
+                nextText: 6
+            }
+        ]
+    },
+    {
+        id: 4,
+        icon: 'clock',
+        text: 'Tasks take longer than expected. Abandon detail and quality. Mark comments on workload',
+        options: [
+            {
+                text: 'Persevere and complete the tasks',
+                nextText:7
+            },
+            {
+                text: 'Speak to Susan about your workload.',
+                nextText: 8
+            },
+        ]
+    },
+    {
+        id: 5,
+        icon: 'warning',
+        text: 'Stressed and short with colleagues. Limited contact with team / feeling neglected. Group resentment aimed at Jordan and Audrey',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 6,
+        icon: 'chat',
+        text: 'Expects you to communicate in the future. Susan assigns responsibilities to Priya?',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 7,
+        icon: 'warning',
+        text: 'Tasks not completed up to standard. Susan asks what’s going on. Group resentment aimed at Jordan. Mark thinks you’re making the team look bad',
+        options: [
+             {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 8,
+        icon: 'chat',
+        text: 'Raised concerns about quality of completed work. Asks why you didn’t speak to her sooner. Expects you to communicate in the future',
+        options: [
+             {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 9,
+        icon: 'team',
+        text: 'Mark wants to excel and is upset you are giving orders – still annoyed from the time tokens exercise. Priya is upset that you are giving her tasks and forcing communication. Audrey is feeling stressed because she is now taking on Jordan’s workload AND her own work',
+        options: [
+            {
+                text: 'Ask Audrey to cancel her leave and work instead.',
+                nextText: 10 
+            },
+            {
+                text: 'Ask Mark and Priya to take on the additional work. Resentment for both Mark and Priya',
+                nextText: 11
+            },
+        ]
+    },
+    {
+        id: 10,
+        icon: 'handshake',
+        text: 'Audrey agrees but is awkward around you. Mark feels rejected by you and wants to contribute',
+        options: [
+            {
+                text: 'Equally split the remaining tasks between you and Audrey.',
+                nextText: 12
+            },
+            {
+                text: 'Speak to Susan about the additional workload.',
+                nextText: 13
+            },
+        ]
+    },
+    {
+        id: 11,
+        icon: 'team',
+        text: 'Resentment for both Mark and Priya. Audrey is feeling guilty for not helping.',
+        options: [
+            {
+                text: 'Continue supervising Mark and Priya as they complete the remaining tasks.',
+                nextText: 14
+            },
+            {
+                text: 'Speak to Susan about the additional workload.',
+                nextText: 15
+            },
+        ]
+    },
+    {
+        id: 12,
+        icon: 'warning',
+        text: 'Audrey is upset with you',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 13,
+        icon: 'warning',
+        text: 'Susan is upset you asked Audrey to cancel her leave.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 14,
+        icon: 'warning',
+        text: 'Priya and Mark are upset with you and have reported you to Susan. Micromanagement and oversight',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 15,
+        icon: 'clock',
+        text: 'Concerns about meeting the deadline.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 16,
+        icon: 'phone',
+        text: 'Jordan agrees but is very stressed and short with you. Does not tangibly improve the rate of completed tasks because Jordan is distracted. Mark considers this unprofessional, Audrey is concerned about Jordan, Priya considers this a significant disruption',
+        options: [
+            {
+                text: 'Jordan and Mark work together to complete the tasks.',
+                nextText: 17
+            },
+            {
+                text: 'Take over their tasks yourself.',
+                nextText: 18
+            },
+        ]
+    },
+    {
+        id: 17,
+        icon: 'team',
+        text: 'Mark is pleased that you have made a mistake and plans on reporting you to Susan / Mark begins undermining you. Audrey is upset by Jordan returning to work. Priya hates the disruption',
+        options: [
+            {
+                text: 'Focus on supporting the team while completing the tasks.',
+                nextText: 19
+            },
+            {
+                text: 'Speak to Susan about meeting the deadline',
+                nextText: 20
+            },
+        ]
+    },
+    {
+        id: 18,
+        icon: 'handshake',
+        text: 'Audrey offers to cancel her leave request and work instead to support you. Mark sees you struggling and thinks it’s funny. Jordan leaves work but now feels guilty and has lost trust in you',
+        options: [
+            {
+                text: 'Ask Audrey to cancel her leave.',
+                nextText: 21
+            },
+            {
+                text: 'Speak to Susan about meeting the additional workload.',
+                nextText: 22
+            },
+        ]
+    },
+    {
+        id: 19,
+        icon: 'warning',
+        text: 'Mark has reported you to Susan. Both Jordan and Mark are upset',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 20,
+        icon: 'warning',
+        text: 'Everyone is upset at you',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 21,
+        icon: 'warning',
+        text: 'Tasks are not completed with appropriate quality. Susan is very upset that Audrey cancelled her leave and that Jordan returned to the office so quickly.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 22,
+        icon: 'warning',
+        text: 'Susan is very upset you asked Jordan to return to the office.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    }
+]
+
+startGame()
+</script>
+</body>
+</html>

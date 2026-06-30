@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mail App — Draft Builder Test</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --AIMblue: #4353A3;
+  --darkBlue: #38416D;
+  --teal: #5DC8B9;
+  --cream: #F1EEDE;
+  --grey: #e7e9ec;
+  --rust: #AF4510;
+  --navy: #12195C;
+  --white: #ffffff;
+  --lightBlue: #AEBAE4;
+  --bg-app:          #f0ede8;
+  --bg-sidebar:      #e8e4de;
+  --bg-panel:        #ffffff;
+  --bg-message-head: #f5f3f0;
+  --bg-private-tag:  #fff0ee;
+  --bg-unread-dot:   #378add;
+  --bg-selected-row: #e6f1fb;
+  --bg-badge:        #d85a30;
+  --bg-input:        #f5f3f0;
+
+  --text-primary:    #1a1a1a;
+  --text-secondary:  #666660;
+  --text-muted:      #999994;
+  --text-avatar-blue:#0c447c;
+  --text-avatar-teal:#085041;
+  --text-private:    #993c1d;
+  --text-badge:      #ffffff;
+
+  --border-subtle:   #dedad3;
+  --border-medium:   #ccc8c0;
+
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-pill:99px;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #ddd9d0;
+  padding: 30px;
+}
+
+/* =====================
+    LAYOUT SHELL
+===================== */
+.mail-app {
+  display: flex;
+  width: 900px;
+  height: 580px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-panel);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  margin: auto;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 100px;
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-title { font-size: 16px; font-weight: 600; padding: 0 16px 14px; color: var(--text-primary); }
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 16px; font-size: 13px; color: var(--text-secondary);
+  cursor: pointer; user-select: none;
+}
+.sidebar-item.active { background: var(--bg-panel); color: var(--text-primary); font-weight: 600; }
+.sidebar-icon { font-size: 15px; width: 16px; text-align: center; }
+.sidebar-badge {
+  margin-left: auto; background: var(--bg-badge); color: var(--text-badge);
+  font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: var(--radius-pill);
+}
+
+.emailInboxThread { display: flex; }
+
+/* INBOX LIST */
+.inbox-list {
+  width: 260px; flex-shrink: 0; border-right: 1px solid var(--border-subtle);
+  overflow-y: auto; background: var(--bg-panel); height: auto;
+}
+.inbox-toolbar { display: flex; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); gap: 8px; }
+.inbox-toolbar-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.inbox-toolbar-count { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+.email-row { padding: 11px 14px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; opacity: 0.8; }
+.email-row.selected { background: var(--bg-selected-row); opacity: 1; }
+.email-row-top { display: flex; align-items: flex-start; gap: 5px; margin-bottom: 3px; }
+.unread-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bg-unread-dot); flex-shrink: 0; margin-top: 4px; }
+.email-sender { flex: 1; font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.email-time { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.email-subject { font-size: 12px; color: var(--text-primary); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.email-preview { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.thread-count-pill {
+  display: inline-block; font-size: 10px; color: var(--text-muted); background: var(--bg-message-head);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 0 5px; margin-left: 4px; vertical-align: middle;
+}
+
+/* THREAD PANE */
+.thread-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-panel); }
+.thread-header { padding: 14px 20px 12px; border-bottom: 1px solid var(--border-subtle); }
+.thread-subject { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+.thread-meta { display: flex; align-items: center; gap: 6px; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: var(--radius-pill); }
+.tag-inbox { background: var(--bg-message-head); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+.thread-actions { margin-left: auto; display: flex; gap: 6px; }
+
+.btn {
+  background: none; border: 1px solid var(--border-medium); border-radius: var(--radius-md);
+  padding: 4px 12px; font-size: 12px; color: var(--text-secondary); cursor: pointer;
+}
+.btn:hover { background: var(--bg-message-head); }
+.btn:focus, .btn:focus-visible { outline: 2px solid var(--AIMblue); outline-offset: 2px; }
+
+#emailRow1 { display: none; }
+
+.thread-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+.message-card { border: 1px solid var(--border-subtle); }
+.message-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-message-head); border-bottom: 1px solid var(--border-subtle); }
+.avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; cursor: pointer; }
+.avatar-teal { background: var(--teal); color: var(--text-avatar-teal); }
+.avatar-lightblue { background: var(--lightBlue); color: var(--text-avatar-blue); }
+.message-from { flex: 1; }
+.message-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.message-name-to { font-size: 11px; font-weight: 400; color: var(--text-muted); }
+.message-address { font-size: 11px; color: var(--text-muted); }
+.message-time { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
+.message-body { padding: 12px 14px; font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+.message-body p + p { margin-top: 8px; }
+
+/* COMPOSE BAR */
+.compose-bar { display: flex; gap: 8px; align-items: center; padding: 10px 20px; border-top: 1px solid var(--border-subtle); }
+.compose-input {
+  flex: 1; padding: 8px 12px; font-size: 13px; background: var(--bg-input);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md); color: var(--text-primary);
+  outline: none; min-height: 200px; font-family: inherit;
+}
+.compose-input:focus { border-color: var(--border-medium); }
+.compose-send {
+  padding: 8px 16px; font-size: 13px; background: var(--text-primary); color: #fff;
+  border: none; border-radius: var(--radius-md); cursor: pointer;
+}
+.compose-send:hover { opacity: 0.85; }
+.sent { color: grey; background-color: var(--text-muted); cursor: not-allowed; }
+#replyBody { display: none; }
+
+ul, ol { margin-left: 15px; }
+
+/* =====================
+    DRAFT BUILDER (NEW)
+===================== */
+.chunk-row { margin-bottom: 14px; }
+.chunk-label { font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px; color: var(--text-primary); }
+.chunk-select {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  outline: none;
+}
+.chunk-select:focus { border-color: var(--AIMblue); }
+
+#draftPreview {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 160px;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+}
+
+.draft-actions { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
+.draft-saved-msg, .draft-used-msg { font-size: 12px; color: #3B6D11; display: none; }
+.btn-secondary {
+  padding: 8px 16px; font-size: 13px; background: none; color: var(--AIMblue);
+  border: 1px solid var(--AIMblue); border-radius: var(--radius-md); cursor: pointer;
+}
+.btn-secondary:hover { background: #eef0fa; }
+</style>
+</head>
+<body>
+
+<div class="mail-app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Mail</div>
+    <div class="sidebar-item active" id="sidebarInbox" tabindex="0">
+      <span class="sidebar-icon">&#9711;</span> Inbox
+    </div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
+    <div class="sidebar-item" id="sidebarDrafts" tabindex="0">
+      <span class="sidebar-icon">&#9998;</span> Drafts
+    </div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
+    <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
+  </nav>
+
+  <div class="emailInboxThread" id="inboxThreadWrap">
+    <!-- INBOX LIST -->
+    <div class="inbox-list">
+      <div class="inbox-toolbar">
+        <span class="inbox-toolbar-title">Inbox</span>
+        <span class="inbox-toolbar-count">1 message</span>
+      </div>
+      <div class="email-row" id="emailRow1" onclick="swapEmails(1)" tabindex="0">
+        <div class="email-row-top">
+          <span class="unread-dot"></span>
+          <span class="email-sender">Susan H</span>
+          <span class="email-time">1:46 pm</span>
+        </div>
+        <div class="email-subject">First week wrap-up</div>
+        <div class="email-preview">Hey New Leader! Welcome to your fi...</div>
+      </div>
+
+      <div class="email-row" id="emailRow2" onclick="swapEmails(2)" tabindex="0">
+        <div class="email-row-top">
+          <span class="email-sender">Susan H</span>
+          <span class="email-time">Wednesday</span>
+        </div>
+        <div class="email-subject">First day on the job</div>
+        <div class="email-preview">Hey New Leader! Welcome to your fi...</div>
+      </div>
+    </div>
+
+    <!-- THREAD PANE -->
+    <div class="thread-pane" id="defaultThreadPane">
+      <div id="thread1" class="thread-header" tabindex="0">
+        <div class="thread-subject">First week wrap-up</div>
+        <div class="thread-meta">
+          <span class="tag tag-inbox">Inbox</span>
+          <div class="thread-actions">
+            <button class="btn" onclick="reply()">&#8617; Reply</button>
+            <button class="btn">&#8943;</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="threadBody1" class="thread-body" tabindex="0">
+        <div id="replyBody">
+          <div class="message-card">
+            <div class="message-header">
+              <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+              <div class="message-from">
+                <div class="message-name">New Leader <span class="message-name-to">to Susan H</span></div>
+                <div class="message-address">sh@organisation.com</div>
+              </div>
+              <button class="compose-send" id="sendBtn">Send</button>
+              <span class="message-time">1:50 pm</span>
+            </div>
+            <div class="message-body">
+              <div class="compose-bar">
+                <textarea class="compose-input" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-card">
+          <div class="message-header">
+            <div class="avatar avatar-lightblue" id="SH_icon">SH</div>
+            <div class="message-from">
+              <div class="message-name">Susan H <span class="message-name-to">to New Leader</span></div>
+              <div class="message-address">newleader@organisation.com</div>
+            </div>
+            <span class="message-time">1:46 pm</span>
+          </div>
+          <div class="message-body">
+            <p>Hi New Leader,</p>
+            <p>I wanted to check in on how your first week has gone leading the team. Still feeling good, I hope.</p>
+            <p>As you reflect on the week, it would be useful to hear what you’ve learned so far about the team, and any early patterns you’ve noticed that you might want to change or adjust in the future.</p>
+            <p>Using your completed DISC profile, answer the questions below:</p>
+            <ul>
+              <li>How confident did you feel leading the team?</li>
+              <li>How effectively did you communicate with others, and how did your team members respond to your approach?</li>
+              <li>How was stability and trust built within the team during this period? Where do you think the team might need more reassurance?</li>
+              <li>Where might there need to be more structure or attention to detail?</li>
+              <li>Did you notice your natural leadership style appear when completing the activities? How might you adapt your approach to meet the different needs of your team?</li>
+            </ul>
+            <br>
+            <p>For our next one-on-one meeting, remember to fill out the self-reflection activity I’ve linked below. Be honest! This will be useful for us to discuss in the future.</p>
+            <br>
+            <p>Thanks, and I look forward to hearing from you. Have a good weekend!</p>
+            <br><br>
+            <p>Thanks,</p>
+            <p>Susan</p>
+            <br>
+            <p>Sent from my iPhone</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="thread2" class="thread-header" tabindex="0" style="display:none;">
+        <div class="thread-subject">First day on the job</div>
+        <div class="thread-meta">
+          <span class="tag tag-inbox">Inbox</span>
+          <div class="thread-actions">
+            <button class="btn">&#8617; Reply</button>
+            <button class="btn">&#8943;</button>
+          </div>
+        </div>
+      </div>
+      <div id="threadBody2" class="thread-body" tabindex="0" style="display:none;">
+        <div class="message-card">
+          <div class="message-header">
+            <div class="avatar avatar-lightblue" id="SH_icon2">SH</div>
+            <div class="message-from">
+              <div class="message-name">Susan H <span class="message-name-to">to New Leader</span></div>
+              <div class="message-address">newleader@organisation.com</div>
+            </div>
+            <span class="message-time">12:03 pm</span>
+          </div>
+          <div class="message-body">
+            <p>Hey New Leader!</p>
+            <p>Congratulations on the first day in your new role...</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /defaultThreadPane -->
+
+    <!-- =====================
+         DRAFT BUILDER PANE (NEW)
+    ===================== -->
+    <div class="thread-pane" id="draftBuilderPane" style="display:none;">
+      <div class="thread-header">
+        <div class="thread-subject">Draft: Re: First week wrap-up</div>
+      </div>
+      <div class="thread-body" style="overflow-y:auto;">
+        <div class="message-card" style="padding:16px; border:none;">
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">
+            Build your reply to Susan by choosing a sentence for each part of the email.
+          </p>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Greeting</label>
+            <select class="chunk-select" data-chunk="greeting" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="Hi Susan,">Hi Susan,</option>
+              <option value="Hello Susan,">Hello Susan,</option>
+              <option value="Dear Susan,">Dear Susan,</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Confidence leading the team</label>
+            <select class="chunk-select" data-chunk="confidence" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="I felt confident leading the team this week, even when things didn't go to plan.">I felt confident leading the team this week, even when things didn't go to plan.</option>
+              <option value="I felt a little unsure at times, but grew more confident as the week went on.">I felt a little unsure at times, but grew more confident as the week went on.</option>
+              <option value="I'm still building my confidence and leaned on the team's experience this week.">I'm still building my confidence and leaned on the team's experience this week.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Communication</label>
+            <select class="chunk-select" data-chunk="communication" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="I tried to keep communication clear and direct, and the team responded well to that structure.">I tried to keep communication clear and direct, and the team responded well to that structure.</option>
+              <option value="I focused on listening first, and noticed people opened up more once they felt heard.">I focused on listening first, and noticed people opened up more once they felt heard.</option>
+              <option value="I checked in regularly with each person, which seemed to put people at ease.">I checked in regularly with each person, which seemed to put people at ease.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Trust and stability</label>
+            <select class="chunk-select" data-chunk="trust" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="I think trust is building steadily, though a few team members may still need more reassurance as we settle in.">I think trust is building steadily, though a few team members may still need more reassurance as we settle in.</option>
+              <option value="Trust came quickly with some of the team, but I want to spend more one-on-one time with others.">Trust came quickly with some of the team, but I want to spend more one-on-one time with others.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Structure and detail</label>
+            <select class="chunk-select" data-chunk="structure" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="I noticed I could bring more structure to our meetings so priorities are clearer for everyone.">I noticed I could bring more structure to our meetings so priorities are clearer for everyone.</option>
+              <option value="I think I need to pay closer attention to the small details the team relies on me to track.">I think I need to pay closer attention to the small details the team relies on me to track.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Natural leadership style</label>
+            <select class="chunk-select" data-chunk="style" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="My natural style definitely came through, and I want to flex it more for team members who need a different approach.">My natural style definitely came through, and I want to flex it more for team members who need a different approach.</option>
+              <option value="I noticed myself defaulting to my usual style, and I'll keep working on adapting it to different people.">I noticed myself defaulting to my usual style, and I'll keep working on adapting it to different people.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Closing</label>
+            <select class="chunk-select" data-chunk="closing" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="I'll complete the self-reflection activity before our next one-on-one and look forward to discussing it with you.">I'll complete the self-reflection activity before our next one-on-one and look forward to discussing it with you.</option>
+              <option value="Thanks for checking in — I'll have the self-reflection activity ready for our next catch-up.">Thanks for checking in — I'll have the self-reflection activity ready for our next catch-up.</option>
+            </select>
+          </div>
+
+          <div class="chunk-row">
+            <label class="chunk-label">Sign-off</label>
+            <select class="chunk-select" data-chunk="signoff" onchange="updateDraftPreview()">
+              <option value="">Choose...</option>
+              <option value="Thanks,">Thanks,</option>
+              <option value="Best,">Best,</option>
+              <option value="Kind regards,">Kind regards,</option>
+            </select>
+          </div>
+
+          <div style="border-top:1px solid var(--border-subtle); padding-top:12px;">
+            <p style="font-size:12px;font-weight:600;margin-bottom:6px;">Live preview</p>
+            <div id="draftPreview">Your draft will appear here as you make selections.</div>
+          </div>
+
+          <div class="draft-actions">
+            <button class="compose-send" id="saveDraftBtn" onclick="saveDraft()">Save Draft</button>
+            <button class="btn-secondary" id="useDraftBtn" onclick="useDraftInReply()">Use this draft in reply &rarr;</button>
+            <span id="draftSavedMsg" class="draft-saved-msg">&#10003; Draft saved</span>
+            <span id="draftUsedMsg" class="draft-used-msg">&#10003; Added to reply</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /draftBuilderPane -->
+
+  </div><!-- /emailInboxThread -->
+</div><!-- /mail-app -->
+
+<script>
+  // ── INBOX / THREAD SWITCHING (original behaviour) ──
+  function swapEmails(threadNumber) {
+    for (let i = 1; i <= 2; i++) {
+      document.getElementById(`thread${i}`).style.display = 'none';
+      document.getElementById(`threadBody${i}`).style.display = 'none';
+      document.getElementById(`emailRow${i}`).classList.remove("selected");
+    }
+    document.getElementById(`thread${threadNumber}`).style.display = 'block';
+    document.getElementById(`threadBody${threadNumber}`).style.display = 'flex';
+    document.getElementById(`emailRow${threadNumber}`).classList.add("selected");
+  }
+
+  function emailArrives() {
+    document.getElementById('emailRow1').style.display = 'block';
+  }
+
+  function reply() {
+    document.getElementById("replyBody").style.display = 'block';
+  }
+
+  // Reply textarea persistence
+  const learnerReply = document.getElementById('learnerReplyTwo');
+  const saveBtn = document.getElementById('sendBtn');
+  const savedRUN = localStorage.getItem('learnerReplyTwo');
+  if (savedRUN) learnerReply.value = savedRUN;
+
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem('learnerReplyTwo', learnerReply.value.trim());
+    saveBtn.classList.add('sent');
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    swapEmails(2);
+    emailArrives(); // show the unlocked "First week wrap-up" email for testing
+  });
+
+  // ── SIDEBAR: INBOX vs DRAFTS ──
+  const sidebarInbox = document.getElementById('sidebarInbox');
+  const sidebarDrafts = document.getElementById('sidebarDrafts');
+  const defaultThreadPane = document.getElementById('defaultThreadPane');
+  const draftBuilderPane = document.getElementById('draftBuilderPane');
+  const inboxList = document.querySelector('.inbox-list');
+
+  function showInboxView() {
+    sidebarInbox.classList.add('active');
+    sidebarDrafts.classList.remove('active');
+    inboxList.style.display = 'block';
+    defaultThreadPane.style.display = 'flex';
+    draftBuilderPane.style.display = 'none';
+  }
+
+  function showDraftsView() {
+    sidebarDrafts.classList.add('active');
+    sidebarInbox.classList.remove('active');
+    inboxList.style.display = 'none';
+    defaultThreadPane.style.display = 'none';
+    draftBuilderPane.style.display = 'flex';
+  }
+
+  sidebarInbox.addEventListener('click', showInboxView);
+  sidebarInbox.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showInboxView(); } });
+  sidebarDrafts.addEventListener('click', showDraftsView);
+  sidebarDrafts.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDraftsView(); } });
+
+  // ── DRAFT BUILDER LOGIC ──
+  function buildDraftText() {
+    const selects = document.querySelectorAll('.chunk-select');
+    const values = {};
+    selects.forEach(s => values[s.dataset.chunk] = s.value);
+
+    const lines = [];
+    if (values.greeting) lines.push(values.greeting, '');
+
+    const body = [values.confidence, values.communication, values.trust, values.structure, values.style].filter(Boolean);
+    if (body.length) lines.push(body.join(' '), '');
+
+    if (values.closing) lines.push(values.closing, '');
+    if (values.signoff) lines.push(values.signoff, 'New Leader');
+
+    return lines.join('\n').trim();
+  }
+
+  function updateDraftPreview() {
+    const text = buildDraftText();
+    const preview = document.getElementById('draftPreview');
+    preview.textContent = text || 'Your draft will appear here as you make selections.';
+    // any edit invalidates the "used" confirmation message
+    document.getElementById('draftUsedMsg').style.display = 'none';
+  }
+
+  function saveDraft() {
+    const text = buildDraftText();
+    localStorage.setItem('draftEmailContent', text);
+    const msg = document.getElementById('draftSavedMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => msg.style.display = 'none', 2500);
+  }
+
+  // NEW: push the assembled draft into the reply textarea on thread 1,
+  // open the reply box, switch back to the inbox/thread view, and select thread 1.
+  function useDraftInReply() {
+    const text = buildDraftText();
+    if (!text) {
+      alert('Make at least one selection before using this draft.');
+      return;
+    }
+
+    // Populate and persist the reply textarea
+    learnerReply.value = text;
+    localStorage.setItem('learnerReplyTwo', text);
+    saveBtn.classList.remove('sent'); // allow sending again since content changed
+
+    const msg = document.getElementById('draftUsedMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => msg.style.display = 'none', 2500);
+
+    // Switch back to inbox view, open thread 1, reveal reply box
+    showInboxView();
+    swapEmails(1);
+    reply();
+    learnerReply.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>
+
+</body>
+</html>

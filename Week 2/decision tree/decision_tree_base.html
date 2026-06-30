@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Text Adventure</title>
+    <style>
+
+        :root {
+  --AIMblue: #4353A3;
+  --darkBlue: #38416D;
+  --teal: #5DC8B9;
+  --cream: #F1EEDE;
+  --grey: #e7e9ec;
+  --rust: #AF4510;
+  --navy: #12195C;
+  --white: #ffffff;
+  --lightBlue: #AEBAE4;
+  --bg-app:          #f0ede8;
+  --bg-sidebar:      #e8e4de;
+  --bg-activity-pane:#454545;
+  --bg-panel:        #ffffff;
+  --bg-message-head: #f5f3f0;
+  --bg-private-tag:  #fff0ee;
+  --bg-unread-dot:   #378add;
+  --bg-avatar-blue:  #b5d4f4;
+  --bg-avatar-teal:  #9fe1cb;
+  --bg-selected-row: #e6f1fb;
+  --bg-badge:        #d85a30;
+  --bg-input:        #f5f3f0;
+
+  --text-primary:    #1a1a1a;
+  --text-secondary:  #666660;
+  --text-muted:      #999994;
+  --text-avatar-blue:#0c447c;
+  --text-avatar-teal:#085041;
+  --text-private:    #993c1d;
+  --text-badge:      #ffffff;
+  --text-link:       #185fa5;
+
+  --border-subtle:   #dedad3;
+  --border-medium:   #ccc8c0;
+
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-pill:99px;
+
+      --purple-dark: #464775;
+  --purple-mid:  #6264A7;
+  --purple-light:#9EA2D4;
+  --sidebar-bg:  #1b1b2e;
+  --channel-bg:  #252538;
+  --chat-bg:     #ffffff;
+  --text-primary:#1a1a1a;
+  --text-secondary:#555;
+  --text-muted:  #999;
+  --border:      rgba(0,0,0,0.1);
+  --bg-secondary:#f5f5f5;
+  --bg-primary:  #ffffff;
+  --online:      #6EBB8A;
+  --away:        #F4A540;
+  --busy:        #E04D4D;
+  --unread:      #D65B8E;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  }
+
+
+        *, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #333;
+     font-family: 'Inter', sans-serif;
+}
+
+.container {
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 2px;
+
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: black;
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 5px 20px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border-color: black;
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="text">Text</div>
+    <div id="option-buttons" class="btn-grid">
+        <button class="btn">Option 1</button>
+        <button class="btn">Option 2</button>
+        <button class="btn">Option 3</button>
+        <button class="btn">Option 4</button>
+    </div>
+</div>
+</body>
+<script>
+    const textElement = document.getElementById('text')
+const optionButtonsElement = document.getElementById('option-buttons')
+
+let state = {}
+
+function startGame() {
+    state = {}
+    showTextNode(1)
+}
+
+function showTextNode(textNodeIndex) {
+    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
+    textElement.innerText = textNode.text
+    while (optionButtonsElement.firstChild) {
+        optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+    }
+
+    textNode.options.forEach(option => {
+        if (showOption(option)) {
+            const button = document.createElement('button')
+            button.innerText = option.text
+            button.classList.add('btn')
+            button.addEventListener('click', () => selectOption(option))
+            optionButtonsElement.appendChild(button)
+        }
+    })
+}
+
+
+function showOption(option) {
+    return option.requiredState == null || option.requiredState(state)
+}
+
+function selectOption(option){
+    const nextTextNodeId = typeof option.nextText === "function"
+    ? option.nextText()
+    : option.nextText;
+
+    if (nextTextNodeId <= 0) {
+        return startGame();
+    }
+    state = Object.assign(state, option.setState)
+    showTextNode(nextTextNodeId);
+}
+
+const textNodes = [
+    {
+        id: 1,
+        text: 'Based on the reduced capacity of your team, you need to decide how to handle all the additional tasks with your available resources.',
+        options: [
+            {
+                text: 'Take on all the additional tasks yourself, even if this means working late.',
+                nextText:2
+            },
+            {
+                text: 'Delegate the remaining tasks to your team members.',
+                nextText: 9
+            },
+            {
+                text: 'Call Jordan and ask them to return to the office as soon as possible.',
+                nextText: 16
+            }
+        ]
+    },
+    {
+        id: 2,
+        text: 'Stressed and overworked. Feeling resentment for Audrey and Jordan',
+        options:  [
+            {
+                text: 'Arrive early and leave work late during the week to complete the tasks.',
+                nextText: 3
+            },
+            {
+                text: 'Hurry through the tasks to complete them as quickly as possible.',
+                nextText: 4
+            }
+        ]
+    },
+    {
+        id: 3,
+        text: 'Progressively more stressed, starting to get short with coworkers asking you for assistance. Office gets quieter as people talk to you less. Audrey is sad + feels guilty for taking leave',
+        options:[
+            {
+                text: 'Continue working independently, prioritising your new responsibilities',
+                nextText:5
+            },
+            {
+                text: 'Speak to Susan about your workload. Susan explains coworkers are feeling neglected.',
+                nextText: 6
+            }
+        ]
+    },
+    {
+        id: 4,
+        text: 'Tasks take longer than expected. Abandon detail and quality. Mark comments on workload',
+        options: [
+            {
+                text: 'Persevere and complete the tasks',
+                nextText:7
+            },
+            {
+                text: 'Speak to Susan about your workload.',
+                nextText: 8
+            },
+        ]
+    },
+    {
+        id: 5,
+        text: 'Stressed and short with colleagues. Limited contact with team / feeling neglected. Group resentment aimed at Jordan and Audrey',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 6,
+        text: 'Expects you to communicate in the future. Susan assigns responsibilities to Priya?',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 7,
+        text: 'Tasks not completed up to standard. Susan asks what’s going on. Group resentment aimed at Jordan. Mark thinks you’re making the team look bad',
+        options: [
+             {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 8,
+        text: 'Raised concerns about quality of completed work. Asks why you didn’t speak to her sooner. Expects you to communicate in the future',
+        options: [
+             {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 9,
+        text: 'Mark wants to excel and is upset you are giving orders – still annoyed from the time tokens exercise. Priya is upset that you are giving her tasks and forcing communication. Audrey is feeling stressed because she is now taking on Jordan’s workload AND her own work',
+        options: [
+            {
+                text: 'Ask Audrey to cancel her leave and work instead.',
+                nextText: 10 
+            },
+            {
+                text: 'Ask Mark and Priya to take on the additional work. Resentment for both Mark and Priya',
+                nextText: 11
+            },
+        ]
+    },
+    {
+        id: 10,
+        text: 'Audrey agrees but is awkward around you. Mark feels rejected by you and wants to contribute',
+        options: [
+            {
+                text: 'Equally split the remaining tasks between you and Audrey.',
+                nextText: 12
+            },
+            {
+                text: 'Speak to Susan about the additional workload.',
+                nextText: 13
+            },
+        ]
+    },
+    {
+        id: 11,
+        text: 'Resentment for both Mark and Priya. Audrey is feeling guilty for not helping.',
+        options: [
+            {
+                text: 'Continue supervising Mark and Priya as they complete the remaining tasks.',
+                nextText: 14
+            },
+            {
+                text: 'Speak to Susan about the additional workload.',
+                nextText: 15
+            },
+        ]
+    },
+    {
+        id: 12,
+        text: 'Audrey is upset with you',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 13,
+        text: 'Susan is upset you asked Audrey to cancel her leave.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 14,
+        text: 'Priya and Mark are upset with you and have reported you to Susan. Micromanagement and oversight',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 15,
+        text: 'Concerns about meeting the deadline.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 16,
+        text: 'Jordan agrees but is very stressed and short with you. Does not tangibly improve the rate of completed tasks because Jordan is distracted. Mark considers this unprofessional, Audrey is concerned about Jordan, Priya considers this a significant disruption',
+        options: [
+            {
+                text: 'Jordan and Mark work together to complete the tasks.',
+                nextText: 17
+            },
+            {
+                text: 'Take over their tasks yourself.',
+                nextText: 18
+            },
+        ]
+    },
+    {
+        id: 17,
+        text: 'Mark is pleased that you have made a mistake and plans on reporting you to Susan / Mark begins undermining you. Audrey is upset by Jordan returning to work. Priya hates the disruption',
+        options: [
+            {
+                text: 'Focus on supporting the team while completing the tasks.',
+                nextText: 19
+            },
+            {
+                text: 'Speak to Susan about meeting the deadline',
+                nextText: 20
+            },
+        ]
+    },
+    {
+        id: 18,
+        text: 'Audrey offers to cancel her leave request and work instead to support you. Mark sees you struggling and thinks it’s funny. Jordan leaves work but now feels guilty and has lost trust in you',
+        options: [
+            {
+                text: 'Ask Audrey to cancel her leave.',
+                nextText: 21
+            },
+            {
+                text: 'Speak to Susan about meeting the additional workload.',
+                nextText: 22
+            },
+        ]
+    },
+    {
+        id: 19,
+        text: 'Mark has reported you to Susan. Both Jordan and Mark are upset',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 20,
+        text: 'Everyone is upset at you',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 21,
+        text: 'Tasks are not completed with appropriate quality. Susan is very upset that Audrey cancelled her leave and that Jordan returned to the office so quickly.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    },
+    {
+        id: 22,
+        text: 'Susan is very upset you asked Jordan to return to the office.',
+        options: [
+            {
+                text: 'Restart',
+                nextText: -1
+            }
+        ]
+    }
+]
+
+startGame()
+</script>
+</html>
