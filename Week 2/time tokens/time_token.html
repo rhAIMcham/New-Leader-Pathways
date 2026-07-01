@@ -77,6 +77,8 @@
   .task-info { flex: 1; }
   .task-name { font-size: 14px; font-weight: 500; color: var(--gray-800); }
   .task-desc { font-size: 12px; color: var(--gray-600); margin-top: 2px; line-height: 1.5; }
+  .task-cat { font-size: 10.5px; color: var(--purple-600); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
+  .task-note { font-size: 11.5px; color: var(--gray-600); margin-top: 4px; line-height: 1.5; font-style: italic; }
   .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-100); flex-shrink: 0; margin-top: 5px; transition: background 0.2s; }
   .status-dot.done { background: var(--teal-600); }
 
@@ -88,7 +90,7 @@
   }
   .opt-btn:hover { background: var(--gray-50); border-color: var(--gray-400); }
   .opt-btn.sel-importance { background: var(--coral-600); color: var(--white); border-color: var(--coral-600); }
-  .opt-btn.sel-difficulty { background: var(--purple-600); color: var(--white); border-color: var(--purple-600); }
+  .opt-btn.sel-difficulty { background: var(--teal-600); color: var(--white); border-color: var(--teal-600); }
   .opt-btn.sel-length { background: var(--teal-600); color: var(--white); border-color: var(--teal-600); }
   .opt-btn.sel-person { background: var(--purple-600); color: var(--white); border-color: var(--purple-600); }
   .opt-btn:disabled { opacity: 0.3; cursor: default; }
@@ -147,6 +149,8 @@
   .cal-head { font-size: 12px; font-weight: 600; color: var(--purple-900); text-align: center; padding: 6px 0; }
   .cal-rowlabel { font-size: 12px; font-weight: 500; color: var(--gray-600); display: flex; align-items: center; padding-left: 2px; }
   .cal-cell { background: var(--white); border: 0.5px solid var(--gray-100); border-radius: 8px; min-height: 64px; padding: 6px; display: flex; flex-direction: column; gap: 6px; }
+  .cal-cell.unavailable { background: repeating-linear-gradient(45deg, var(--gray-50), var(--gray-50) 6px, var(--gray-100) 6px, var(--gray-100) 12px); }
+  .cal-unavail-label { font-size: 10.5px; color: var(--gray-400); text-align: center; margin-top: auto; margin-bottom: auto; }
   .cal-chip { background: var(--purple-50); border-radius: 6px; padding: 6px 8px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .cal-chip .chip-task { font-size: 11.5px; font-weight: 600; color: var(--purple-900); }
   .cal-chip .chip-person { font-size: 11px; color: var(--gray-600); }
@@ -175,7 +179,7 @@
 <div class="page-header">
   <div class="header-text">
     <h1 id="headerTitle">Phase 1 — Rate your tasks</h1>
-    <p id="headerDesc">Rate each task's importance, difficulty and expected length, and pick who's allowed to do it. Every task needs all three ratings and at least one eligible person before you can move on.</p>
+    <p id="headerDesc">Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
     <button class="reset-link" onclick="startOver()">Reset everything and start over</button>
   </div>
   <div class="step-summary">
@@ -237,19 +241,28 @@
 </div>
 
 <script>
-  const PEOPLE = ['Self', 'Employee 1', 'Employee 2', 'Employee 3', 'Employee 4'];
+  const PEOPLE = ['Mark', 'Audrey', 'Priya', 'Jordan'];
   const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const SLOTS = ['AM', 'PM'];
   const LEVELS = ['Low', 'Medium', 'High'];
 
+  // People who are unavailable on certain days, e.g. { 'Audrey': ['Fri'] }
+  const UNAVAILABLE = { 'Audrey': ['Fri'] };
+
+  function isPersonUnavailable(person, day) {
+    return !!(UNAVAILABLE[person] && UNAVAILABLE[person].includes(day));
+  }
+
   const TASKS = [
-    { id: 'a', letter: 'A', name: 'Task A', desc: 'Draft the project brief and define scope' },
-    { id: 'b', letter: 'B', name: 'Task B', desc: 'Run stakeholder alignment meeting' },
-    { id: 'c', letter: 'C', name: 'Task C', desc: 'Conduct research and analysis' },
-    { id: 'd', letter: 'D', name: 'Task D', desc: 'Produce design mockups' },
-    { id: 'e', letter: 'E', name: 'Task E', desc: 'Write the summary report' },
-    { id: 'f', letter: 'F', name: 'Task F', desc: 'Coordinate team communications' },
-    { id: 'g', letter: 'G', name: 'Task G', desc: 'Additional task' },
+    { id: 'a', letter: 'A', name: 'Draft the project brief and define scope', cat: 'Project work / administerial (efficiency)', desc: 'This must be completed before your meetings for the week. The team member assigned to this task should be efficient and experienced.' },
+    { id: 'b', letter: 'B', name: 'Write the summary report', cat: 'Project work / administerial (efficiency)', desc: 'This cannot be completed before your meetings for the week. The team member assigned to this task should be experienced and thorough.' },
+    { id: 'c', letter: 'C', name: 'Conduct research and analysis', cat: 'Project work / administerial (efficiency)', desc: 'This may require input during your meetings for the week. The team member assigned to this task should be thorough and experienced.' },
+    { id: 'd', letter: 'D', name: 'Meeting with clients', cat: 'Client meetings / presentations (communication)', desc: 'To impress clients, it is important to prepare and practice your presentation beforehand. The team member assigned to this task should be experienced and communicative.' },
+    { id: 'e', letter: 'E', name: 'Run stakeholder alignment meeting', cat: 'Client meetings / presentations (communication)', desc: 'Presenting yourself and your team in a professional and informative way is crucial for success. The team member assigned to this task should be communicative and efficient.' },
+    { id: 'f', letter: 'F', name: 'Present the pitch for future projects', cat: 'Client meetings / presentations (communication)', desc: 'For this project, it is important to have completed research and industry analysis before presenting. The team member assigned to this task should be communicative and thorough.' },
+    { id: 'g', letter: 'G', name: 'Coordinate team communications', cat: 'Onsite meetings / travel (experience)', desc: 'Aligning different team members across different sites requires significant time-management skills. The team member assigned to this task should be experienced and communicative.' },
+    { id: 'h', letter: 'H', name: 'Conduct onsite inspection and report', cat: 'Onsite meetings / travel (experience)', desc: 'Onsite safety standards and other considerations must be regularly checked and updated. The team member assigned to this task should be thorough and experienced.' },
+    { id: 'i', letter: 'I', name: 'Verify work completion', cat: 'Onsite meetings / travel (experience)', desc: "Quality checking and completion guarantees product meets the client's expectations. The team member assigned to this task should be efficient and experienced." },
   ];
 
   let ratings = {};
@@ -260,7 +273,7 @@
 
   function freshRatings() {
     const r = {};
-    TASKS.forEach(t => { r[t.id] = { importance: null, difficulty: null, length: null, eligible: [] }; });
+    TASKS.forEach(t => { r[t.id] = { importance: null, difficulty: null, eligible: [] }; });
     return r;
   }
   ratings = freshRatings();
@@ -271,16 +284,12 @@
 
   function isTaskRated(id) {
     const r = ratings[id];
-    return !!(r.importance && r.difficulty && r.length && r.eligible.length > 0);
+    return !!(r.importance && r.difficulty && r.eligible.length > 0);
   }
   function ratedCount() { return TASKS.filter(t => isTaskRated(t.id)).length; }
 
   function setLevel(taskId, field, val) {
     ratings[taskId][field] = val;
-    renderPhase1();
-  }
-  function setLength(taskId, val) {
-    ratings[taskId].length = val;
     renderPhase1();
   }
   function toggleEligible(taskId, person) {
@@ -322,15 +331,6 @@
           </div>
         </div>`;
 
-      const lengthRow = `
-        <div>
-          <div class="sub-label">Expected length</div>
-          <div class="opt-row">
-            <button class="opt-btn${r.length === 1 ? ' sel-length' : ''}" onclick="setLength('${task.id}',1)">Half day</button>
-            <button class="opt-btn${r.length === 2 ? ' sel-length' : ''}" onclick="setLength('${task.id}',2)">Full day</button>
-          </div>
-        </div>`;
-
       const eligibleRow = `
         <div>
           <div class="sub-label">Who's allowed to do this?</div>
@@ -344,13 +344,13 @@
           <div class="task-letter">${task.letter}</div>
           <div class="task-info">
             <div class="task-name">${task.name}</div>
-            <div class="task-desc">${task.desc}</div>
+            <div class="task-cat">${task.cat}</div>
+            <div class="task-note">${task.desc}</div>
           </div>
           <div class="status-dot${done ? ' done' : ''}"></div>
         </div>
         ${levelRow('importance', 'Importance')}
         ${levelRow('difficulty', 'Difficulty')}
-        ${lengthRow}
         ${eligibleRow}
       `;
       board.appendChild(card);
@@ -368,7 +368,7 @@
     document.getElementById('phase1View').style.display = 'none';
     document.getElementById('phase2View').style.display = 'block';
     document.getElementById('headerTitle').textContent = 'Phase 2 — Schedule the week';
-    document.getElementById('headerDesc').textContent = "Assign each task to one of its eligible people and slot it into the calendar. A task's length decides whether it needs one half-day slot or both halves of a day.";
+    document.getElementById('headerDesc').textContent = "Assign each task to one of its eligible people and slot it into the calendar. Every task takes a full day — both morning and afternoon.";
     renderPhase2();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -378,7 +378,7 @@
     document.getElementById('phase2View').style.display = 'none';
     document.getElementById('phase1View').style.display = 'block';
     document.getElementById('headerTitle').textContent = 'Phase 1 — Rate your tasks';
-    document.getElementById('headerDesc').textContent = "Rate each task's importance, difficulty and expected length, and pick who's allowed to do it. Every task needs all three ratings and at least one eligible person before you can move on.";
+    document.getElementById('headerDesc').textContent = "Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.";
     renderPhase1();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -386,6 +386,7 @@
   /* ---------------- PHASE 2 ---------------- */
 
   function isFree(person, day, slot, excludeTaskId) {
+    if (isPersonUnavailable(person, day)) return false;
     return !schedule.some(a => a.assignee === person && a.day === day && a.slots.includes(slot) && a.taskId !== excludeTaskId);
   }
 
@@ -396,7 +397,6 @@
     return TASKS.filter(t => !scheduledIds.has(t.id)).sort((t1, t2) => {
       const r1 = ratings[t1.id], r2 = ratings[t2.id];
       if (levelRank(r2.importance) !== levelRank(r1.importance)) return levelRank(r2.importance) - levelRank(r1.importance);
-      if (r2.length !== r1.length) return r2.length - r1.length;
       return t1.name.localeCompare(t2.name);
     });
   }
@@ -423,8 +423,7 @@
     renderPhase2();
   }
   function confirmSchedule() {
-    const r = ratings[activeScheduleTaskId];
-    const slots = r.length === 2 ? ['AM', 'PM'] : [draft.slot];
+    const slots = ['AM', 'PM'];
     schedule.push({ taskId: activeScheduleTaskId, day: draft.day, slots, assignee: draft.assignee });
     activeScheduleTaskId = null; draft = { assignee: null, day: null, slot: null };
     renderPhase2();
@@ -442,8 +441,9 @@
       <div class="panel-row">
         <div class="sub-label">Who's doing this?</div>
         <div class="opt-row">
-          ${r.eligible.map(p => `<button class="opt-btn${a === p ? ' sel-person' : ''}" onclick="selectDraftAssignee('${p}')">${p}</button>`).join('')}
+          ${r.eligible.map(p => `<button class="opt-btn${a === p ? ' sel-person' : ''}" onclick="selectDraftAssignee('${p}')">${p}${isPersonUnavailable(p,'Fri') ? ' *' : ''}</button>`).join('')}
         </div>
+        ${r.eligible.some(p => isPersonUnavailable(p,'Fri')) ? `<div class="panel-hint">* unavailable on Fri</div>` : ''}
       </div>`;
 
     let dayRow = '';
@@ -453,9 +453,7 @@
           <div class="sub-label">Pick a day</div>
           <div class="opt-row">
             ${DAYS.map(d => {
-              const avail = r.length === 2
-                ? (isFree(a, d, 'AM', task.id) && isFree(a, d, 'PM', task.id))
-                : (isFree(a, d, 'AM', task.id) || isFree(a, d, 'PM', task.id));
+              const avail = isFree(a, d, 'AM', task.id) && isFree(a, d, 'PM', task.id);
               const sel = draft.day === d;
               return `<button class="opt-btn${sel ? ' sel-person' : ''}" ${avail ? '' : 'disabled'} onclick="selectDraftDay('${d}')">${d}</button>`;
             }).join('')}
@@ -464,24 +462,11 @@
     }
 
     let slotRow = '';
-    if (a && draft.day && r.length === 1) {
-      slotRow = `
-        <div class="panel-row">
-          <div class="sub-label">Morning or afternoon?</div>
-          <div class="opt-row">
-            ${SLOTS.map(s => {
-              const avail = isFree(a, draft.day, s, task.id);
-              const sel = draft.slot === s;
-              const label = s === 'AM' ? 'Morning' : 'Afternoon';
-              return `<button class="opt-btn${sel ? ' sel-person' : ''}" ${avail ? '' : 'disabled'} onclick="selectDraftSlot('${s}')">${label}</button>`;
-            }).join('')}
-          </div>
-        </div>`;
-    } else if (a && draft.day && r.length === 2) {
+    if (a && draft.day) {
       slotRow = `<div class="panel-hint">This task takes the whole day — both morning and afternoon on ${draft.day}.</div>`;
     }
 
-    const canConfirm = r.length === 2 ? !!(a && draft.day) : !!(a && draft.day && draft.slot);
+    const canConfirm = !!(a && draft.day);
 
     return `
       <div class="panel">
@@ -504,7 +489,6 @@
     } else {
       queueList.innerHTML = unscheduled.map(task => {
         const r = ratings[task.id];
-        const lengthLabel = r.length === 2 ? 'Full day' : 'Half day';
         const isOpen = activeScheduleTaskId === task.id;
         return `
           <div class="queue-card">
@@ -512,13 +496,12 @@
               <div class="task-letter">${task.letter}</div>
               <div class="task-info">
                 <div class="queue-name">${task.name}</div>
-                <div class="task-desc">${task.desc}</div>
+                <div class="task-cat">${task.cat}</div>
               </div>
             </div>
             <div class="badge-row">
               <span class="badge lvl-${r.importance.toLowerCase()}">${r.importance} importance</span>
               <span class="badge lvl-${r.difficulty.toLowerCase()}">${r.difficulty} difficulty</span>
-              <span class="badge lvl-length">${lengthLabel}</span>
             </div>
             <div class="eligible-line">Eligible: ${r.eligible.join(', ')}</div>
             ${isOpen ? renderSchedulePanel(task) : `<button class="ghost-btn" onclick="openSchedulePanel('${task.id}')">Schedule this task</button>`}

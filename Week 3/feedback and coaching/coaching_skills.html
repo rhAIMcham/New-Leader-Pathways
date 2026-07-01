@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MCQ Single Screen</title>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<style>
+ :root{
+    --AIMblue: #4353A3;
+    --darkBlue: #38416D;
+    --teal: #5DC8B9;
+    --cream: #F1EEDE;
+    --grey: #ebebeb;
+    --rust: #AF4510;
+    --navy: #12195C;
+    --white: #ffffff;
+    --lightBlue: #AEBAE4;
+    }
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+   font-family: "IBM-Plex-Sans", sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); */
+}
+
+h1 {
+    color: var(--darkBlue);
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.legend {
+    margin-bottom: 30px;
+    padding: 30px;
+    background: #f7fafc;
+    border-radius: 8px;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.legend-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--darkBlue);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: var(--darkBlue);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+tr:nth-child(even) {
+    background-color: var(--grey); /*Grey of torment!*/
+}
+
+td:first-child {
+    font-weight: 500;
+    color: #2d3748;
+    max-width: 500px;
+}
+
+.rating-cell {
+    text-align: center;
+}
+
+.rating-input {
+    width: 64px;
+    height: 44px;
+    font-family: "IBM Plex Sans", sans-serif;
+    border: 2px solid var(--lightBlue);
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--AIMblue);
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.rating-input:focus {
+    outline: none;
+    border-color: var(--AIMblue);
+    background: #edf2f7;
+}
+
+.rating-input.filled {
+    background-color: #12195C;
+    border-color: #12195C;
+    color: white;
+}
+
+.rating-input.invalid {
+    border-color: var(--rust);
+}
+
+.rating-hint {
+    font-size: 11px;
+    color: #a0aec0;
+    margin-top: 4px;
+}
+
+button {
+  position: relative;
+  color: white;
+  width: 200px;
+  border: solid 2px var(--cream);
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: var(--lightBlue);
+  color: #12195C;
+  border: solid 2px #12195C;
+}
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 8px;
+    display: none;
+}
+
+.results.show {
+    display: block;
+}
+
+.results h2 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.result-item {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-label {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.result-value {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 18px;
+}
+
+.average {
+    text-align: left;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+td > h4 {
+  margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .rating-input {
+        width: 52px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">       
+        <!-- <div class="legend">
+            <div class="legend-title">Description</div>
+            <p>Task and rating outline</p>
+        </div> -->
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Skill</th>
+                    <th class="rating-cell">Your Rating (1&ndash;10)</th>
+                </tr>
+            </thead>
+            <tbody id="assessmentBody">
+                <tr data-area="quesion1">
+                    <td>I can skilfully challenge personal attributes</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion2">
+                    <td>I can avoid the temptation to direct conversation back to myself</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion3">
+                    <td>I engender trust in my team members</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion4">
+                    <td>I am discreet and professional</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion5">
+                    <td>I am confident in myself and my team members</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion6">
+                    <td>I have proven leadership qualities</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion7">
+                    <td>I am able to deal with personalities, politics and conflict</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion8">
+                    <td>I display open and assertive communication</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion9">
+                    <td>I have excellent listening skills</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion10">
+                    <td>I am able to identify if the relationship is not working well</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion11">
+                    <td>I can take the rejection of my ideas, advice or suggestions well</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion12">
+                    <td>I have my own support mechanisms</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion13">
+                    <td>I reliably meet my commitments</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+                <tr data-area="quesion14">
+                    <td>I take real pleasure in others&rsquo; success, even when this surpasses my own</td>
+                    <td class="rating-cell">
+                        <input type="number" class="rating-input" min="1" max="10" step="1" inputmode="numeric" placeholder="&ndash;">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="results" id="results">
+            <div id="resultsList"></div>
+            <div class="average" id="average"></div>
+        </div>
+    </div>
+
+    <script>
+        const ratings = {};
+        const TOTAL_QUESTIONS = 14;
+        const MIN_TOTAL = TOTAL_QUESTIONS * 1;   // 14
+        const MAX_TOTAL = TOTAL_QUESTIONS * 10;  // 140
+
+        // Thresholds scaled proportionally from the original 10-question / 1-5 scale
+        // (original cutoffs sat at ~32.5% and ~67.5% of the possible range)
+        const LOW_CUTOFF = 55;   // total < 55
+        const HIGH_CUTOFF = 99;  // total > 99
+
+        document.querySelectorAll('.rating-input').forEach(input => {
+            input.addEventListener('input', function() {
+                const row = this.closest('tr');
+                const area = row.dataset.area;
+                let raw = this.value;
+
+                if (raw === '') {
+                    delete ratings[area];
+                    this.classList.remove('filled', 'invalid');
+                    updateResults();
+                    return;
+                }
+
+                let value = parseInt(raw, 10);
+
+                if (isNaN(value)) {
+                    this.classList.remove('filled');
+                    this.classList.add('invalid');
+                    delete ratings[area];
+                    updateResults();
+                    return;
+                }
+
+                if (value < 1 || value > 10) {
+                    this.classList.remove('filled');
+                    this.classList.add('invalid');
+                    delete ratings[area];
+                    updateResults();
+                    return;
+                }
+
+                this.classList.remove('invalid');
+                this.classList.add('filled');
+                ratings[area] = value;
+                updateResults();
+            });
+
+            input.addEventListener('blur', function() {
+                // Clamp stray out-of-range entries on blur
+                if (this.value !== '') {
+                    let value = parseInt(this.value, 10);
+                    if (!isNaN(value)) {
+                        value = Math.min(10, Math.max(1, value));
+                        this.value = value;
+                        this.dispatchEvent(new Event('input'));
+                    }
+                }
+            });
+        });
+
+        function updateResults() {
+            const ratingCount = Object.keys(ratings).length;
+
+            if (ratingCount > 0) {
+                document.getElementById('results').classList.add('show');
+
+                let total = 0;
+                for (const value of Object.values(ratings)) {
+                    total += value;
+                }
+
+                if (ratingCount === TOTAL_QUESTIONS && total < LOW_CUTOFF) {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are still developing your coaching skills. Refer to the Developing Your People section of your The DISC Profile. How can you use this intel to better develop your skills in this area?</p></div>
+                    `;
+                } else if (ratingCount === TOTAL_QUESTIONS && total >= LOW_CUTOFF && total <= HIGH_CUTOFF) {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are progressing well on improving your coaching skills. Are there any areas in this quiz that will be a particular focus area for you going forward?</p></div>
+                    `;
+                } else if (ratingCount === TOTAL_QUESTIONS && total > HIGH_CUTOFF) {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are engaging well with coaching skills as a leader. Are there any areas you have focused on due to past experiences of poor leadership?</p></div>
+                    `;
+                } else {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 16px;">Complete all ratings to see your total score</div>
+                        <div style="margin-top: 8px; font-size: 14px; opacity: 0.9;">${ratingCount} of ${TOTAL_QUESTIONS} completed</div>
+                    `;
+                }
+            } else {
+                document.getElementById('results').classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
