@@ -202,11 +202,16 @@
 </div>
 
 <script>
-    const textElement = document.getElementById('text')
+const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
 const imageElement = document.getElementById('image-area')
 const bigCountElement = document.getElementById('bigCount')
 const pipTrackElement = document.getElementById('pipTrack')
+const exportChoices = [];
+var exported = false;
+
+  // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
+  const STORAGE_KEY = 'studentChoices';
 
 let state = {}
 let stepCount = 1
@@ -324,6 +329,7 @@ function showTextNode(textNodeIndex) {
     }
 
     const isEnding = textNode.options.length === 1 && textNode.options[0].nextText <= 0
+    
 
     textNode.options.forEach(option => {
         if (showOption(option)) {
@@ -331,24 +337,32 @@ function showTextNode(textNodeIndex) {
             button.innerHTML = option.text
             button.classList.add('opt-btn')
             if (isEnding) button.classList.add('restart-btn')
+            // if (isEnding) exported = true;
             button.addEventListener('click', () => selectOption(option))
             optionButtonsElement.appendChild(button)
         }
     })
-
-    renderProgress()
-}
-
-function renderProgress() {
-    bigCountElement.textContent = stepCount
-    pipTrackElement.innerHTML = ''
-    const total = textNodes.length
-    for (let i = 0; i < Math.min(stepCount, total); i++) {
-        const d = document.createElement('div')
-        d.className = 'pip on'
-        pipTrackElement.appendChild(d)
+    if (exported === false) {
+        exportChoices.push(textElement.innerHTML);
+    } else {
+        return null;
     }
+
+    // renderProgress()
+    console.log(exportChoices);
+    console.log(exported);
 }
+
+// function renderProgress() {
+//     // bigCountElement.textContent = stepCount
+//     pipTrackElement.innerHTML = ''
+//     const total = textNodes.length
+//     for (let i = 0; i < Math.min(stepCount, total); i++) {
+//         const d = document.createElement('div')
+//         d.className = 'pip on'
+//         pipTrackElement.appendChild(d)
+//     }
+// }
 
 
 function showOption(option) {
@@ -361,6 +375,11 @@ function selectOption(option){
     : option.nextText;
 
     if (nextTextNodeId <= 0) {
+        exported = true;
+        const removeFinal = exportChoices.pop();
+         localStorage.setItem(STORAGE_KEY, JSON.stringify(exportChoices))
+    
+        //TODO include single use function here - function one(fn) => let hasRun = false; 
         return startGame();
     }
     state = Object.assign(state, option.setState)
