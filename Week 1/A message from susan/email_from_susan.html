@@ -686,7 +686,7 @@ svg:hover {
 .compose-send {
   padding: 8px 16px;
   font-size: 13px;
-  background: var(--text-primary);
+  background: var(--navy);
   color: #fff;
   border: none;
   border-radius: var(--radius-md);
@@ -759,6 +759,41 @@ ul, ol {
 #learnerReply {
   width:max-content;
   height: 50px;
+}
+
+/*Pulse button animation */
+.pulse-btn {
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-btn:hover {
+  color: var(--navy);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+textarea {
+font-family: 'Inter', sans-serif;
 }
 
 .workArea3 {
@@ -1483,6 +1518,7 @@ audio {
 }
 
 
+
 @media only screen and (max-width: 767px) {
  .workspace {
     width: auto;
@@ -1725,7 +1761,7 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" onclick="reply()" tabindex="0">&#8617; Reply</button>
+          <button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
           <button class="btn">&#8943;</button>
         </div>
       </div>
@@ -1803,10 +1839,6 @@ audio {
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -1856,10 +1888,6 @@ audio {
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -1910,10 +1938,6 @@ audio {
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -1962,10 +1986,6 @@ audio {
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -2010,10 +2030,6 @@ audio {
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -2057,10 +2073,6 @@ audio {
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
-        </div>
       </div>
     </div>
 
@@ -2323,6 +2335,7 @@ function emailArrives() {
 
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
+  document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
 const STORAGE_KEY_REPLY_1 = 'learnerReplyOne';

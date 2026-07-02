@@ -765,6 +765,42 @@ ul, ol {
     color: black;
 }
 
+
+/*Pulse button animation */
+.pulse-btn {
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-btn:hover {
+  color: var(--navy);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+textarea {
+font-family: 'Inter', sans-serif;
+}
+
 .workArea3 {
 font-size: 14px;
 display: flex;
@@ -1786,8 +1822,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -1865,8 +1899,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -1918,8 +1950,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -1972,8 +2002,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -2024,8 +2052,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -2072,8 +2098,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -2119,8 +2143,6 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
@@ -2384,6 +2406,7 @@ function emailArrives() {
 
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
+    document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 </script>
 </div>
