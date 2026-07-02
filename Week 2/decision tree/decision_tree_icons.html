@@ -343,6 +343,7 @@ function showTextNode(textNodeIndex) {
         }
     })
     if (exported === false) {
+        //  var cleaned = textElement.innerHTML.replace(/<\/?p[^>]*>/gi, "");
         exportChoices.push(textElement.innerHTML);
     } else {
         return null;
@@ -375,9 +376,14 @@ function selectOption(option){
     : option.nextText;
 
     if (nextTextNodeId <= 0) {
+        exportChoices.push(textElement.innerHTML);
         exported = true;
         const removeFinal = exportChoices.pop();
-         localStorage.setItem(STORAGE_KEY, JSON.stringify(exportChoices))
+        var toString = exportChoices.toString();
+         var removeP = toString.replace(/<\/?p[^>]*>/gi, "");
+         var removeB = removeP.replace(/<br\s*\/?>/gi, '\n');
+         var cleaned = removeB.replaceAll("You decide to:", "");
+         localStorage.setItem(STORAGE_KEY, (cleaned))
     
         //TODO include single use function here - function one(fn) => let hasRun = false; 
         return startGame();
@@ -440,7 +446,7 @@ const textNodes = [
     {
         id: 4,
         icon: 'clock',
-        text: '<p>Hurry through the tasks to complete them as quickly as possible. <br><br> To finish by the deadline, you decide to hurry through certain tasks to finish everything without overworking yourself. As such, some of your completed work does not meet your usual quality, while other tasks still take longer than expected, meaning you to spend even less time with the remaining assignments. <br><br>On Thursday, Mark has commented to you on the increased workload, asking if you are on track for Friday and offering his assistance if needed, especially once Audrey is on holiday and her work must also be distributed. Priya has informed you that her work will be completed on time, but you have not reached out to her directly. <br><br>Mark also asks that you check his and Priya’s work, but you do not currently have the time to fulfill his request. <br><br>You decide to:  </p>',
+        text: '<p>Hurry through the tasks to complete them as quickly as possible. <br><br> To finish by the deadline, you choose to hurry through certain tasks to finish everything without overworking yourself. As such, some of your completed work does not meet your usual quality, while other tasks still take longer than expected, meaning you to spend even less time with the remaining assignments. <br><br>On Thursday, Mark has commented to you on the increased workload, asking if you are on track for Friday and offering his assistance if needed, especially once Audrey is on holiday and her work must also be distributed. Priya has informed you that her work will be completed on time, but you have not reached out to her directly. <br><br>Mark also asks that you check his and Priya’s work, but you do not currently have the time to fulfill his request. <br><br>You decide to:  </p>',
         options: [
             {
                 text: '<p>Persevere and complete the tasks.</p>',
