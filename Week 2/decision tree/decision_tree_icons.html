@@ -370,27 +370,36 @@ function showOption(option) {
     return option.requiredState == null || option.requiredState(state)
 }
 
-function selectOption(option){
+function selectOption(option) {
     const nextTextNodeId = typeof option.nextText === "function"
-    ? option.nextText()
-    : option.nextText;
+        ? option.nextText()
+        : option.nextText;
 
     if (nextTextNodeId <= 0) {
         exportChoices.push(textElement.innerHTML);
         exported = true;
-        const removeFinal = exportChoices.pop();
-        var toString = exportChoices.toString();
-         var removeP = toString.replace(/<\/?p[^>]*>/gi, "");
-         var removeB = removeP.replace(/<br\s*\/?>/gi, '\n');
-         var cleaned = removeB.replaceAll("You decide to:", "");
-         localStorage.setItem(STORAGE_KEY, (cleaned))
-    
-        //TODO include single use function here - function one(fn) => let hasRun = false; 
+        exportChoices.pop(); 
+
+        const rawHtml = exportChoices.join('\n');
+        const cleaned = exportReady(rawHtml);
+
+        localStorage.setItem(STORAGE_KEY, cleaned);
         return startGame();
     }
-    state = Object.assign(state, option.setState)
-    stepCount += 1
+
+    state = Object.assign(state, option.setState);
+    stepCount += 1;
     showTextNode(nextTextNodeId);
+}
+
+function exportReady(htmlString) {
+    return htmlString
+        .replace(/<\/p>/gi, '\n\n')
+        .replace(/<p[^>]*>/gi, '')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<strong[^>]*>/gi, '**')
+        .replace(/<\/strong>/gi, '**')
+        .replaceAll("You decide to:", "");
 }
 
 const textNodes = [
@@ -416,7 +425,7 @@ const textNodes = [
     {
         id: 2,
         icon: 'stress',
-        text: '<p>You choose to take on Jordan’s assigned tasks yourself, in addition to your regular responsibilities. This is a significant increase in your workload, and you struggle to complete work while continuing to support your team through this busy period. <br><br> As Audrey has taken leave on Friday, you will have even less support for the deadline at the end of the week. Mark and Priya are also focused on their own responsibilities, and you are unsure if you have the time to adequately assist them, should other issues arise. While Jordan has contacted you and reported they will be returning to work next week, that still leaves you short-staffed and struggling to meet expectations. <br><br> You decide to: </p>',
+        text: '<p><strong>Take on all the additional tasks yourself, even if this means working late. </strong><br><br>You choose to take on Jordan’s assigned tasks yourself, in addition to your regular responsibilities. This is a significant increase in your workload, and you struggle to complete work while continuing to support your team through this busy period. <br><br> As Audrey has taken leave on Friday, you will have even less support for the deadline at the end of the week. Mark and Priya are also focused on their own responsibilities, and you are unsure if you have the time to adequately assist them, should other issues arise. While Jordan has contacted you and reported they will be returning to work next week, that still leaves you short-staffed and struggling to meet expectations. <br><br> You decide to: </p>',
         options:  [
             {
                 text: '<p>Arrive early and leave work late during the week to complete the tasks.</p>',
@@ -431,7 +440,7 @@ const textNodes = [
     {
         id: 3,
         icon: 'stress',
-        text: '<p>Arrive early and leave work late during the week to complete the tasks. <br><br> During the week, you become progressively more stressed and find yourself getting short with your team members who are asking you for assistance. You are arriving early and leaving late to prioritise completing the tasks but find that others in the office have begun to withdraw from you.<br><br> As Mark and Priya have not been actively communicating with you, they might instead be speaking to other leaders about their work. You also have not had time to respond to Jordan’s message.<br><br> On Thursday, Audrey approaches you and expresses concern about your workload and the team’s deadline. She tells you that Mark and Priya are also feeling overworked and worried about completing their tasks by the end of the week. <br><br> You decide to:</p> ',
+        text: '<p><strong>Arrive early and leave work late during the week to complete the tasks. </strong><br><br> During the week, you become progressively more stressed and find yourself getting short with your team members who are asking you for assistance. You are arriving early and leaving late to prioritise completing the tasks but find that others in the office have begun to withdraw from you.<br><br> As Mark and Priya have not been actively communicating with you, they might instead be speaking to other leaders about their work. You also have not had time to respond to Jordan’s message.<br><br> On Thursday, Audrey approaches you and expresses concern about your workload and the team’s deadline. She tells you that Mark and Priya are also feeling overworked and worried about completing their tasks by the end of the week. <br><br> You decide to:</p> ',
         options:[
             {
                 text: 'Continue working independently, prioritising your new responsibilities.',
@@ -446,7 +455,7 @@ const textNodes = [
     {
         id: 4,
         icon: 'clock',
-        text: '<p>Hurry through the tasks to complete them as quickly as possible. <br><br> To finish by the deadline, you choose to hurry through certain tasks to finish everything without overworking yourself. As such, some of your completed work does not meet your usual quality, while other tasks still take longer than expected, meaning you to spend even less time with the remaining assignments. <br><br>On Thursday, Mark has commented to you on the increased workload, asking if you are on track for Friday and offering his assistance if needed, especially once Audrey is on holiday and her work must also be distributed. Priya has informed you that her work will be completed on time, but you have not reached out to her directly. <br><br>Mark also asks that you check his and Priya’s work, but you do not currently have the time to fulfill his request. <br><br>You decide to:  </p>',
+        text: '<p><strong>Hurry through the tasks to complete them as quickly as possible. </strong><br><br> To finish by the deadline, you choose to hurry through certain tasks to finish everything without overworking yourself. As such, some of your completed work does not meet your usual quality, while other tasks still take longer than expected, meaning you to spend even less time with the remaining assignments. <br><br>On Thursday, Mark has commented to you on the increased workload, asking if you are on track for Friday and offering his assistance if needed, especially once Audrey is on holiday and her work must also be distributed. Priya has informed you that her work will be completed on time, but you have not reached out to her directly. <br><br>Mark also asks that you check his and Priya’s work, but you do not currently have the time to fulfill his request. <br><br>You decide to:  </p>',
         options: [
             {
                 text: '<p>Persevere and complete the tasks.</p>',
@@ -461,7 +470,7 @@ const textNodes = [
     {
         id: 5,
         icon: 'warning',
-        text: '<p>After several late nights, you successfully complete the tasks for the deadline. However, by doing so you have neglected your other responsibilities, and your team members are reluctant to speak with you. <br><br>Additionally, by limiting contact, other members of your team are now expressing resentment with Audrey and Jordan for leaving incomplete work during a busy period, and with you for inadequately supporting them. <br><br>You are then contacted by Susan, who requests a private meeting to discuss the situation. </p>',
+        text: '<p><strong>Continue working independently, prioritising your new responsibilities.</strong><br><br>After several late nights, you successfully complete the tasks for the deadline. However, by doing so you have neglected your other responsibilities, and your team members are reluctant to speak with you. <br><br>Additionally, by limiting contact, other members of your team are now expressing resentment with Audrey and Jordan for leaving incomplete work during a busy period, and with you for inadequately supporting them. <br><br>You are then contacted by Susan, who requests a private meeting to discuss the situation. </p>',
         options: [
             {
                 text: 'Restart',
@@ -472,7 +481,7 @@ const textNodes = [
     {
         id: 6,
         icon: 'chat',
-        text: '<p>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues, as your team members had flagged that they were feeling neglected and unsupported. <br><br>While she is thankful that the tasks were completed on time, she is concerned that you neglected your team during a critical period, and that did not adequately delegate tasks among your team members, so everyone could contribute to a more successful outcome.  <br><br>She assigns several of the outstanding tasks to Priya and remains in close contact to monitor both of you until all the work is completed.</p>',
+        text: '<p<strong>Speak to Susan about your workload. </strong><br><br>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues, as your team members had flagged that they were feeling neglected and unsupported. <br><br>While she is thankful that the tasks were completed on time, she is concerned that you neglected your team during a critical period, and that did not adequately delegate tasks among your team members, so everyone could contribute to a more successful outcome.  <br><br>She assigns several of the outstanding tasks to Priya and remains in close contact to monitor both of you until all the work is completed.</p>',
         options: [
             {
                 text: 'Restart',
@@ -483,7 +492,7 @@ const textNodes = [
     {
         id: 7,
         icon: 'warning',
-        text: '<p>By the end of the week, you successfully complete the remaining tasks for the deadline. However, others in the office flag a series of errors in some of the documentation that may delay future projects, as well as other concerns for the quality of the work. <br><br>Additionally, you have neglected some of your other responsibilities by focusing on these tasks, and Mark and Priya are now reluctant to speak with you. As you did not review their work, they now feel as if they are being blamed for these errors on your behalf. <br><br>Susan then contacts you and requests a private meeting to discuss the situation.</p> ',
+        text: '<p><srong>Persevere and complete the tasks.</strong><br><br>By the end of the week, you successfully complete the remaining tasks for the deadline. However, others in the office flag a series of errors in some of the documentation that may delay future projects, as well as other concerns for the quality of the work. <br><br>Additionally, you have neglected some of your other responsibilities by focusing on these tasks, and Mark and Priya are now reluctant to speak with you. As you did not review their work, they now feel as if they are being blamed for these errors on your behalf. <br><br>Susan then contacts you and requests a private meeting to discuss the situation.</p> ',
         options: [
              {
                 text: 'Restart',
@@ -494,7 +503,7 @@ const textNodes = [
     {
         id: 8,
         icon: 'chat',
-        text: '<p>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. Additionally, she raises concerns about the quality of completed work and says that she found a series of errors in some of the documentation that would have delayed future projects. <br><br>Although the tasks were completed by the deadline, you will now have to spend time fixing these mistakes, further delaying your other assignments.  <br><br>Susan assigns several of the outstanding tasks to Priya and remains in close contact to monitor both of you until the work is completed. Privately, Priya expresses to you that she dislikes this degree of scrutiny and wishes you had taken action to delegate these tasks instead. </p>',
+        text: '<p><strong>Speak to Susan about your workload.</strong><br><br>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. Additionally, she raises concerns about the quality of completed work and says that she found a series of errors in some of the documentation that would have delayed future projects. <br><br>Although the tasks were completed by the deadline, you will now have to spend time fixing these mistakes, further delaying your other assignments.  <br><br>Susan assigns several of the outstanding tasks to Priya and remains in close contact to monitor both of you until the work is completed. Privately, Priya expresses to you that she dislikes this degree of scrutiny and wishes you had taken action to delegate these tasks instead. </p>',
         options: [
              {
                 text: 'Restart',
@@ -505,7 +514,7 @@ const textNodes = [
     {
         id: 9,
         icon: 'team',
-        text: '<p>You delegate the remaining tasks to different members of the team, mindful that Audrey will not be available at work on Friday. Although the distribution is even, your team members are still clearly stressed about the tight deadline and volume of work. <br><br>Mark expresses concern that he is not being given the opportunity to excel, and that you have given him tasks of less importance or complexity when compared to others. Priya is upset that her normal workflow has been disrupted in Jordan’s absence, and that you are closely monitoring her activity. Audrey is feeling stressed about completing both her own work and the additional tasks from Jordan before she takes leave.  <br><br>You decide to: </p>',
+        text: '<p><strong>Delegate the remaining tasks to your team members.</strong><br><br>You delegate the remaining tasks to different members of the team, mindful that Audrey will not be available at work on Friday. Although the distribution is even, your team members are still clearly stressed about the tight deadline and volume of work. <br><br>Mark expresses concern that he is not being given the opportunity to excel, and that you have given him tasks of less importance or complexity when compared to others. Priya is upset that her normal workflow has been disrupted in Jordan’s absence, and that you are closely monitoring her activity. Audrey is feeling stressed about completing both her own work and the additional tasks from Jordan before she takes leave.  <br><br>You decide to: </p>',
         options: [
             {
                 text: 'Ask Audrey to cancel her leave and work instead.',
@@ -520,7 +529,7 @@ const textNodes = [
     {
         id: 10,
         icon: 'handshake',
-        text: '<p>After observing that the work may not be completed by the deadline, you choose to ask Audrey to cancel her leave and stay to complete her outstanding tasks. Audrey agrees but withdraws from you and is less communicative for the rest of the week. <br><br>Mark asks that he be assigned some of the outstanding tasks and is disappointed when he feels he is given less support than Audrey. He insists that he wants to contribute more to the team, so you partner Mark and Audrey together to better support each other. <br><br>In the meantime, Priya is difficult to reach and is entirely focused on her own tasks without communicating with the other members of your team. <br><br>You decide to: </p>',
+        text: '<p><strong>Ask Audrey to cancel her leave and work instead.</strong><br><br>After observing that the work may not be completed by the deadline, you choose to ask Audrey to cancel her leave and stay to complete her outstanding tasks. Audrey agrees but withdraws from you and is less communicative for the rest of the week. <br><br>Mark asks that he be assigned some of the outstanding tasks and is disappointed when he feels he is given less support than Audrey. He insists that he wants to contribute more to the team, so you partner Mark and Audrey together to better support each other. <br><br>In the meantime, Priya is difficult to reach and is entirely focused on her own tasks without communicating with the other members of your team. <br><br>You decide to: </p>',
         options: [
             {
                 text: '<p>Equally split the remaining tasks between you and Audrey.</p>',
@@ -535,7 +544,7 @@ const textNodes = [
     {
         id: 11,
         icon: 'team',
-        text: '<p>After observing that the work may not be completed by the deadline, you delegate Jordan and Audrey’s outstanding tasks to Mark and Priya. Although both agree to the additional workload, there is now significant stress to meet the deadline with less support. <br><br>Mark is dissatisfied by Audrey’s efforts and expresses frustration that her work does not meet his standards, and he may have to redo some documentation in her absence. Similarly, Priya is uncomfortable with your involvement and is struggling to work efficiently while you monitor her activity and offer support. <br><br>You decide to: </p>',
+        text: '<p><strong>Ask Mark and Priya to take on the additional work.</strong><br><br>After observing that the work may not be completed by the deadline, you delegate Jordan and Audrey’s outstanding tasks to Mark and Priya. Although both agree to the additional workload, there is now significant stress to meet the deadline with less support. <br><br>Mark is dissatisfied by Audrey’s efforts and expresses frustration that her work does not meet his standards, and he may have to redo some documentation in her absence. Similarly, Priya is uncomfortable with your involvement and is struggling to work efficiently while you monitor her activity and offer support. <br><br>You decide to: </p>',
         options: [
             {
                 text: '<p>Continue supervising Mark and Priya as they complete the remaining tasks.</p>',
@@ -550,7 +559,7 @@ const textNodes = [
     {
         id: 12,
         icon: 'warning',
-        text: '<p>You and Audrey and Mark split the remaining tasks, and all work together to complete any outstanding work. Although you are successful, this also means that Priya’s work is not reviewed before submission, and both Audrey and Mark feel micromanaged by your involvement. <br><br>While Audrey is pleased that the work was completed on time, she now seems uncomfortable with you and is less friendly in her communication with you. Additionally, Mark comments that asking Audrey to remain at work was unprofessional, and that he could have completed any remaining tasks himself. <br><br>You are then contacted by Susan, who saw that Audrey’s leave had been cancelled. Susan is very upset that Audrey worked on Friday. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. </p>',
+        text: '<p><strong>Equally split the remaining tasks between you and Audrey.</strong><br><br>You and Audrey and Mark split the remaining tasks, and all work together to complete any outstanding work. Although you are successful, this also means that Priya’s work is not reviewed before submission, and both Audrey and Mark feel micromanaged by your involvement. <br><br>While Audrey is pleased that the work was completed on time, she now seems uncomfortable with you and is less friendly in her communication with you. Additionally, Mark comments that asking Audrey to remain at work was unprofessional, and that he could have completed any remaining tasks himself. <br><br>You are then contacted by Susan, who saw that Audrey’s leave had been cancelled. Susan is very upset that Audrey worked on Friday. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. </p>',
         options: [
             {
                 text: 'Restart',
@@ -561,7 +570,7 @@ const textNodes = [
     {
         id: 13,
         icon: 'warning',
-        text: '<p>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. <br><br>Susan is very upset that Audrey worked on Friday, and that Jordan returned to the office so quickly at your request. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. <br><br>Although Mark and Audrey worked together to complete the tasks, they struggled without your mediation and had conflicting opinions on work processes and other concerns. <br><br>Additionally, you did not adequately support your team during this period, so they are more reluctant to speak with you directly about their concerns at work and may have lost trust in your leadership.</p>',
+        text: '<p><strong>Speak to Susan about the additional workload.</strong><br><br>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. <br><br>Susan is very upset that Audrey worked on Friday, and that Jordan returned to the office so quickly at your request. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. <br><br>Although Mark and Audrey worked together to complete the tasks, they struggled without your mediation and had conflicting opinions on work processes and other concerns. <br><br>Additionally, you did not adequately support your team during this period, so they are more reluctant to speak with you directly about their concerns at work and may have lost trust in your leadership.</p>',
         options: [
             {
                 text: 'Restart',
@@ -572,7 +581,7 @@ const textNodes = [
     {
         id: 14,
         icon: 'warning',
-        text: '<p>Priya and Mark successfully complete the remaining tasks, however they frequently disagree about correct work processes, so you spend time mediating between them. Once finished, Mark says he believed he could’ve taken on more responsibility, while Priya did not enjoy either of your involvement in her work. <br><br>You are then contacted by Susan, who is thankful that the work was completed by the deadline, but expresses concern that you neglected your other responsibilities during this period. <br><br>She asks that next time; you speak to her about delegating tasks so that you can better support your team in the future and focus on communicating any issues with other leaders at the organisation. <br><br>As you remained involved with all completed tasks, the work was done to a consistent high standard, but Priya and Mark have expressed resentment about Audrey and Jordan’s absence, and how they had not fully contributed to the team’s success prior to leaving the office. </p>',
+        text: '<p><strong>Continue supervising Mark and Priya as they complete the remaining tasks.</strong><br><br>Priya and Mark successfully complete the remaining tasks, however they frequently disagree about correct work processes, so you spend time mediating between them. Once finished, Mark says he believed he could’ve taken on more responsibility, while Priya did not enjoy either of your involvement in her work. <br><br>You are then contacted by Susan, who is thankful that the work was completed by the deadline, but expresses concern that you neglected your other responsibilities during this period. <br><br>She asks that next time; you speak to her about delegating tasks so that you can better support your team in the future and focus on communicating any issues with other leaders at the organisation. <br><br>As you remained involved with all completed tasks, the work was done to a consistent high standard, but Priya and Mark have expressed resentment about Audrey and Jordan’s absence, and how they had not fully contributed to the team’s success prior to leaving the office. </p>',
         options: [
             {
                 text: 'Restart',
@@ -583,7 +592,7 @@ const textNodes = [
     {
         id: 15,
         icon: 'clock',
-        text: '<p>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. She notes that by overworking your team to meet a deadline, your team members may have eventually lost trust in your leadership, thus impacting future projects. <br><br>Susan delegates your other responsibilities to different leaders within the organisation, giving you more flexibility to support Mark and Priya. You take on some of the remaining tasks, and together you can finish all assignments by the deadline. <br><br>However, Mark and Priya do express some grievances against Audrey and Jordan, who they believe did not work to your organisation’s standard prior to leaving the office early. </p>',
+        text: '<p><strong>Speak to Susan about the additional workload.</strong><br><br>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. She notes that by overworking your team to meet a deadline, your team members may have eventually lost trust in your leadership, thus impacting future projects. <br><br>Susan delegates your other responsibilities to different leaders within the organisation, giving you more flexibility to support Mark and Priya. You take on some of the remaining tasks, and together you can finish all assignments by the deadline. <br><br>However, Mark and Priya do express some grievances against Audrey and Jordan, who they believe did not work to your organisation’s standard prior to leaving the office early. </p>',
         options: [
             {
                 text: 'Restart',
@@ -594,7 +603,7 @@ const textNodes = [
     {
         id: 16,
         icon: 'phone',
-        text: '<p>Jordan is very surprised you asked them to return to work but still agrees to return to the office. However, this does not tangibly increase the rate of completed tasks because Jordan is distracted and receiving frequent calls from their sister.  <br><br>Others in the office notice that Jordan has returned early, and many express both sympathy and concern. Mark sends you a message and comments that he finds this behaviour unprofessional, and that he would not have bothered Jordan with work-related issues until they returned from the hospital. Audrey takes frequent breaks to check in with Jordan, who is only becoming more stressed by the volume of work they must now complete. Priya also contacts you, explaining that this has been a significant disruption, and it has been difficult to track completed tasks given how assigned work keeps changing. <br><br>Noticeably, you realise that Jordan is less communicative and is no longer as open when discussing work matters with you. Additionally, they request that you stop asking them about their sister until after the deadline. <br><br>You decide to: </p>',
+        text: '<p><strong>Call Jordan and ask them to return to the office as soon as possible.</strong><br><br>Jordan is very surprised you asked them to return to work but still agrees to return to the office. However, this does not tangibly increase the rate of completed tasks because Jordan is distracted and receiving frequent calls from their sister.  <br><br>Others in the office notice that Jordan has returned early, and many express both sympathy and concern. Mark sends you a message and comments that he finds this behaviour unprofessional, and that he would not have bothered Jordan with work-related issues until they returned from the hospital. Audrey takes frequent breaks to check in with Jordan, who is only becoming more stressed by the volume of work they must now complete. Priya also contacts you, explaining that this has been a significant disruption, and it has been difficult to track completed tasks given how assigned work keeps changing. <br><br>Noticeably, you realise that Jordan is less communicative and is no longer as open when discussing work matters with you. Additionally, they request that you stop asking them about their sister until after the deadline. <br><br>You decide to: </p>',
         options: [
             {
                 text: '<p>Assign Jordan and Mark work together to complete the tasks.</p>',
@@ -609,7 +618,7 @@ const textNodes = [
     {
         id: 17,
         icon: 'team',
-        text: '<p>Mark agrees to assist with the tasks, and immediately begins directing other team members, even though this was not what you requested. In particular, he assigns specific work to both Jordan and Audrey and encourages them to address concerns to him rather than you. <br><br>You privately discuss this with Mark, explaining that while you appreciate his support, he is also pushing the boundaries of his role within the team, and that your team members should be contacting you for support instead. He agrees, however Audrey and Jordan seem reluctant to speak with you, only increasing stress in the office.<br><br> You decide to: </p> ',
+        text: '<p><strong>Assign Jordan and Mark work together to complete the tasks.</strong><br><br>Mark agrees to assist with the tasks, and immediately begins directing other team members, even though this was not what you requested. In particular, he assigns specific work to both Jordan and Audrey and encourages them to address concerns to him rather than you. <br><br>You privately discuss this with Mark, explaining that while you appreciate his support, he is also pushing the boundaries of his role within the team, and that your team members should be contacting you for support instead. He agrees, however Audrey and Jordan seem reluctant to speak with you, only increasing stress in the office.<br><br> You decide to: </p> ',
         options: [
             {
                 text: '<p>Focus on supporting the team while completing the tasks.</p>',
@@ -624,7 +633,7 @@ const textNodes = [
     {
         id: 18,
         icon: 'handshake',
-        text: '<p>Speaking with Jordan, you ask that they return to the hospital and take the rest of the week off. Jordan agrees, but clearly feels guilty about the incomplete work, and withdraws from you further. <br><br>As you continue working, you become progressively more stressed and find yourself getting short with your team members who are asking you for assistance. You are arriving early and leaving late to prioritise completing the tasks but find that others in the office have begun to withdraw from you.  <br><br>After seeing you struggle, Audrey offers to cancel her leave request to complete any outstanding tasks to better support you in Jordan’s absence. <br><br>You decide to: </p>',
+        text: '<p><strong>Take over their tasks yourself.</strong><br><br>Speaking with Jordan, you ask that they return to the hospital and take the rest of the week off. Jordan agrees, but clearly feels guilty about the incomplete work, and withdraws from you further. <br><br>As you continue working, you become progressively more stressed and find yourself getting short with your team members who are asking you for assistance. You are arriving early and leaving late to prioritise completing the tasks but find that others in the office have begun to withdraw from you.  <br><br>After seeing you struggle, Audrey offers to cancel her leave request to complete any outstanding tasks to better support you in Jordan’s absence. <br><br>You decide to: </p>',
         options: [
             {
                 text: '<p>Ask Audrey to cancel her leave.</p>',
@@ -639,7 +648,7 @@ const textNodes = [
     {
         id: 19,
         icon: 'warning',
-        text: '<p>The team successfully completes all tasks by the deadline, but members of your team are feeling burnt out from the stress. While Priya has been more communicative with you, Jordan and Audrey seem more inclined to speak with Mark rather than you, who then contacts you on their behalf. <br><br>Mark expresses that he has not felt supported by you during this period, and that he has spoken to Susan. <br><br>You are then contacted by Susan, who is very upset that Jordan was asked to return to the office, and comments that this reflects badly on both you and her. She also expresses disappointment that you had not contacted her about these issues sooner, and that Mark had spoken to her instead. <br><br>Although life may be unpredictable and affect timelines, she says you did not adequately adjust to meet the needs of your team during this period. Tasks were completed on time, but your team was still negatively affected and may have lost trust in your leadership. </p>',
+        text: '<p><strong>Focus on supporting the team while completing the tasks.</strong><br><br>The team successfully completes all tasks by the deadline, but members of your team are feeling burnt out from the stress. While Priya has been more communicative with you, Jordan and Audrey seem more inclined to speak with Mark rather than you, who then contacts you on their behalf. <br><br>Mark expresses that he has not felt supported by you during this period, and that he has spoken to Susan. <br><br>You are then contacted by Susan, who is very upset that Jordan was asked to return to the office, and comments that this reflects badly on both you and her. She also expresses disappointment that you had not contacted her about these issues sooner, and that Mark had spoken to her instead. <br><br>Although life may be unpredictable and affect timelines, she says you did not adequately adjust to meet the needs of your team during this period. Tasks were completed on time, but your team was still negatively affected and may have lost trust in your leadership. </p>',
         options: [
             {
                 text: 'Restart',
@@ -650,7 +659,7 @@ const textNodes = [
     {
         id: 20,
         icon: 'warning',
-        text: '<p>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. She also notes that Mark had been contacted her with updates during the week, something you were not aware of. <br><br>However, she is very upset that you asked Jordan to return to the office so quickly, and comments that this reflects badly on both you and her. In future, she informs you that you should contact her with your concerns prior to making these requests to your staff. <br><br>As you have not adequately supported your team during this period, she decides to monitor your team’s activity over the next week to ensure that work is completed on time, and you are better prepared to communicate and advocate for your team members. <br><br>When asked, your team members express that this degree of scrutiny will be difficult, and they wish things had been better handled this week.</p>',
+        text: '<p><strong>Speak to Susan about meeting the deadline.</strong><br><br>Susan thanks you for discussing this with her but says she is disappointed that you did not speak to her sooner about these issues. She also notes that Mark had been contacted her with updates during the week, something you were not aware of. <br><br>However, she is very upset that you asked Jordan to return to the office so quickly, and comments that this reflects badly on both you and her. In future, she informs you that you should contact her with your concerns prior to making these requests to your staff. <br><br>As you have not adequately supported your team during this period, she decides to monitor your team’s activity over the next week to ensure that work is completed on time, and you are better prepared to communicate and advocate for your team members. <br><br>When asked, your team members express that this degree of scrutiny will be difficult, and they wish things had been better handled this week.</p>',
         options: [
             {
                 text: 'Restart',
@@ -661,7 +670,7 @@ const textNodes = [
     {
         id: 21,
         icon: 'warning', 
-        text: '<p>Audrey remains at work for the rest of the week, but due to the disruption you both struggle to complete tasks quickly. Despite meeting the deadline, you neglected your other responsibilities and did not support Mark and Priya by reviewing their work before the end of the week. <br><br>You are then contacted by Susan, who saw that Audrey’s leave had been cancelled. Susan is very upset that Audrey worked on Friday, and that Jordan returned to the office so quickly at your request. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. <br><br>As a result, all members of your team have lost trust in your leadership, and do not feel confident that you can advocate for them in the future. Now, you must work to rebuild their trust and facilitate a more supportive work environment.</p>',
+        text: '<p><strong>Ask Audrey to cancel her leave.</strong><br><br>Audrey remains at work for the rest of the week, but due to the disruption you both struggle to complete tasks quickly. Despite meeting the deadline, you neglected your other responsibilities and did not support Mark and Priya by reviewing their work before the end of the week. <br><br>You are then contacted by Susan, who saw that Audrey’s leave had been cancelled. Susan is very upset that Audrey worked on Friday, and that Jordan returned to the office so quickly at your request. She expresses that if you had serious concerns about meeting the deadline, that she should have been contacted earlier and then assisted in delegating tasks to better support your team. <br><br>As a result, all members of your team have lost trust in your leadership, and do not feel confident that you can advocate for them in the future. Now, you must work to rebuild their trust and facilitate a more supportive work environment.</p>',
         options: [
             {
                 text: 'Restart',
@@ -672,7 +681,7 @@ const textNodes = [
     {
         id: 22,
         icon: 'warning',
-        text: '<p>Susan thanks you for discussing this with her but is very upset you asked Jordan to return to the office. She comments that this was unprofessional and reflects badly on both you and her. In future, she informs you that you should contact her with your concerns prior to making these requests to your staff. <br><br>Additionally, she says that she had difficulty getting in contact with you this week, and that you had neglected your other responsibilities to complete this work by the deadline. Mark and Priya did not feel supported, and you did not review or engage with any of the work they were doing, leaving them feeling underappreciated. <br><br>In future, you must contact her about any serious concerns regarding work deadlines so she can better assist your team.</p>',
+        text: '<p><strong>Speak to Susan about meeting the additional workload.</strong><br><br>Susan thanks you for discussing this with her but is very upset you asked Jordan to return to the office. She comments that this was unprofessional and reflects badly on both you and her. In future, she informs you that you should contact her with your concerns prior to making these requests to your staff. <br><br>Additionally, she says that she had difficulty getting in contact with you this week, and that you had neglected your other responsibilities to complete this work by the deadline. Mark and Priya did not feel supported, and you did not review or engage with any of the work they were doing, leaving them feeling underappreciated. <br><br>In future, you must contact her about any serious concerns regarding work deadlines so she can better assist your team.</p>',
         options: [
             {
                 text: 'Restart',
