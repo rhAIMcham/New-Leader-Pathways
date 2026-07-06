@@ -772,6 +772,40 @@ ul, ol {
   height: 50px;
 }
 
+/*Pulse button animation */
+.pulse-btn {
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-btn:hover {
+  color: var(--navy);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+textarea {
+font-family: 'Inter', sans-serif;
+}
 .workArea3 {
 font-size: 14px;
 display: flex;
@@ -1594,7 +1628,7 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">08:55</div>
+            <div class="lock-time" id="lockTime">11:55</div>
             <div class="lock-date" id="lockDate">Monday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1623,14 +1657,14 @@ audio {
               </div>
             </div>
             <div class="workArea1" id="work1">
-              <div class="text-entry-containment">
+              <!-- <div class="text-entry-containment">
               <textarea  name="identify-desired-procedures" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
 outcome for this issue? How could you achieve this outcome?"> </textarea>
        <textarea name="create-kpis" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
 outcome for this issue? How could you achieve this outcome?"> </textarea>
        <textarea name="how-to-collect-and-analyse-data" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
 outcome for this issue? How could you achieve this outcome?"> </textarea>
-</div>
+</div> -->
             </div>
 <div class="workArea2" id="work2">
 <div class="mail-app">
@@ -1643,7 +1677,9 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <!-- <span class="sidebar-badge">1</span> -->
     </div>
     <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
-    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+<div class="sidebar-item" onclick="openCompose()" tabindex="0">
+  <span class="sidebar-icon">&#9998;</span> Drafts
+</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
   </nav>
@@ -1657,8 +1693,19 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
          <span class="unread-dot"></span>
+        <span class="email-sender">SLT</span>
+        <span class="email-time">11:23 am</span>
+      </div>
+      <div class="email-subject">
+     Policy updates
+      </div>
+      <div class="email-preview">Hello managers. We wanted to let you all...</div>
+    </div>
+
+      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">1:15 pm</span>
+        <span class="email-time">Friday</span>
       </div>
       <div class="email-subject">
       Second week check-in
@@ -1666,7 +1713,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hey <span class="username">New Leader</span>. Just wanted to check...</div>
     </div>
 
-      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1677,7 +1724,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+      <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1688,7 +1735,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">Last week</span>
@@ -1700,7 +1747,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">Last week</span>
@@ -1712,7 +1759,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">Last week</span>
@@ -1724,7 +1771,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">Last week</span>
@@ -1736,7 +1783,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
+    <div class="email-row" id="emailRow9" onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Last week</span>
@@ -1745,7 +1792,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow9" onclick="swapEmails(9)" tabindex="0">
+    <div class="email-row" id="emailRow10" onclick="swapEmails(10)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Last week</span>
@@ -1758,12 +1805,12 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
   <!-- THREAD PANE -->
   <div class="thread-pane">
      <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">Second week check-in</div>
+      <div class="thread-subject">Policy updates</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" onclick="reply()">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
+          <!-- <button class="btn pulse-btn" id="replyBtn" onclick="reply()">&#8617; Reply</button>
+          <button class="btn">&#8943;</button> -->
         </div>
       </div>
     </div>
@@ -1779,15 +1826,45 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
              <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:15 pm</span>
+          <span class="message-time">1:50 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwoWeek2" maxlength="50000"></textarea>
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan"  maxlength="50000"></textarea>
     </div>
 </div>
 </div>
 </div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-navy" id="AK_icon">AK</div>
+          <div class="message-from">
+            <div class="message-name">Senior Leadership<span class="message-name-to"> to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">11:23 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hello managers. We wanted to let you all know about an upcoming policy change.</p>
+          <p>Kind regards,</p>
+          <p>Alfred K</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">Second week check-in</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -1812,37 +1889,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       </div>
 </div>
 
-     <div id="thread2" class="thread-header" tabindex="0">
+     <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn" ">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex="0">
-      <div id="replyBody">
- <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
-          <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
-            <div class="message-address">sh@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:50 pm</span>
-        </div>
-        <div class="message-body">
-        <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan"  maxlength="50000"></textarea>
-    </div>
-</div>
-</div>
-</div>
+    <div id="threadBody3" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -1878,18 +1934,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
         </div>
       </div>
 </div>
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex="0">
+    <div id="threadBody4" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -1940,18 +1994,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
     </div>
 
 
-     <div id="thread4" class="thread-header" tabindex="0">
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -1993,18 +2045,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       </div>
     </div>
 
-     <div id="thread5" class="thread-header" tabindex="0">
+     <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -2047,18 +2097,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
 
     </div>
 
-    <div id="thread6" class="thread-header" tabindex="0">
+    <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2099,18 +2147,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       </div>
 
     </div>
-   <div id="thread7" class="thread-header" tabindex="0">
+   <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -2147,18 +2193,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       </div>
     </div>
 
-    <div id="thread8" class="thread-header" tabindex="0">
+    <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody9" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2194,18 +2238,16 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
       </div>
 </div>
 
-    <div id="thread9" class="thread-header" tabindex="0">
+    <div id="thread10" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
         </div>
       </div>
     </div>
 
-    <div id="threadBody9" class="thread-body" tabindex="0">
+    <div id="threadBody10" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2240,6 +2282,29 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
   </div><!-- end thread-pane -->
 </div>
 </div><!-- end mail-app -->
+<div id="composeNewEmail" class="messageHidden" style="position:absolute; top:80px; left:150px; z-index:1000;">
+  <div class="message-card" style="width:550px; background:white;">
+    <div class="message-header">
+      <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+      <div class="message-from">
+        <div class="message-name">New message</div>
+      </div>
+      <button class="btn" onclick="closeCompose()" style="margin-left:auto;">&#10005;</button>
+    </div>
+    <div class="message-body" style="padding:0;">
+      <div style="display:flex; flex-direction:column; gap:0;">
+        <input type="text" id="composeTo" placeholder="To: (e.g. mj@organisation.com.au, js@organisation.com.au)"
+          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
+        <input type="text" id="composeSubject" placeholder="Subject"
+          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
+        <textarea id="composeBody" class="compose-input" placeholder="Write your message..." style="border:none; border-radius:0;"></textarea>
+      </div>
+    </div>
+    <div class="compose-bar" style="justify-content:flex-end; border-top:1px solid var(--border-subtle);">
+      <button class="compose-send" id="composeSendBtn" onclick="sendNewEmail()">Send</button>
+    </div>
+  </div>
+</div>
 
 <div id="MJ_info_card" class="messageHidden"  tabindex="0">
   <div class="topBar">
@@ -2435,7 +2500,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 10; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2462,6 +2527,7 @@ function emailArrives() {
 
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
+  document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
 const STORAGE_KEY_REPLY_2 = 'learnerReplyTwoWeek2';
@@ -2477,6 +2543,59 @@ saveBtn.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
+
+function openCompose() {
+  // Switch to mail work area first
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`work${i}`).style.display = 'none';
+  }
+  document.getElementById('work2').style.display = 'flex';
+
+  // Preload any existing draft from localStorage (matches your loadNote pattern)
+  const savedTo = localStorage.getItem('draftEmailTo');
+  const savedSubject = localStorage.getItem('draftEmailSubject');
+  const savedBody = localStorage.getItem('draftEmailBody');
+
+  document.getElementById('composeTo').value = savedTo || '';
+  document.getElementById('composeSubject').value = savedSubject || '';
+  document.getElementById('composeBody').value = savedBody || '';
+
+  document.getElementById('composeSendBtn').classList.remove('sent');
+  document.getElementById('composeSendBtn').textContent = 'Send';
+  document.getElementById('composeSendBtn').disabled = false;
+
+  document.getElementById('composeNewEmail').classList.add('messageRevealed');
+}
+function closeCompose() {
+  // Autosave whatever's currently typed, so reopening Drafts preloads it
+  localStorage.setItem('draftEmailTo', document.getElementById('composeTo').value.trim());
+  localStorage.setItem('draftEmailSubject', document.getElementById('composeSubject').value.trim());
+  localStorage.setItem('draftEmailBody', document.getElementById('composeBody').value.trim());
+
+  document.getElementById('composeNewEmail').classList.remove('messageRevealed');
+}
+
+function sendNewEmail() {
+  const to = document.getElementById('composeTo').value.trim();
+  const subject = document.getElementById('composeSubject').value.trim();
+  const body = document.getElementById('composeBody').value.trim();
+
+  // if (!to || !subject) {
+  //   alert('Please add at least one recipient and a subject before sending.');
+  //   return;
+  // }
+
+  document.getElementById('composeSendBtn').textContent = 'Sent';
+  document.getElementById('composeSendBtn').classList.add('sent');
+  document.getElementById('composeSendBtn').disabled = true;
+
+  // Clear the draft now that it's been sent
+  localStorage.removeItem('draftEmailTo');
+  localStorage.removeItem('draftEmailSubject');
+  localStorage.removeItem('draftEmailBody');
+
+  setTimeout(closeCompose, 900);
+}
 </script>
 </div>
 </div>
@@ -3004,7 +3123,7 @@ function openApps(appNumber) {
 
 // Initialize - show mail app by default
 document.addEventListener('DOMContentLoaded', function() {
-    openApps(1);
+    openApps(3);
 });
 
 //Controls appearance of popup
