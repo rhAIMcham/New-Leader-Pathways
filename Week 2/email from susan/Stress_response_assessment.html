@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MCQ Single Screen</title>
+  <meta charset="UTF-8" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<style>
+ :root{
+    --AIMblue: #4353A3;
+    --darkBlue: #38416D;
+    --teal: #5DC8B9;
+    --cream: #F1EEDE;
+    --grey: #ebebeb;
+    --rust: #AF4510;
+    --navy: #12195C;
+    --white: #ffffff;
+    --lightBlue: #AEBAE4;
+    }
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+   font-family: "IBM-Plex-Sans", sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); */
+}
+
+h1 {
+    color: var(--darkBlue);
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.legend {
+    margin-bottom: 30px;
+    padding: 30px;
+    background: #f7fafc;
+    border-radius: 8px;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.legend-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--darkBlue);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: var(--darkBlue);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+tr:nth-child(even) {
+    background-color: var(--grey); /*Grey of torment!*/
+}
+
+td:first-child {
+    font-weight: 500;
+    color: #2d3748;
+    max-width: 300px;
+}
+
+.rating-cell {
+    text-align: center;
+}
+
+.rating-btn {
+    width: 40px;
+      font-family: "IBM Plex Sans", sans-serif;
+    height: 40px;
+    border: 2px solid var(--lightBlue);
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    color:  var(--AIMblue);
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.rating-btn:hover {
+    border-color: var(--AIMblue);
+    transform: scale(1.1);
+    background: #edf2f7;
+}
+
+.rating-btn.selected {
+  background-color: #12195C;
+    border-color: #12195C;
+    color: white;
+    transform: scale(1.15);
+}
+
+
+button {
+
+
+  position: relative;
+  color: white;
+  width: 200px;
+  border: solid 2px var(--cream);
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: var(--lightBlue);
+  color: #12195C;
+  border: solid 2px #12195C;
+}
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 8px;
+    display: none;
+}
+
+.results.show {
+    display: block;
+}
+
+.results h2 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.result-item {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-label {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.result-value {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 18px;
+}
+
+.average {
+    text-align: left;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+td > h4 {
+  margin-bottom: 10px;
+}
+.firstTD {
+    width: 10px;
+        writing-mode: sideways-lr;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .rating-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">       
+        <div class="legend">
+            <div class="legend-title">Leadership self reflection</div>
+            <p>Reflecting on your leadership style, rate how accurately each statement describes you:</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question class</th>
+                    <th>1 is least accurate, 5 is most accurate.</th>
+                    <th class="rating-cell">1</th>
+                    <th class="rating-cell">2</th>
+                    <th class="rating-cell">3</th>
+                    <th class="rating-cell">4</th>
+                    <th class="rating-cell">5</th>
+                </tr>
+            </thead>
+            <tbody id="assessmentBody">
+            
+                <tr data-area="quesion1">
+                    <td rowspan="3" class="firstTD">Critical Thinking</td>
+                    <td>I challenge my own assumptions when solving problems.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion2">
+                    <td>I gather relevant information before reaching conclusions.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion3">
+                    <td>I think through potential consequences before taking action.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion4">
+                    <td rowspan="3" class="firstTD">Delegation</td>
+                    <td>I trust others to take ownership of assigned tasks.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion5">
+                    <td>I delegate tasks to develop team members' skills and confidence.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion6">
+                <td>I am comfortable sharing responsibility for important outcomes.</td>
+                <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+            </tr>
+                <tr data-area="quesion7">
+                    <td rowspan="3" class="firstTD">Authenticity</td>
+                    <td>My actions consistently align with my values.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion8">
+                    <td>I am comfortable admitting mistakes when they occur.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion9">
+                    <td>I show genuine interest in the perspectives of others.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion10">
+                    <td rowspan="3" class="firstTD">Constructive Feedback</td>
+                    <td>I focus on behaviours and outcomes rather than personalities.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                     <tr data-area="quesion11">
+                    <td>I balance positive feedback with opportunities for improvement.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion12">
+                    <td>I actively seek feedback to improve my own performance.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion13">
+                    <td rowspan="3" class="firstTD">Conflict management</td>
+                    <td>I address conflict rather than avoiding it.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                     <tr data-area="quesion14">
+                    <td>I work toward solutions that benefit everyone involved.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+                <tr data-area="quesion15">
+                    <td>I use conflict as an opportunity to strengthen relationships and team performance.</td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="1">1</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="2">2</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="3">3</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="4">4</button></td>
+                    <td class="rating-cell"><button class="rating-btn" data-value="5">5</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="results" id="results">
+            <div id="resultsList"></div>
+            <div class="average" id="average"></div>
+        </div>
+    </div>
+
+    <script>
+        
+        const ratings = {};
+        const questionList = [
+            'q1',
+            'q2',
+            'q3',
+            'q4',
+            'q5',
+            'q6',
+            'q7',
+            'q8',
+            'q9',
+            'q10',
+            'q11',
+            'q12',
+            'q13',
+            'q14',
+            'q15'
+        ];
+
+        document.querySelectorAll('.rating-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const area = row.dataset.area;
+                const value = parseInt(this.dataset.value);
+
+                row.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+
+                ratings[area] = value;
+                updateResults();
+            });
+        });
+
+        function updateResults() {
+            const ratingCount = Object.keys(ratings).length;
+            
+            if (ratingCount > 0) {
+                document.getElementById('results').classList.add('show');
+                
+                const resultsList = document.getElementById('resultsList');
+                resultsList.innerHTML = '';
+                
+                let total = 0;
+                let index = 0;
+                
+                for (const [area, value] of Object.entries(ratings)) {
+                    total += value;
+                    index++;
+                }
+
+                if (ratingCount === 15) {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">Reflect on your results prior to the webinar. 
+                           
+                        </p></div>
+                    `;
+                    
+                    // Attach click handlers to the newly created buttons
+                    document.getElementById('savePngBtn').addEventListener('click', saveTableAsPNG);
+                    document.getElementById('savePdfBtn').addEventListener('click', saveTableAsPDF);
+                } else {
+                    document.getElementById('results').classList.remove('show');
+                }
+            } else {
+                document.getElementById('results').classList.remove('show');
+            }
+        }
+
+        // Captures the filled-in quiz exactly as it sits on the page right
+        // now (the .container div already wraps the legend, the table with
+        // selected answers, and the results/score section). The Save
+        // buttons are hidden just for the snapshot so they don't appear in
+        // the exported image, then restored straight after.
+        // async function captureQuizSnapshot() {
+        //     const container = document.querySelector('.container');
+        //     const saveBtns = [
+        //         document.getElementById('savePngBtn'),
+        //         document.getElementById('savePdfBtn')
+        //     ].filter(Boolean);
+
+        //     saveBtns.forEach(b => b.style.visibility = 'hidden');
+        //     try {
+        //         return await html2canvas(container, {
+        //             backgroundColor: '#ffffff',
+        //             scale: 2,
+        //             useCORS: true,
+        //             allowTaint: true,  // ← Add this
+        //             logging: false,    // ← Suppress console warnings
+        //             windowWidth: container.scrollWidth,
+        //             windowHeight: container.scrollHeight
+        //         });
+        //     } finally {
+        //         saveBtns.forEach(b => b.style.visibility = 'visible');
+        //     }
+        // }
+
+        // async function saveTableAsPNG() {
+        //     try {
+        //         const canvas = await captureQuizSnapshot();
+        //         canvas.toBlob(blob => {
+        //             const url = URL.createObjectURL(blob);
+        //             const link = document.createElement('a');
+        //             link.href = url;
+        //             link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
+        //             document.body.appendChild(link);
+        //             link.click();
+        //             document.body.removeChild(link);
+        //             URL.revokeObjectURL(url);
+        //         }, 'image/png');
+        //     } catch (err) {
+        //         console.error('PNG export failed:', err);
+        //         alert('Sorry, something went wrong creating the PNG. Please try again.');
+        //     }
+        // }
+
+        // async function saveTableAsPDF() {
+        //     try {
+        //         const { jsPDF } = window.jspdf;
+        //         const canvas = await captureQuizSnapshot();
+                
+        //         canvas.toBlob(blob => {
+        //             const reader = new FileReader();
+        //             reader.onload = () => {
+        //                 const imgData = reader.result;
+        //                 const pdf = new jsPDF('p', 'mm', 'a4');
+        //                 const pdfWidth = pdf.internal.pageSize.getWidth();
+        //                 const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        //                 const imgProps = pdf.getImageProperties(imgData);
+        //                 const imgWidthMm = pdfWidth;
+        //                 const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
+
+        //                 if (imgHeightMm <= pdfHeight) {
+        //                     pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
+        //                 } else {
+        //                     let position = 0;
+        //                     let remainingHeight = imgHeightMm;
+        //                     pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+        //                     remainingHeight -= pdfHeight;
+        //                     while (remainingHeight > 0) {
+        //                         position -= pdfHeight;
+        //                         pdf.addPage();
+        //                         pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
+        //                         remainingHeight -= pdfHeight;
+        //                     }
+        //                 }
+
+        //                 pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
+        //             };
+        //             reader.readAsDataURL(blob);
+        //         }, 'image/png');
+        //     } catch (err) {
+        //         console.error('PDF export failed:', err);
+        //         alert('Sorry, something went wrong creating the PDF. Please try again.');
+        //     }
+        // }
+    </script>
+</body>
+</html>

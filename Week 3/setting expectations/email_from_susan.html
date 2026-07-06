@@ -255,6 +255,17 @@ svg:hover {
   color: white;
   font-size: 4rem;
 }
+
+.text-entry-containment {
+  width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-entry-box {
+  margin: 8px;
+}
 /*Import from mail widget*/
 
 .workArea2 {
@@ -1612,7 +1623,14 @@ audio {
               </div>
             </div>
             <div class="workArea1" id="work1">
-              <p></p>
+              <div class="text-entry-containment">
+              <textarea  name="identify-desired-procedures" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
+outcome for this issue? How could you achieve this outcome?"> </textarea>
+       <textarea name="create-kpis" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
+outcome for this issue? How could you achieve this outcome?"> </textarea>
+       <textarea name="how-to-collect-and-analyse-data" class="text-entry-box" placeholder="Review and consider the issue presented in the scenario. What is the desired
+outcome for this issue? How could you achieve this outcome?"> </textarea>
+</div>
             </div>
 <div class="workArea2" id="work2">
 <div class="mail-app">
@@ -2986,7 +3004,7 @@ function openApps(appNumber) {
 
 // Initialize - show mail app by default
 document.addEventListener('DOMContentLoaded', function() {
-    openApps(3);
+    openApps(1);
 });
 
 //Controls appearance of popup
