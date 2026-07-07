@@ -774,8 +774,7 @@ ul, ol {
 
 /*Pulse button animation */
 .pulse-btn {
-  background-color: var(--navy);
-  color: white;
+
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -1678,7 +1677,7 @@ outcome for this issue? How could you achieve this outcome?"> </textarea>
     </div>
     <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
 <div class="sidebar-item" onclick="openCompose()" tabindex="0">
-  <span class="sidebar-icon">&#9998;</span> Drafts
+  <span class="sidebar-icon pulse-btn" id="drafts" >&#9998;</span> Drafts
 </div>
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
@@ -2565,6 +2564,8 @@ function openCompose() {
   document.getElementById('composeSendBtn').disabled = false;
 
   document.getElementById('composeNewEmail').classList.add('messageRevealed');
+
+  document.getElementById('drafts').classList.remove('pulse-btn');
 }
 function closeCompose() {
   // Autosave whatever's currently typed, so reopening Drafts preloads it

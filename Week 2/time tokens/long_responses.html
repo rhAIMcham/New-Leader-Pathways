@@ -31,6 +31,7 @@ border-radius: 8px;
 border: 1px solid #ccc;
 resize: vertical;
 font-size: 1rem; 
+font-family: 'Inter', sans-serif;
 }
  .saved {
     display: flex;
@@ -75,8 +76,8 @@ padding: 5px;
 
   <!-- Flexbox row: Saved! stays left, Save button stays right -->
   <div class="saved" >
-    <p id="statusMsg" class="savedMsg">Saved!</p>
-    <button id="saveBtn" class="saveBtn">Save</button>
+    <p id="statusMsg1" class="savedMsg">Saved!</p>
+    <button id="saveBtn1" class="saveBtn">Save</button>
   </div>
 </div>
 
@@ -89,8 +90,8 @@ padding: 5px;
 
   <!-- Flexbox row: Saved! stays left, Save button stays right -->
   <div class="saved" >
-    <p id="statusMsg" class="savedMsg">Saved!</p>
-    <button id="saveBtn" class="saveBtn">Save</button>
+    <p id="statusMsg2" class="savedMsg">Saved!</p>
+    <button id="saveBtn2" class="saveBtn">Save</button>
   </div>
 </div>
 
@@ -102,18 +103,17 @@ padding: 5px;
 
   <!-- Flexbox row: Saved! stays left, Save button stays right -->
   <div class="saved" >
-    <p id="statusMsg" class="savedMsg">Saved!</p>
-    <button id="saveBtn" class="saveBtn">Save</button>
+    <p id="statusMsg3" class="savedMsg">Saved!</p>
+    <button id="saveBtn3" class="saveBtn">Save</button>
   </div>
 </div>
 <script>
-(function() {
-  const textArea = document.getElementById('notesInput');
-  const saveBtn = document.getElementById('saveBtn');
-  const statusMsg = document.getElementById('statusMsg');
+function initNotesBox(inputId, btnId, msgId, storageKey) {
+  const textArea = document.getElementById(inputId);
+  const saveBtn = document.getElementById(btnId);
+  const statusMsg = document.getElementById(msgId);
 
-  // Each lesson uses a unique key (example: eNotes1, eNotes2, eNotes3)
-  const STORAGE_KEY = 'eNotes1';
+  const STORAGE_KEY = storageKey;
 
   // Load existing note (if any)
   const savedNote = localStorage.getItem(STORAGE_KEY);
@@ -132,5 +132,9 @@ padding: 5px;
   textArea.addEventListener('input', () => {
     localStorage.setItem(STORAGE_KEY, textArea.value.trim());
   });
-})();
+}
+
+initNotesBox('notesInput1', 'saveBtn1', 'statusMsg1', 'timeTokensQ1');
+initNotesBox('notesInput2', 'saveBtn2', 'statusMsg2', 'timeTokensQ2');
+initNotesBox('notesInput3', 'saveBtn3', 'statusMsg3', 'timeTokensQ3');
 </script>
