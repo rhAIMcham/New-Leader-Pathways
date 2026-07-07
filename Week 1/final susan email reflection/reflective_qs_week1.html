@@ -69,7 +69,7 @@ padding: 5px;
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
 <div class="notesBox">
-  <p class="questionText">Why were certain decisions made?</p>
+  <p class="questionText">Aspects that work in my favour</p>
 
   <textarea id="notesInput1" rows="8"
     ></textarea>
@@ -83,7 +83,7 @@ padding: 5px;
 
 
 <div class="notesBox">
-  <p class="questionText">What may have triggered stress?</p>
+  <p class="questionText">Aspects that might work against me</p>
 
   <textarea id="notesInput2" rows="8"
     ></textarea>
@@ -95,18 +95,6 @@ padding: 5px;
   </div>
 </div>
 
-<div class="notesBox">
-  <p class="questionText">What was your first instinct? Our first response to stress does not always lead to productive decision-making.</p>
-
-  <textarea id="notesInput3" rows="8"
-    ></textarea>
-
-  <!-- Flexbox row: Saved! stays left, Save button stays right -->
-  <div class="saved" >
-    <p id="statusMsg3" class="savedMsg">Saved!</p>
-    <button id="saveBtn3" class="saveBtn">Save</button>
-  </div>
-</div>
 <script>
 function initNotesBox(inputId, btnId, msgId, storageKey) {
   const textArea = document.getElementById(inputId);
@@ -134,7 +122,6 @@ function initNotesBox(inputId, btnId, msgId, storageKey) {
   });textArea
 }
 
-initNotesBox('notesInput1', 'saveBtn1', 'statusMsg1', 'decisionTreeQ1');
-initNotesBox('notesInput2', 'saveBtn2', 'statusMsg2', 'decisionTreeQ2');
-initNotesBox('notesInput3', 'saveBtn3', 'statusMsg3', 'decisionTreeQ3');
+initNotesBox('notesInput1', 'saveBtn1', 'statusMsg1', 'discReplyOne');
+initNotesBox('notesInput2', 'saveBtn2', 'statusMsg2', 'discReplyTwo');
 </script>
