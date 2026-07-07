@@ -72,26 +72,37 @@ window.InitUserScripts = function() {
           y -= 30;
 
           // ── Wrapped text helper ──────────────────────────────────────
-          function drawWrapped(text, startY, size, fontRef, color, page) {
-            var words = text.split(" ");
-            var line  = "";
-            var curY  = startY;
-            for (var i = 0; i < words.length; i++) {
-              var test = line ? line + " " + words[i] : words[i];
-              if (fontRef.widthOfTextAtSize(test, size) > maxWidth && line) {
-                page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
-                curY -= lineH;
-                line = words[i];
-              } else {
-                line = test;
-              }
-            }
-            if (line) {
-              page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
-              curY -= lineH;
-            }
-            return curY;
-          }
+function drawWrapped(text, startY, size, fontRef, color, page) {
+  var paragraphs = text.split("\n");
+  var curY = startY;
+
+  for (var p = 0; p < paragraphs.length; p++) {
+    var words = paragraphs[p].split(" ");
+    var line = "";
+
+    if (words.length === 1 && words[0] === "") {
+      // blank line from a paragraph break — add vertical space only
+      curY -= lineH;
+      continue;
+    }
+
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + " " + words[i] : words[i];
+      if (fontRef.widthOfTextAtSize(test, size) > maxWidth && line) {
+        page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
+        curY -= lineH;
+        line = words[i];
+      } else {
+        line = test;
+      }
+    }
+    if (line) {
+      page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
+      curY -= lineH;
+    }
+  }
+  return curY;
+}
 
           // ── Section banner helper ───────────────────────────────────
           function drawSectionBanner(title, page, startY) {
