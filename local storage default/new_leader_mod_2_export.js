@@ -179,7 +179,7 @@ window.InitUserScripts = function() {
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 1 AIM.pdf";
+            a.download = "New Leader Session 2 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
