@@ -347,12 +347,7 @@ td > h4 {
             'q7',
             'q8',
             'q9',
-            'q10',
-            'q11',
-            'q12',
-            'q13',
-            'q14',
-            'q15'
+            'q10'
         ];
 
         document.querySelectorAll('.rating-btn').forEach(btn => {
@@ -386,113 +381,32 @@ td > h4 {
                     index++;
                 }
 
-                if (ratingCount === 15) {
+                if (ratingCount === 10 && total < 23) {
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
-                        <div><p style="padding: 10px 0;">Reflect on your results prior to the webinar. 
-                           
-                        </p></div>
+                        <div><p style="padding: 10px 0;">You typically maintain strong concentration and manage distractions effectively. You likely have good systems for managing tasks, prioritising and controlling your environment. Digital interruptions and task-switching don’t easily derail you. You may still benefit from fine-tuning productivity habits or stress-management techniques, but overall you operate with clarity and consistency.</p></div>
                     `;
-                    
-                    // Attach click handlers to the newly created buttons
-                    document.getElementById('savePngBtn').addEventListener('click', saveTableAsPNG);
-                    document.getElementById('savePdfBtn').addEventListener('click', saveTableAsPDF);
-                } else {
-                    document.getElementById('results').classList.remove('show');
+                } else if (ratingCount === 10 && total > 22 && total < 37){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You can focus well at times, but your attention fluctuates depending on context or energy levels. Digital distractions, stress or fatigue may interfere on busy days. You may struggle to prioritise or stay engaged with less interesting tasks. With a few targeted strategies you can significantly improve your consistency.</p></div>
+
+                    `;
+                }  else if  (ratingCount === 10 && total > 37){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are currently experiencing frequent challenges with sustaining attention. Multitasking, overwhelm, stress or environmental distractions may be significantly affecting your performance. You may find certain tasks harder to begin or complete due to boredom, fatigue or cognitive overload. With structured approaches you can build strong focus habits.</p></div>
+                    `;
+                }  else {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 16px;">Complete all ratings to see your total score</div>
+                        <div style="margin-top: 8px; font-size: 14px; opacity: 0.9;">${ratingCount} of 10 completed</div>
+                    `;
                 }
             } else {
                 document.getElementById('results').classList.remove('show');
             }
         }
-
-        // Captures the filled-in quiz exactly as it sits on the page right
-        // now (the .container div already wraps the legend, the table with
-        // selected answers, and the results/score section). The Save
-        // buttons are hidden just for the snapshot so they don't appear in
-        // the exported image, then restored straight after.
-        // async function captureQuizSnapshot() {
-        //     const container = document.querySelector('.container');
-        //     const saveBtns = [
-        //         document.getElementById('savePngBtn'),
-        //         document.getElementById('savePdfBtn')
-        //     ].filter(Boolean);
-
-        //     saveBtns.forEach(b => b.style.visibility = 'hidden');
-        //     try {
-        //         return await html2canvas(container, {
-        //             backgroundColor: '#ffffff',
-        //             scale: 2,
-        //             useCORS: true,
-        //             allowTaint: true,  // ← Add this
-        //             logging: false,    // ← Suppress console warnings
-        //             windowWidth: container.scrollWidth,
-        //             windowHeight: container.scrollHeight
-        //         });
-        //     } finally {
-        //         saveBtns.forEach(b => b.style.visibility = 'visible');
-        //     }
-        // }
-
-        // async function saveTableAsPNG() {
-        //     try {
-        //         const canvas = await captureQuizSnapshot();
-        //         canvas.toBlob(blob => {
-        //             const url = URL.createObjectURL(blob);
-        //             const link = document.createElement('a');
-        //             link.href = url;
-        //             link.download = `leadership-reflection-${new Date().toISOString().split('T')[0]}.png`;
-        //             document.body.appendChild(link);
-        //             link.click();
-        //             document.body.removeChild(link);
-        //             URL.revokeObjectURL(url);
-        //         }, 'image/png');
-        //     } catch (err) {
-        //         console.error('PNG export failed:', err);
-        //         alert('Sorry, something went wrong creating the PNG. Please try again.');
-        //     }
-        // }
-
-        // async function saveTableAsPDF() {
-        //     try {
-        //         const { jsPDF } = window.jspdf;
-        //         const canvas = await captureQuizSnapshot();
-                
-        //         canvas.toBlob(blob => {
-        //             const reader = new FileReader();
-        //             reader.onload = () => {
-        //                 const imgData = reader.result;
-        //                 const pdf = new jsPDF('p', 'mm', 'a4');
-        //                 const pdfWidth = pdf.internal.pageSize.getWidth();
-        //                 const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        //                 const imgProps = pdf.getImageProperties(imgData);
-        //                 const imgWidthMm = pdfWidth;
-        //                 const imgHeightMm = (imgProps.height * imgWidthMm) / imgProps.width;
-
-        //                 if (imgHeightMm <= pdfHeight) {
-        //                     pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
-        //                 } else {
-        //                     let position = 0;
-        //                     let remainingHeight = imgHeightMm;
-        //                     pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-        //                     remainingHeight -= pdfHeight;
-        //                     while (remainingHeight > 0) {
-        //                         position -= pdfHeight;
-        //                         pdf.addPage();
-        //                         pdf.addImage(imgData, 'PNG', 0, position, imgWidthMm, imgHeightMm);
-        //                         remainingHeight -= pdfHeight;
-        //                     }
-        //                 }
-
-        //                 pdf.save(`leadership-reflection-${new Date().toISOString().split('T')[0]}.pdf`);
-        //             };
-        //             reader.readAsDataURL(blob);
-        //         }, 'image/png');
-        //     } catch (err) {
-        //         console.error('PDF export failed:', err);
-        //         alert('Sorry, something went wrong creating the PDF. Please try again.');
-        //     }
-        // }
     </script>
 </body>
 </html>
