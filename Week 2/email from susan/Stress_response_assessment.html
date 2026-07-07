@@ -384,18 +384,18 @@ td > h4 {
                 if (ratingCount === 10 && total < 23) {
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
-                        <div><p style="padding: 10px 0;">You typically maintain strong concentration and manage distractions effectively. You likely have good systems for managing tasks, prioritising and controlling your environment. Digital interruptions and task-switching don’t easily derail you. You may still benefit from fine-tuning productivity habits or stress-management techniques, but overall you operate with clarity and consistency.</p></div>
+                        <div><p style="padding: 10px 0;">You typically manage your emotional state well at work. You are able to handle complex and stressful situations without carrying that stress forward into the rest of your working day. You are able priotisie a good outcome for all rather than being sidetracked by frustration.</p></div>
                     `;
                 } else if (ratingCount === 10 && total > 22 && total < 37){
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
-                        <div><p style="padding: 10px 0;">You can focus well at times, but your attention fluctuates depending on context or energy levels. Digital distractions, stress or fatigue may interfere on busy days. You may struggle to prioritise or stay engaged with less interesting tasks. With a few targeted strategies you can significantly improve your consistency.</p></div>
+                        <div><p style="padding: 10px 0;">You can maintain your composure at times, but in some areas you struggle to remain focused if things are becoming more difficult or stressful. Challenging situations can create persistent stress.</p></div>
 
                     `;
                 }  else if  (ratingCount === 10 && total > 37){
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
-                        <div><p style="padding: 10px 0;">You are currently experiencing frequent challenges with sustaining attention. Multitasking, overwhelm, stress or environmental distractions may be significantly affecting your performance. You may find certain tasks harder to begin or complete due to boredom, fatigue or cognitive overload. With structured approaches you can build strong focus habits.</p></div>
+                        <div><p style="padding: 10px 0;">You are likely struggling to remain composed at work quite frequently. Difficult conversations and emotional challenges can derail your whole day, impacting your wellbeing and functionality at work. Focusing on improving your emotional agility can help reduce some of this discomfort.</p></div>
                     `;
                 }  else {
                     document.getElementById('average').innerHTML = `
