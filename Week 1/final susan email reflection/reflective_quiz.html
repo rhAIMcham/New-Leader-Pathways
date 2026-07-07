@@ -432,19 +432,32 @@ td > h4 {
                     index++;
                 }
 
-                if (ratingCount === 15) {
+                if (ratingCount === 15 && total < 30) {
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
-                        <div><p style="padding: 10px 0;">Reflect on your results prior to the webinar. 
-                           
-                        </p></div>
+                        <div><p style="padding: 10px 0;">You are just starting to develop some of the skills needed for leadership. Reflecting on your DISC profile results, do any of the 5 key areas covered in this quiz seem like natural areas of strength to focus on initially? Which areas do you anticipate will be challenging?</p></div>
                     `;
-                    
-                    // Attach click handlers to the newly created buttons
-                    document.getElementById('savePngBtn').addEventListener('click', saveTableAsPNG);
-                    document.getElementById('savePdfBtn').addEventListener('click', saveTableAsPDF);
-                } else {
-                    document.getElementById('results').classList.remove('show');
+                } else if (ratingCount === 15 && total > 29 && total < 40){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are on your way to developing key skills needed for a leader. Consider the 5 areas - was there any area in particular your scores were lower? How might you addres this?</p></div>
+
+                    `;
+                }  else if  (ratingCount === 15 && total > 39 && total < 60){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You have mastered some of the skills needed for a leader. Well done! Consider the 5 areas - was there any area in particular your scores were lower? How might you addres this?</p></div>
+                    `;
+                }  else if  (ratingCount === 15 && total > 59){
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
+                        <div><p style="padding: 10px 0;">You are confident and proficient in many of the skills required for leadership. High self awareness and the ability to build trust with your employees will serve you well as you move through your career.</p></div>
+                    `;
+                }  else {
+                    document.getElementById('average').innerHTML = `
+                        <div style="font-size: 16px;">Complete all ratings to see your total score</div>
+                        <div style="margin-top: 8px; font-size: 14px; opacity: 0.9;">${ratingCount} of 10 completed</div>
+                    `;
                 }
             } else {
                 document.getElementById('results').classList.remove('show');
