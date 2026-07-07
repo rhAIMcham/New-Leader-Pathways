@@ -75,6 +75,7 @@ window.InitUserScripts = function() {
 function drawWrapped(text, startY, size, fontRef, color, page) {
   var paragraphs = text.split("\n");
   var curY = startY;
+  var spaceWidth = fontRef.widthOfTextAtSize(" ", size);
 
   function ensureRoom() {
     if (curY < FOOTER_RESERVE) {
@@ -83,33 +84,63 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
     }
   }
 
-  for (var p = 0; p < paragraphs.length; p++) {
-    var words = paragraphs[p].split(" ");
-    var line = "";
+  function drawLine(lineWords) {
+    var x = margin;
+    for (var i = 0; i < lineWords.length; i++) {
+      var wFont = lineWords[i].bold ? fontBold : fontRef;
+      page.drawText(lineWords[i].text, { x: x, y: curY, size: size, font: wFont, color: color });
+      x += wFont.widthOfTextAtSize(lineWords[i].text, size) + spaceWidth;
+    }
+    curY -= lineH;
+    ensureRoom();
+  }
 
-    if (words.length === 1 && words[0] === "") {
+  for (var p = 0; p < paragraphs.length; p++) {
+    var paragraph = paragraphs[p];
+
+    if (paragraph === "") {
       curY -= lineH;
       ensureRoom();
       continue;
     }
 
-    for (var i = 0; i < words.length; i++) {
-      var test = line ? line + " " + words[i] : words[i];
-      if (fontRef.widthOfTextAtSize(test, size) > maxWidth && line) {
-        page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
-        curY -= lineH;
-        ensureRoom();
-        line = words[i];
-      } else {
-        line = test;
+    // Split on ** markers: even-index segments are normal, odd-index are bold
+    var segments = paragraph.split("**");
+    var words = [];
+    for (var s = 0; s < segments.length; s++) {
+      var isBold = (s % 2 === 1);
+      var segWords = segments[s].split(" ");
+      for (var w = 0; w < segWords.length; w++) {
+        if (segWords[w].length > 0) {
+          words.push({ text: segWords[w], bold: isBold });
+        }
       }
     }
-    if (line) {
-      page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
-      curY -= lineH;
-      ensureRoom();
+
+    var lineWords = [];
+    var lineWidth = 0;
+
+    for (var i = 0; i < words.length; i++) {
+      var wFont = words[i].bold ? fontBold : fontRef;
+      var wWidth = wFont.widthOfTextAtSize(words[i].text, size);
+      var addWidth = (lineWords.length > 0 ? spaceWidth : 0) + wWidth;
+
+      if (lineWidth + addWidth > maxWidth && lineWords.length > 0) {
+        drawLine(lineWords);
+        lineWords = [];
+        lineWidth = 0;
+        addWidth = wWidth;
+      }
+
+      lineWords.push(words[i]);
+      lineWidth += addWidth;
+    }
+
+    if (lineWords.length > 0) {
+      drawLine(lineWords);
     }
   }
+
   return { page: page, y: curY };
 }
 
