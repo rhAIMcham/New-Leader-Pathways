@@ -2,6 +2,8 @@ window.InitUserScripts = function() {
   window.Script1 = function() {
     var n1 = localStorage.getItem("learnerReplyOne") || "(no response saved)";
     var n2 = localStorage.getItem("learnerReplyTwo") || "(no response saved)";
+    var m1 = localStorage.getItem("discReplyOne") || "(no response saved)";
+    var m2 = localStorage.getItem("discReplyTwo") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -110,6 +112,8 @@ window.InitUserScripts = function() {
           // ✏️ Update titles to match your exercises
           var exercises = [
             { title: "First email to Susan", response: n1 },
+            { title: "Aspects that work in my favour", response: m1 },
+            { title: "Aspects that might work against me", response: m2 },
             { title: "Second email to Susan", response: n2 }
           ];
 
@@ -153,7 +157,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader programme", {
+            pg.drawText("New leader program", {
               x: margin,
               y: 32,
               size: labelSize,
