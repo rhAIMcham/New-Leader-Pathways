@@ -76,13 +76,20 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
   var paragraphs = text.split("\n");
   var curY = startY;
 
+  function ensureRoom() {
+    if (curY < FOOTER_RESERVE) {
+      page = addPage();
+      curY = pageH - 60;
+    }
+  }
+
   for (var p = 0; p < paragraphs.length; p++) {
     var words = paragraphs[p].split(" ");
     var line = "";
 
     if (words.length === 1 && words[0] === "") {
-      // blank line from a paragraph break — add vertical space only
       curY -= lineH;
+      ensureRoom();
       continue;
     }
 
@@ -91,6 +98,7 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
       if (fontRef.widthOfTextAtSize(test, size) > maxWidth && line) {
         page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
         curY -= lineH;
+        ensureRoom();
         line = words[i];
       } else {
         line = test;
@@ -99,9 +107,10 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
     if (line) {
       page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
       curY -= lineH;
+      ensureRoom();
     }
   }
-  return curY;
+  return { page: page, y: curY };
 }
 
           // ── Section banner helper ───────────────────────────────────
@@ -138,23 +147,27 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
 
           var FOOTER_RESERVE = 70;
 
-          for (var e = 0; e < exercises.length; e++) {
-            var ex = exercises[e];
+for (var e = 0; e < exercises.length; e++) {
+  var ex = exercises[e];
 
-            if (y < FOOTER_RESERVE + 60) {
-              page = addPage();
-              y = pageH - 60;
-            }
+  if (y < FOOTER_RESERVE + 60) {
+    page = addPage();
+    y = pageH - 60;
+  }
 
-            y = drawSectionBanner(ex.title, page, y);
-            y = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
-            y -= 26;
+  y = drawSectionBanner(ex.title, page, y);
 
-            if (y < FOOTER_RESERVE && e < exercises.length - 1) {
-              page = addPage();
-              y = pageH - 60;
-            }
-          }
+  var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
+  page = result.page;   // <-- important: pick up whichever page we ended on
+  y = result.y;
+
+  y -= 26;
+
+  if (y < FOOTER_RESERVE && e < exercises.length - 1) {
+    page = addPage();
+    y = pageH - 60;
+  }
+}
 
           // ── Footer pass: thin rule + "Page X of Y" on every page ───
           var total = pages.length;
