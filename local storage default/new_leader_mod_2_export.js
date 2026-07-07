@@ -118,7 +118,7 @@ window.InitUserScripts = function() {
             { title: "How have you naviagted unexpected workload increases in the past?", response: t1 },
             { title: "How has company culture and team leadership contributed positively or negatively to your ability to navigate these situations in the past?", response: t2 },
             { title: "How would you support your team in similar situations?", response: t3 },
-            { title: "Decision tree choices", response: studentChoices },
+            { title: "Decision tree choices", response: dtWhole },
             { title: "Why were certain decisions made?", response: dt1 },
             { title: "What may have triggered stress?", response: dt2 },
             { title: "What was your first instinct? Our first response to stress does not always lead to productive decision-making.", response: dt3 },
