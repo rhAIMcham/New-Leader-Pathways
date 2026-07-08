@@ -571,45 +571,31 @@
     color: var(--gray-400);
   }
 
-  .cal-wrap {
-    overflow-x: auto;
-  }
   .calendar {
     display: grid;
-    grid-template-columns: 84px repeat(5, minmax(140px, 1fr));
-    gap: 8px;
-    min-width: 760px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
   }
-  .cal-head {
+  .cal-day {
+    background: var(--white);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 96px;
+  }
+  .cal-day-head {
     font-size: 12px;
     font-weight: 600;
     color: var(--navy);
     text-align: center;
-    padding: 6px 0;
+    padding-bottom: 2px;
+    border-bottom: 0.5px solid var(--gray-100);
   }
-  .cal-rowlabel {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--gray-600);
-    display: flex;
-    align-items: center;
-    padding-left: 2px;
-  }
-  .cal-cell {
-    background: var(--white);
-    border: 0.5px solid var(--border-subtle);
-    border-radius: 8px;
-    min-height: 64px;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .cal-cell.unavailable {
-    background: repeating-linear-gradient(45deg, var(--gray-50), var(--gray-50) 6px, var(--gray-100) 6px, var(--gray-100) 12px);
-  }
-  .cal-unavail-label {
-    font-size: 10.5px;
+  .cal-empty-label {
+    font-size: 11px;
     color: var(--gray-400);
     text-align: center;
     margin-top: auto;
@@ -755,9 +741,7 @@
 
       <div>
         <div class="section-eyebrow">Your week</div>
-        <div class="cal-wrap">
-          <div class="calendar" id="calendar"></div>
-        </div>
+        <div class="calendar" id="calendar"></div>
       </div>
     </div>
 
@@ -786,7 +770,12 @@
   const LEVELS = ['Low', 'Medium', 'High'];
 
   // People who are unavailable on certain days, e.g. { 'Audrey': ['Fri'] }
-  const UNAVAILABLE = { 'Audrey': ['Fri'] };
+  const UNAVAILABLE = {
+    'Audrey': ['Fri'],
+    'Jordan': ['Mon'],
+    'Mark': ['Mon', 'Tue', 'Wed'],
+    'Priya': ['Tue', 'Wed'],
+  };
 
   function isPersonUnavailable(person, day) {
     return !!(UNAVAILABLE[person] && UNAVAILABLE[person].includes(day));
@@ -1066,9 +1055,9 @@
       <div class="panel-row">
         <div class="sub-label">Who's doing this?</div>
         <div class="opt-row">
-          ${r.eligible.map(p => `<button class="opt-btn${a === p ? ' sel-person' : ''}" onclick="selectDraftAssignee('${p}')">${p}${isPersonUnavailable(p,'Fri') ? ' *' : ''}</button>`).join('')}
+          ${r.eligible.map(p => `<button class="opt-btn${a === p ? ' sel-person' : ''}" onclick="selectDraftAssignee('${p}')">${p}${(UNAVAILABLE[p] && UNAVAILABLE[p].length) ? ' *' : ''}</button>`).join('')}
         </div>
-        ${r.eligible.some(p => isPersonUnavailable(p,'Fri')) ? `<div class="panel-hint">* unavailable on Fri</div>` : ''}
+        ${r.eligible.filter(p => UNAVAILABLE[p] && UNAVAILABLE[p].length).map(p => `<div class="panel-hint">* ${p} unavailable ${UNAVAILABLE[p].join(', ')}</div>`).join('')}
       </div>`;
 
     let dayRow = '';
@@ -1135,29 +1124,25 @@
     }
 
     const calendar = document.getElementById('calendar');
-    let cal = `<div></div>`;
-    DAYS.forEach(d => cal += `<div class="cal-head">${d}</div>`);
-
-    const slotLabels = { AM: 'Morning', PM: 'Afternoon' };
-    SLOTS.forEach(slot => {
-      cal += `<div class="cal-rowlabel">${slotLabels[slot]}</div>`;
-      DAYS.forEach(day => {
-        const entries = schedule.filter(a => a.day === day && a.slots.includes(slot));
-        const chips = entries.map(a => {
-          const t = taskById(a.taskId);
-          return `
-            <div class="cal-chip">
-              <div>
-                <div class="chip-task">${t.letter} · ${t.name}</div>
-                <div class="chip-person">${a.assignee}</div>
-              </div>
-              <button onclick="removeAssignment('${a.taskId}')" title="Remove">×</button>
-            </div>`;
-        }).join('');
-        cal += `<div class="cal-cell">${chips}</div>`;
-      });
-    });
-    calendar.innerHTML = cal;
+    calendar.innerHTML = DAYS.map(day => {
+      const entries = schedule.filter(a => a.day === day);
+      const chips = entries.map(a => {
+        const t = taskById(a.taskId);
+        return `
+          <div class="cal-chip">
+            <div>
+              <div class="chip-task">${t.letter} · ${t.name}</div>
+              <div class="chip-person">${a.assignee}</div>
+            </div>
+            <button onclick="removeAssignment('${a.taskId}')" title="Remove">×</button>
+          </div>`;
+      }).join('');
+      return `
+        <div class="cal-day">
+          <div class="cal-day-head">${day}</div>
+          ${chips || `<div class="cal-empty-label">Free</div>`}
+        </div>`;
+    }).join('');
 
     document.getElementById('progressText2').innerHTML = `<strong>${schedule.length}</strong> of ${TASKS.length} tasks scheduled`;
     document.getElementById('planBtn').disabled = schedule.length !== TASKS.length;
@@ -1169,21 +1154,15 @@
     if (schedule.length !== TASKS.length) return;
     const panel = document.getElementById('resultPanel');
     const dayBlocks = document.getElementById('dayBlocks');
-    const slotLabels = { AM: 'Morning', PM: 'Afternoon' };
 
     dayBlocks.innerHTML = DAYS.map(day => {
-      const lines = [];
-      SLOTS.forEach(slot => {
-        const entries = schedule.filter(a => a.day === day && a.slots.includes(slot));
-        if (entries.length === 0) {
-          lines.push(`<div class="slot-line"><span class="t">${slotLabels[slot]}:</span> —</div>`);
-        } else {
-          entries.forEach(a => {
+      const entries = schedule.filter(a => a.day === day);
+      const lines = entries.length === 0
+        ? [`<div class="slot-line">—</div>`]
+        : entries.map(a => {
             const t = taskById(a.taskId);
-            lines.push(`<div class="slot-line"><span class="t">${slotLabels[slot]}:</span> ${t.name} — ${a.assignee}</div>`);
+            return `<div class="slot-line">${t.name} — ${a.assignee}</div>`;
           });
-        }
-      });
       return `<div class="day-block"><h3>${day}</h3>${lines.join('')}</div>`;
     }).join('');
 
