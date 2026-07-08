@@ -2529,7 +2529,7 @@ function reply() {
   document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
-const STORAGE_KEY_REPLY_2 = 'learnerReplyTwoWeek2';
+const STORAGE_KEY_NEW_EMAIL = 'setExpectationsEmail';
 const learnerReply = document.getElementById('learnerReplyTwoWeek2');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
@@ -2539,7 +2539,7 @@ const saveBtn = document.getElementById('sendBtn');
   if (savedRUN) learnerReply.value = savedRUN;
 
 saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+    localStorage.setItem(STORAGE_KEY_NEW_EMAIL, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
 
@@ -2550,14 +2550,12 @@ function openCompose() {
   }
   document.getElementById('work2').style.display = 'flex';
 
-  // Preload any existing draft from localStorage (matches your loadNote pattern)
-  const savedTo = localStorage.getItem('draftEmailTo');
-  const savedSubject = localStorage.getItem('draftEmailSubject');
-  const savedBody = localStorage.getItem('draftEmailBody');
+  // Preload any existing draft from localStorage (single key now)
+  const draft = JSON.parse(localStorage.getItem('draftEmail') || '{}');
 
-  document.getElementById('composeTo').value = savedTo || '';
-  document.getElementById('composeSubject').value = savedSubject || '';
-  document.getElementById('composeBody').value = savedBody || '';
+  document.getElementById('composeTo').value = draft.to || '';
+  document.getElementById('composeSubject').value = draft.subject || '';
+  document.getElementById('composeBody').value = draft.body || '';
 
   document.getElementById('composeSendBtn').classList.remove('sent');
   document.getElementById('composeSendBtn').textContent = 'Send';
@@ -2567,11 +2565,15 @@ function openCompose() {
 
   document.getElementById('drafts').classList.remove('pulse-btn');
 }
+
 function closeCompose() {
-  // Autosave whatever's currently typed, so reopening Drafts preloads it
-  localStorage.setItem('draftEmailTo', document.getElementById('composeTo').value.trim());
-  localStorage.setItem('draftEmailSubject', document.getElementById('composeSubject').value.trim());
-  localStorage.setItem('draftEmailBody', document.getElementById('composeBody').value.trim());
+  // Autosave whatever's currently typed as a single object
+  const draft = {
+    to: document.getElementById('composeTo').value.trim(),
+    subject: document.getElementById('composeSubject').value.trim(),
+    body: document.getElementById('composeBody').value.trim()
+  };
+  localStorage.setItem('draftEmail', JSON.stringify(draft));
 
   document.getElementById('composeNewEmail').classList.remove('messageRevealed');
 }
@@ -2581,19 +2583,12 @@ function sendNewEmail() {
   const subject = document.getElementById('composeSubject').value.trim();
   const body = document.getElementById('composeBody').value.trim();
 
-  // if (!to || !subject) {
-  //   alert('Please add at least one recipient and a subject before sending.');
-  //   return;
-  // }
-
   document.getElementById('composeSendBtn').textContent = 'Sent';
   document.getElementById('composeSendBtn').classList.add('sent');
   document.getElementById('composeSendBtn').disabled = true;
 
   // Clear the draft now that it's been sent
-  localStorage.removeItem('draftEmailTo');
-  localStorage.removeItem('draftEmailSubject');
-  localStorage.removeItem('draftEmailBody');
+  // localStorage.removeItem('draftEmail');
 
   setTimeout(closeCompose, 900);
 }
