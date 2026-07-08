@@ -248,6 +248,8 @@ svg:hover {
   padding: 15px;
   text-align: center;
   line-height: 2.5;
+  margin-left: 30px;
+  margin-top: -30px;
 }
 
 
@@ -1101,6 +1103,15 @@ padding: 20px;
   }
   .chat-text p + p { margin-top: 4px; }
 
+    .minutes {
+    padding: 15px;
+    background: #f1eede60; /*Cream at 60% opacity */
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin-top: 5px;
+  }
   .chat-actions {
     opacity: 0; 
     display: flex; 
@@ -1639,6 +1650,38 @@ audio {
     </div>
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
+        <span class="email-sender">Taylor M</span>
+        <span class="email-time">10:35 am</span>
+      </div>
+      <div class="email-subject">
+      Deliverables this week
+      </div>
+      <div class="email-preview">Dear Team, There are several high-priority deliverables that ha...</div>
+    </div>
+
+    <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">09:15 am</span>
+      </div>
+      <div class="email-subject">Team birthdays
+      </div>
+      <div class="email-preview">Hi all, It’s time to celebrate our colleagues with birt...</div>
+    </div>
+
+    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+      <div class="email-row-top">
+        <span class="email-sender">Noah L</span>
+        <span class="email-time">08:55 am</span>
+      </div>
+      <div class="email-subject">
+    Organisation growth
+      </div>
+      <div class="email-preview">Dear Team, Over the past several months, our organisation has ex...</div>
+    </div>
+
+    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+      <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Friday</span>
       </div>
@@ -1648,7 +1691,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Wednesday</span>
@@ -1659,7 +1702,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">Wednesday</span>
@@ -1671,7 +1714,7 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">Wednesday</span>
@@ -1683,7 +1726,7 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">Wednesday</span>
@@ -1695,7 +1738,7 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+    <div class="email-row" id="emailRow9"  onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">Wednesday</span>
@@ -1707,7 +1750,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow7" onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow10" onclick="swapEmails(10)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Tuesday</span>
@@ -1716,7 +1759,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow8" onclick="swapEmails(8)" tabindex="0">
+    <div class="email-row" id="emailRow11" onclick="swapEmails(11)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Mon</span>
@@ -1728,17 +1771,141 @@ audio {
 
   <!-- THREAD PANE -->
   <div class="thread-pane">
-     <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">First week wrap-up</div>
+
+    <div id="thread1" class="thread-header" tabindex="0">
+      <div class="thread-subject">Deliverables this week</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-
         </div>
       </div>
     </div>
 
     <div id="threadBody1" class="thread-body" tabindex="0">
+      <div id="replyBody">
+ <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+          <div class="message-from">
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
+            <div class="message-address">sh@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+             <button class="compose-send"  id="sendBtn">Send</button>
+          <span class="message-time">1:30 pm</span>
+        </div>
+        <div class="message-body">
+        <div class="compose-bar">
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
+    </div>
+</div>
+</div>
+</div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-teal">TM</div>
+          <div class="message-from">
+            <div class="message-name">Taylor M <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">10:35 am</span>
+        </div>
+        <div class="message-body">
+          <p>Dear Team,</p>
+          <br>
+          <p>There are several high-priority deliverables that have been assigned this week. These tasks are critical and must be completed by close of business on Friday.</p>
+          <p>I know this represents a significant increase in workload and may place additional pressure on our teams. As leaders, your role in planning, delegating, and supporting your staff will be essential for ensuring we meet our commitments.</p>
+          <p>Please review your team’s capacity, redistribute work where appropriate, and raise any significant concerns to me or Susan as soon as possible. While I encourage everyone to maximise productivity during normal business hours, there may be occasions this week where additional effort is required to ensure our commitments are delivered on time.</p>
+          <br>
+          <p>Thank you for your leadership, flexibility, and continued support. I appreciate the professionalism you and your teams bring to these challenging periods, and I am confident we will achieve success by working together.</p>
+          <br>
+          <p>Thanks,</p>
+          <br>
+          <p>Taylor</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">Team birthdays</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">09:15 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi all,</p>
+          <p>It’s time to celebrate our colleagues with birthdays this month!</p>
+          <p>Please join us in wishing Kyle, Audrey, and Kannika a very happy birthday with cake in the break room this Thursday. An electronic birthday card is attached. If you would like to add a personal message, please take a moment to do so before then.</p>
+            <br>
+            <p>Kind regards,</p>
+          <p>Susan</p>
+          <br>
+          <p>Sent from my iPhone</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread3" class="thread-header" tabindex="0">
+      <div class="thread-subject"> Organisation growth</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody3" class="thread-body" tabindex="0">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-navy">NL</div>
+          <div class="message-from">
+            <div class="message-name">Noah L<span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">8:55 am</span>
+        </div>
+        <div class="message-body">
+          <p>Dear Team,<p>
+            <p>Over the past several months, our organisation has experienced significant change. As with any period of transition, adapting to new processes and evolving priorities has required flexibility, resilience and a dedication to embracing new opportunities.</p>
+            <p>I want to take the time to thank every one of you for the professionalism you have demonstrated throughout this journey. Change is rarely linear, yet time and time again I have seen teams collaborate, support each other, and remain focused on delivering excellent outcomes for our customers and stakeholders.
+          </p>
+          <p>I am incredibly proud of how our people have responded. Your adaptability, dedication, and positivity have helped position us for future success. While there is still important work ahead, I am confident that by continuing to work together, we will build on the progress we have already made and continue to achieve great things.</p>
+          <br>
+          <p>Thank you for your ongoing contribution and for everything everyone does day to day to make our organisation stronger.</p>
+        <br> <br>
+        <p>Cheers,</p>
+         <br> <br>
+         <p>Noah.</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread4" class="thread-header" tabindex="0">
+      <div class="thread-subject">First week wrap-up</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody4" class="thread-body" tabindex="0">
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
@@ -1794,7 +1961,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread2" class="thread-header" tabindex="0">
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1803,7 +1970,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -1853,8 +2020,7 @@ audio {
       </div>
     </div>
 
-
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1863,7 +2029,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -1905,7 +2071,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread4" class="thread-header" tabindex="0">
+     <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1914,7 +2080,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -1957,7 +2123,7 @@ audio {
 
     </div>
 
-    <div id="thread5" class="thread-header" tabindex="0">
+    <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1966,7 +2132,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2007,7 +2173,8 @@ audio {
       </div>
 
     </div>
-   <div id="thread6" class="thread-header" tabindex="0">
+
+   <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2016,8 +2183,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
-
+    <div id="threadBody9" class="thread-body" tabindex="0">
       <!-- Private reply 4 -->
       <div class="message-card">
         <div class="message-header">
@@ -2053,7 +2219,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread7" class="thread-header" tabindex="0">
+    <div id="thread10" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2062,7 +2228,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody10" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2098,7 +2264,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread8" class="thread-header" tabindex="0">
+    <div id="thread11" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2107,7 +2273,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody11" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2337,7 +2503,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 11; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2405,15 +2571,14 @@ saveBtn.addEventListener('click', () => {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-        <div class="dm-item" onclick="loadDM('jordan', this)" tabindex="0">
+        <div class="dm-item active" onclick="loadDM('jordan', this)" tabindex="0">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-online"></span></div>
       <span class="dm-name">Jordan S</span>
             <span class="dm-unread-count">1</span>
     </div>
-     <div class="dm-item active" onclick="loadDM('general', this)" tabindex="0">
+     <div class="dm-item" onclick="loadDM('general', this)" tabindex="0">
        <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
           <span class="dm-name">General</span>
-                <span class="dm-unread-count">1</span>
     </div>
     <div class="dm-item" onclick="loadDM('mark', this)" tabindex="0">
       <div class="dm-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
@@ -2572,7 +2737,7 @@ saveBtn.addEventListener('click', () => {
           </div>
 
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>
         <div class="chat-group" style="margin-top:4px">
@@ -2582,7 +2747,7 @@ saveBtn.addEventListener('click', () => {
             <div class="chat-text">Agreed! so convenient.</div>
             </div>
                     <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>
 
@@ -2595,65 +2760,62 @@ saveBtn.addEventListener('click', () => {
                     </div>
             </div>
                     <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
           </div>
+                  
                    <div class="date-divider">Yesterday</div>
                    <div class="chat-group" style="margin-top:4px">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:15 AM</span></div>
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:03 AM</span></div>
             <div class="chat-text">
-                <h4>Minutes</h4>
-                <p>First weekly team meeting</p>
-                  <h5>Attendees</h5>
-                  <ul>
-                    <li>Audrey
+              <p>Meeting minutes from our first meeting. Any ammendments please reply promptly.
+                </div>
+              <div class="minutes">
+                <h3>Minutes</h3>
+
+                <h4>Meeting date: Monday</h4>
+
+                  <h4>Participants</h4>
+                    <ul>
+                      <li> <span class="username">New Leader</span>
                       <li>Mark
-                        <li> <span class="username">New Leader</span>
-                          <li>Jordan
-                            <li>Priya
-                              </ul>
-                              <h5>Agenda</h5>
-                              <ol>
-                                <li>Review of responsibilities and tasks underway
-                                  <li>Review of task tracking practices
-                                    <li>Concern from team that review process will take too long
-                                      <li>Discussion of ideal roles for each team member
-                                        </ol>
-                                        <h5>Next steps</h5>
-                                        <ul>
-                                          <li>Assign tasks clearly based on skill set and capacity, not previous convention
-                                            <li>Review task assignments in weekly check ins
-                                              </ul>
-                    </div>
+                      <li>Audrey
+                      <li>Jordan
+                      <li>Priya
+                    </ul>
+                     <br>
+                  <h4>Agenda items</h4>
+                    <ul>
+                      <li>Review team workload and priorities for the week.
+                      <li>Discuss allocation of new high-priority tasks.
+                      <li>Identify any resource or workload challenges.
+                      <li>Confirm support arrangements for Audrey’s planned leave.
+                    </ul>
+                     <br>
+                  <h4>Decisions made</h4>
+                    <ul>
+                      <li>The team acknowledged the week will require an “all hands on deck” approach due to the volume of high-priority work.
+                      <li><span class="username">New Leader</span> will be delegating tasks and supporting the team in addition to their regular responsibilities.
+                      <li>Mark is prepared to assist on coordinating upcoming tasks when appropriate.
+                      <li>Audrey advised she has approved leave booked for Friday and may not complete all assigned work before then.
+                      <li>Jordan has offered to assist Audrey with outstanding tasks.
+                      <li>Priya will remain focused on completing current tasks and will provide support when possible.
+                      <li>The team agreed to maintain regular communication throughout the week to monitor workloads and respond to changing priorities.
+                      <li>All team members prioritise work with this week’s deadline, communicate any emerging risks or delays, and support one another to ensure key deadlines are met.
+                    </ul>
+                     <br>
+                  <h4>Additional notes</h4>
+                      <ul>
+                        <li>Audrey shared that balancing current deadlines with planned leave has been challenging, but she is excited for her beach trip.
+                        <li>The team acknowledged that the upcoming week presents an opportunity to prove their ability to deliver high-quality outcomes under increased workload demands.
+                      </ul>
+                </div>
+                </div>
             </div>
+                    <div class="chat-actions">
             
-                    <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-          </div>
-          </div>
-          <div class="date-divider">Today</div>
-           <div class="chat-group" style="margin-top:4px">
-         <div class="chat-avatar av-teal">NL</div>
-          <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name"><span class="username">New Leader</span></span><span class="chat-time">10:05 AM</span></div>
-            <div class="chat-text">
-               <p>Hi folks, just posted a new breakdown of tasks in our shared calendar. Let me know any concerns.</p>
-                    </div>
-            </div>
-                    <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
-          </div>
-          </div>
-          <div class="chat-group" style="margin-top:4px">
-          <div class="chat-avatar av-coral">AE</div>
-          <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:15 AM</span></div>
-            <div class="chat-text">Thanks! Looks good</div>
-            </div>
-                    <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
           </div>
         </div>
         </div>
@@ -2674,7 +2836,7 @@ saveBtn.addEventListener('click', () => {
             <div class="chat-text">Sent those files through, let me know if they don't arrive.</div>
           </div>
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>
         </div>`
@@ -2694,7 +2856,7 @@ saveBtn.addEventListener('click', () => {
             <div class="chat-text">Got those files from Priya, I'll let you know how I go with them.</div>
           </div>
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>
         <div class="date-divider">Today</div>
@@ -2711,7 +2873,7 @@ saveBtn.addEventListener('click', () => {
               <p>Jordan</p></div>
           </div>
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>
         `
@@ -2731,7 +2893,7 @@ saveBtn.addEventListener('click', () => {
             <div class="chat-text">Saw this and thought of you! <a href="https://www.msn.com/en-au/lifestyle/lifestylegeneral/the-surprising-signs-your-cat-actually-likes-you/ar-AA1Iki4f?ocid=entnewsntp&pc=U531&cvid=6a2a2eb650114f30a6e34ed3d4af4baa&ei=22" target="_blank">Signs your cat loves you</a></div>
             </div>
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>`
     },
@@ -2750,7 +2912,7 @@ saveBtn.addEventListener('click', () => {
             <div class="chat-text">Sent through those tables you asked for.</div>
             </div>
           <div class="chat-actions">
-            <button class="chat-act-btn" title="React"><i class="ti ti-mood-smile"></i></button>
+            
           </div>
         </div>`
     }
@@ -2837,7 +2999,7 @@ saveBtn.addEventListener('click', () => {
     }
   }
   // Load default channel on startup
-  setChat(dms['general']);
+  setChat(dms['jordan']);
 
 </script>
                </div>
