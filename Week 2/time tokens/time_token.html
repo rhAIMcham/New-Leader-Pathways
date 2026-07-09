@@ -214,6 +214,40 @@
     border: 1.5px solid var(--rust);
     box-shadow: 0 0 0 3px rgba(153, 60, 29, 0.1);
   }
+  .task-card:focus {
+    outline: none;
+    border-color: var(--AIMblue);
+    box-shadow: 0 0 0 3px rgba(67, 83, 163, 0.25);
+  }
+  .task-card .opt-group {
+    border-radius: 8px;
+    padding: 6px;
+    margin: -6px;
+    transition: background 0.15s;
+  }
+  .task-card:focus .opt-group.active-group {
+    background: var(--bg-selected-row);
+  }
+  .task-card:focus .opt-group.active-group .sub-label {
+    color: var(--AIMblue);
+  }
+  .opt-btn.cursor-highlight {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 1px;
+  }
+  .kbd-hint {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 8px;
+  }
+  .kbd-hint kbd {
+    font-family: inherit;
+    background: var(--gray-50);
+    border: 0.5px solid var(--border-medium);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 10.5px;
+  }
   .task-top {
     display: flex;
     align-items: flex-start;
@@ -700,6 +734,7 @@
   <div class="header-text">
     <h1 id="headerTitle">Phase 1 — Rate your tasks</h1>
     <p id="headerDesc">Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
+    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Difficulty, or Who's allowed · <kbd>Space</kbd> cycles that option</p>
     <button class="reset-link" onclick="startOver()">Reset everything and start over</button>
   </div>
   <div class="step-summary">
@@ -822,6 +857,24 @@
   let draft = { assignee: null, day: null, slot: null };
   let checked = false; // whether "Check my answers" has been run
 
+  // Card keyboard-nav state
+  let focusedCardId = null;         // which card currently has DOM focus (survives re-render)
+  const activeGroup = {};           // taskId -> 0 (importance) | 1 (difficulty) | 2 (eligible)
+  const eligibleCursor = {};        // taskId -> index into PEOPLE, for stepping through eligible options
+
+  function getActiveGroup(taskId) {
+    if (!(taskId in activeGroup)) activeGroup[taskId] = 0;
+    return activeGroup[taskId];
+  }
+  function getEligibleCursor(taskId) {
+    if (!(taskId in eligibleCursor)) eligibleCursor[taskId] = 0;
+    return eligibleCursor[taskId];
+  }
+  function cycleLevel(current) {
+    const idx = LEVELS.indexOf(current);
+    return LEVELS[idx === -1 ? 0 : (idx + 1) % LEVELS.length];
+  }
+
   function freshRatings() {
     const r = {};
     TASKS.forEach(t => { r[t.id] = { importance: null, difficulty: null, eligible: [] }; });
@@ -869,6 +922,8 @@
   function setLevel(taskId, field, val) {
     ratings[taskId][field] = val;
     checked = false;
+    focusedCardId = taskId;
+    activeGroup[taskId] = field === 'importance' ? 0 : 1;
     renderPhase1();
   }
   function toggleEligible(taskId, person) {
@@ -876,7 +931,75 @@
     const i = arr.indexOf(person);
     if (i === -1) arr.push(person); else arr.splice(i, 1);
     checked = false;
+    focusedCardId = taskId;
+    activeGroup[taskId] = 2;
+    eligibleCursor[taskId] = PEOPLE.indexOf(person);
     renderPhase1();
+  }
+
+  // Called when a card receives DOM focus (via Tab or a click)
+  function handleCardFocus(taskId) {
+    focusedCardId = taskId;
+    getActiveGroup(taskId); // ensure a default exists
+    updateGroupHighlight(taskId);
+  }
+
+  // Arrow keys pick which option group (Importance / Difficulty / Who's allowed) is "active";
+  // Space cycles the value of whichever group is active.
+  function handleCardKeydown(e, taskId) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      activeGroup[taskId] = (getActiveGroup(taskId) + 1) % 3;
+      updateGroupHighlight(taskId);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      activeGroup[taskId] = (getActiveGroup(taskId) + 2) % 3;
+      updateGroupHighlight(taskId);
+    } else if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
+      e.preventDefault();
+      const g = getActiveGroup(taskId);
+      if (g === 0) {
+        ratings[taskId].importance = cycleLevel(ratings[taskId].importance);
+      } else if (g === 1) {
+        ratings[taskId].difficulty = cycleLevel(ratings[taskId].difficulty);
+      } else {
+        const cursor = getEligibleCursor(taskId);
+        const person = PEOPLE[cursor];
+        const arr = ratings[taskId].eligible;
+        const idx = arr.indexOf(person);
+        if (idx === -1) arr.push(person); else arr.splice(idx, 1);
+        eligibleCursor[taskId] = (cursor + 1) % PEOPLE.length;
+      }
+      checked = false;
+      focusedCardId = taskId;
+      renderPhase1(); // rebuilds the board; focus is restored at the end of renderPhase1
+    }
+  }
+
+  // Highlights the active group + (for the eligible group) the current cursor person,
+  // without a full re-render — used on plain focus/arrow-key moves.
+  function updateGroupHighlight(taskId) {
+    const card = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+    if (!card) return;
+    const groups = card.querySelectorAll('.opt-group');
+    const active = getActiveGroup(taskId);
+    groups.forEach((g, i) => g.classList.toggle('active-group', i === active));
+    const eligibleGroup = card.querySelector('.opt-group[data-group="2"]');
+    if (eligibleGroup) {
+      const buttons = eligibleGroup.querySelectorAll('.opt-btn');
+      const cursor = getEligibleCursor(taskId);
+      buttons.forEach((b, i) => b.classList.toggle('cursor-highlight', active === 2 && i === cursor));
+    }
+  }
+
+  // After renderPhase1() rebuilds the DOM, put keyboard focus back on whichever card had it.
+  function restoreCardFocus() {
+    if (!focusedCardId) return;
+    const card = document.querySelector(`.task-card[data-task-id="${focusedCardId}"]`);
+    if (card) {
+      card.focus({ preventScroll: true });
+      updateGroupHighlight(focusedCardId);
+    }
   }
 
   function checkAnswers() {
@@ -913,20 +1036,26 @@
       if (grade) cardClass += grade.correct ? ' correct' : ' incorrect';
       else if (done) cardClass += ' complete';
       card.className = cardClass;
+      card.tabIndex = 0;
+      card.dataset.taskId = task.id;
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', `Task ${task.letter}: ${task.name}`);
+      card.addEventListener('focus', () => handleCardFocus(task.id));
+      card.addEventListener('keydown', (e) => handleCardKeydown(e, task.id));
 
-      const levelRow = (field, label) => `
-        <div>
+      const levelRow = (field, label, groupIndex) => `
+        <div class="opt-group" data-group="${groupIndex}">
           <div class="sub-label">${label}</div>
           <div class="opt-row">
-            ${LEVELS.map(lv => `<button class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
+            ${LEVELS.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
           </div>
         </div>`;
 
       const eligibleRow = `
-        <div>
+        <div class="opt-group" data-group="2">
           <div class="sub-label">Who's allowed to do this?</div>
           <div class="opt-row">
-            ${PEOPLE.map(p => `<button class="opt-btn${r.eligible.includes(p) ? ' sel-person' : ''}" onclick="toggleEligible('${task.id}','${p}')">${p}</button>`).join('')}
+            ${PEOPLE.map(p => `<button type="button" tabindex="-1" class="opt-btn${r.eligible.includes(p) ? ' sel-person' : ''}" onclick="toggleEligible('${task.id}','${p}')">${p}</button>`).join('')}
           </div>
         </div>`;
 
@@ -953,8 +1082,8 @@
           </div>
           ${grade ? resultChip : `<div class="status-dot${done ? ' done' : ''}"></div>`}
         </div>
-        ${levelRow('importance', 'Importance')}
-        ${levelRow('difficulty', 'Difficulty')}
+        ${levelRow('importance', 'Importance', 0)}
+        ${levelRow('difficulty', 'Difficulty', 1)}
         ${eligibleRow}
         ${mismatchNote}
       `;
@@ -975,6 +1104,7 @@
     }
 
     renderHeaderSummary();
+    restoreCardFocus();
   }
 
   function continueToPhase2() {
@@ -984,6 +1114,7 @@
     document.getElementById('phase2View').style.display = 'block';
     document.getElementById('headerTitle').textContent = 'Phase 2 — Schedule the week';
     document.getElementById('headerDesc').textContent = "Assign each task to one of its eligible people and slot it into the calendar. Every task takes a full day — both morning and afternoon.";
+    document.getElementById('kbdHint').style.display = 'none';
     renderPhase2();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -994,6 +1125,7 @@
     document.getElementById('phase1View').style.display = 'block';
     document.getElementById('headerTitle').textContent = 'Phase 1 — Rate your tasks';
     document.getElementById('headerDesc').textContent = "Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.";
+    document.getElementById('kbdHint').style.display = '';
     renderPhase1();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
