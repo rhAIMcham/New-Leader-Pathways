@@ -940,7 +940,7 @@
     const g = field === 'importance' ? 0 : 1;
     activeGroup[taskId] = g;
     setCursor(taskId, g, LEVELS.indexOf(val));
-    renderPhase1();
+    patchCard(taskId);
   }
   function toggleEligible(taskId, person) {
     const arr = ratings[taskId].eligible;
@@ -950,7 +950,7 @@
     focusedCardId = taskId;
     activeGroup[taskId] = 2;
     setCursor(taskId, 2, PEOPLE.indexOf(person));
-    renderPhase1();
+    patchCard(taskId);
   }
 
   // Called when a card receives DOM focus (via Tab or a click)
@@ -995,7 +995,7 @@
       }
       checked = false;
       focusedCardId = taskId;
-      renderPhase1(); // rebuilds the board; focus is restored at the end of renderPhase1
+      patchCard(taskId); // in-place update — the card node stays put, so focus is never lost
     }
   }
 
@@ -1049,73 +1049,98 @@
     const board = document.getElementById('board');
     board.innerHTML = '';
     TASKS.forEach(task => {
-      const r = ratings[task.id];
-      const done = isTaskRated(task.id);
-      const grade = checked ? gradeTask(task.id) : null;
-
       const card = document.createElement('div');
-      let cardClass = 'task-card';
-      if (grade) cardClass += grade.correct ? ' correct' : ' incorrect';
-      else if (done) cardClass += ' complete';
-      card.className = cardClass;
       card.tabIndex = 0;
       card.dataset.taskId = task.id;
       card.setAttribute('role', 'group');
       card.setAttribute('aria-label', `Task ${task.letter}: ${task.name}`);
       card.addEventListener('focus', () => handleCardFocus(task.id));
       card.addEventListener('keydown', (e) => handleCardKeydown(e, task.id));
-
-      const levelRow = (field, label, groupIndex) => `
-        <div class="opt-group" data-group="${groupIndex}">
-          <div class="sub-label">${label}</div>
-          <div class="opt-row">
-            ${LEVELS.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
-          </div>
-        </div>`;
-
-      const eligibleRow = `
-        <div class="opt-group" data-group="2">
-          <div class="sub-label">Who's allowed to do this?</div>
-          <div class="opt-row">
-            ${PEOPLE.map(p => `<button type="button" tabindex="-1" class="opt-btn${r.eligible.includes(p) ? ' sel-person' : ''}" onclick="toggleEligible('${task.id}','${p}')">${p}</button>`).join('')}
-          </div>
-        </div>`;
-
-      let resultChip = '';
-      let mismatchNote = '';
-      if (grade) {
-        resultChip = `<div class="result-chip ${grade.correct ? 'correct' : 'incorrect'}">${grade.correct ? '✓ Correct' : '✗ Incorrect'}</div>`;
-        if (!grade.correct) {
-          const issues = [];
-          if (!grade.importanceOk) issues.push(`Importance should be <strong>${grade.key.importance}</strong>`);
-          if (!grade.difficultyOk) issues.push(`Difficulty should be <strong>${grade.key.difficulty}</strong>`);
-          if (!grade.eligibleOk) issues.push(`Eligible people should be <strong>${grade.key.eligible.join(', ')}</strong>`);
-          mismatchNote = `<div class="mismatch-note">${issues.join('<br>')}</div>`;
-        }
-      }
-
-      card.innerHTML = `
-        <div class="task-top">
-          <div class="task-letter">${task.letter}</div>
-          <div class="task-info">
-            <div class="task-name">${task.name}</div>
-            <div class="task-cat">${task.cat}</div>
-            <div class="task-note">${task.desc}</div>
-          </div>
-          ${grade ? resultChip : `<div class="status-dot${done ? ' done' : ''}"></div>`}
-        </div>
-        ${levelRow('importance', 'Importance', 0)}
-        ${levelRow('difficulty', 'Difficulty', 1)}
-        ${eligibleRow}
-        ${mismatchNote}
-      `;
       board.appendChild(card);
+      patchCardContent(card, task);
     });
+    updateFooterAndHeader();
+    restoreCardFocus();
+  }
 
+  // Builds/refreshes one card's className + innerHTML from current ratings/checked state.
+  // Used both for the initial full build and for in-place single-card updates.
+  function patchCardContent(card, task) {
+    const r = ratings[task.id];
+    const done = isTaskRated(task.id);
+    const grade = checked ? gradeTask(task.id) : null;
+
+    let cardClass = 'task-card';
+    if (grade) cardClass += grade.correct ? ' correct' : ' incorrect';
+    else if (done) cardClass += ' complete';
+    card.className = cardClass;
+
+    const levelRow = (field, label, groupIndex) => `
+      <div class="opt-group" data-group="${groupIndex}">
+        <div class="sub-label">${label}</div>
+        <div class="opt-row">
+          ${LEVELS.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
+        </div>
+      </div>`;
+
+    const eligibleRow = `
+      <div class="opt-group" data-group="2">
+        <div class="sub-label">Who's allowed to do this?</div>
+        <div class="opt-row">
+          ${PEOPLE.map(p => `<button type="button" tabindex="-1" class="opt-btn${r.eligible.includes(p) ? ' sel-person' : ''}" onclick="toggleEligible('${task.id}','${p}')">${p}</button>`).join('')}
+        </div>
+      </div>`;
+
+    let resultChip = '';
+    let mismatchNote = '';
+    if (grade) {
+      resultChip = `<div class="result-chip ${grade.correct ? 'correct' : 'incorrect'}">${grade.correct ? '✓ Correct' : '✗ Incorrect'}</div>`;
+      if (!grade.correct) {
+        const issues = [];
+        if (!grade.importanceOk) issues.push(`Importance should be <strong>${grade.key.importance}</strong>`);
+        if (!grade.difficultyOk) issues.push(`Difficulty should be <strong>${grade.key.difficulty}</strong>`);
+        if (!grade.eligibleOk) issues.push(`Eligible people should be <strong>${grade.key.eligible.join(', ')}</strong>`);
+        mismatchNote = `<div class="mismatch-note">${issues.join('<br>')}</div>`;
+      }
+    }
+
+    card.innerHTML = `
+      <div class="task-top">
+        <div class="task-letter">${task.letter}</div>
+        <div class="task-info">
+          <div class="task-name">${task.name}</div>
+          <div class="task-cat">${task.cat}</div>
+          <div class="task-note">${task.desc}</div>
+        </div>
+        ${grade ? resultChip : `<div class="status-dot${done ? ' done' : ''}"></div>`}
+      </div>
+      ${levelRow('importance', 'Importance', 0)}
+      ${levelRow('difficulty', 'Difficulty', 1)}
+      ${eligibleRow}
+      ${mismatchNote}
+    `;
+  }
+
+  // Updates a single existing card in place (no board rebuild) — used by Space so the
+  // card element itself is never removed from the DOM, which means it never loses focus.
+  function patchCard(taskId) {
+    const card = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+    if (!card) { renderPhase1(); return; } // fallback, shouldn't normally happen
+    patchCardContent(card, taskById(taskId));
+    // Re-assert focus on the card. If focus was already on the card (the Space-key case)
+    // this is a no-op. If focus was on a child button that just got destroyed by the
+    // innerHTML swap (the mouse-click case), this moves focus back to a sane place.
+    card.focus({ preventScroll: true });
+    updateGroupHighlight(taskId);
+    updateFooterAndHeader();
+  }
+
+  function updateFooterAndHeader() {
     const done = ratedCount();
     document.getElementById('progressText').innerHTML = `<strong>${done}</strong> of ${TASKS.length} tasks rated`;
     document.getElementById('continueBtn').disabled = done !== TASKS.length;
-    document.getElementById('checkBtn').disabled = done !== TASKS.length;
+    const checkBtn = document.getElementById('checkBtn');
+    if (checkBtn) checkBtn.disabled = done !== TASKS.length;
 
     const scoreText = document.getElementById('scoreText');
     if (checked) {
@@ -1126,7 +1151,6 @@
     }
 
     renderHeaderSummary();
-    restoreCardFocus();
   }
 
   function continueToPhase2() {
