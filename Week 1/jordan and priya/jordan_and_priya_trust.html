@@ -1542,20 +1542,32 @@ audio {
 }
 
 .mail-app {
-  width: auto;
-  height: auto;
+  max-width: 300px;
+  height: 90%;
   flex-direction: column;
 }
-
+.chat-header-desc {
+  text-wrap: wrap;
+}
 .inbox-list {
-  width: 150px;
-   max-height: 500px;
+  width: auto;
+   max-height: 200px;
 }
 .sidebar {
   width: auto;
   flex-direction: row;
 }
 
+.emailInboxThread { 
+  flex-direction: column;
+}
+.sidebar-item.active {
+  display: block !important;
+}
+
+.sidebar-item {
+  display: none;
+}
 .thread-pane {
   max-height: 500px;
 }
