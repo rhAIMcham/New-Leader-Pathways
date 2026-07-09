@@ -247,6 +247,39 @@ svg:hover {
   padding: 15px;
   text-align: center;
   line-height: 2.5;
+  right: 40px;
+}
+
+/*Pulse button animation */
+.pulse-alert {
+  background-color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-alert:hover {
+  color: var(--navy);
+  background-color: var(--lightBlue);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 #12195C70;
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px #12195C00;
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 #12195C00;
+  }
 }
 
 /*PH for now but will be generic black workspace*/
@@ -699,6 +732,7 @@ position: absolute;
 width: 550px;
 min-height: 250px;
 display: block;
+z-index: 999;
 }
 
 .topBar {
@@ -1327,7 +1361,9 @@ padding: 20px;
   }
 
   .call-name.missed { color: #AF4510; }
-
+#audreyTranscriptClick, #markTranscriptClick {
+  text-decoration: underline;
+}
   .call-sub { 
     font-size: 11px; 
     color: var(--text-muted); 
@@ -1695,14 +1731,14 @@ audio {
               </a>
             </div>
             <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" tabindex="0">
-              <div class="desktopAlert">
+              <div class="desktopAlert pulse-alert">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
                 <p>New Email</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
               </div>
             </div>
             <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertPhone()" tabindex="0">
-              <div class="desktopAlert" tabindex="0">
+              <div class="desktopAlert pulse-alert" tabindex="0">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
                 <p>2 missed voice calls</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
@@ -2530,6 +2566,7 @@ function reply() {
             <div class="call-sub">
              
               <span>Missed &middot; 12:52 PM</span>
+              <span><p onclick="audreyTranscript()" id="audreyTranscriptClick"  tabindex="0">View transcript</p></span>
               <audio controls id="audreyVM" tabindex="0">
                 <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Audrey_voicemail_NL_mod1.mp3">
                 Your browser does not support the audio element.
@@ -2538,13 +2575,31 @@ function reply() {
           </div>
           <div class="call-time" title="Audrey reply button" onclick="audreyAudio()" tabindex="0">Reply</div>
         </div>
- 
+ <div id="audreyVMCard" class="messageHidden">
+  <div class="topBar">
+  <div class="description">
+    <p>Voicemail transcript from Audrey E, at 12:52 PM.</p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Hi, it’s Audrey! </p>
+    <br>
+    <p>Just wanted to check in and see how you’re surviving your first week. Hopefully we haven’t scared you off yet! </p>
+    <p>A few of us were talking about getting drinks later, so let me know when you’re free. It still feels so strange not doing our coffee run – it’s like I barely see you!</p>
+    <br>
+    <p>Anyway, how’s the new place? Hopefully that thing with the neighbour finally got sorted. </p>
+    <p>Give me a call when you get a chance. It’d be nice to catch up properly.  </p>
+    <br>
+    <p>Talk soon! </p>
+  </div>
+</div>
         <div class="call-item">
           <div class="call-avatar av-blue">MJ</div>
           <div class="call-info">
             <div class="call-name missed">Mark J</div>
             <div class="call-sub">
               <span>Missed &middot; 12:25 PM</span>
+               <span><p onclick="markTranscript()" id="markTranscriptClick" tabindex="0">View transcript</p></span>
              <audio controls id="markVM" tabindex="0">
             <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Mark_voice_generation_NL_module_1.mp3" type="audio/mp3">
           Your browser does not support the audio element.
@@ -2554,7 +2609,22 @@ function reply() {
           <div class="call-time" title="Mark reply button" onclick="markAudio()" tabindex="0">Reply</div>
         
         </div>
-
+ <div id="markVMCard" class="messageHidden">
+  <div class="topBar">
+  <div class="description">
+    <p>Voicemail transcript from Mark J, at 12:25 PM.<span>X</span></p>
+    </div>
+    </div>
+    <div class="keyPoints">
+    <p>Hello, it’s Mark. </p>
+    <br>
+    <p>I wanted to touch base regarding the team’s transition. There are several procedural updates that still need to be documented, along with a redistribution of responsibilities across the group. I have notes on the outstanding tasks and a few other operational issues that will likely require your attention sooner rather than later.</p>
+    <br>
+    <p>I’ve managed these processes for a long time, so I can walk you through them when you’re available. It may save some confusion and prevent unnecessary delays.</p>
+    <br>
+    <p>Give me a call when you have the chance. Thank you </p>
+  </div>
+</div>
         <div class="call-item">
           <div class="call-avatar av-teal">SH</div>
           <div class="call-info">
@@ -2875,6 +2945,47 @@ function reply() {
     });
   }
 
+  function audreyTranscript() {
+  const infocard = document.getElementById("audreyVMCard");
+  if (infocard) {
+    infocard.classList.toggle("messageRevealed");
+}
+}
+
+function markTranscript() {
+  const infocard = document.getElementById("markVMCard");
+  if (infocard) {
+    infocard.classList.toggle("messageRevealed");
+  }
+}
+
+// ── Close on Escape ───────────────────────────────────────────────────
+document.addEventListener("keydown", function (event) {
+  if (event.key !== "Escape") return;
+
+  const infocards = document.querySelectorAll('#audreyVMCard, #markVMCard');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
+      card.classList.remove("messageRevealed");
+
+      // Return focus to the trigger that opened it
+      const trigger = document.querySelector(`[aria-controls="${card.id}"]`);
+      if (trigger) trigger.focus();
+    }
+  });
+});
+
+// ── Close on outside click ───────────
+document.addEventListener("click", function (event) {
+  const infocards = document.querySelectorAll('#audreyVMCard, #markVMCard');
+  infocards.forEach(card => {
+    if (card.classList.contains("messageRevealed")) {
+      if (!card.contains(event.target) && !event.target.closest('[onclick]')) {
+        card.classList.remove("messageRevealed");
+      }
+    }
+  });
+});
   // ── HELPERS ───────────────────────────────────────────────────────────
   function clearActive() {
     document.querySelectorAll('.dm-item').forEach(el => el.classList.remove('active'));
