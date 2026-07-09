@@ -734,7 +734,7 @@
   <div class="header-text">
     <h1 id="headerTitle">Phase 1 — Rate your tasks</h1>
     <p id="headerDesc">Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
-    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Difficulty, or Who's allowed · <kbd>Space</kbd> cycles that option</p>
+    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Difficulty, or Who's allowed · <kbd>←</kbd>/<kbd>→</kbd> moves across its options · <kbd>Space</kbd> selects/toggles the highlighted one</p>
     <button class="reset-link" onclick="startOver()">Reset everything and start over</button>
   </div>
   <div class="step-summary">
@@ -860,19 +860,33 @@
   // Card keyboard-nav state
   let focusedCardId = null;         // which card currently has DOM focus (survives re-render)
   const activeGroup = {};           // taskId -> 0 (importance) | 1 (difficulty) | 2 (eligible)
-  const eligibleCursor = {};        // taskId -> index into PEOPLE, for stepping through eligible options
+  const groupCursor = {};           // taskId -> [cursorInImportance, cursorInDifficulty, cursorInEligible]
 
   function getActiveGroup(taskId) {
     if (!(taskId in activeGroup)) activeGroup[taskId] = 0;
     return activeGroup[taskId];
   }
-  function getEligibleCursor(taskId) {
-    if (!(taskId in eligibleCursor)) eligibleCursor[taskId] = 0;
-    return eligibleCursor[taskId];
+  function getCursors(taskId) {
+    if (!groupCursor[taskId]) groupCursor[taskId] = [0, 0, 0];
+    return groupCursor[taskId];
   }
-  function cycleLevel(current) {
-    const idx = LEVELS.indexOf(current);
-    return LEVELS[idx === -1 ? 0 : (idx + 1) % LEVELS.length];
+  function getCursor(taskId, group) {
+    return getCursors(taskId)[group];
+  }
+  function setCursor(taskId, group, idx) {
+    getCursors(taskId)[group] = idx;
+  }
+  function groupItems(group) {
+    return group === 2 ? PEOPLE : LEVELS;
+  }
+  // When arrowing into the Importance/Difficulty group, start the cursor on whatever is
+  // currently selected (if anything) so left/right feels like it's moving from "here".
+  function syncCursorToValue(taskId, group) {
+    if (group === 2) return;
+    const field = group === 0 ? 'importance' : 'difficulty';
+    const val = ratings[taskId][field];
+    const idx = val ? LEVELS.indexOf(val) : 0;
+    setCursor(taskId, group, idx === -1 ? 0 : idx);
   }
 
   function freshRatings() {
@@ -923,7 +937,9 @@
     ratings[taskId][field] = val;
     checked = false;
     focusedCardId = taskId;
-    activeGroup[taskId] = field === 'importance' ? 0 : 1;
+    const g = field === 'importance' ? 0 : 1;
+    activeGroup[taskId] = g;
+    setCursor(taskId, g, LEVELS.indexOf(val));
     renderPhase1();
   }
   function toggleEligible(taskId, person) {
@@ -933,42 +949,49 @@
     checked = false;
     focusedCardId = taskId;
     activeGroup[taskId] = 2;
-    eligibleCursor[taskId] = PEOPLE.indexOf(person);
+    setCursor(taskId, 2, PEOPLE.indexOf(person));
     renderPhase1();
   }
 
   // Called when a card receives DOM focus (via Tab or a click)
   function handleCardFocus(taskId) {
     focusedCardId = taskId;
-    getActiveGroup(taskId); // ensure a default exists
+    const g = getActiveGroup(taskId); // ensure a default exists
+    syncCursorToValue(taskId, g);
     updateGroupHighlight(taskId);
   }
 
-  // Arrow keys pick which option group (Importance / Difficulty / Who's allowed) is "active";
-  // Space cycles the value of whichever group is active.
+  // Up/Down picks the group (Importance / Difficulty / Who's allowed).
+  // Left/Right moves a cursor across that group's individual options.
+  // Space selects (Importance/Difficulty) or toggles (Who's allowed) whatever the cursor is on.
   function handleCardKeydown(e, taskId) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      activeGroup[taskId] = (getActiveGroup(taskId) + 1) % 3;
+      const delta = e.key === 'ArrowDown' ? 1 : 2; // +1 or -1 mod 3
+      const g = (getActiveGroup(taskId) + delta) % 3;
+      activeGroup[taskId] = g;
+      syncCursorToValue(taskId, g);
       updateGroupHighlight(taskId);
-    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.preventDefault();
-      activeGroup[taskId] = (getActiveGroup(taskId) + 2) % 3;
+      const g = getActiveGroup(taskId);
+      const items = groupItems(g);
+      const delta = e.key === 'ArrowRight' ? 1 : items.length - 1;
+      setCursor(taskId, g, (getCursor(taskId, g) + delta) % items.length);
       updateGroupHighlight(taskId);
     } else if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
       e.preventDefault();
       const g = getActiveGroup(taskId);
+      const cursor = getCursor(taskId, g);
       if (g === 0) {
-        ratings[taskId].importance = cycleLevel(ratings[taskId].importance);
+        ratings[taskId].importance = LEVELS[cursor];
       } else if (g === 1) {
-        ratings[taskId].difficulty = cycleLevel(ratings[taskId].difficulty);
+        ratings[taskId].difficulty = LEVELS[cursor];
       } else {
-        const cursor = getEligibleCursor(taskId);
         const person = PEOPLE[cursor];
         const arr = ratings[taskId].eligible;
         const idx = arr.indexOf(person);
         if (idx === -1) arr.push(person); else arr.splice(idx, 1);
-        eligibleCursor[taskId] = (cursor + 1) % PEOPLE.length;
       }
       checked = false;
       focusedCardId = taskId;
@@ -976,20 +999,19 @@
     }
   }
 
-  // Highlights the active group + (for the eligible group) the current cursor person,
+  // Highlights the active group + the item the left/right cursor is currently on,
   // without a full re-render — used on plain focus/arrow-key moves.
   function updateGroupHighlight(taskId) {
     const card = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
     if (!card) return;
     const groups = card.querySelectorAll('.opt-group');
     const active = getActiveGroup(taskId);
-    groups.forEach((g, i) => g.classList.toggle('active-group', i === active));
-    const eligibleGroup = card.querySelector('.opt-group[data-group="2"]');
-    if (eligibleGroup) {
-      const buttons = eligibleGroup.querySelectorAll('.opt-btn');
-      const cursor = getEligibleCursor(taskId);
-      buttons.forEach((b, i) => b.classList.toggle('cursor-highlight', active === 2 && i === cursor));
-    }
+    groups.forEach((g, i) => {
+      g.classList.toggle('active-group', i === active);
+      const buttons = g.querySelectorAll('.opt-btn');
+      const cursor = getCursor(taskId, i);
+      buttons.forEach((b, j) => b.classList.toggle('cursor-highlight', i === active && j === cursor));
+    });
   }
 
   // After renderPhase1() rebuilds the DOM, put keyboard focus back on whichever card had it.
