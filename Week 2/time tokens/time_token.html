@@ -837,6 +837,7 @@
     const r = ratings[id];
     return !!(r.importance && r.difficulty && r.eligible.length > 0);
   }
+  
   function ratedCount() { return TASKS.filter(t => isTaskRated(t.id)).length; }
 
   function sameSet(arr1, arr2) {
