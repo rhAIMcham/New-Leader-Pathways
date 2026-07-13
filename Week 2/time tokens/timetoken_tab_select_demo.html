@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Rating & Weekly Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-200: #AFA9EC;
+    --teal-50: #E1F5EE;
+    --coral-50: #FAECE7;
+    --gray-50: #F1EFE8;
+    --gray-100: #D3D1C7;
+    --gray-200: #B4B2A9;
+    --gray-400: #888780;
+    --gray-600: #5F5E5A;
+    --gray-800: #444441;
+    --white: #ffffff;
+  }
+
+    :root {
+  --AIMblue: #4353A3;
+  --darkBlue: #38416D;
+  --teal: #5DC8B9;
+  --cream: #F1EEDE;
+  --grey: #e7e9ec;
+  --rust: #AF4510;
+  --navy: #12195C;
+  --white: #ffffff;
+  --lightBlue: #AEBAE4;
+  --bg-app:          #f0ede8;
+  --bg-sidebar:      #e8e4de;
+  --bg-activity-pane:#454545;
+  --bg-panel:        #ffffff;
+  --bg-message-head: #f5f3f0;
+  --bg-private-tag:  #fff0ee;
+  --bg-unread-dot:   #378add;
+  --bg-avatar-blue:  #b5d4f4;
+  --bg-avatar-teal:  #9fe1cb;
+  --bg-selected-row: #e6f1fb;
+  --bg-badge:        #d85a30;
+  --bg-input:        #f5f3f0;
+
+  --text-primary:    #1a1a1a;
+  --text-secondary:  #666660;
+  --text-muted:      #999994;
+  --text-avatar-blue:#0c447c;
+  --text-avatar-teal:#085041;
+  --text-private:    #993c1d;
+  --text-badge:      #ffffff;
+  --text-link:       #185fa5;
+
+  --border-subtle:   #dedad3;
+  --border-medium:   #ccc8c0;
+
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-pill:99px;
+
+      --purple-dark: #464775;
+  --purple-mid:  #6264A7;
+  --purple-light:#9EA2D4;
+  --sidebar-bg:  #1b1b2e;
+  --channel-bg:  #252538;
+  --chat-bg:     #ffffff;
+  --text-primary:#1a1a1a;
+  --text-secondary:#555;
+  --text-muted:  #999;
+  --border:      rgba(0,0,0,0.1);
+  --bg-secondary:#f5f5f5;
+  --bg-primary:  #ffffff;
+  --online:      #6EBB8A;
+  --away:        #F4A540;
+  --busy:        #E04D4D;
+  --unread:      #D65B8E;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: "IBM Plex Sans", sans-serif;
+    min-height: 100vh;
+    color: var(--gray-800);   
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .page-header {
+    background: var(--white);
+    border-bottom: 0.5px solid var(--border-medium);
+    padding: 24px 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-text h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .header-text p {
+    font-size: 14px;
+    color: var(--gray-600);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .reset-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--gray-400);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+  .reset-link:hover {
+    color: var(--rust);
+  }
+
+  .step-summary {
+    background: var(--bg-selected-row);
+    border: 0.5px solid var(--border-medium);
+    border-radius: 12px;
+    padding: 14px 20px;
+    min-width: 200px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .step-summary .big-num {
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .step-summary .label {
+    font-size: 12px;
+    color: var(--AIMblue);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+  .pip-track {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .pip {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    transition: background 0.2s;
+  }
+  .pip.on {
+    background: var(--navy);
+  }
+
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ---------- Phase 1 ---------- */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .task-card {
+    background: var(--white);
+    border: 0.5px solid var(--border-medium);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border 0.25s, box-shadow 0.25s;
+  }
+  .task-card.complete {
+    border: 1.5px solid var(--teal);
+    box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.07);
+  }
+  .task-card.correct {
+    border: 1.5px solid var(--teal);
+    box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.12);
+  }
+  .task-card.incorrect {
+    border: 1.5px solid var(--rust);
+    box-shadow: 0 0 0 3px rgba(153, 60, 29, 0.1);
+  }
+  .task-card:focus {
+    outline: none;
+    border-color: var(--AIMblue);
+    box-shadow: 0 0 0 3px rgba(67, 83, 163, 0.25);
+  }
+  .task-card .opt-group {
+    border-radius: 8px;
+    padding: 6px;
+    margin: -6px;
+    transition: background 0.15s;
+  }
+  .task-card:focus .opt-group.active-group {
+    background: var(--bg-selected-row);
+  }
+  .task-card:focus .opt-group.active-group .sub-label {
+    color: var(--AIMblue);
+  }
+  .opt-btn.cursor-highlight {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 1px;
+  }
+  .kbd-hint {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 8px;
+  }
+  .kbd-hint kbd {
+    font-family: inherit;
+    background: var(--gray-50);
+    border: 0.5px solid var(--border-medium);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 10.5px;
+  }
+  .task-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .task-letter {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--bg-selected-row);
+    color: var(--navy);
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-info {
+    flex: 1;
+  }
+  .task-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-800);
+  }
+  .task-desc {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+  .task-cat {
+    font-size: 10.5px;
+    color: var(--navy);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .task-note {
+    font-size: 11.5px;
+    color: var(--gray-600);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    flex-shrink: 0;
+    margin-top: 5px;
+    transition: background 0.2s;
+  }
+  .status-dot.done {
+    background: var(--teal);
+  }
+  .result-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .result-chip.correct {
+    background: var(--teal-50);
+    color: var(--darkBlue);
+  }
+  .result-chip.incorrect {
+    background: var(--coral-50);
+    color: var(--rust);
+  }
+  .mismatch-note {
+    font-size: 11.5px;
+    color: var(--rust);
+    line-height: 1.6;
+    background: var(--coral-50);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+
+  .sub-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .opt-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .opt-btn {
+    font-size: 12px;
+    font-family: "IBM Plex Sans", sans-serif;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-medium);
+    background: transparent;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .opt-btn:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-400);
+  }
+  .opt-btn.sel-importance {
+    background: var(--rust);
+    color: var(--white);
+    border-color: var(--rust);
+  }
+  .opt-btn.sel-difficulty {
+    background: var(--teal);
+    color: var(--white);
+    border-color: var(--teal);
+  }
+  .opt-btn.sel-length {
+    background: var(--teal);
+    color: var(--white);
+    border-color: var(--teal);
+  }
+  .opt-btn.sel-person {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+  .opt-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    border-top: 0.5px solid var(--gray-100);
+    margin-bottom: 8px;
+  }
+  .footer-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .progress-text {
+    font-size: 13px;
+    color: var(--gray-600);
+  }
+  .progress-text strong {
+    color: var(--gray-800);
+  }
+  .score-text {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-left: 12px;
+  }
+  .score-text strong {
+    color: var(--teal);
+  }
+  .primary-btn {
+    padding: 12px 32px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "IBM Plex Sans", sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .primary-btn:hover:not(:disabled) {
+    background: var(--AIMblue);
+  }
+  .primary-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .check-btn {
+    padding: 12px 24px;
+    background: var(--teal);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "IBM Plex Sans", sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-btn:hover:not(:disabled) {
+    background: var(--darkBlue);
+  }
+  .check-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .ghost-btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-medium);
+    background: transparent;
+    font-size: 13px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ghost-btn:hover {
+    background: var(--white);
+    border-color: var(--gray-400);
+  }
+
+  /* ---------- Phase 2 ---------- */
+  #phase2View {
+    display: none;
+  }
+  .phase2-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .phase2-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .phase2-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .queue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .queue-card {
+    background: var(--white);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .queue-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .queue-name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .badge-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .badge.lvl-low {
+    background: var(--gray-50);
+    color: var(--gray-600);
+  }
+  .badge.lvl-medium {
+    background: var(--bg-selected-row);
+    color: var(--AIMblue);
+  }
+  .badge.lvl-high {
+    background: var(--coral-50);
+    color: var(--rust);
+  }
+  .badge.lvl-length {
+    background: var(--teal-50);
+    color: var(--darkBlue);
+  }
+  .eligible-line {
+    font-size: 11.5px;
+    color: var(--gray-600);
+  }
+  .empty-queue {
+    font-size: 13px;
+    color: var(--gray-400);
+    padding: 24px 4px;
+    text-align: center;
+  }
+
+  .panel {
+    background: var(--gray-50);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .panel-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .panel-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .panel-confirm {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 13px;
+    font-family: "IBM Plex Sans", sans-serif;
+    cursor: pointer;
+  }
+  .panel-confirm:hover:not(:disabled) {
+    background: var(--AIMblue);
+  }
+  .panel-confirm:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .panel-cancel {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-subtle);
+    background: transparent;
+    font-size: 13px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: var(--gray-600);
+    cursor: pointer;
+  }
+  .panel-hint {
+    font-size: 11.5px;
+    color: var(--gray-400);
+  }
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .cal-day {
+    background: var(--white);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 96px;
+  }
+  .cal-day-head {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    padding-bottom: 2px;
+    border-bottom: 0.5px solid var(--gray-100);
+  }
+  .cal-empty-label {
+    font-size: 11px;
+    color: var(--gray-400);
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .cal-chip {
+    background: var(--bg-selected-row);
+    border-radius: 6px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cal-chip .chip-task {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .cal-chip .chip-person {
+    font-size: 11px;
+    color: var(--gray-600);
+  }
+  .cal-chip button {
+    border: none;
+    background: transparent;
+    color: var(--gray-400);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+  }
+  .cal-chip button:hover {
+    color: var(--rust);
+  }
+
+  .result-panel {
+    display: none;
+    background: var(--white);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+  }
+  .result-panel.show {
+    display: block;
+  }
+  .result-panel h2 {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--teal);
+  }
+  .day-block {
+    margin-bottom: 14px;
+  }
+  .day-block h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .day-block .slot-line {
+    font-size: 13px;
+    color: var(--gray-800);
+    padding: 3px 0;
+  }
+  .day-block .slot-line span.t {
+    color: var(--gray-600);
+  }
+  .workload-summary {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.8;
+    padding-top: 12px;
+    border-top: 0.5px solid var(--gray-100);
+    margin-top: 6px;
+  }
+  .result-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      flex-direction: column;
+    }
+    .step-summary {
+      min-width: auto;
+      width: 100%;
+    }
+    .main {
+      padding: 20px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-text">
+    <h1 id="headerTitle">Phase 1 — Rate your tasks</h1>
+    <p id="headerDesc">Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
+    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Difficulty, or Who's allowed · <kbd>Space</kbd> cycles that option</p>
+    <button class="reset-link" onclick="startOver()">Reset everything and start over</button>
+  </div>
+  <div class="step-summary">
+    <div class="big-num" id="bigCount">0</div>
+    <div class="label" id="bigLabel">tasks rated</div>
+    <div class="pip-track" id="pipTrack"></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- PHASE 1 -->
+  <div id="phase1View">
+    <div class="section-eyebrow">Tasks — rate &amp; restrict</div>
+    <div class="board" id="board"></div>
+    <div class="footer">
+      <div>
+        <span class="progress-text" id="progressText"></span><span class="score-text" id="scoreText"></span>
+      </div>
+      <div class="footer-buttons">
+        <!-- <button class="check-btn" id="checkBtn" onclick="checkAnswers()" disabled>Check my answers</button> -->
+        <button class="primary-btn" id="continueBtn" onclick="continueToPhase2()" disabled>Continue to scheduling</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div id="phase2View">
+    <div class="phase2-header-row">
+      <div class="section-eyebrow" style="margin-bottom:0;">Schedule the week</div>
+      <button class="ghost-btn" onclick="goBackToPhase1()">← Back to ratings</button>
+    </div>
+
+    <div class="phase2-grid">
+      <div>
+        <div class="section-eyebrow">Unscheduled tasks (most important first)</div>
+        <div class="queue-list" id="queueList"></div>
+      </div>
+
+      <div>
+        <div class="section-eyebrow">Your week</div>
+        <div class="calendar" id="calendar"></div>
+      </div>
+    </div>
+
+    <div class="footer" style="margin-top:24px;">
+      <div class="progress-text" id="progressText2"></div>
+      <button class="primary-btn" id="planBtn" onclick="showWeeklyPlan()" disabled>View weekly plan</button>
+    </div>
+
+    <div class="result-panel" id="resultPanel">
+      <h2>Your week is planned</h2>
+      <div id="dayBlocks"></div>
+      <div class="workload-summary" id="workloadSummary"></div>
+      <div class="result-actions">
+        <button class="ghost-btn" onclick="resetScheduleOnly()">Reset schedule only</button>
+        <button class="ghost-btn" onclick="startOver()">Start completely over</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const PEOPLE = ['Mark', 'Audrey', 'Priya', 'Jordan'];
+  const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const SLOTS = ['AM', 'PM'];
+  const LEVELS = ['Low', 'Medium', 'High'];
+
+  // People who are unavailable on certain days, e.g. { 'Audrey': ['Fri'] }
+  const UNAVAILABLE = {
+    'Audrey': ['Fri'],
+    'Jordan': ['Mon'],
+    'Mark': ['Mon', 'Tue', 'Wed'],
+    'Priya': ['Tue', 'Wed'],
+  };
+
+  function isPersonUnavailable(person, day) {
+    return !!(UNAVAILABLE[person] && UNAVAILABLE[person].includes(day));
+  }
+
+  const TASKS = [
+    { id: 'a', letter: 'A', name: 'Draft the project brief and define scope', cat: 'Project work / administerial (efficiency)', desc: 'This must be completed before your meetings for the week. Many of the details needed have been compiled already. The team member assigned to this task should be efficient and experienced.' },
+    { id: 'b', letter: 'B', name: 'Write the summary report', cat: 'Project work / administerial (efficiency)', desc: 'This cannot be completed before your meetings for the week. The team member assigned to this task should be experienced and thorough.' },
+    { id: 'c', letter: 'C', name: 'Conduct research and analysis', cat: 'Project work / administerial (efficiency)', desc: 'This may require input during your meetings for the week. The team member assigned to this task should be thorough and experienced.' },
+    { id: 'd', letter: 'D', name: 'Meeting with clients', cat: 'Client meetings / presentations (communication)', desc: 'To impress clients, it is important to prepare and practice your presentation beforehand. The team member assigned to this task should be experienced and communicative.' },
+    { id: 'e', letter: 'E', name: 'Run stakeholder alignment meeting', cat: 'Client meetings / presentations (communication)', desc: 'Presenting yourself and your team in a professional and informative way is crucial for success. The team member assigned to this task should be communicative and efficient.' },
+    { id: 'f', letter: 'F', name: 'Present the pitch for future projects', cat: 'Client meetings / presentations (communication)', desc: 'For this project, it is important to have completed research and industry analysis before presenting. The team member assigned to this task should be communicative and thorough.' },
+    { id: 'g', letter: 'G', name: 'Coordinate team communications', cat: 'Onsite meetings / travel (experience)', desc: 'Aligning different team members across different sites requires significant time-management skills. The team member assigned to this task should be experienced and communicative.' },
+    { id: 'h', letter: 'H', name: 'Conduct onsite inspection and report', cat: 'Onsite meetings / travel (experience)', desc: 'Onsite safety standards and other considerations must be regularly checked and updated. The team member assigned to this task should be thorough and experienced.' },
+    { id: 'i', letter: 'I', name: 'Verify work completion', cat: 'Onsite meetings / travel (experience)', desc: "Quality checking and completion guarantees product meets the client's expectations. The team member assigned to this task should be efficient and experienced." },
+    { id: 'j', letter: 'J', name: 'Review submission documents thoroughly', cat: 'Quality assurance / auditing (attention to detail)', desc: "Qdesc1" },
+    { id: 'K', letter: 'K', name: 'Quality test product for accessibility requirement standards', cat: 'Quality assurance / auditing (attention to detail)', desc: "desc2." },
+    { id: 'L', letter: 'L', name: 'Ensure compliance is satisfied with process documentation', cat: 'Quality assurance / auditing (attention to detail)', desc: "desc3" },
+  ];
+
+  // ---- ANSWER KEY ----
+  // Edit these values to whatever the "correct" rating should be for each task.
+  // importance / difficulty: 'Low' | 'Medium' | 'High'
+  // eligible: array of names from PEOPLE who SHOULD be marked eligible (order doesn't matter)
+  const ANSWER_KEY = {
+    a: { importance: 'High',   difficulty: 'Medium', eligible: ['Mark', 'Priya'] },
+    b: { importance: 'Medium', difficulty: 'High',   eligible: ['Priya', 'Jordan'] },
+    c: { importance: 'Medium', difficulty: 'High',   eligible: ['Priya'] },
+    d: { importance: 'High',   difficulty: 'High',   eligible: ['Mark', 'Audrey'] },
+    e: { importance: 'High',   difficulty: 'Medium', eligible: ['Audrey', 'Mark'] },
+    f: { importance: 'Medium', difficulty: 'High',   eligible: ['Audrey'] },
+    g: { importance: 'Medium', difficulty: 'Medium', eligible: ['Mark', 'Audrey'] },
+    h: { importance: 'High',   difficulty: 'High',   eligible: ['Priya', 'Jordan'] },
+    i: { importance: 'Medium', difficulty: 'Low',    eligible: ['Jordan', 'Mark'] },
+    j: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
+    K: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
+    L: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
+  };
+
+  let ratings = {};
+  let schedule = []; // { taskId, day, slots: ['AM'] or ['AM','PM'], assignee }
+  let phase = 1;
+  let activeScheduleTaskId = null;
+  let draft = { assignee: null, day: null, slot: null };
+  let checked = false; // whether "Check my answers" has been run
+
+  // Card keyboard-nav state
+  let focusedCardId = null;         // which card currently has DOM focus (survives re-render)
+  const activeGroup = {};           // taskId -> 0 (importance) | 1 (difficulty) | 2 (eligible)
+  const eligibleCursor = {};        // taskId -> index into PEOPLE, for stepping through eligible options
+
+  function getActiveGroup(taskId) {
+    if (!(taskId in activeGroup)) activeGroup[taskId] = 0;
+    return activeGroup[taskId];
+  }
+  function getEligibleCursor(taskId) {
+    if (!(taskId in eligibleCursor)) eligibleCursor[taskId] = 0;
+    return eligibleCursor[taskId];
+  }
+  function cycleLevel(current) {
+    const idx = LEVELS.indexOf(current);
+    return LEVELS[idx === -1 ? 0 : (idx + 1) % LEVELS.length];
+  }
+
+  function freshRatings() {
+    const r = {};
+    TASKS.forEach(t => { r[t.id] = { importance: null, difficulty: null, eligible: [] }; });
+    return r;
+  }
+  ratings = freshRatings();
+
+  function taskById(id) { return TASKS.find(t => t.id === id); }
+
+  /* ---------------- PHASE 1 ---------------- */
+
+  function isTaskRated(id) {
+    const r = ratings[id];
+    return !!(r.importance && r.difficulty && r.eligible.length > 0);
+  }
+  
+  function ratedCount() { return TASKS.filter(t => isTaskRated(t.id)).length; }
+
+  function sameSet(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    const s = new Set(arr1);
+    return arr2.every(x => s.has(x));
+  }
+
+  function gradeTask(id) {
+    const key = ANSWER_KEY[id];
+    const r = ratings[id];
+    if (!key) return null;
+    const importanceOk = r.importance === key.importance;
+    const difficultyOk = r.difficulty === key.difficulty;
+    const eligibleOk = sameSet(r.eligible, key.eligible);
+    return {
+      correct: importanceOk && difficultyOk && eligibleOk,
+      importanceOk, difficultyOk, eligibleOk,
+      key
+    };
+  }
+
+  function scoreSummary() {
+    const graded = TASKS.map(t => gradeTask(t.id)).filter(Boolean);
+    const numCorrect = graded.filter(g => g.correct).length;
+    return { numCorrect, total: graded.length };
+  }
+
+  function setLevel(taskId, field, val) {
+    ratings[taskId][field] = val;
+    checked = false;
+    focusedCardId = taskId;
+    activeGroup[taskId] = field === 'importance' ? 0 : 1;
+    renderPhase1();
+  }
+  function toggleEligible(taskId, person) {
+    const arr = ratings[taskId].eligible;
+    const i = arr.indexOf(person);
+    if (i === -1) arr.push(person); else arr.splice(i, 1);
+    checked = false;
+    focusedCardId = taskId;
+    activeGroup[taskId] = 2;
+    eligibleCursor[taskId] = PEOPLE.indexOf(person);
+    renderPhase1();
+  }
+
+  // Called when a card receives DOM focus (via Tab or a click)
+  function handleCardFocus(taskId) {
+    focusedCardId = taskId;
+    getActiveGroup(taskId); // ensure a default exists
+    updateGroupHighlight(taskId);
+  }
+
+  // Arrow keys pick which option group (Importance / Difficulty / Who's allowed) is "active";
+  // Space cycles the value of whichever group is active.
+  function handleCardKeydown(e, taskId) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      activeGroup[taskId] = (getActiveGroup(taskId) + 1) % 3;
+      updateGroupHighlight(taskId);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      activeGroup[taskId] = (getActiveGroup(taskId) + 2) % 3;
+      updateGroupHighlight(taskId);
+    } else if (e.key === ' ' || e.key === 'Spacebar' || e.code === 'Space') {
+      e.preventDefault();
+      const g = getActiveGroup(taskId);
+      if (g === 0) {
+        ratings[taskId].importance = cycleLevel(ratings[taskId].importance);
+      } else if (g === 1) {
+        ratings[taskId].difficulty = cycleLevel(ratings[taskId].difficulty);
+      } else {
+        const cursor = getEligibleCursor(taskId);
+        const person = PEOPLE[cursor];
+        const arr = ratings[taskId].eligible;
+        const idx = arr.indexOf(person);
+        if (idx === -1) arr.push(person); else arr.splice(idx, 1);
+        eligibleCursor[taskId] = (cursor + 1) % PEOPLE.length;
+      }
+      checked = false;
+      focusedCardId = taskId;
+      renderPhase1(); // rebuilds the board; focus is restored at the end of renderPhase1
+    }
+  }
+
+  // Highlights the active group + (for the eligible group) the current cursor person,
+  // without a full re-render — used on plain focus/arrow-key moves.
+  function updateGroupHighlight(taskId) {
+    const card = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+    if (!card) return;
+    const groups = card.querySelectorAll('.opt-group');
+    const active = getActiveGroup(taskId);
+    groups.forEach((g, i) => g.classList.toggle('active-group', i === active));
+    const eligibleGroup = card.querySelector('.opt-group[data-group="2"]');
+    if (eligibleGroup) {
+      const buttons = eligibleGroup.querySelectorAll('.opt-btn');
+      const cursor = getEligibleCursor(taskId);
+      buttons.forEach((b, i) => b.classList.toggle('cursor-highlight', active === 2 && i === cursor));
+    }
+  }
+
+  // After renderPhase1() rebuilds the DOM, put keyboard focus back on whichever card had it.
+  function restoreCardFocus() {
+    if (!focusedCardId) return;
+    const card = document.querySelector(`.task-card[data-task-id="${focusedCardId}"]`);
+    if (card) {
+      card.focus({ preventScroll: true });
+      updateGroupHighlight(focusedCardId);
+    }
+  }
+
+  function checkAnswers() {
+    if (ratedCount() !== TASKS.length) return;
+    checked = true;
+    renderPhase1();
+  }
+
+  function renderHeaderSummary() {
+    const pipTrack = document.getElementById('pipTrack');
+    pipTrack.innerHTML = '';
+    let count, label;
+    if (phase === 1) { count = ratedCount(); label = 'tasks rated'; }
+    else { count = schedule.length; label = 'tasks scheduled'; }
+    for (let i = 0; i < TASKS.length; i++) {
+      const d = document.createElement('div');
+      d.className = 'pip' + (i < count ? ' on' : '');
+      pipTrack.appendChild(d);
+    }
+    document.getElementById('bigCount').textContent = count;
+    document.getElementById('bigLabel').textContent = label;
+  }
+
+  function renderPhase1() {
+    const board = document.getElementById('board');
+    board.innerHTML = '';
+    TASKS.forEach(task => {
+      const r = ratings[task.id];
+      const done = isTaskRated(task.id);
+      const grade = checked ? gradeTask(task.id) : null;
+
+      const card = document.createElement('div');
+      let cardClass = 'task-card';
+      if (grade) cardClass += grade.correct ? ' correct' : ' incorrect';
+      else if (done) cardClass += ' complete';
+      card.className = cardClass;
+      card.tabIndex = 0;
+      card.dataset.taskId = task.id;
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', `Task ${task.letter}: ${task.name}`);
+      card.addEventListener('focus', () => handleCardFocus(task.id));
+      card.addEventListener('keydown', (e) => handleCardKeydown(e, task.id));
+
+      const levelRow = (field, label, groupIndex) => `
+        <div class="opt-group" data-group="${groupIndex}">
+          <div class="sub-label">${label}</div>
+          <div class="opt-row">
+            ${LEVELS.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
+          </div>
+        </div>`;
+
+      const eligibleRow = `
+        <div class="opt-group" data-group="2">
+          <div class="sub-label">Who's allowed to do this?</div>
+          <div class="opt-row">
+            ${PEOPLE.map(p => `<button type="button" tabindex="-1" class="opt-btn${r.eligible.includes(p) ? ' sel-person' : ''}" onclick="toggleEligible('${task.id}','${p}')">${p}</button>`).join('')}
+          </div>
+        </div>`;
+
+      let resultChip = '';
+      let mismatchNote = '';
+      if (grade) {
+        resultChip = `<div class="result-chip ${grade.correct ? 'correct' : 'incorrect'}">${grade.correct ? '✓ Correct' : '✗ Incorrect'}</div>`;
+        if (!grade.correct) {
+          const issues = [];
+          if (!grade.importanceOk) issues.push(`Importance should be <strong>${grade.key.importance}</strong>`);
+          if (!grade.difficultyOk) issues.push(`Difficulty should be <strong>${grade.key.difficulty}</strong>`);
+          if (!grade.eligibleOk) issues.push(`Eligible people should be <strong>${grade.key.eligible.join(', ')}</strong>`);
+          mismatchNote = `<div class="mismatch-note">${issues.join('<br>')}</div>`;
+        }
+      }
+
+      card.innerHTML = `
+        <div class="task-top">
+          <div class="task-letter">${task.letter}</div>
+          <div class="task-info">
+            <div class="task-name">${task.name}</div>
+            <div class="task-cat">${task.cat}</div>
+            <div class="task-note">${task.desc}</div>
+          </div>
+          ${grade ? resultChip : `<div class="status-dot${done ? ' done' : ''}"></div>`}
+        </div>
+        ${levelRow('importance', 'Importance', 0)}
+        ${levelRow('difficulty', 'Difficulty', 1)}
+        ${eligibleRow}
+        ${mismatchNote}
+      `;
+      board.appendChild(card);
+    });
+
+    const done = ratedCount();
+    document.getElementById('progressText').innerHTML = `<strong>${done}</strong> of ${TASKS.length} tasks rated`;
+    document.getElementById('continueBtn').disabled = done !== TASKS.length;
+    document.getElementById('checkBtn').disabled = done !== TASKS.length;
+
+    const scoreText = document.getElementById('scoreText');
+    if (checked) {
+      const { numCorrect, total } = scoreSummary();
+      scoreText.innerHTML = `<strong>${numCorrect} / ${total}</strong> correct`;
+    } else {
+      scoreText.innerHTML = '';
+    }
+
+    renderHeaderSummary();
+    restoreCardFocus();
+  }
+
+  function continueToPhase2() {
+    if (ratedCount() !== TASKS.length) return;
+    phase = 2;
+    document.getElementById('phase1View').style.display = 'none';
+    document.getElementById('phase2View').style.display = 'block';
+    document.getElementById('headerTitle').textContent = 'Phase 2 — Schedule the week';
+    document.getElementById('headerDesc').textContent = "Assign each task to one of its eligible people and slot it into the calendar. Every task takes a full day — both morning and afternoon.";
+    document.getElementById('kbdHint').style.display = 'none';
+    renderPhase2();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goBackToPhase1() {
+    phase = 1;
+    document.getElementById('phase2View').style.display = 'none';
+    document.getElementById('phase1View').style.display = 'block';
+    document.getElementById('headerTitle').textContent = 'Phase 1 — Rate your tasks';
+    document.getElementById('headerDesc').textContent = "Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.";
+    document.getElementById('kbdHint').style.display = '';
+    renderPhase1();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ---------------- PHASE 2 ---------------- */
+
+  function isFree(person, day, slot, excludeTaskId) {
+    if (isPersonUnavailable(person, day)) return false;
+    return !schedule.some(a => a.assignee === person && a.day === day && a.slots.includes(slot) && a.taskId !== excludeTaskId);
+  }
+
+  function levelRank(lv) { return lv === 'High' ? 3 : lv === 'Medium' ? 2 : 1; }
+
+  function unscheduledTasksSorted() {
+    const scheduledIds = new Set(schedule.map(a => a.taskId));
+    return TASKS.filter(t => !scheduledIds.has(t.id)).sort((t1, t2) => {
+      const r1 = ratings[t1.id], r2 = ratings[t2.id];
+      if (levelRank(r2.importance) !== levelRank(r1.importance)) return levelRank(r2.importance) - levelRank(r1.importance);
+      return t1.name.localeCompare(t2.name);
+    });
+  }
+
+  function openSchedulePanel(taskId) {
+    activeScheduleTaskId = (activeScheduleTaskId === taskId) ? null : taskId;
+    draft = { assignee: null, day: null, slot: null };
+    renderPhase2();
+  }
+  function selectDraftAssignee(person) {
+    draft.assignee = person; draft.day = null; draft.slot = null;
+    renderPhase2();
+  }
+  function selectDraftDay(day) {
+    draft.day = day; draft.slot = null;
+    renderPhase2();
+  }
+  function selectDraftSlot(slot) {
+    draft.slot = slot;
+    renderPhase2();
+  }
+  function cancelSchedulePanel() {
+    activeScheduleTaskId = null; draft = { assignee: null, day: null, slot: null };
+    renderPhase2();
+  }
+  function confirmSchedule() {
+    const slots = ['AM', 'PM'];
+    schedule.push({ taskId: activeScheduleTaskId, day: draft.day, slots, assignee: draft.assignee });
+    activeScheduleTaskId = null; draft = { assignee: null, day: null, slot: null };
+    renderPhase2();
+  }
+  function removeAssignment(taskId) {
+    schedule = schedule.filter(a => a.taskId !== taskId);
+    renderPhase2();
+  }
+
+  function renderSchedulePanel(task) {
+    const r = ratings[task.id];
+    const a = draft.assignee;
+
+    const peopleRow = `
+      <div class="panel-row">
+        <div class="sub-label">Who's doing this?</div>
+        <div class="opt-row">
+          ${r.eligible.map(p => `<button class="opt-btn${a === p ? ' sel-person' : ''}" onclick="selectDraftAssignee('${p}')">${p}${(UNAVAILABLE[p] && UNAVAILABLE[p].length) ? ' *' : ''}</button>`).join('')}
+        </div>
+        ${r.eligible.filter(p => UNAVAILABLE[p] && UNAVAILABLE[p].length).map(p => `<div class="panel-hint">* ${p} unavailable ${UNAVAILABLE[p].join(', ')}</div>`).join('')}
+      </div>`;
+
+    let dayRow = '';
+    if (a) {
+      dayRow = `
+        <div class="panel-row">
+          <div class="sub-label">Pick a day</div>
+          <div class="opt-row">
+            ${DAYS.map(d => {
+              const avail = isFree(a, d, 'AM', task.id) && isFree(a, d, 'PM', task.id);
+              const sel = draft.day === d;
+              return `<button class="opt-btn${sel ? ' sel-person' : ''}" ${avail ? '' : 'disabled'} onclick="selectDraftDay('${d}')">${d}</button>`;
+            }).join('')}
+          </div>
+        </div>`;
+    }
+
+    let slotRow = '';
+    if (a && draft.day) {
+      slotRow = `<div class="panel-hint">This task takes the whole day — both morning and afternoon on ${draft.day}.</div>`;
+    }
+
+    const canConfirm = !!(a && draft.day);
+
+    return `
+      <div class="panel">
+        ${peopleRow}
+        ${dayRow}
+        ${slotRow}
+        <div class="panel-actions">
+          <button class="panel-cancel" onclick="cancelSchedulePanel()">Cancel</button>
+          <button class="panel-confirm" ${canConfirm ? '' : 'disabled'} onclick="confirmSchedule()">Add to calendar</button>
+        </div>
+      </div>`;
+  }
+
+  function renderPhase2() {
+    const queueList = document.getElementById('queueList');
+    const unscheduled = unscheduledTasksSorted();
+
+    if (unscheduled.length === 0) {
+      queueList.innerHTML = `<div class="empty-queue">All tasks are scheduled. Check your week on the right →</div>`;
+    } else {
+      queueList.innerHTML = unscheduled.map(task => {
+        const r = ratings[task.id];
+        const isOpen = activeScheduleTaskId === task.id;
+        return `
+          <div class="queue-card">
+            <div class="queue-top">
+              <div class="task-letter">${task.letter}</div>
+              <div class="task-info">
+                <div class="queue-name">${task.name}</div>
+                <div class="task-cat">${task.cat}</div>
+              </div>
+            </div>
+            <div class="badge-row">
+              <span class="badge lvl-${r.importance.toLowerCase()}">${r.importance} importance</span>
+              <span class="badge lvl-${r.difficulty.toLowerCase()}">${r.difficulty} difficulty</span>
+            </div>
+            <div class="eligible-line">Eligible: ${r.eligible.join(', ')}</div>
+            ${isOpen ? renderSchedulePanel(task) : `<button class="ghost-btn" onclick="openSchedulePanel('${task.id}')">Schedule this task</button>`}
+          </div>`;
+      }).join('');
+    }
+
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = DAYS.map(day => {
+      const entries = schedule.filter(a => a.day === day);
+      const chips = entries.map(a => {
+        const t = taskById(a.taskId);
+        return `
+          <div class="cal-chip">
+            <div>
+              <div class="chip-task">${t.letter} · ${t.name}</div>
+              <div class="chip-person">${a.assignee}</div>
+            </div>
+            <button onclick="removeAssignment('${a.taskId}')" title="Remove">×</button>
+          </div>`;
+      }).join('');
+      return `
+        <div class="cal-day">
+          <div class="cal-day-head">${day}</div>
+          ${chips || `<div class="cal-empty-label">Free</div>`}
+        </div>`;
+    }).join('');
+
+    document.getElementById('progressText2').innerHTML = `<strong>${schedule.length}</strong> of ${TASKS.length} tasks scheduled`;
+    document.getElementById('planBtn').disabled = schedule.length !== TASKS.length;
+    document.getElementById('resultPanel').classList.remove('show');
+    renderHeaderSummary();
+  }
+
+  function showWeeklyPlan() {
+    if (schedule.length !== TASKS.length) return;
+    const panel = document.getElementById('resultPanel');
+    const dayBlocks = document.getElementById('dayBlocks');
+
+    dayBlocks.innerHTML = DAYS.map(day => {
+      const entries = schedule.filter(a => a.day === day);
+      const lines = entries.length === 0
+        ? [`<div class="slot-line">—</div>`]
+        : entries.map(a => {
+            const t = taskById(a.taskId);
+            return `<div class="slot-line">${t.name} — ${a.assignee}</div>`;
+          });
+      return `<div class="day-block"><h3>${day}</h3>${lines.join('')}</div>`;
+    }).join('');
+
+    const workload = {};
+    PEOPLE.forEach(p => workload[p] = 0);
+    schedule.forEach(a => { workload[a.assignee] += a.slots.length; });
+    const workloadLines = PEOPLE.filter(p => workload[p] > 0)
+      .map(p => `${p}: ${workload[p]} slot${workload[p] !== 1 ? 's' : ''} (${(workload[p] / 2).toFixed(1)} day${workload[p] !== 2 ? 's' : ''})`)
+      .join(' · ');
+    document.getElementById('workloadSummary').innerHTML = `<strong>Workload:</strong> ${workloadLines || '—'}`;
+
+    panel.classList.add('show');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetScheduleOnly() {
+    schedule = [];
+    activeScheduleTaskId = null;
+    draft = { assignee: null, day: null, slot: null };
+    document.getElementById('resultPanel').classList.remove('show');
+    renderPhase2();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function startOver() {
+    // if (!confirm('Reset everything — ratings and schedule — and start over?')) return;
+    ratings = freshRatings();
+    schedule = [];
+    checked = false;
+    activeScheduleTaskId = null;
+    draft = { assignee: null, day: null, slot: null };
+    goBackToPhase1();
+  }
+
+  renderPhase1();
+</script>
+</body>
+</html>
