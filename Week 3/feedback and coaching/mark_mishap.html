@@ -100,10 +100,10 @@ svg {
   width: 30px;
   margin: 5px;
 }
-
 svg:hover {
   fill: var(--teal);
 }
+
 .topBarDesktop {
   display: flex;
   /* From https://css.glass */
@@ -223,7 +223,7 @@ svg:hover {
 }
 
 /*email Alert*/
-.alertAppear { 
+.emailAppear { 
   opacity: 1; 
   position: relative;
   left: 20px;
@@ -232,7 +232,7 @@ svg:hover {
   z-index: 999;
 }
 
-.desktopAlert {
+.emailAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -254,6 +254,17 @@ svg:hover {
 .workArea1 {
   color: white;
   font-size: 4rem;
+}
+
+.text-entry-containment {
+  width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-entry-box {
+  margin: 8px;
 }
 /*Import from mail widget*/
 
@@ -334,6 +345,7 @@ svg:hover {
 .emailInboxThread {
   display: flex;
 }
+
 /* =====================
     INBOX LIST
 ===================== */
@@ -343,6 +355,7 @@ svg:hover {
   border-right: 1px solid var(--border-subtle);
   overflow-y: auto;
   background: var(--bg-panel);
+  height: auto;
 }
 
 .inbox-toolbar {
@@ -369,7 +382,7 @@ svg:hover {
   padding: 11px 14px;
   border-bottom: 1px solid var(--border-subtle);
   cursor: pointer;
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .email-row:first-of-type {
@@ -488,6 +501,16 @@ svg:hover {
   border: 1px solid var(--border-subtle);
 }
 
+.btn:focus {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--AIMblue);
+    outline-offset: 2px;
+}
+
 .tag-private {
   background: var(--bg-private-tag);
   color: var(--text-private);
@@ -517,9 +540,8 @@ svg:hover {
     FIRST THREAD HIDDEN
 ===================== */
 #emailRow1 {
-  display: block;
+  display: none;
 }
-
 /* =====================
     MESSAGE CARDS
 ===================== */
@@ -642,6 +664,7 @@ svg:hover {
   color: var(--text-muted);
 }
 
+
 /* =====================
     COMPOSE BAR
 ===================== */
@@ -662,6 +685,7 @@ svg:hover {
   border-radius: var(--radius-md);
   color: var(--text-primary);
   outline: none;
+  min-height: 300px;
 }
 
 .compose-input:focus {
@@ -682,10 +706,15 @@ svg:hover {
   opacity: 0.85;
 }
 
+.sent {
+  color: grey;
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+}
+
 .messageHidden {
   display: none;
 }
-
 .messageRevealed {
 /* From https://css.glass */
 background: rgba(255, 255, 255, 0.85);
@@ -704,7 +733,6 @@ display: block;
   justify-content: space-between;
   border-bottom: solid 1px var(--border-subtle);
 }
-
 .keyPoints {
   margin: 15px;
   padding: 10px;
@@ -714,22 +742,21 @@ display: block;
   width: 120px;
   margin: 20px;
 }
-
 .description {
   flex: 2;
   margin: 10px;
   padding: 10px;
-}
 
+}
 .description > p{
   margin: 5px;
 }
 
-#thread2, #thread3, #thread4 {
+#thread2, #thread3, #thread4, #thread5, #thread6 {
     display: none;
 }
 
-#threadBody2, #threadBody3, #threadBody4 {
+#threadBody2, #threadBody3, #threadBody4 , #thread5, #thread6 {
     display: none;
 }
 
@@ -745,31 +772,9 @@ ul, ol {
   height: 50px;
 }
 
-.learner {
-    border: solid grey 0px;
-}
-
-.learnerOption {
-    border: solid 1px var(--border-medium);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 5px;
-    cursor: pointer;
-    transition: 300ms ease;
-    background-color: var(--bg-selected-row);
-    color: var(--text-muted);
-}
-.learnerOption:hover {
-    background: white;
-    margin-left: 7px;
-    color: black;
-}
-
-
 /*Pulse button animation */
 .pulse-btn {
-  background-color: var(--navy);
-  color: white;
+
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -801,6 +806,34 @@ textarea {
 font-family: 'Inter', sans-serif;
 }
 
+
+#replyBody {
+  display: none;
+}
+#learnerReply {
+  width:max-content;
+  height: 50px;
+}
+
+.learner {
+    border: solid grey 0px;
+}
+
+.learnerOption {
+    border: solid 1px var(--border-medium);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    transition: 300ms ease;
+    background-color: var(--bg-selected-row);
+    color: var(--text-muted);
+}
+.learnerOption:hover {
+    background: white;
+    margin-left: 7px;
+    color: black;
+}
 .workArea3 {
 font-size: 14px;
 display: flex;
@@ -1353,6 +1386,14 @@ padding: 20px;
     text-align: right; 
   }
 
+    .no-calls {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
   .call-dir { font-size: 13px; }
   .call-dir.incoming { color: #3B6D11; }
   .call-dir.outgoing { color: #185FA5; }
@@ -1582,7 +1623,9 @@ audio {
   height: 90%;
   flex-direction: column;
 }
-
+.chat-header-desc {
+  text-wrap: wrap;
+}
 .inbox-list {
   width: auto;
    max-height: 200px;
@@ -1591,12 +1634,7 @@ audio {
   width: auto;
   flex-direction: row;
 }
-.chat-header-desc {
-  text-wrap: wrap;
-}
-.thread-body {
-  overflow-x: hidden;
-}
+
 .emailInboxThread { 
   flex-direction: column;
 }
@@ -1676,9 +1714,6 @@ audio {
 }
 
 }
-
-/*Controls for message responses*/
-
 </style>
 <body>
 <div class="workspace">
@@ -1686,8 +1721,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">16:04</div>
-            <div class="lock-date" id="lockDate">Thursday</div>
+            <div class="lock-time" id="lockTime">11:55</div>
+            <div class="lock-date" id="lockDate">Wednesday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1697,31 +1732,25 @@ audio {
         </div>
         <div class="desktop">
             <div class="topBarDesktop">
-              <a class="topBarIcon home" onclick="openApps(1)">
+              <a class="topBarIcon home" onclick="openApps(1)" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M496 512H368a16 16 0 0 1-16-16V368a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v128a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V311c1.78-1.21 3.85-1.89 5.47-3.35L288 115l218.74 192.9c1.54 1.38 3.56 2 5.26 3.2V496a16 16 0 0 1-16 16z" class="fa-secondary"/><path d="M527.92 283.88L298.6 81.61a16 16 0 0 0-21.17 0L48.11 283.89a16 16 0 0 1-22.59-1.21L4.1 258.89a16 16 0 0 1 1.21-22.59l256-226a39.85 39.85 0 0 1 53.45 0L416 99.67V48a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v136.43l58.69 51.83a16 16 0 0 1 1.22 22.59l-21.4 23.82a16 16 0 0 1-22.59 1.21z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon mail" onclick="openApps(2)">
+              <a class="topBarIcon mail" onclick="openApps(2)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
               </a>
-              <a class="topBarIcon teams" onclick="openApps(3)">
+              <a class="topBarIcon teams" onclick="openApps(3)" tabindex=0>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()">
-              <div class="desktopAlert">
+            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
+              <div class="emailAlert" tabindex=0>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
                 <p>New Email</p>
-              
+              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
               </div>
             </div>
-
-<!--Work area 1 -->
-<div class="workArea1" id="work1">
-  <p></p>
-</div>
-
-<!--Work area 2 Email-->
-<!--Work area 2 Email-->
+            <div class="workArea1" id="work1">
+            </div>
 <div class="workArea2" id="work2">
 <div class="mail-app">
 
@@ -1733,7 +1762,9 @@ audio {
       <!-- <span class="sidebar-badge">1</span> -->
     </div>
     <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
-    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+<div class="sidebar-item" onclick="openCompose()" tabindex="0">
+  <span class="sidebar-icon pulse-btn" id="drafts" >&#9998;</span> Drafts
+</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
   </nav>
@@ -1742,51 +1773,32 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">No new messages</span>
+      <span class="inbox-toolbar-count">1 message</span>
     </div>
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
+         <span class="unread-dot"></span>
+        <span class="email-sender">SLT</span>
+        <span class="email-time">11:23 am</span>
+      </div>
+      <div class="email-subject">
+     Policy updates
+      </div>
+      <div class="email-preview">Hello managers. We wanted to let you all...</div>
+    </div>
+
+      <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">1:15 pm</span>
+        <span class="email-time">Friday</span>
       </div>
       <div class="email-subject">
       Second week check-in
       </div>
-      <div class="email-preview">Hey <span class="username">New Leader</span>.I just wanted to ...</div>
-    </div>
-  <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
-      <div class="email-row-top">
-        <span class="email-sender">Taylor M</span>
-        <span class="email-time">Monday</span>
-      </div>
-      <div class="email-subject">
-      Deliverables this week
-      </div>
-      <div class="email-preview">Dear Team, There are several high-priority deliverables that ha...</div>
+      <div class="email-preview">Hey <span class="username">New Leader</span>. Just wanted to check...</div>
     </div>
 
-    <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
-      <div class="email-row-top">
-        <span class="email-sender">Susan H</span>
-        <span class="email-time">Monday</span>
-      </div>
-      <div class="email-subject">Team birthdays
-      </div>
-      <div class="email-preview">Hi all, It’s time to celebrate our colleagues with birt...</div>
-    </div>
-
-    <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
-      <div class="email-row-top">
-        <span class="email-sender">Noah L</span>
-        <span class="email-time">Monday</span>
-      </div>
-      <div class="email-subject">
-    Organisation growth
-      </div>
-      <div class="email-preview">Dear Team, Over the past several months, our organisation has ex...</div>
-    </div>
-
-      <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1797,7 +1809,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+      <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1808,7 +1820,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">Last week</span>
@@ -1820,7 +1832,7 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
+    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">Last week</span>
@@ -1832,7 +1844,7 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow9"  onclick="swapEmails(9)" tabindex="0">
+    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">Last week</span>
@@ -1844,7 +1856,7 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow10"  onclick="swapEmails(10)" tabindex="0">
+    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">Last week</span>
@@ -1856,7 +1868,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow11" onclick="swapEmails(11)" tabindex="0">
+    <div class="email-row" id="emailRow9" onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Last week</span>
@@ -1865,7 +1877,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow12" onclick="swapEmails(12)" tabindex="0">
+    <div class="email-row" id="emailRow10" onclick="swapEmails(10)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Last week</span>
@@ -1878,11 +1890,11 @@ audio {
   <!-- THREAD PANE -->
   <div class="thread-pane">
      <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">Second week check-in</div>
+      <div class="thread-subject">Policy updates</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <!-- <button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
+          <!-- <button class="btn pulse-btn" id="replyBtn" onclick="reply()">&#8617; Reply</button>
           <button class="btn">&#8943;</button> -->
         </div>
       </div>
@@ -1903,11 +1915,41 @@ audio {
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyEmailWeek2" maxlength="50000"></textarea>
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan"  maxlength="50000"></textarea>
     </div>
 </div>
 </div>
 </div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-navy" id="AK_icon">AK</div>
+          <div class="message-from">
+            <div class="message-name">Senior Leadership<span class="message-name-to"> to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">11:23 am</span>
+        </div>
+        <div class="message-body">
+          <p>Email explaining mark's crimes. Mark has created issues in the project etc etc. requests for learner to speak with mark.</p>
+          <p>Kind regards,</p>
+          <p>Alfred K</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">Second week check-in</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+          
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -1920,18 +1962,9 @@ audio {
         </div>
         <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
-          <p>I just wanted to check in and see how you are doing at the end of your second week. We had some tough days there, but the work was submitted and we can now reflect on how we handled the challenges presented to us.</p>
+          <p>Just wanted to check in and make sure you second week has gone well. I know we had a couple of difficult days, but you got the team through it. </p>
           <br>
-          <p>Now you are in a leadership role, understanding how you respond to stress can be really helpful in improving your stress responses and remaining professional when things go awry. Answer the following questions and complete the reflection quiz attached to this email.</p>
-          <br>
-          <ul>
-            <li>Think back to some of the stressful moments of the week. How do you typically handle stress and pressure?</li>
-          <li>Do you have any experience being managed by someone who handled stress poorly?</li>
-          <li>Think back to a frustrating experience. How could you reframe this to a positive viewpoint?</li>
-          </ul>
-          <br>
-          <p><a href="https://rhaimcham.github.io/New-Leader-Pathways/Week%202/email%20from%20susan/Stress_response_assessment.html" target="_blank">How do you handle stress?</a></p>
- 
+          <p>Reflecting on the stresses of the week, think about how you might improve or evolve the team culture. What about your team dynamic works well? What are elements you've seen or experienced in other teams you would want to introduce here? How would you account for the variety of personality types and communication styles?</p>
           <br>
           <p>Enjoy your weekend and see you on Monday,</p>
           <p>Susan</p>
@@ -1941,130 +1974,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread2" class="thread-header" tabindex="0">
-      <div class="thread-subject">Deliverables this week</div>
-      <div class="thread-meta">
-        <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-        </div>
-      </div>
-    </div>
-
-    <div id="threadBody2" class="thread-body" tabindex="0">
-      <div id="replyBody">
- <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
-          <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
-            <div class="message-address">sh@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:30 pm</span>
-        </div>
-        <div class="message-body">
-        <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyTwo" maxlength="50000"></textarea>
-    </div>
-</div>
-</div>
-</div>
-          <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-teal">TM</div>
-          <div class="message-from">
-            <div class="message-name">Taylor M <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address">newleader@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">10:35 am</span>
-        </div>
-        <div class="message-body">
-          <p>Dear Team,</p>
-          <br>
-          <p>There are several high-priority deliverables that have been assigned this week. These tasks are critical and must be completed by close of business on Friday.</p>
-          <p>I know this represents a significant increase in workload and may place additional pressure on our teams. As leaders, your role in planning, delegating, and supporting your staff will be essential for ensuring we meet our commitments.</p>
-          <p>Please review your team’s capacity, redistribute work where appropriate, and raise any significant concerns to me or Susan as soon as possible. While I encourage everyone to maximise productivity during normal business hours, there may be occasions this week where additional effort is required to ensure our commitments are delivered on time.</p>
-          <br>
-          <p>Thank you for your leadership, flexibility, and continued support. I appreciate the professionalism you and your teams bring to these challenging periods, and I am confident we will achieve success by working together.</p>
-          <br>
-          <p>Thanks,</p>
-          <br>
-          <p>Taylor</p>
-        </div>
-      </div>
-</div>
-
      <div id="thread3" class="thread-header" tabindex="0">
-      <div class="thread-subject">Team birthdays</div>
-      <div class="thread-meta">
-        <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-        </div>
-      </div>
-    </div>
-
-    <div id="threadBody3" class="thread-body" tabindex="0">
-          <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
-          <div class="message-from">
-            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address">newleader@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">09:15 am</span>
-        </div>
-        <div class="message-body">
-          <p>Hi all,</p>
-          <p>It’s time to celebrate our colleagues with birthdays this month!</p>
-          <p>Please join us in wishing Kyle, Audrey, and Kannika a very happy birthday with cake in the break room this Thursday. An electronic birthday card is attached. If you would like to add a personal message, please take a moment to do so before then.</p>
-            <br>
-            <p>Kind regards,</p>
-          <p>Susan</p>
-          <br>
-          <p>Sent from my iPhone</p>
-        </div>
-      </div>
-</div>
-
-     <div id="thread4" class="thread-header" tabindex="0">
-      <div class="thread-subject"> Organisation growth</div>
-      <div class="thread-meta">
-        <span class="tag tag-inbox">Inbox</span>
-        <div class="thread-actions">
-        </div>
-      </div>
-    </div>
-
-    <div id="threadBody4" class="thread-body" tabindex="0">
-          <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-navy">NL</div>
-          <div class="message-from">
-            <div class="message-name">Noah L<span class="message-name-to">to <span class="username">New Leader</span></span></div>
-            <div class="message-address">newleader@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">8:55 am</span>
-        </div>
-        <div class="message-body">
-          <p>Dear Team,<p>
-            <p>Over the past several months, our organisation has experienced significant change. As with any period of transition, adapting to new processes and evolving priorities has required flexibility, resilience and a dedication to embracing new opportunities.</p>
-            <p>I want to take the time to thank every one of you for the professionalism you have demonstrated throughout this journey. Change is rarely linear, yet time and time again I have seen teams collaborate, support each other, and remain focused on delivering excellent outcomes for our customers and stakeholders.
-          </p>
-          <p>I am incredibly proud of how our people have responded. Your adaptability, dedication, and positivity have helped position us for future success. While there is still important work ahead, I am confident that by continuing to work together, we will build on the progress we have already made and continue to achieve great things.</p>
-          <br>
-          <p>Thank you for your ongoing contribution and for everything everyone does day to day to make our organisation stronger.</p>
-        <br> <br>
-        <p>Cheers,</p>
-         <br> <br>
-         <p>Noah.</p>
-        </div>
-      </div>
-</div>
-     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2073,26 +1983,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
-      <div id="replyBody">
- <div class="message-card">
-        <div class="message-header">
-          <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
-          <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
-            <div class="message-address">sh@organisation.com</div>
-          </div>
-          <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">1:50 pm</span>
-        </div>
-        <div class="message-body">
-        <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan"  maxlength="50000"></textarea>
-    </div>
-</div>
-</div>
-</div>
+    <div id="threadBody3" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -2128,7 +2019,7 @@ audio {
         </div>
       </div>
 </div>
-     <div id="thread6" class="thread-header" tabindex="0">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2137,7 +2028,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
+    <div id="threadBody4" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -2187,7 +2078,8 @@ audio {
       </div>
     </div>
 
-     <div id="thread7" class="thread-header" tabindex="0">
+
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2196,7 +2088,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -2238,7 +2130,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread8" class="thread-header" tabindex="0">
+     <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2247,7 +2139,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -2290,7 +2182,7 @@ audio {
 
     </div>
 
-    <div id="thread9" class="thread-header" tabindex="0">
+    <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2299,7 +2191,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody9" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2340,8 +2232,7 @@ audio {
       </div>
 
     </div>
-
-   <div id="thread10" class="thread-header" tabindex="0">
+   <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2350,7 +2241,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody10" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -2387,7 +2278,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread11" class="thread-header" tabindex="0">
+    <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2396,7 +2287,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody11" class="thread-body" tabindex="0">
+    <div id="threadBody9" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2432,7 +2323,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread12" class="thread-header" tabindex="0">
+    <div id="thread10" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2441,7 +2332,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody12" class="thread-body" tabindex="0">
+    <div id="threadBody10" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2476,6 +2367,29 @@ audio {
   </div><!-- end thread-pane -->
 </div>
 </div><!-- end mail-app -->
+<div id="composeNewEmail" class="messageHidden" style="position:absolute; top:80px; left:150px; z-index:1000;">
+  <div class="message-card" style="width:550px; background:white;">
+    <div class="message-header">
+      <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+      <div class="message-from">
+        <div class="message-name">New message</div>
+      </div>
+      <button class="btn" onclick="closeCompose()" style="margin-left:auto;">&#10005;</button>
+    </div>
+    <div class="message-body" style="padding:0;">
+      <div style="display:flex; flex-direction:column; gap:0;">
+        <input type="text" id="composeTo" placeholder="To: (e.g. mj@organisation.com.au, js@organisation.com.au)"
+          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
+        <input type="text" id="composeSubject" placeholder="Subject"
+          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
+        <textarea id="composeBody" class="compose-input" placeholder="Write your message..." style="border:none; border-radius:0;"></textarea>
+      </div>
+    </div>
+    <div class="compose-bar" style="justify-content:flex-end; border-top:1px solid var(--border-subtle);">
+      <button class="compose-send" id="composeSendBtn" onclick="sendNewEmail()">Send</button>
+    </div>
+  </div>
+</div>
 
 <div id="MJ_info_card" class="messageHidden"  tabindex="0">
   <div class="topBar">
@@ -2671,7 +2585,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 10; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2686,7 +2600,7 @@ function swapEmails(threadNumber) {
 
 // Initialize - show first thread by default
 document.addEventListener('DOMContentLoaded', function() {
-    swapEmails(1);
+    swapEmails(2);
 });
 
 //timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
@@ -2698,11 +2612,11 @@ function emailArrives() {
 
 function reply() {
   document.getElementById("replyBody").style.display = 'block';
-   document.getElementById("replyBtn").classList.remove("pulse-btn");
+  document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
-const STORAGE_KEY_REPLY_2 = 'learnerReplyEmailWeek2';
-const learnerReply = document.getElementById('learnerReplyEmailWeek2');  // ✅ Matches your input id
+const STORAGE_KEY_NEW_EMAIL = 'setExpectationsEmail';
+const learnerReply = document.getElementById('learnerReplyTwoWeek2');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
 
@@ -2711,14 +2625,62 @@ const saveBtn = document.getElementById('sendBtn');
   if (savedRUN) learnerReply.value = savedRUN;
 
 saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+    localStorage.setItem(STORAGE_KEY_NEW_EMAIL, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
+
+function openCompose() {
+  // Switch to mail work area first
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`work${i}`).style.display = 'none';
+  }
+  document.getElementById('work2').style.display = 'flex';
+
+  // Preload any existing draft from localStorage (single key now)
+  const draft = JSON.parse(localStorage.getItem('draftEmail') || '{}');
+
+  document.getElementById('composeTo').value = draft.to || '';
+  document.getElementById('composeSubject').value = draft.subject || '';
+  document.getElementById('composeBody').value = draft.body || '';
+
+  document.getElementById('composeSendBtn').classList.remove('sent');
+  document.getElementById('composeSendBtn').textContent = 'Send';
+  document.getElementById('composeSendBtn').disabled = false;
+
+  document.getElementById('composeNewEmail').classList.add('messageRevealed');
+
+  document.getElementById('drafts').classList.remove('pulse-btn');
+}
+
+function closeCompose() {
+  // Autosave whatever's currently typed as a single object
+  const draft = {
+    to: document.getElementById('composeTo').value.trim(),
+    subject: document.getElementById('composeSubject').value.trim(),
+    body: document.getElementById('composeBody').value.trim()
+  };
+  localStorage.setItem('draftEmail', JSON.stringify(draft));
+
+  document.getElementById('composeNewEmail').classList.remove('messageRevealed');
+}
+
+function sendNewEmail() {
+  const to = document.getElementById('composeTo').value.trim();
+  const subject = document.getElementById('composeSubject').value.trim();
+  const body = document.getElementById('composeBody').value.trim();
+
+  document.getElementById('composeSendBtn').textContent = 'Sent';
+  document.getElementById('composeSendBtn').classList.add('sent');
+  document.getElementById('composeSendBtn').disabled = true;
+
+  // Clear the draft now that it's been sent
+  // localStorage.removeItem('draftEmail');
+
+  setTimeout(closeCompose, 900);
+}
 </script>
 </div>
 </div>
-
-
 
 <!--Work area 3 Teams-->
 <div class="workArea3" id="work3">                
@@ -2747,11 +2709,11 @@ saveBtn.addEventListener('click', () => {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-    <div class="dm-item" onclick="loadDM('mark', this)">
+    <div class="dm-item active" onclick="loadDM('mark', this)">
       <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
       <span class="dm-name">Mark J</span>
     </div>
-        <div class="dm-item active" onclick="loadDM('jordan', this)">
+        <div class="dm-item" onclick="loadDM('jordan', this)">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
     </div>
@@ -2807,12 +2769,12 @@ saveBtn.addEventListener('click', () => {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Calls</span>
     </div>
-    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)">
+    <div class="dm-item active" id="tab-calls" onclick="switchPhoneTab('calls', this)" tabindex="0">
       <div class="dm-avatar av-blue">
         <svg class="phoneSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 240a72 72 0 1 0 72 72 72 72 0 0 0-72-72zm250.18-117C436.76 65 347.38 32 256 32S75.24 65 5.82 123A16.45 16.45 0 0 0 0 135.64V192a16 16 0 0 0 16 16h70.11a16 16 0 0 0 14.31-8.85L128 128c39.9-17.28 83.2-24 128-24 44.77 0 88.07 6.72 128 24l27.58 71.15a16 16 0 0 0 14.31 8.85H496a16 16 0 0 0 16-16v-56.36a16.45 16.45 0 0 0-5.82-12.64z" class="fa-secondary"/><path d="M475.78 376.62L370.43 192.25A64 64 0 0 0 314.86 160H197.14a64 64 0 0 0-55.57 32.25L36.22 376.62A32 32 0 0 0 32 392.5V448a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32v-55.5a32 32 0 0 0-4.22-15.88zM256 384a72 72 0 1 1 72-72 72 72 0 0 1-72 72z" class="fa-primary"/></svg></div>
       <span class="dm-name">Recent calls</span>
     </div>
-    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)">
+    <div class="dm-item" id="tab-contacts" onclick="switchPhoneTab('contacts', this)" tabindex="0">
       <div class="dm-avatar av-teal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M96 224a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64zm480 32h-64a63.81 63.81 0 0 0-45.1 18.6A146.27 146.27 0 0 1 542 384h66a32 32 0 0 0 32-32v-32a64.06 64.06 0 0 0-64-64zm-512 0a64.06 64.06 0 0 0-64 64v32a32 32 0 0 0 32 32h65.9a146.64 146.64 0 0 1 75.2-109.4A63.81 63.81 0 0 0 128 256zm480-32a64 64 0 1 0-64-64 64.06 64.06 0 0 0 64 64z" class="fa-secondary"/><path d="M396.8 288h-8.3a157.53 157.53 0 0 1-68.5 16c-24.6 0-47.6-6-68.5-16h-8.3A115.23 115.23 0 0 0 128 403.2V432a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48v-28.8A115.23 115.23 0 0 0 396.8 288zM320 256a112 112 0 1 0-112-112 111.94 111.94 0 0 0 112 112z" class="fa-primary"/></svg></div>
       <span class="dm-name">Contacts</span>
@@ -2831,54 +2793,9 @@ saveBtn.addEventListener('click', () => {
         </div>
       </div>
       <div class="pane-body">
- 
-        <div class="call-item">
-          <div class="call-avatar av-coral">AE</div>
-          <div class="call-info">
-            <div class="call-name missed">Audrey E</div>
-            <div class="call-sub">
-             
-              <span>Missed &middot; 11:42 AM</span>
-              <audio controls id="audreyVM">
-                <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Audrey_call_PH.mp3">
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          </div>
-          <div class="call-time">Today</div>
-          <button class="call-action" title="Call back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.92-27.96zm-109.74 254.9l-49.6-60.6a24 24 0 0 0-28-6.9l-112 48a24 24 0 0 0-13.9 27.5l24 104a24 24 0 0 0 23.4 18.6 461.2 461.2 0 0 0 269.7-86.9l-80-61.8c-10.9 6.5-22.1 12.69-33.6 18.1z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg>
-          </button>
+        <div class="no-calls">
+            <p>No calls to display</p>
         </div>
- 
-        <div class="call-item">
-          <div class="call-avatar av-blue">MJ</div>
-          <div class="call-info">
-            <div class="call-name missed">Mark J</div>
-            <div class="call-sub">
-              <span>Missed &middot; 11:05 AM</span>
-             <audio controls>
-            <source src="https://s3.ap-southeast-2.amazonaws.com/learn.aim.com.au/Guided+Pathways/New+Leader/Audio+files/Mark_call_PH.mp3" type="audio/mp3">
-          Your browser does not support the audio element.
-          </audio>
-            </div>
-          </div>
-          <div class="call-time">Today</div>
-          <button class="call-action" title="Call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M377.91 126.51l48-112a24.16 24.16 0 0 1 27.5-13.9l104 24A24 24 0 0 1 576 48a462 462 0 0 1-100.17 288l-76-58.76a367.76 367.76 0 0 0 45.6-73.17l-60.6-49.6a23.94 23.94 0 0 1-6.9-28l48-112A24.16 24.16 0 0 1 389.41.61l104 24A24 24 0 0 1 512 48z" class="fa-secondary"/><path d="M3.37 31.41L23 6.21a16.06 16.06 0 0 1 22.5-2.8l588.3 454.7a15.85 15.85 0 0 1 2.9 22.3l-19.6 25.3a16.06 16.06 0 0 1-22.5 2.8L6.17 53.81a15.93 15.93 0 0 1-2.8-22.4z" class="fa-primary"/></svg></button>
-        </div>
-
-        <div class="call-item">
-          <div class="call-avatar av-teal">SH</div>
-          <div class="call-info">
-            <div class="call-name">Susan H</div>
-            <div class="call-sub">
-              <span>Incoming &middot; 2:00 PM &middot; 8 min</span>
-            </div>
-          </div>
-          <div class="call-time">Yesterday</div>
-          <button class="call-action" title="Call"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M144 16v64h64a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16h-64v64a16 16 0 0 1-16 16H96a16 16 0 0 1-16-16v-64H16a16 16 0 0 1-16-16V96a16 16 0 0 1 16-16h64V16A16 16 0 0 1 96 0h32a16 16 0 0 1 16 16z" class="fa-secondary"/><path d="M512 48c0 256.5-207.9 464-464 464a24 24 0 0 1-23.4-18.6l-24-104a24.29 24.29 0 0 1 14-27.6l112-48a24 24 0 0 1 28 6.9l49.6 60.6a370.61 370.61 0 0 0 177.2-177.2l-60.6-49.6a23.94 23.94 0 0 1-6.9-28l48-112A24.16 24.16 0 0 1 389.41.61l104 24A24 24 0 0 1 512 48z" class="fa-primary"/></svg></button>
-        </div>
-
       </div><!-- /pane-body -->
     </div><!-- /calls-pane -->
  
@@ -2896,7 +2813,7 @@ saveBtn.addEventListener('click', () => {
       <div class="pane-body" id="contacts-list">
  
         <div class="contact-group-label">A</div>
-        <div class="contact-item" data-name="audrey e">
+        <div class="contact-item" data-name="audrey e" tabindex="0">
           <div class="contact-avatar av-coral">AE<span class="status-dot status-busy"></span></div>
           <div class="contact-info">
             <div class="contact-name">Audrey E</div>
@@ -2904,7 +2821,7 @@ saveBtn.addEventListener('click', () => {
         </div>
  
         <div class="contact-group-label">J</div>
-        <div class="contact-item" data-name="jordan s">
+        <div class="contact-item" data-name="jordan s" tabindex="0">
           <div class="contact-avatar av-teal">JS<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Jordan S</div>
@@ -2912,7 +2829,7 @@ saveBtn.addEventListener('click', () => {
         </div>
  
         <div class="contact-group-label">M</div>
-        <div class="contact-item" data-name="mark j">
+        <div class="contact-item" data-name="mark j" tabindex="0">
           <div class="contact-avatar av-blue">MJ<span class="status-dot status-away"></span></div>
           <div class="contact-info">
             <div class="contact-name">Mark J</div>
@@ -2920,7 +2837,7 @@ saveBtn.addEventListener('click', () => {
         </div>
  
         <div class="contact-group-label">P</div>
-        <div class="contact-item" data-name="priya d">
+        <div class="contact-item" data-name="priya d" tabindex="0">
           <div class="contact-avatar av-purple">PD<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Priya D</div>
@@ -2928,7 +2845,7 @@ saveBtn.addEventListener('click', () => {
         </div>
  
         <div class="contact-group-label">S</div>
-                <div class="contact-item" data-name="susan h">
+                <div class="contact-item" data-name="susan h" tabindex="0">
           <div class="contact-avatar av-teal">SH<span class="status-dot status-online"></span></div>
           <div class="contact-info">
             <div class="contact-name">Susan H</div>
@@ -3009,9 +2926,12 @@ saveBtn.addEventListener('click', () => {
         <div class="chat-options learnerOption">
           <div onclick="mark1()" tabindex="0">
             <p>Hi Mark,
-I’ve just received some negative feedback about your behaviour during the product launch and wanted to address them with you.
-This situation reflects poorly on both me and the rest of the team, so I’d like you to explain yourself before I decide what to do next. Please respond today.
-Thanks,
+              <br><br>
+              I’ve just received some negative feedback about your behaviour during the product launch and wanted to address them with you.
+              <br><br>
+              This situation reflects poorly on both me and the rest of the team, so I’d like you to explain yourself before I decide what to do next. Please respond today.
+              <br><br>
+              Thanks,
                 </p>
             </div>
             </div>
@@ -3019,9 +2939,12 @@ Thanks,
             <div class="chat-options learnerOption">
           <div onclick="mark2()" tabindex="0">
             <p>Hi Mark,
-I’ve just received some feedback regarding the product launch, and before I respond I’d like to understand the situation from your perspective.
-Can you walk me through your role on the project? If there are things you think could have been handled differently, I’d appreciate your thoughts. This will help me understand the full picture before we discuss next steps.
-Thanks, 
+              <br><br>
+              I’ve just received some feedback regarding the product launch, and before I respond I’d like to understand the situation from your perspective.
+              <br><br>
+              Can you walk me through your role on the project? If there are things you think could have been handled differently, I’d appreciate your thoughts. This will help me understand the full picture before we discuss next steps.
+              <br><br>
+              Thanks, 
                 </p>
             </div>
             </div>
@@ -3029,9 +2952,12 @@ Thanks,
          <div class="chat-options learnerOption">
           <div onclick="mark3()" tabindex="0">
             <p>Hi Mark,
-I just wanted to check in about the recent launch.
-When you have some time, could we discuss what happened during the project from your perspective? I’d appreciate hearing your thoughts.
-Thanks,
+              <br><br>
+              I just wanted to check in about the recent launch. 
+              <br><br>
+              When you have some time, could we discuss what happened during the project from your perspective? I’d appreciate hearing your thoughts.
+              <br><br>
+              Thanks,
                 </p>
             </div>
             </div>
@@ -3275,10 +3201,13 @@ function mark1() {
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
            <p>Hi Mark,
-I’ve just received some negative feedback about your behaviour during the product launch and wanted to address them with you.
-This situation reflects poorly on both me and the rest of the team, so I’d like you to explain yourself before I decide what to do next. Please respond today.
-Thanks,
-${username}
+            <br><br>
+            I’ve just received some negative feedback about your behaviour during the product launch and wanted to address them with you.
+            <br><br>
+            This situation reflects poorly on both me and the rest of the team, so I’d like you to explain yourself before I decide what to do next. Please respond today.
+            <br><br>
+            Thanks,
+            ${username}
                 </p>
             </div>
       </div>
@@ -3308,11 +3237,16 @@ ${username}
         <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
             ${username},
-        It is not appropriate that you have already found me at fault before even investigating the situation, nor is it professional behaviour to make demands in this manner.
-There were many people involved in the launch, and I am not responsible for any issues that may have arisen once I finished my work on the project. I completed the tasks I was assigned and met the deadlines I was given.
-If other teams had issues, that’s something you should address with them, otherwise I will contact leadership to resolve the issue before it escalates further.
-Kind regards,
-Mark</div>
+            <br><br>
+            It is not appropriate that you have already found me at fault before even investigating the situation, nor is it professional behaviour to make demands in this manner.
+            <br><br>
+            There were many people involved in the launch, and I am not responsible for any issues that may have arisen once I finished my work on the project. I completed the tasks I was assigned and met the deadlines I was given.
+            <br><br>
+            If other teams had issues, that’s something you should address with them, otherwise I will contact leadership to resolve the issue before it escalates further.
+            <br><br>
+            Kind regards,
+            <br><br>
+            Mark</div>
       </div>
       <div class="chat-actions">
         
@@ -3344,7 +3278,6 @@ function mark2() {
         <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
       </div>
       <div class="chat-actions">
-        
       </div>
     </div>
     <div class="chat-group learner">
@@ -3353,9 +3286,12 @@ function mark2() {
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
            <p>Hi Mark,
-I’ve just received some feedback regarding the product launch, and before I respond I’d like to understand the situation from your perspective.
-Can you walk me through your role on the project? If there are things you think could have been handled differently, I’d appreciate your thoughts. This will help me understand the full picture before we discuss next steps.
-Thanks,
+            <br><br>
+            I’ve just received some feedback regarding the product launch, and before I respond I’d like to understand the situation from your perspective.
+            <br><br>
+            Can you walk me through your role on the project? If there are things you think could have been handled differently, I’d appreciate your thoughts. This will help me understand the full picture before we discuss next steps.
+            <br><br>
+            Thanks,
                 </p>
             </div>
       </div>
@@ -3384,12 +3320,18 @@ Thanks,
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hello ${username},
-There were several issues during the launch. Marketing updated some of the specifications at the last minute, but I was not informed that others on the project were not working from the updated document.
-I noticed there were differences in the documentation and recognised that these issues had to be fixed prior to the deadline. I understand that Adrian should have been notified of the change, but given the tight turnaround, completing the project was more important.
-In future, I will confirm any changes made prior to launch with the team lead before acting independently.
-Thanks,
-Mark</div>
+          <p>Hello ${username},
+            <br><br>
+            There were several issues during the launch. Marketing updated some of the specifications at the last minute, but I was not informed that others on the project were not working from the updated document.
+            <br><br>
+            I noticed there were differences in the documentation and recognised that these issues had to be fixed prior to the deadline. I understand that Adrian should have been notified of the change, but given the tight turnaround, completing the project was more important.
+           <br><br>
+            In future, I will confirm any changes made prior to launch with the team lead before acting independently.
+            <br><br>
+            Thanks,
+            <br><br>
+            Mark</p>
+            </div>
       </div>
       <div class="chat-actions">
         
@@ -3429,12 +3371,15 @@ function mark3() {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">${username}</span><span class="chat-time">10:58 AM</span></div>
         <div class="chat-text">
-           <p>
-              Hi Mark,
-I just wanted to check in about the recent launch.
-When you have some time, could we discuss what happened during the project from your perspective? I’d appreciate hearing your thoughts.
-Thanks,
-${username}
+           <p>Hi Mark,
+            <br><br>
+            I just wanted to check in about the recent launch.
+            <br><br>
+            When you have some time, could we discuss what happened during the project from your perspective? I’d appreciate hearing your thoughts.
+            <br><br>
+            Thanks,
+            <br><br>
+            ${username}
                 </p>
             </div>
       </div>
@@ -3463,11 +3408,16 @@ setTimeout(() => {
       <div class="chat-content">
         <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">2:15 PM</span></div>
         <div class="chat-text">
-            Hello [NAME],
-Unfortunately, the launch did not go as planned as we experienced significant disruption while working on the project. Many issues came from other teams changing important documentation quite late in the timeline, and there was a lack of communication in the team.
-I focused on completing my own tasks to my best ability. If everyone had been on the same page, I believe the launch would have been more successful.
-Thanks,
-Mark</div>
+          <p>
+            Hello ${username},
+            <br><br>
+            Unfortunately, the launch did not go as planned as we experienced significant disruption while working on the project. Many issues came from other teams changing important documentation quite late in the timeline, and there was a lack of communication in the team.
+            <br><br>
+            I focused on completing my own tasks to my best ability. If everyone had been on the same page, I believe the launch would have been more successful.
+            <br><br>
+            Thanks,
+            Mark
+            </p></div>
       </div>
       <div class="chat-actions">
         
@@ -3488,7 +3438,7 @@ Mark</div>
 }
 //Audrey 
 // Load default channel on startup
-setChat(dms['jordan']);
+setChat(dms['mark']);
 
 </script>
 </div>
@@ -3496,22 +3446,8 @@ setChat(dms['jordan']);
 </div>
 </div>
 </body>
+
 <script>
-// Live clock
-// function updateClock() {
-//   const now = new Date();
-//   const h = now.getHours().toString().padStart(2, '0');
-//   const m = now.getMinutes().toString().padStart(2, '0');
-//   document.getElementById('lockTime').textContent = h + ':' + m;
-
-//   const days = ['Sunday','Monday', 'Tuesday', 'Wednesday' ,'Thursday',' Friday', 'Saturday'];
-//   const months = ['January','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-//   document.getElementById('lockDate').textContent =
-//     days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
-// }
-// updateClock();
-// setInterval(updateClock, 10000);
-
 // Unlock button
 document.getElementById('unlockBtn').addEventListener('click', function () {
   const overlay = document.getElementById('lockOverlay');
@@ -3536,28 +3472,18 @@ document.addEventListener('DOMContentLoaded', function() {
     openApps(2);
 });
 
-
-//--Alerts control area --//
-
-//Controls appearance of popup email
+//Controls appearance of popup
 function openEmail() {
- document.getElementById("emailAlert").classList.add('alertAppear');
+ document.getElementById("emailAlert").classList.add('emailAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
-function openTeams() {
-  document.getElementById("teamsAlert").classList.add('alertAppear');
-  document.getElementById("teamsAlert").classList.remove("hideMe");
-}
-
 //Ensure pop closes when clicked on or if desktop is clicked
-function closeAlert(alertId = "emailAlert") {
-  const alert = document.getElementById(alertId);
-  alert.classList.remove('alertAppear');
-  alert.classList.add("hideMe");
+function closeEmail() {
+  document.getElementById("emailAlert").classList.remove('emailAppear');
+  document.getElementById("emailAlert").classList.add("hideMe");
 }
 
-//Email alert functionality
 function clickEmailAlert() {
    for (let i = 1; i <= 3; i++) {
         document.getElementById(`work${i}`).style.display = 'none';
@@ -3566,41 +3492,12 @@ function clickEmailAlert() {
     // Show selected work area
     document.getElementById('work2').style.display = 'flex';
     swapEmails(1);
-    closeAlert("emailAlert");
+    closeEmail();
 }
-
-//teams alert functionality for missed calls specifically
-function clickTeamsAlertPhone() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-     // Show phone section instead of chat
-    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
-    setActive(phoneIcon);
-
-    closeAlert("teamsAlert");
-}
-
-function clickTeamsAlertChat() {
-  for (let i = 1; i <= 3; i++) {
-        document.getElementById(`work${i}`).style.display = 'none';
-    }
-    
-    // Show selected work area
-    document.getElementById('work3').style.display = 'flex';
-
-    closeAlert("teamsAlert");
-}
-
 function initiate() {
   openEmail();
+  emailArrives();
 }
-
-
 
 (function () {
   function loadNote(storageKey, displayClass) {
@@ -3630,3 +3527,4 @@ function loadIcon(storageKey, storageKey2, displayID) {
   loadIcon('riseUserName', 'lastInitialToken', 'NL_icon_fill')
 })();
 </script>
+
