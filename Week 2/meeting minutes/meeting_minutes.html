@@ -223,7 +223,7 @@ svg:hover {
 }
 
 /*email Alert*/
-.emailAppear { 
+.alertAppear { 
   opacity: 1; 
   position: relative;
   left: 20px;
@@ -232,8 +232,7 @@ svg:hover {
   z-index: 999;
 }
 
-
-.desktopAlert {
+.teamsAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -248,10 +247,8 @@ svg:hover {
   padding: 15px;
   text-align: center;
   line-height: 2.5;
-  margin-left: 30px;
-  margin-top: -30px;
+  right: 40px;  
 }
-
 
 /*PH for now but will be generic black workspace*/
 
@@ -763,6 +760,55 @@ ul, ol {
 #learnerReply {
   width:max-content;
   height: 50px;
+}
+
+
+/*Pulse button animation */
+.pulse-btn {
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-btn:hover {
+  color: var(--navy);
+}
+
+/*Pulse button animation */
+.pulse-alert {
+  background-color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-alert:hover {
+  color: var(--navy);
+  background-color: var(--lightBlue);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 #12195C70;
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px #12195C00;
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 #12195C00;
+  }
 }
 
 .workArea3 {
@@ -1636,8 +1682,8 @@ audio {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-<div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
-              <div class="desktopAlert">
+<div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()" tabindex="0">
+              <div class="teamsAlert pulse-alert" tabindex="0">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
                 <p>1 new message</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
@@ -3055,7 +3101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //Controls appearance of popup email
 function openEmail() {
- document.getElementById("emailAlert").classList.add('alertAppear');
+ document.getElementById("emailAlert").classList.add('emailAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
