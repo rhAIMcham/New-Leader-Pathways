@@ -2676,17 +2676,26 @@ function reply() {
    document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
-const STORAGE_KEY_REPLY_2 = 'learnerReplyEmailWeek2';
+const defaultValue = `Reflect on some of the stressful moments this week. How do you typically handle stress and pressure?
+
+Do you have any experience being managed by someone who handled stress poorly? What behaviours would you avoid on your own leadership journey?
+
+Think back to a frustrating experience. How could you reframe this from a different perspective? Were there other external factors impacted your response?`;
+
+const STORAGE_KEY_REPLY_Week_2 = 'learnerReplyEmailWeek2';
 const learnerReply = document.getElementById('learnerReplyEmailWeek2');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
+if (localStorage.getItem(STORAGE_KEY_REPLY_Week_2) === null) 
+ localStorage.setItem(STORAGE_KEY_REPLY_Week_2, defaultValue);
+
 
 // Load existing note (if any)
-  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
+  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_Week_2);
   if (savedRUN) learnerReply.value = savedRUN;
 
 saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+    localStorage.setItem(STORAGE_KEY_REPLY_Week_2, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
 </script>

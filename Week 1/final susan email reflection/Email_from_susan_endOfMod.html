@@ -2436,10 +2436,25 @@ function reply() {
    document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
+const defaultValue = `Using your completed DISC profile, answer the questions below:
+
+How confident did you feel leading the team?
+
+How effectively did you communicate with others, and how did your team members respond to your approach?
+
+How was stability and trust built within the team during this period? Where do you think the team might need more reassurance?
+
+Where might there need to be more structure or attention to detail?
+
+Did you notice your natural leadership style appear when completing the activities? How might you adapt your approach to meet the different needs of your team?`;
+
+
 const STORAGE_KEY_REPLY_2 = 'learnerReplyTwo';
 const learnerReply = document.getElementById('learnerReplyTwo');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
 
+if (localStorage.getItem(STORAGE_KEY_REPLY_2) === null) 
+ localStorage.setItem(STORAGE_KEY_REPLY_2, defaultValue);
 
 // Load existing note (if any)
   const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
@@ -2449,6 +2464,8 @@ saveBtn.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
+
+
 </script>
 </div>
 </div>

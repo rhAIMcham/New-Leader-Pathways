@@ -2362,8 +2362,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
 function emailArrives() {
     document.getElementById('emailRow1').style.display = 'block';
-        // document.getElementById('emailRow1').classList.add("selected");
-        // document.getElementById('emailRow2').classList.remove("selected");
 }
 
 function reply() {
@@ -2371,9 +2369,27 @@ function reply() {
   document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
+const defaultValue = `About you:
+
+What qualities do you want to incorporate into your own leadership style?
+What excites you about this role, and what concerns you?
+
+Your team:
+
+How might your colleagues feel about your role as a new leader?
+How will you build trust with each team member?
+
+Potential challenges:
+
+What support might you need from your manager during this transition?
+After reading about your team in the previous lesson, are there any problems that stand out?`;
+
 const STORAGE_KEY_REPLY_1 = 'learnerReplyOne';
 const learnerReply = document.getElementById('learnerReplyOne');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
+
+if (localStorage.getItem(STORAGE_KEY_REPLY_1) === null) 
+ localStorage.setItem(STORAGE_KEY_REPLY_1, defaultValue);
 
 // Load existing note (if any)
   const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_1);
