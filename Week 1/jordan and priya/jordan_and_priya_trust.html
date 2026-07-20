@@ -2745,7 +2745,7 @@ function reply() {
       <div class="chat-answers-box">
         
         <div class="chat-options learnerOption">
-          <div onclick="jordan1()">
+          <div onclick="jordan1(this)" id="jordan1">
             <p>
                Hi Jordan, <br>
                Thanks for reaching out. 
@@ -2760,7 +2760,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="jordan2()">
+          <div onclick="jordan2(this)">
             <p>Hi Jordan, 
               <br>Thank you for raising this. 
               <br><br>
@@ -2774,7 +2774,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="jordan3()">
+          <div onclick="jordan3(this)">
             <p>Hello Jordan, 
               <br><br>Thank you for your message. 
               <br><br>
@@ -2834,7 +2834,7 @@ function reply() {
              </div>
           <div class="chat-answers-box">
         <div class="chat-options learnerOption">
-          <div onclick="priya1()">
+          <div onclick="priya1(this)">
             <p>Thanks for the note. 
                <br><br>
                That sounds fine for now – no need to shake things up too much at this stage. I’m still getting across everything, so I’ll keep tasks as they are and step in when needed. 
@@ -2847,7 +2847,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="priya2()">
+          <div onclick="priya2(this)">
             <p>Thanks for your message. 
               <br><br>
               I’ll be reviewing team responsibilities over the next week, so expect some communication from me at the end of that period. 
@@ -2864,7 +2864,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="priya3()">
+          <div onclick="priya3(this)">
             <p>Thanks for your message. 
               <br><br>
               I’m currently reviewing how best to align responsibilities and workflows across the team to ensure everything continues running smoothly. As part of that, I’ll be observing how current processes operate before making any decisions about broader structure. 
@@ -2980,33 +2980,56 @@ function playAudio() {
  const lastInitial = localStorage.getItem("lastInitialToken") || "a";
  const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
-const JORDAN_RESPONSE = 'Jordan_Response';
-const PRIYA_RESPONSE = 'Priya_Response';
+// const JORDAN_RESPONSE = 'Jordan_Response';
+// const PRIYA_RESPONSE = 'Priya_Response';
 
-function saveResponse(key, value) {
-  const cleanValue = typeof value === 'string' ? value.trim() : String(value ?? '');
-  localStorage.setItem(key, cleanValue);
+// function saveResponse(key, value) {
+//   const cleanValue = typeof value === 'string' ? value.trim() : String(value ?? '');
+//   localStorage.setItem(key, cleanValue);
+// }
+
+// function saveInteractionChoice(person, choiceId, responseText) {
+//   let saved = {};
+//   try {
+//     saved = JSON.parse(localStorage.getItem('interactionChoices') || '{}');
+//   } catch (e) {
+//     saved = {};
+//   }
+
+//   saved[person] = {
+//     choiceId,
+//     responseText: (responseText || '').toString().trim(),
+//     savedAt: new Date().toISOString()
+//   };
+
+//   localStorage.setItem('interactionChoices', JSON.stringify(saved));
+// }
+
+//Script used to prepare responses to be saved to localStorage
+  function stripHtmlToText(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = typeof html === 'string' ? html : '';
+  return temp.textContent.replace(/\s+/g, ' ').trim();
 }
 
-function saveInteractionChoice(person, choiceId, responseText) {
-  let saved = {};
-  try {
-    saved = JSON.parse(localStorage.getItem('interactionChoices') || '{}');
-  } catch (e) {
-    saved = {};
-  }
+function saveJordanChoiceAndReply(optionEl, replyHtml) {
+  const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  const replyText = stripHtmlToText(replyHtml);
 
-  saved[person] = {
-    choiceId,
-    responseText: (responseText || '').toString().trim(),
-    savedAt: new Date().toISOString()
-  };
-
-  localStorage.setItem('interactionChoices', JSON.stringify(saved));
+  localStorage.setItem('JordanChoice', choiceText);
+  localStorage.setItem('JordanResponse', replyText);
 }
+
+function saveAudreyChoiceAndReply(optionEl, replyHtml) {
+  const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  const replyText = stripHtmlToText(replyHtml);
+
+  localStorage.setItem('AudreyChoice', choiceText);
+  localStorage.setItem('AudreyResponse', replyText);
+}
+
 //jordan responses
-//jordan responses
-function jordan1() {
+function jordan1(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['jordan'].html = `
@@ -3110,11 +3133,22 @@ function jordan1() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    // const STORAGE_KEY_Jordan_Choice = 'JordanChoice';
+    // const STORAGE_KEY_Jordan_Response = 'JordanResponse';
+    // const jordanLearnerSelectionStorage =  document.getElementById('jordan1')?.textContent?.trim() || '';
+    // const jordanLearnerReplyStorage = typeof newMsgHTML === 'string' ? newMsgHTML.trim() : '';
+    
+    //  localStorage.setItem(STORAGE_KEY_Jordan_Choice, jordanLearnerSelectionStorage.value.trim());
+
+    //      localStorage.setItem(STORAGE_KEY_Jordan_Response, jordanLearnerReplyStorage.value.trim());
+
+    saveJordanChoiceAndReply(optionEl, newMsgHTML);
+
     dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function jordan2() {
+function jordan2(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['jordan'].html = `
@@ -3216,11 +3250,13 @@ function jordan2() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveJordanChoiceAndReply(optionEl, newMsgHTML);
+
     dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function jordan3() {
+function jordan3(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['jordan'].html = `
@@ -3318,12 +3354,14 @@ function jordan3() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveJordanChoiceAndReply(optionEl, newMsgHTML);
+
     dms['jordan'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
 //priya responses
-function priya1() {
+function priya1(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['priya'].html = `
@@ -3429,11 +3467,13 @@ function priya1() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function priya2() {
+function priya2(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['priya'].html = `
@@ -3544,11 +3584,13 @@ function priya2() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function priya3() {
+function priya3(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['priya'].html = `
@@ -3658,6 +3700,8 @@ function priya3() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+     
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }

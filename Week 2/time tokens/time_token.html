@@ -352,7 +352,7 @@
     padding: 6px 12px;
     border-radius: 6px;
     border: 0.5px solid var(--border-medium);
-    background: transparent;
+    background: var(--white);
     color: var(--gray-600);
     cursor: pointer;
     transition: all 0.15s;
@@ -542,6 +542,18 @@
   .badge.lvl-length {
     background: var(--teal-50);
     color: var(--darkBlue);
+  }
+  .badge.lvl-not-important, .badge.lvl-not-urgent {
+    background: var(--gray-50);
+    color: var(--gray-600);
+  }
+  .badge.lvl-important {
+    background: var(--coral-50);
+    color: var(--rust);
+  }
+  .badge.lvl-urgent {
+    background: var(--bg-selected-row);
+    color: var(--AIMblue);
   }
   .eligible-line {
     font-size: 11.5px;
@@ -733,8 +745,8 @@
 <div class="page-header">
   <div class="header-text">
     <h1 id="headerTitle">Phase 1 — Rate your tasks</h1>
-    <p id="headerDesc">Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
-    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Difficulty, or Who's allowed · <kbd>←</kbd>/<kbd>→</kbd> moves across its options · <kbd>Space</kbd> selects/toggles the highlighted one</p>
+    <p id="headerDesc">Rate each task's importance and urgency, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.</p>
+    <p class="kbd-hint" id="kbdHint"><kbd>Tab</kbd> moves between task cards · <kbd>↑</kbd>/<kbd>↓</kbd> picks Importance, Urgency, or Who's allowed · <kbd>←</kbd>/<kbd>→</kbd> moves across its options · <kbd>Space</kbd> selects/toggles the highlighted one</p>
     <button class="reset-link" onclick="startOver()">Reset everything and start over</button>
   </div>
   <div class="step-summary">
@@ -802,13 +814,14 @@
   const PEOPLE = ['Mark', 'Audrey', 'Priya', 'Jordan'];
   const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const SLOTS = ['AM', 'PM'];
-  const LEVELS = ['Low', 'Medium', 'High'];
+  const IMPORTANCE_LEVELS = ['Not important', 'Important'];
+  const URGENCY_LEVELS = ['Not urgent', 'Urgent'];
 
   // People who are unavailable on certain days, e.g. { 'Audrey': ['Fri'] }
   const UNAVAILABLE = {
     'Audrey': ['Fri'],
     'Jordan': ['Mon'],
-    'Mark': ['Mon', 'Tue', 'Wed'],
+    'Mark': ['Mon', 'Tue'],
     'Priya': ['Tue', 'Wed'],
   };
 
@@ -826,28 +839,23 @@
     { id: 'g', letter: 'G', name: 'Coordinate team communications', cat: 'Onsite meetings / travel (experience)', desc: 'Aligning different team members across different sites requires significant time-management skills. The team member assigned to this task should be experienced and communicative.' },
     { id: 'h', letter: 'H', name: 'Conduct onsite inspection and report', cat: 'Onsite meetings / travel (experience)', desc: 'Onsite safety standards and other considerations must be regularly checked and updated. The team member assigned to this task should be thorough and experienced.' },
     { id: 'i', letter: 'I', name: 'Verify work completion', cat: 'Onsite meetings / travel (experience)', desc: "Final checklists and completion guarantees product meets the client's expectations. The team member assigned to this task should be efficient and experienced." },
-    { id: 'j', letter: 'J', name: 'Review submission documents thoroughly', cat: 'Quality assurance / auditing (attention to detail)', desc: "Submission documents require high quality content as well as good presentation. The person assigned to this should be organised and a good communicator." },
-    { id: 'K', letter: 'K', name: 'Quality test product for accessibility requirement standards', cat: 'Quality assurance / auditing (attention to detail)', desc: "Quality testing and access testing ensures no use case or unusual fault is missed. The team member assigned to this task should be imaginative and thorough." },
-    { id: 'L', letter: 'L', name: 'Ensure compliance is satisfied with process documentation', cat: 'Quality assurance / auditing (attention to detail)', desc: "Ensuring documentation complicance is an important step, requiring knowledge of documentatio standards. The team member assigned to this should be persistent and organised." },
   ];
 
   // ---- ANSWER KEY ----
   // Edit these values to whatever the "correct" rating should be for each task.
-  // importance / difficulty: 'Low' | 'Medium' | 'High'
+  // importance: 'Not important' | 'Important'
+  // difficulty (urgency): 'Not urgent' | 'Urgent'
   // eligible: array of names from PEOPLE who SHOULD be marked eligible (order doesn't matter)
   const ANSWER_KEY = {
-    a: { importance: 'High',   difficulty: 'Medium', eligible: ['Mark', 'Priya'] },
-    b: { importance: 'Medium', difficulty: 'High',   eligible: ['Priya', 'Jordan'] },
-    c: { importance: 'Medium', difficulty: 'High',   eligible: ['Priya'] },
-    d: { importance: 'High',   difficulty: 'High',   eligible: ['Mark', 'Audrey'] },
-    e: { importance: 'High',   difficulty: 'Medium', eligible: ['Audrey', 'Mark'] },
-    f: { importance: 'Medium', difficulty: 'High',   eligible: ['Audrey'] },
-    g: { importance: 'Medium', difficulty: 'Medium', eligible: ['Mark', 'Audrey'] },
-    h: { importance: 'High',   difficulty: 'High',   eligible: ['Priya', 'Jordan'] },
-    i: { importance: 'Medium', difficulty: 'Low',    eligible: ['Jordan', 'Mark'] },
-    j: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
-    K: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
-    L: { importance: 'Low',    difficulty: 'Low',    eligible: PEOPLE.slice() },
+    a: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Mark', 'Priya'] },
+    b: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Priya', 'Jordan'] },
+    c: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Priya'] },
+    d: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Mark', 'Audrey'] },
+    e: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Audrey', 'Mark'] },
+    f: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Audrey'] },
+    g: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Mark', 'Audrey'] },
+    h: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Priya', 'Jordan'] },
+    i: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Jordan', 'Mark'] },
   };
 
   let ratings = {};
@@ -877,15 +885,18 @@
     getCursors(taskId)[group] = idx;
   }
   function groupItems(group) {
-    return group === 2 ? PEOPLE : LEVELS;
+    if (group === 0) return IMPORTANCE_LEVELS;
+    if (group === 1) return URGENCY_LEVELS;
+    return PEOPLE;
   }
-  // When arrowing into the Importance/Difficulty group, start the cursor on whatever is
+  // When arrowing into the Importance/Urgency group, start the cursor on whatever is
   // currently selected (if anything) so left/right feels like it's moving from "here".
   function syncCursorToValue(taskId, group) {
     if (group === 2) return;
     const field = group === 0 ? 'importance' : 'difficulty';
     const val = ratings[taskId][field];
-    const idx = val ? LEVELS.indexOf(val) : 0;
+    const items = groupItems(group);
+    const idx = val ? items.indexOf(val) : 0;
     setCursor(taskId, group, idx === -1 ? 0 : idx);
   }
 
@@ -939,7 +950,7 @@
     focusedCardId = taskId;
     const g = field === 'importance' ? 0 : 1;
     activeGroup[taskId] = g;
-    setCursor(taskId, g, LEVELS.indexOf(val));
+    setCursor(taskId, g, groupItems(g).indexOf(val));
     patchCard(taskId);
   }
   function toggleEligible(taskId, person) {
@@ -961,9 +972,9 @@
     updateGroupHighlight(taskId);
   }
 
-  // Up/Down picks the group (Importance / Difficulty / Who's allowed).
+  // Up/Down picks the group (Importance / Urgency / Who's allowed).
   // Left/Right moves a cursor across that group's individual options.
-  // Space selects (Importance/Difficulty) or toggles (Who's allowed) whatever the cursor is on.
+  // Space selects (Importance/Urgency) or toggles (Who's allowed) whatever the cursor is on.
   function handleCardKeydown(e, taskId) {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
@@ -983,10 +994,11 @@
       e.preventDefault();
       const g = getActiveGroup(taskId);
       const cursor = getCursor(taskId, g);
+      const items = groupItems(g);
       if (g === 0) {
-        ratings[taskId].importance = LEVELS[cursor];
+        ratings[taskId].importance = items[cursor];
       } else if (g === 1) {
-        ratings[taskId].difficulty = LEVELS[cursor];
+        ratings[taskId].difficulty = items[cursor];
       } else {
         const person = PEOPLE[cursor];
         const arr = ratings[taskId].eligible;
@@ -1075,11 +1087,11 @@
     else if (done) cardClass += ' complete';
     card.className = cardClass;
 
-    const levelRow = (field, label, groupIndex) => `
+    const levelRow = (field, label, groupIndex, items) => `
       <div class="opt-group" data-group="${groupIndex}">
         <div class="sub-label">${label}</div>
         <div class="opt-row">
-          ${LEVELS.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
+          ${items.map(lv => `<button type="button" tabindex="-1" class="opt-btn${r[field] === lv ? ' sel-' + field : ''}" onclick="setLevel('${task.id}','${field}','${lv}')">${lv}</button>`).join('')}
         </div>
       </div>`;
 
@@ -1098,7 +1110,7 @@
       if (!grade.correct) {
         const issues = [];
         if (!grade.importanceOk) issues.push(`Importance should be <strong>${grade.key.importance}</strong>`);
-        if (!grade.difficultyOk) issues.push(`Difficulty should be <strong>${grade.key.difficulty}</strong>`);
+        if (!grade.difficultyOk) issues.push(`Urgency should be <strong>${grade.key.difficulty}</strong>`);
         if (!grade.eligibleOk) issues.push(`Eligible people should be <strong>${grade.key.eligible.join(', ')}</strong>`);
         mismatchNote = `<div class="mismatch-note">${issues.join('<br>')}</div>`;
       }
@@ -1114,8 +1126,8 @@
         </div>
         ${grade ? resultChip : `<div class="status-dot${done ? ' done' : ''}"></div>`}
       </div>
-      ${levelRow('importance', 'Importance', 0)}
-      ${levelRow('difficulty', 'Difficulty', 1)}
+      ${levelRow('importance', 'Importance', 0, IMPORTANCE_LEVELS)}
+      ${levelRow('difficulty', 'Urgency', 1, URGENCY_LEVELS)}
       ${eligibleRow}
       ${mismatchNote}
     `;
@@ -1170,7 +1182,7 @@
     document.getElementById('phase2View').style.display = 'none';
     document.getElementById('phase1View').style.display = 'block';
     document.getElementById('headerTitle').textContent = 'Phase 1 — Rate your tasks';
-    document.getElementById('headerDesc').textContent = "Rate each task's importance and difficulty, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.";
+    document.getElementById('headerDesc').textContent = "Rate each task's importance and urgency, and pick who's allowed to do it. Every task needs both ratings and at least one eligible person before you can move on.";
     document.getElementById('kbdHint').style.display = '';
     renderPhase1();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1183,7 +1195,7 @@
     return !schedule.some(a => a.assignee === person && a.day === day && a.slots.includes(slot) && a.taskId !== excludeTaskId);
   }
 
-  function levelRank(lv) { return lv === 'High' ? 3 : lv === 'Medium' ? 2 : 1; }
+  function levelRank(lv) { return lv === 'Important' || lv === 'Urgent' ? 2 : 1; }
 
   function unscheduledTasksSorted() {
     const scheduledIds = new Set(schedule.map(a => a.taskId));
@@ -1254,18 +1266,12 @@
         </div>`;
     }
 
-    let slotRow = '';
-    if (a && draft.day) {
-      slotRow = `<div class="panel-hint">This task takes the whole day — both morning and afternoon on ${draft.day}.</div>`;
-    }
-
     const canConfirm = !!(a && draft.day);
 
     return `
       <div class="panel">
         ${peopleRow}
         ${dayRow}
-        ${slotRow}
         <div class="panel-actions">
           <button class="panel-cancel" onclick="cancelSchedulePanel()">Cancel</button>
           <button class="panel-confirm" ${canConfirm ? '' : 'disabled'} onclick="confirmSchedule()">Add to calendar</button>
@@ -1293,8 +1299,8 @@
               </div>
             </div>
             <div class="badge-row">
-              <span class="badge lvl-${r.importance.toLowerCase()}">${r.importance} importance</span>
-              <span class="badge lvl-${r.difficulty.toLowerCase()}">${r.difficulty} difficulty</span>
+              <span class="badge lvl-${r.importance.toLowerCase().replace(/\s+/g,'-')}">${r.importance}</span>
+              <span class="badge lvl-${r.difficulty.toLowerCase().replace(/\s+/g,'-')}">${r.difficulty}</span>
             </div>
             <div class="eligible-line">Eligible: ${r.eligible.join(', ')}</div>
             ${isOpen ? renderSchedulePanel(task) : `<button class="ghost-btn" onclick="openSchedulePanel('${task.id}')">Schedule this task</button>`}
