@@ -814,6 +814,101 @@ ul, ol {
 textarea {
 font-family: 'Inter', sans-serif;
 }
+/* =====================
+    CAROUSEL (attachments)
+===================== */
+.carousel {
+  width: 550px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  position: relative;
+}
+
+.carousel > p {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.35s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-slide img {
+  width: 300px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.carousel-slide .chat-group {
+  width: 100%;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.carousel-arrow {
+  background: var(--bg-message-head);
+  border: 1px solid var(--border-medium);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.carousel-arrow:hover {
+  background: var(--AIMblue);
+  color: white;
+  border-color: var(--AIMblue);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border-medium);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.carousel-dot.active {
+  background: var(--navy);
+}
 
 .workArea3 {
 font-size: 14px;
@@ -2450,7 +2545,72 @@ audio {
 
 <!--Card displaying angry text messages between audrey and Kannika-->
 <div id="text-chain-kannika-audrey_info_card" class="messageHidden" tabindex="0">
-<p>record of issues</p>
+<div class="carousel">
+  <p>Record of issues</p>
+
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack">
+
+      <div class="carousel-slide">
+        <img src="Fridge photos/1000011990.jpg" alt="Photo of tupperware containing 3 leftover muffins.">
+      </div>
+
+      <div class="carousel-slide">
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:12 PM</span></div>
+            <div class="chat-text">Maybe if people showed a bit more respect for everyone else, these conversations wouldn't happen in the first place.</div>
+          </div>
+          <div class="chat-actions"></div>
+        </div>
+
+        <div class="chat-group">
+          <div class="chat-avatar av-pink">KS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Kannika S</span><span class="chat-time">2:14 PM</span></div>
+            <div class="chat-text">Respect? You're calling me out in a team chat over dessert. That's pretty rich.</div>
+          </div>
+          <div class="chat-actions"></div>
+        </div>
+
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:15 PM</span></div>
+            <div class="chat-text">I'm calling out the behaviour, not the dessert.</div>
+          </div>
+          <div class="chat-actions"></div>
+        </div>
+
+        <div class="chat-group">
+          <div class="chat-avatar av-pink">KS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Kannika S</span><span class="chat-time">2:16 PM</span></div>
+            <div class="chat-text">Whatever. Next time I'll send out a company-wide survey before I take a leftover cupcake.</div>
+          </div>
+          <div class="chat-actions"></div>
+        </div>
+
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">2:17 PM</span></div>
+            <div class="chat-text">Honestly, your attitude is the real problem.</div>
+          </div>
+          <div class="chat-actions"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="carousel-controls">
+    <div class="carousel-arrow" onclick="carouselMove(-1)" tabindex="0">&#8249;</div>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-arrow" onclick="carouselMove(1)" tabindex="0">&#8250;</div>
+  </div>
+</div>
   </div>
 
 <div id="MJ_info_card" class="messageHidden"  tabindex="0">
@@ -2540,6 +2700,34 @@ audio {
 
 
 <script>
+(function () {
+  const track = document.getElementById('carouselTrack');
+  const dotsWrap = document.getElementById('carouselDots');
+  const slides = track ? track.children.length : 0;
+  let current = 0;
+
+  if (!track) return;
+
+  for (let i = 0; i < slides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsWrap.appendChild(dot);
+  }
+
+  function goToSlide(index) {
+    current = (index + slides) % slides;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  window.carouselMove = function (dir) {
+    goToSlide(current + dir);
+  };
+})();
+
 function reveal(cardId) {
   const infocard = document.getElementById(cardId);
   if (infocard) {
