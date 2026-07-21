@@ -2745,7 +2745,7 @@ function reply() {
       <div class="chat-answers-box">
         
         <div class="chat-options learnerOption">
-          <div onclick="jordan1(this)" id="jordan1">
+          <div onclick="jordan1(this)" id="jordan1" tabindex="0">
             <p>
                Hi Jordan, <br>
                Thanks for reaching out. 
@@ -2760,7 +2760,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="jordan2(this)">
+          <div onclick="jordan2(this)" tabindex="0">
             <p>Hi Jordan, 
               <br>Thank you for raising this. 
               <br><br>
@@ -2774,7 +2774,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="jordan3(this)">
+          <div onclick="jordan3(this)" tabindex="0">
             <p>Hello Jordan, 
               <br><br>Thank you for your message. 
               <br><br>
@@ -2834,7 +2834,7 @@ function reply() {
              </div>
           <div class="chat-answers-box">
         <div class="chat-options learnerOption">
-          <div onclick="priya1(this)">
+          <div onclick="priya1(this)" tabindex="0">
             <p>Thanks for the note. 
                <br><br>
                That sounds fine for now – no need to shake things up too much at this stage. I’m still getting across everything, so I’ll keep tasks as they are and step in when needed. 
@@ -2847,7 +2847,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="priya2(this)">
+          <div onclick="priya2(this)" tabindex="0">
             <p>Thanks for your message. 
               <br><br>
               I’ll be reviewing team responsibilities over the next week, so expect some communication from me at the end of that period. 
@@ -2864,7 +2864,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="priya3(this)">
+          <div onclick="priya3(this)" tabindex="0">
             <p>Thanks for your message. 
               <br><br>
               I’m currently reviewing how best to align responsibilities and workflows across the team to ensure everything continues running smoothly. As part of that, I’ll be observing how current processes operate before making any decisions about broader structure. 
@@ -3020,12 +3020,12 @@ function saveJordanChoiceAndReply(optionEl, replyHtml) {
   localStorage.setItem('JordanResponse', replyText);
 }
 
-function saveAudreyChoiceAndReply(optionEl, replyHtml) {
+function savePriyaChoiceAndReply(optionEl, replyHtml) {
   const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
   const replyText = stripHtmlToText(replyHtml);
 
-  localStorage.setItem('AudreyChoice', choiceText);
-  localStorage.setItem('AudreyResponse', replyText);
+  localStorage.setItem('PriyaChoice', choiceText);
+  localStorage.setItem('PriyaResponse', replyText);
 }
 
 //jordan responses
@@ -3467,7 +3467,7 @@ function priya1(optionEl) {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
-     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+     savePriyaChoiceAndReply(optionEl, newMsgHTML);
 
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
@@ -3584,7 +3584,7 @@ function priya2(optionEl) {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
-     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+     savePriyaChoiceAndReply(optionEl, newMsgHTML);
 
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
@@ -3700,8 +3700,8 @@ function priya3(optionEl) {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
-     saveAudreyChoiceAndReply(optionEl, newMsgHTML);
-     
+     savePriyaChoiceAndReply(optionEl, newMsgHTML);
+
     dms['priya'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }

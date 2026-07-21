@@ -2747,7 +2747,7 @@ function reply() {
       <div class="chat-answers-box">
         
         <div class="chat-options learnerOption">
-          <div onclick="mark1()" tabindex="0">
+          <div onclick="mark1(this)" tabindex="0">
             <p>
                 Thanks for reaching out. Things are still settling at the moment, but I’ll keep your notes in mind as I get up to speed. 
                 <br><br>
@@ -2759,7 +2759,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="mark2()" tabindex="0">
+          <div onclick="mark2(this)" tabindex="0">
             <p>Thank you for your message. I’ll review the procedural updates, outstanding tasks and current reporting workflows as soon as possible.  
                 <br><br>
                 Please send me your documentation and availability for a meeting this week. My goal is to finalise team responsibilities within the next two weeks, so your input will be helpful during this process. 
@@ -2770,7 +2770,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="mark3()" tabindex="0">
+          <div onclick="mark3(this)" tabindex="0">
             <p>
                 Thank you for reaching out. I understand there are several items that will need attention as the team moves forward. 
                 <br><br>
@@ -2831,7 +2831,7 @@ function reply() {
                 </div>
       <div class="chat-answers-box">
         <div class="chat-options learnerOption">
-          <div onclick="audrey1()" tabindex="0">
+          <div onclick="audrey1(this)" tabindex="0">
             <p>
                 Hey Audrey, 
                 <br><br>
@@ -2849,7 +2849,7 @@ function reply() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="audrey2()" tabindex="0">
+          <div onclick="audrey2(this)" tabindex="0">
             <p>
                 Hi Audrey, 
                 <br><br>
@@ -2867,7 +2867,7 @@ function reply() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="audrey3()" tabindex="0">
+          <div onclick="audrey3(this)" tabindex="0">
             <p>
                 Hi Audrey, 
                 <br><br>
@@ -3084,9 +3084,32 @@ function audreyAudio() {
  const lastInitial = localStorage.getItem("lastInitialToken") || "a";
  const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
+
+ //Script used to prepare responses to be saved to localStorage
+  function stripHtmlToText(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = typeof html === 'string' ? html : '';
+  return temp.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function saveMarkChoiceAndReply(optionEl, replyHtml) {
+  const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  const replyText = stripHtmlToText(replyHtml);
+
+  localStorage.setItem('MarkChoice', choiceText);
+  localStorage.setItem('MarkResponse', replyText);
+}
+
+function saveAudreyChoiceAndReply(optionEl, replyHtml) {
+  const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  const replyText = stripHtmlToText(replyHtml);
+
+  localStorage.setItem('AudreyChoice', choiceText);
+  localStorage.setItem('AudreyResponse', replyText);
+}
 //Mark responses
 //Mark responses
-function mark1() {
+function mark1(optionEl) {
     localStorage.setItem('markChoice', 'mark1');
   const chatBody = document.getElementById('chat-body');
 
@@ -3167,11 +3190,13 @@ function mark1() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function mark2() {
+function mark2(optionEl) {
     localStorage.setItem('markChoice', 'mark2');
   const chatBody = document.getElementById('chat-body');
 
@@ -3248,11 +3273,13 @@ function mark2() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function mark3() {
+function mark3(optionEl) {
     localStorage.setItem('markChoice', 'mark3');
   const chatBody = document.getElementById('chat-body');
 
@@ -3332,11 +3359,13 @@ setTimeout(() => {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 //Audrey responses
-function audrey1() {
+function audrey1(optionEl) {
     localStorage.setItem('audreyChoice', 'audrey1');
   const chatBody = document.getElementById('chat-body');
 
@@ -3420,11 +3449,13 @@ function audrey1() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+
     dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function audrey2() {
+function audrey2(optionEl) {
     localStorage.setItem('audreyChoice', 'audrey2');
   const chatBody = document.getElementById('chat-body');
 
@@ -3512,11 +3543,13 @@ function audrey2() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+    saveAudreyChoiceAndReply(optionEl, newMsgHTML);
+
     dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function audrey3() {
+function audrey3(optionEl) {
     localStorage.setItem('audreyChoice', 'audrey3');
   const chatBody = document.getElementById('chat-body');
 
@@ -3599,6 +3632,8 @@ function audrey3() {
 
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
+
+    saveAudreyChoiceAndReply(optionEl, newMsgHTML);
 
     dms['audrey'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
