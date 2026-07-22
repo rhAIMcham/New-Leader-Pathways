@@ -223,7 +223,7 @@ svg:hover {
 }
 
 /*email Alert*/
-.emailAppear { 
+.alertAppear { 
   opacity: 1; 
   position: relative;
   left: 20px;
@@ -232,7 +232,7 @@ svg:hover {
   z-index: 999;
 }
 
-.emailAlert {
+.desktopAlert {
   position: absolute;
   width: 300px;
   min-height: 100px;
@@ -247,6 +247,39 @@ svg:hover {
   padding: 15px;
   text-align: center;
   line-height: 2.5;
+  right: 40px;
+}
+
+/*Pulse button animation */
+.pulse-alert {
+  background-color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  
+  /* Apply the animation */
+  animation: pulse-border 2s infinite;
+}
+
+.pulse-alert:hover {
+  color: var(--navy);
+  background-color: var(--lightBlue);
+}
+
+@keyframes pulse-border {
+  0% {
+    /* Start with a tight shadow around the element */
+    box-shadow: 0 0 0 0 #12195C70;
+  }
+  70% {
+    /* Expand the shadow outwards while keeping it somewhat solid */
+    box-shadow: 0 0 0 15px #12195C00;
+  }
+  100% {
+    /* Fade the expanded shadow completely out */
+    box-shadow: 0 0 0 0 #12195C00;
+  }
 }
 
 /*PH for now but will be generic black workspace*/
@@ -540,7 +573,7 @@ svg:hover {
     FIRST THREAD HIDDEN
 ===================== */
 #emailRow1 {
-  display: none;
+  display: block;
 }
 /* =====================
     MESSAGE CARDS
@@ -1123,6 +1156,15 @@ padding: 20px;
   }
   .chat-group:hover .chat-actions, .chat-cont:hover .chat-actions { opacity: 1; }
 
+        .minutes {
+    padding: 15px;
+    background: #f1eede60; /*Cream at 60% opacity */
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin-top: 5px;
+  }
   .chat-cont { 
     display: flex; 
     gap: 10px; 
@@ -1742,10 +1784,10 @@ audio {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M448 384c-.1 16.4-13 32-32.1 32H32.08C13 416 .09 400.4 0 384a31.25 31.25 0 0 1 8.61-21.71c19.32-20.76 55.47-52 55.47-154.29 0-77.7 54.48-139.9 127.94-155.16V32a32 32 0 1 1 64 0v20.84C329.42 68.1 383.9 130.3 383.9 208c0 102.3 36.15 133.53 55.47 154.29A31.27 31.27 0 0 1 448 384z" class="fa-secondary"/><path d="M160 448h128a64 64 0 0 1-128 0z" class="fa-primary"/></svg>
               </a>
             </div>
-            <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" >
-              <div class="emailAlert" tabindex=0>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
-                <p>New Email</p>
+            <div id="teamsAlert" class="hideMe" onclick="clickTeamsAlertChat()">
+              <div class="desktopAlert pulse-alert">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 0 0-1.5 8.7A7.83 7.83 0 0 0 8 480c66.3 0 116-31.8 140.6-51.4A305 305 0 0 0 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm128 0a32 32 0 1 1 32-32 32 32 0 0 1-32 32z" class="fa-secondary"/><path d="M128 208a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32zm128 0a32 32 0 1 0 32 32 32 32 0 0 0-32-32z" class="fa-primary"/></svg>
+                <p>2 new messages</p>
               <!-- <button class="btn" onclick="closeEmail()">X</button> -->
               </div>
             </div>
@@ -1773,21 +1815,57 @@ audio {
   <div class="inbox-list">
     <div class="inbox-toolbar">
       <span class="inbox-toolbar-title">Inbox</span>
-      <span class="inbox-toolbar-count">1 message</span>
+      <span class="inbox-toolbar-count">No new messages</span>
     </div>
   <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
          <span class="unread-dot"></span>
-        <span class="email-sender">SLT</span>
+        <span class="email-sender">Eddie F</span>
         <span class="email-time">11:23 am</span>
       </div>
       <div class="email-subject">
      Policy updates
       </div>
-      <div class="email-preview">Hello managers. We wanted to let you all...</div>
+      <div class="email-preview">Hi Leaders, I hope everyone’s doing wel...</div>
     </div>
 
       <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
+           <span class="unread-dot"></span>
+        <span class="email-sender">Taylor</span>
+        <span class="email-time">9:12 am</span>
+      </div>
+      <div class="email-subject">
+      Great work last week
+      </div>
+      <div class="email-preview">Thank you to everyone for the outstanding eff...</div>
+    </div>
+
+      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+      <div class="email-row-top">
+           <span class="unread-dot"></span>
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">8:55 am</span>
+      </div>
+      <div class="email-subject">
+      E-Card reminder
+      </div>
+      <div class="email-preview">Last chance to sign the E-Card before the pa...</div>
+    </div>
+
+      <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+      <div class="email-row-top">
+           <span class="unread-dot"></span>
+        <span class="email-sender">Adrian</span>
+        <span class="email-time">Saturday</span>
+      </div>
+      <div class="email-subject">
+      Successful product launch
+      </div>
+      <div class="email-preview">I want to extend my sincerely congratulation...</div>
+    </div>
+
+      <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Friday</span>
@@ -1798,7 +1876,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>. Just wanted to check...</div>
     </div>
 
-      <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+      <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1809,7 +1887,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+      <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Last week</span>
@@ -1820,7 +1898,7 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
         <span class="email-time">Last week</span>
@@ -1832,7 +1910,7 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+    <div class="email-row" id="emailRow9"  onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
         <span class="email-time">Last week</span>
@@ -1844,7 +1922,7 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
+    <div class="email-row" id="emailRow10"  onclick="swapEmails(10)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
         <span class="email-time">Last week</span>
@@ -1856,7 +1934,7 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
+    <div class="email-row" id="emailRow11"  onclick="swapEmails(11)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">Last week</span>
@@ -1868,7 +1946,7 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow9" onclick="swapEmails(9)" tabindex="0">
+    <div class="email-row" id="emailRow12" onclick="swapEmails(12)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
         <span class="email-time">Last week</span>
@@ -1877,7 +1955,7 @@ audio {
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow10" onclick="swapEmails(10)" tabindex="0">
+    <div class="email-row" id="emailRow13" onclick="swapEmails(13)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Last week</span>
@@ -1922,23 +2000,137 @@ audio {
 </div>
           <div class="message-card">
         <div class="message-header">
-          <div class="avatar avatar-navy" id="AK_icon">AK</div>
+          <div class="avatar avatar-lightblue">EF</div>
           <div class="message-from">
-            <div class="message-name">Senior Leadership<span class="message-name-to"> to <span class="username">New Leader</span></span></div>
+            <div class="message-name">Eddie F<span class="message-name-to"> to <span class="username">New Leader</span></span></div>
             <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">11:23 am</span>
         </div>
         <div class="message-body">
-          <p>Email explaining mark's crimes. Mark has created issues in the project etc etc. requests for learner to speak with mark.</p>
-          <p>Kind regards,</p>
-          <p>Alfred K</p>
+          <p>Hi Leaders,</p>
+            
+            <p>I hope everyone’s doing well.</p>
+            
+            <p>
+            As part of our ongoing commitment to maintaining a productive and supportive workplace, we ask that you take some time over the coming week to remind your team members of our expectations regarding attendance and communication.</p>
+          
+            <p>Please emphasise the importance of:
+            <ul>
+              <li>Arriving at work on time and being punctual throughout the workday.</li>
+              <li>Working within normal rostered or agreed working hours unless prior approval has been provided</li>
+              <li>Keeping you informed if they are running late, need to leave early or are unable to attend work</li>
+              <li>Maintaining open and timely communication with their leader regarding any issues that may affect their work or availability. </li>
+            </ul></p>
+            <p>
+            Where possible, we encourage you to have these conversations in an open and positive manner, giving team members the opportunity to ask questions or raise any concerns. This is not a callout to any team in particular! Clear communication of expectations will set us up for success in the future.</p>
+           
+            <p>
+            Thank you for your support with this matter. If you have any questions or require further guidance, please don’t hesitate to reach out.</p>
+            <br>
+            <p>Thanks,</p>
+            <br>
+            <p>Eddie</p>
+            <br>
+            <p>People and Culture
+</p>
         </div>
       </div>
 </div>
 
      <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">Great work last week</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-navy" id="Taylor_icon">T</div>
+          <div class="message-from">
+            <div class="message-name">Taylor <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="message-time">9:12 am</span>
+        </div>
+        <div class="message-body">
+          <p>Dear Team,</p>
+          <p>Thank you to everyone for the outstanding effort you put in last week to meet our deadlines. Your commitment, professionalism and teamwork were evident to the entire leadership team, and your hard work has been recognised.</p>
+          <p>A special thank you goes to those who worked extra time or stepped in to support other teams. I understand we were a little understaffed at the end of the week, so your willingness to go above and beyond your own responsibilities demonstrates the collaborative culture we strive to build here.</p>
+          <p>Thank you for your continued effort, flexibility, and commitment to your colleagues. We look forward to building on this momentum as we continue to deliver excellent outcomes together.</p>
+          <p>Kind regards,</p>
+          <p>Taylor</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread3" class="thread-header" tabindex="0">
+      <div class="thread-subject">E-Card reminder</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody3" class="thread-body" tabindex="0">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="message-time">8:55 am</span>
+        </div>
+        <div class="message-body">
+          <p>Hi all,</p>
+          <p>Last chance to sign the E-Card before the party! It always means so much to hear from friends and colleagues on your special day! There might even be a prize for the best message!</p>
+          <p>Susan</p>
+          <br>
+          <p>Sent from my iPhone</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread4" class="thread-header" tabindex="0">
+      <div class="thread-subject">Successful product launch</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody4" class="thread-body" tabindex="0">
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-blue" id="Adrian_icon">A</div>
+          <div class="message-from">
+            <div class="message-name">Adrian <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <span class="message-time">2:35 pm</span>
+        </div>
+        <div class="message-body">
+          <p>Hi Team,</p>
+          <p>I want to extend my sincerely congratulations to everyone involved in the successful launch of our product last week.</p>
+          <p>While we did encounter an unexpected delay during production, your professionalism, resilience and commitment made sure we overcame these challenges and successfully delivered to our clients. It was inspiring to see teams working together across the organisation, supporting one another to achieve our shared goal.</p>
+          <p>A successful launch is never the result of one individual. It reflects the dedication and teamwork of the entire organisation. Whether you worked behind the scenes, collaborated across departments, or went the extra mile to keep things moving, your contribution made a real difference.</p>
+          <p>Congratulations again and thank you for helping make this launch a success.</p>
+          <p>Kind regards,</p>
+          <p>Adrian</p>
+          <p>Head of Product Management</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">Second week check-in</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1948,7 +2140,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
 
           <div class="message-card">
         <div class="message-header">
@@ -1966,16 +2158,11 @@ audio {
           <br>
           <p>I just wanted to check in and see how you were doing at the end of your second week. We had some tough days there, but you pulled through and everything got finished. Now, we can reflect on how we handled the challenges presented to us.</p>
           <br>
-          <p>Since you are in a leadership role, understanding how you respond to stress can be very helpful in improving your stress responses and remaining professional when things go awry. Answer the following questions and complete the reflection quiz attached to this email. Remember to be honest!</p>
-          <br>
           <ul>
             <li>Reflect on some of the stressful moments this week. How do you typically handle stress and pressure?</li>
           <li>Do you have any experience being managed by someone who handled stress poorly? What behaviours would you avoid on your own leadership journey?</li>
           <li>Think back to a frustrating experience. How could you reframe this from a different perspective? Were there other external factors impacted your response?</li>
           </ul>
-          <br>
-          <p><a href="https://rhaimcham.github.io/New-Leader-Pathways/Week%202/email%20from%20susan/Stress_response_assessment.html" target="_blank">How do you handle stress?</a></p>
- 
           <br>
           <p>Enjoy your weekend, and I’ll see you on Monday.</p>
           <p>Susan</p>
@@ -1985,7 +2172,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -1994,7 +2181,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -2029,7 +2216,7 @@ audio {
         </div>
       </div>
 </div>
-     <div id="thread4" class="thread-header" tabindex="0">
+     <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2038,7 +2225,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -2089,7 +2276,7 @@ audio {
     </div>
 
 
-     <div id="thread5" class="thread-header" tabindex="0">
+     <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2098,7 +2285,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -2140,7 +2327,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread6" class="thread-header" tabindex="0">
+     <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2149,7 +2336,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
+    <div id="threadBody9" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -2192,7 +2379,7 @@ audio {
 
     </div>
 
-    <div id="thread7" class="thread-header" tabindex="0">
+    <div id="thread10" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2201,7 +2388,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody10" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2242,7 +2429,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread8" class="thread-header" tabindex="0">
+   <div id="thread11" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2251,7 +2438,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody11" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -2288,7 +2475,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread9" class="thread-header" tabindex="0">
+    <div id="thread12" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2297,7 +2484,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody9" class="thread-body" tabindex="0">
+    <div id="threadBody12" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2333,7 +2520,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread10" class="thread-header" tabindex="0">
+    <div id="thread13" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2342,7 +2529,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody10" class="thread-body" tabindex="0">
+    <div id="threadBody13" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -2388,10 +2575,12 @@ audio {
     </div>
     <div class="message-body" style="padding:0;">
       <div style="display:flex; flex-direction:column; gap:0;">
-        <input type="text" id="composeTo" placeholder="To: (e.g. mj@organisation.com.au, js@organisation.com.au)"
-          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
-        <input type="text" id="composeSubject" placeholder="Subject"
-          style="border:none; border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; outline:none;">
+        <div style="border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; color:var(--text-primary);">
+          <span style="color:var(--text-muted);">To:</span> Mark J
+        </div>
+        <div style="border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; color:var(--text-primary);">
+          <span style="color:var(--text-muted);">Subject:</span> Regarding your work with Adrian
+        </div>
         <textarea id="composeBody" class="compose-input" placeholder="Write your message..." style="border:none; border-radius:0;"></textarea>
       </div>
     </div>
@@ -2595,7 +2784,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 13; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -2610,7 +2799,7 @@ function swapEmails(threadNumber) {
 
 // Initialize - show first thread by default
 document.addEventListener('DOMContentLoaded', function() {
-    swapEmails(2);
+    swapEmails(1);
 });
 
 //timeout function displays email once the user has unlocked the screen and just after the email alert has shown up
@@ -2646,12 +2835,9 @@ function openCompose() {
   }
   document.getElementById('work2').style.display = 'flex';
 
-  // Preload any existing draft from localStorage (single key now)
-  const draft = JSON.parse(localStorage.getItem('draftEmail') || '{}');
-
-  document.getElementById('composeTo').value = draft.to || '';
-  document.getElementById('composeSubject').value = draft.subject || '';
-  document.getElementById('composeBody').value = draft.body || '';
+  // Only the body persists — To/Subject are now static in the HTML
+  const savedBody = localStorage.getItem('draftEmailBodyMark') || '';
+  document.getElementById('composeBody').value = savedBody;
 
   document.getElementById('composeSendBtn').classList.remove('sent');
   document.getElementById('composeSendBtn').textContent = 'Send';
@@ -2663,28 +2849,20 @@ function openCompose() {
 }
 
 function closeCompose() {
-  // Autosave whatever's currently typed as a single object
-  const draft = {
-    to: document.getElementById('composeTo').value.trim(),
-    subject: document.getElementById('composeSubject').value.trim(),
-    body: document.getElementById('composeBody').value.trim()
-  };
-  localStorage.setItem('draftEmail', JSON.stringify(draft));
+  const body = document.getElementById('composeBody').value.trim();
+  localStorage.setItem('draftEmailBodyMark', body);
 
   document.getElementById('composeNewEmail').classList.remove('messageRevealed');
 }
 
 function sendNewEmail() {
-  const to = document.getElementById('composeTo').value.trim();
-  const subject = document.getElementById('composeSubject').value.trim();
   const body = document.getElementById('composeBody').value.trim();
 
   document.getElementById('composeSendBtn').textContent = 'Sent';
   document.getElementById('composeSendBtn').classList.add('sent');
   document.getElementById('composeSendBtn').disabled = true;
 
-  // Clear the draft now that it's been sent
-  // localStorage.removeItem('draftEmail');
+  localStorage.setItem('markMishapEmail', body);
 
   setTimeout(closeCompose, 900);
 }
@@ -2719,26 +2897,36 @@ function sendNewEmail() {
     <div class="sidebar-header">
       <span class="sidebar-header-title">Chats</span>
     </div>
-    <div class="dm-item active" onclick="loadDM('mark', this)">
+        <div class="dm-item active" onclick="loadDM('adrian', this)">
+      <div class="dm-avatar av-green">AP<span class="status-dot status-online"></span></div>
+      <span class="dm-name">Adrian P</span>
+      <span class="dm-unread-count">1</span>
+    </div>
+         <div class="dm-item" onclick="loadDM('general', this)" tabindex="0">
+       <div class="dm-avatar av-coral">GEN<span class="status-dot status-online"></span></div>
+          <span class="dm-name">General</span>
+                
+    </div>
+    <div class="dm-item" onclick="loadDM('mark', this)">
       <div class="dm-avatar av-blue">MJ<span class="status-dot status-online"></span></div>
       <span class="dm-name">Mark J</span>
     </div>
         <div class="dm-item" onclick="loadDM('jordan', this)">
-      <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
+      <div class="dm-avatar av-teal">JS<span class="status-dot status-online"></span></div>
       <span class="dm-name">Jordan S</span>
     </div>
 
     <div class="dm-item" onclick="loadDM('priya', this)">
-      <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
+      <div class="dm-avatar av-purple">PD<span class="status-dot status-online"></span></div>
       <span class="dm-name">Priya D</span>
     </div>
     <div class="dm-item" onclick="loadDM('audrey', this)">
-      <div class="dm-avatar av-coral">AE<span class="status-dot status-online"></span></div>
+      <div class="dm-avatar av-coral">AE<span class="status-dot status-away"></span></div>
       <span class="dm-name">Audrey E</span>
     </div>
     
       <div class="dm-item" onclick="loadDM('susan', this)">
-      <div class="dm-avatar av-teal">SH<span class="status-dot status-online"></span></div>
+      <div class="dm-avatar av-teal">SH<span class="status-dot status-busy"></span></div>
       <span class="dm-name">Susan H</span>
     </div>
 
@@ -2873,44 +3061,35 @@ function sendNewEmail() {
   //Scripts for chat app
   // ── DATA ──────────────────────────────────────────────────────────────
   const dms = {
-          'susan': {
-      title: 'Susan H',
-      avatar: '<div class="chat-avatar av-teal">SH</div>',
-      desc: 'Online · She/her · Joined 5 years ago',
-      placeholder: 'Message Susan H',
+     'adrian': {
+      title: 'Adrian P',
+      avatar: '<div class="chat-avatar av-green">AP</div>',
+      desc: 'Online · She/her · Joined 3 years ago',
+      placeholder: 'Message Adrian P',
       html: `
         <div class="date-divider">Today</div>
         <div class="chat-group">
-          <div class="chat-avatar av-teal">SH</div>
+          <div class="chat-avatar av-green">AP</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Susan H</span><span class="chat-time">1:13 PM</span></div>
-            <div class="chat-text">I’ve sent through some questions to your inbox. Please respond when you have the time!</div>
+            <div class="chat-meta"><span class="chat-name">Adrian P</span><span class="chat-time">10:46 AM</span></div>
+            <div class="chat-text">
+              <p>Hello <span class="username">New Leader</span>,</p>
+              <p>I hope you’re doing well in your new role.</p>
+              <p>I’m getting in touch regarding Mark J’s involvement in our product launch, before he was moved to your team.</p>
+              <p>During the project, Mark made several changes to the product documentation without first seeking approval from myself or having a discussion with the wider team. Mark also disagreed with our established work processes and chose to proceed with his own approach without communicating this to others. While I appreciate his confidence and experience in the organisation, acting without appropriate process created confusion for the team and contributed to delays during the launch.</p>
+              <p>As Mark is now a part of your team, I’d appreciate if you could discuss this with him and provide feedback on the importance of seeking approval before making significant changes, following the correct processes, and working collaboratively with project leaders and other teams.</p>
+              <p>Please let me know if you need any further information before addressing this with Mark.</p>
+              <br>
+              <p>Kind regards,</p>
+              <p>Adrian P.</p>
+</div>
             </div>
           <div class="chat-actions">
             
           </div>
         </div>`
     },
-    'audrey': {
-       title: 'Audrey E',
-      avatar: '<div class="chat-avatar av-coral">AE</div>',
-      desc: 'Busy · She/her · Joined 6 years ago',
-      placeholder: 'Message Audrey E',
-      html: `
-        
-        <div class="date-divider">Yesterday</div>
-        <div class="chat-group">
-          <div class="chat-avatar av-coral">AE</div>
-          <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Audrey</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Hey!!! So exciting to be working together again. Come find me whenever you want to grab a coffee and a debrief on everything.</div>
-          </div>
-             <div class="chat-actions">
-            
-          </div>
-        </div>`
-    },
-      'mark': {
+          'mark': {
       title: 'Mark J',
       avatar: '<div class="chat-avatar av-blue">MJ</div>',
       desc: 'Away · He/him · Joined 5 years ago',
@@ -2920,8 +3099,8 @@ function sendNewEmail() {
         <div class="chat-group">
           <div class="chat-avatar av-blue">MJ</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in. </div>
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">9:58 AM</span></div>
+            <div class="chat-text">Sorry I was in another meeting when you called. I'll put some time in the calendar asap.</div>
           </div>
              <div class="chat-actions">
             
@@ -2934,7 +3113,7 @@ function sendNewEmail() {
       <div class="chat-answers-box">
         
         <div class="chat-options learnerOption">
-          <div onclick="mark1()" tabindex="0">
+          <div onclick="mark1(this)" tabindex="0">
             <p>Hi Mark,
               <br><br>
               I’ve just received some negative feedback about your behaviour during the product launch and wanted to address them with you.
@@ -2947,7 +3126,7 @@ function sendNewEmail() {
             </div>
 
             <div class="chat-options learnerOption">
-          <div onclick="mark2()" tabindex="0">
+          <div onclick="mark2(this)" tabindex="0">
             <p>Hi Mark,
               <br><br>
               I’ve just received some feedback regarding the product launch, and before I respond I’d like to understand the situation from your perspective.
@@ -2960,7 +3139,7 @@ function sendNewEmail() {
             </div>
 
          <div class="chat-options learnerOption">
-          <div onclick="mark3()" tabindex="0">
+          <div onclick="mark3(this)" tabindex="0">
             <p>Hi Mark,
               <br><br>
               I just wanted to check in about the recent launch. 
@@ -2978,49 +3157,226 @@ function sendNewEmail() {
         </div>
         </div>`
     },
-   'jordan': {
+  
+     'general': {
+      title: 'general',
+      avatar: '<div class="chat-avatar av-coral">GEN</div>',
+      desc: 'Team-wide announcements and discussion — 5 members',
+      placeholder: 'Message general',
+      html: `
+        <div class="date-divider">2 weeks ago</div>
+        <div class="chat-group" style="margin-top:8px">
+          <div class="chat-avatar av-teal">JS</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">2:45 PM</span></div>
+            <div class="chat-text">Thanks for making a group messaging space.</div>
+          </div>
+
+          <div class="chat-actions">
+            
+          </div>
+        </div>
+        <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">3:01 PM</span></div>
+            <div class="chat-text">Agreed! so convenient.</div>
+            </div>
+                    <div class="chat-actions">
+            
+          </div>
+        </div>
+
+         <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:15 AM</span></div>
+            <div class="chat-text">
+                <p>Agreed, good to keep up to date.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+           
+          </div>
+          </div>
+                   <div class="date-divider">Last week</div>
+                   <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-purple">PD</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">11:03 AM</span></div>
+            <div class="chat-text">
+              <p>Meeting minutes from our first meeting. Any ammendments please reply promptly.
+                </div>
+              <div class="minutes">
+                <h3>Minutes</h3>
+
+                <h4>Meeting date: Monday</h4>
+
+                  <h4>Participants</h4>
+                    <ul>
+                      <li> <span class="username">New Leader</span>
+                      <li>Mark
+                      <li>Audrey
+                      <li>Jordan
+                      <li>Priya
+                    </ul>
+                     <br>
+                  <h4>Agenda items</h4>
+                    <ul>
+                      <li>Review team workload and priorities for the week.
+                      <li>Discuss allocation of new high-priority tasks.
+                      <li>Identify any resource or workload challenges.
+                      <li>Confirm support arrangements for Audrey’s planned leave.
+                    </ul>
+                     <br>
+                  <h4>Decisions made</h4>
+                    <ul>
+                      <li>The team acknowledged the week will require an “all hands on deck” approach due to the volume of high-priority work.
+                      <li><span class="username">New Leader</span> will be delegating tasks and supporting the team in addition to their regular responsibilities.
+                      <li>Mark is prepared to assist on coordinating upcoming tasks when appropriate.
+                      <li>Audrey advised she has approved leave booked for Friday and may not complete all assigned work before then.
+                      <li>Jordan has offered to assist Audrey with outstanding tasks.
+                      <li>Priya will remain focused on completing current tasks and will provide support when possible.
+                      <li>The team agreed to maintain regular communication throughout the week to monitor workloads and respond to changing priorities.
+                      <li>All team members prioritise work with this week’s deadline, communicate any emerging risks or delays, and support one another to ensure key deadlines are met.
+                    </ul>
+                     <br>
+                  <h4>Additional notes</h4>
+                      <ul>
+                        <li>Audrey shared that balancing current deadlines with planned leave has been challenging, but she is excited for her beach trip.
+                        <li>The team acknowledged that the upcoming week presents an opportunity to prove their ability to deliver high-quality outcomes under increased workload demands.
+                      </ul>
+                </div>
+                </div>
+            </div>
+                    <div class="chat-actions">
+            
+          </div>
+          <div class="chat-group" style="margin-top:4px">
+         <div class="chat-avatar av-teal"><span class="NL_icon_fill">N</span></div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name"><span class="username">New Leader</span></span><span class="chat-time">11:22 AM</span></div>
+            <div class="chat-text">
+               <p>Email will be out shortly with allocations for the coming week - it will be a tough week for us but together we can get through it.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+            
+          </div>
+       
+        </div>
+          </div>
+           <div class="chat-group" style="margin-top:4px">
+         <div class="chat-avatar av-teal"><span class="NL_icon_fill">N</span></div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name"><span class="username">New Leader</span></span><span class="chat-time">10:05 AM</span></div>
+            <div class="chat-text">
+               <p>Hi folks, just posted a new breakdown of tasks in our shared calendar. Let me know any concerns.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+          
+          </div>
+          </div>
+          <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:15 AM</span></div>
+            <div class="chat-text">Thanks! Looks good</div>
+            </div>
+                    <div class="chat-actions">
+          
+          </div>
+        </div>
+           <div class="chat-group" style="margin-top:4px">
+         <div class="chat-avatar av-teal"><span class="NL_icon_fill">N</span></div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name"><span class="username">New Leader</span></span><span class="chat-time">09:35 AM</span></div>
+            <div class="chat-text">
+               <p>Running late today, but will be in soon.</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+            
+          </div>
+          </div>
+          <div class="chat-group" style="margin-top:4px">
+          <div class="chat-avatar av-blue">MJ</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">11:08 AM</span></div>
+            <div class="chat-text">Thanks for keeping us in the loop.</div>
+            </div>
+                    <div class="chat-actions">
+            
+          </div>
+        </div>
+         <div class="date-divider">Today</div>
+           <div class="chat-group" style="margin-top:4px">
+        <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">11:03 AM</span></div>
+            <div class="chat-text">
+               <p>Hope everyone had a good weekend!!</p>
+                    </div>
+            </div>
+                    <div class="chat-actions">
+          
+          </div>
+          </div>
+        </div>
+         `
+      },
+  'jordan': {
       title: 'Jordan S',
       avatar: '<div class="chat-avatar av-teal">JS</div>',
       desc: 'Away · They/them · Joined 2 years ago',
       placeholder: 'Message Jordan S',
       html: `
-        <div class="date-divider">Yesterday</div>
+       <div class="date-divider">Older chats</div>
+        <div class="date-divider">Last week</div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
-            <div class="chat-text">
-              <p>Congratulations again on the new role. I have a few ideas I’d love to share once you’ve settled in.</p> </div>
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:37 AM</span></div>
+            <div class="chat-text">Got those files from Priya, I'll let you know how I go with them.</div>
           </div>
-             <div class="chat-actions">
+          <div class="chat-actions">
             
           </div>
-          </div>
-       
-      <div class="date-divider">Today</div>
+        </div>
         <div class="chat-group">
           <div class="chat-avatar av-teal">JS</div>
           <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:58 AM</span></div>
+            <div class="chat-meta"><span class="chat-name">Jordan S</span><span class="chat-time">10:27 AM</span></div>
             <div class="chat-text">
-              <p>Hi,  
-                <br><br>I was hoping to get some clarification on how responsibilities will be organised for the team moving forward, particularly regarding ownership for some higher-priority tasks. There are a few areas I’d like to discuss to make sure expectations are clear and sustainable. 
-                <br><br>
-                Nothing urgent at the moment, but I’d welcome the opportunity to check in with you when you have the time. 
-                <br><br>
-                Thanks,
-                <br><br>
-                Jordan.</p> </div>
+              <p>Hey,</p>
+              <p>I'm sorry I just saw your message in the team chat but I just got a call. There's been a medical emergency and I've got to leave basically right now - I know this is terrible timing. I'll message when I know more but I'm not sure I'll be back today. I might be out for the rest of the week.</p>
+              <p>So so sorry for this</p>
+              <p>Jordan</p></div>
           </div>
-             <div class="chat-actions">
+          <div class="chat-actions">
+           
+          </div>
+        </div>
+        `
+    },
+    'audrey': {
+      title: 'Audrey E',
+      avatar: '<div class="chat-avatar av-coral">AE</div>',
+      desc: 'Busy · She/her · Joined 6 years ago',
+      placeholder: 'Message Audrey E',
+      html: `
+       <div class="date-divider">Older chats</div>
+        <div class="date-divider">Last week</div>
+        <div class="chat-group">
+          <div class="chat-avatar av-coral">AE</div>
+          <div class="chat-content">
+            <div class="chat-meta"><span class="chat-name">Audrey E</span><span class="chat-time">10:14 AM</span></div>
+            <div class="chat-text">I've got a couple of questions about something, mind if we call in 5?</div>
+            </div>
+          <div class="chat-actions">
             
           </div>
-          </div>
-             
-        </div>
-      </div>
-    </div>
-        </div>
         </div>`
     },
     'priya': {
@@ -3029,41 +3385,17 @@ function sendNewEmail() {
       desc: 'Online · She/her · Joined 3 years ago',
       placeholder: 'Message Priya D',
       html: `
-        <div class="date-divider">Yesterday</div>
+      <div class="date-divider">Older chats</div>
+        <div class="date-divider">Last week</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
             <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">9:29 AM</span></div>
-            <div class="chat-text">Congratulations on joining the team.</div>
+            <div class="chat-text">Hey, I haven't heard back from Andrew. Do you know if he's in today?</div>
             </div>
           <div class="chat-actions">
             
           </div>
-</div>
-<div class="date-divider">Today</div>
-          <div class="chat-group">
-          <div class="chat-avatar av-purple">PD</div>
-          <div class="chat-content">
-            <div class="chat-meta"><span class="chat-name">Priya D</span><span class="chat-time">10:37 AM</span></div>
-            <div class="chat-text">
-                <p>Hello, 
-                    <br>  <br>
-                    Just follow up on how you’re planning to assign tasks across the new team. I’m currently working through my existing list of projects and have a workflow that’s been effective so far. I’d prefer to keep things as consistent as possible. 
-                    <br>  <br>
-                    Let me know how you want to approach oversight of tasks moving forward. 
-                    <br>  <br>
-                    Thanks, 
-                    <br>  <br>
-                    Priya.</p> 
-                </div>
-             </div>
-             <div class="chat-actions">
-            
-          </div>
-             </div>
-         
-      </div>
-    </div>
         </div>`
     }
   };
@@ -3165,32 +3497,25 @@ function playAudio() {
  const lastInitial = localStorage.getItem("lastInitialToken") || "a";
  const userIcon = username.slice(0, 1) + lastInitial.toUpperCase(); 
 
-const JORDAN_RESPONSE = 'mark_Response';
 
-function saveResponse(key, value) {
-  const cleanValue = typeof value === 'string' ? value.trim() : String(value ?? '');
-  localStorage.setItem(key, cleanValue);
+
+ //Script used to prepare responses to be saved to localStorage
+  function stripHtmlToText(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = typeof html === 'string' ? html : '';
+  return temp.textContent.replace(/\s+/g, ' ').trim();
 }
 
-function saveInteractionChoice(person, choiceId, responseText) {
-  let saved = {};
-  try {
-    saved = JSON.parse(localStorage.getItem('interactionChoices') || '{}');
-  } catch (e) {
-    saved = {};
-  }
+function saveMarkChoiceAndReply(optionEl, replyHtml) {
+  const choiceText = optionEl?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  const replyText = stripHtmlToText(replyHtml);
 
-  saved[person] = {
-    choiceId,
-    responseText: (responseText || '').toString().trim(),
-    savedAt: new Date().toISOString()
-  };
-
-  localStorage.setItem('interactionChoices', JSON.stringify(saved));
+  localStorage.setItem('MarkChoiceM3', choiceText);
+  localStorage.setItem('MarkResponseM3', replyText);
 }
 
 //Mark responses
-function mark1() {
+function mark1(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['mark'].html = `
@@ -3198,8 +3523,8 @@ function mark1() {
     <div class="chat-group">
       <div class="chat-avatar av-blue">MJ</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">9:58 AM</span></div>
+        <div class="chat-text">Sorry I was in another meeting when you called. I'll put some time in the calendar asap.</div>
       </div>
       <div class="chat-actions">
         
@@ -3272,11 +3597,13 @@ function mark1() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+      saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function mark2() {
+function mark2(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['mark'].html = `
@@ -3284,8 +3611,8 @@ function mark2() {
     <div class="chat-group">
       <div class="chat-avatar av-blue">MJ</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">9:58 AM</span></div>
+        <div class="chat-text">Sorry I was in another meeting when you called. I'll put some time in the calendar asap.</div>
       </div>
       <div class="chat-actions">
       </div>
@@ -3357,11 +3684,13 @@ function mark2() {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+      saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 
-function mark3() {
+function mark3(optionEl) {
   const chatBody = document.getElementById('chat-body');
 
   dms['mark'].html = `
@@ -3369,8 +3698,8 @@ function mark3() {
     <div class="chat-group">
       <div class="chat-avatar av-blue">MJ</div>
       <div class="chat-content">
-        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">10:58 AM</span></div>
-        <div class="chat-text">Congratulations again on the new role. I have a few ideas I'd love to share once you've settled in.</div>
+        <div class="chat-meta"><span class="chat-name">Mark J</span><span class="chat-time">9:58 AM</span></div>
+        <div class="chat-text">Sorry I was in another meeting when you called. I'll put some time in the calendar asap.</div>
       </div>
       <div class="chat-actions">
         
@@ -3443,12 +3772,14 @@ setTimeout(() => {
     requestAnimationFrame(() => newMsgEl.classList.add('visible'));
     chatBody.scrollTop = chatBody.scrollHeight;
 
+      saveMarkChoiceAndReply(optionEl, newMsgHTML);
+
     dms['mark'].html += `<div class="chat-group" style="margin-top:8px">${newMsgHTML}</div>`;
   }, 1400);
 }
 //Audrey 
 // Load default channel on startup
-setChat(dms['mark']);
+setChat(dms['adrian']);
 
 </script>
 </div>
@@ -3482,18 +3813,25 @@ document.addEventListener('DOMContentLoaded', function() {
     openApps(2);
 });
 
-//Controls appearance of popup
+//Controls appearance of popup email
 function openEmail() {
- document.getElementById("emailAlert").classList.add('emailAppear');
+ document.getElementById("emailAlert").classList.add('alertAppear');
   document.getElementById("emailAlert").classList.remove("hideMe");
 }
 
-//Ensure pop closes when clicked on or if desktop is clicked
-function closeEmail() {
-  document.getElementById("emailAlert").classList.remove('emailAppear');
-  document.getElementById("emailAlert").classList.add("hideMe");
+function openTeams() {
+  document.getElementById("teamsAlert").classList.add('alertAppear');
+  document.getElementById("teamsAlert").classList.remove("hideMe");
 }
 
+//Ensure pop closes when clicked on or if desktop is clicked
+function closeAlert(alertId = "emailAlert") {
+  const alert = document.getElementById(alertId);
+  alert.classList.remove('alertAppear');
+  alert.classList.add("hideMe");
+}
+
+//Email alert functionality
 function clickEmailAlert() {
    for (let i = 1; i <= 3; i++) {
         document.getElementById(`work${i}`).style.display = 'none';
@@ -3502,12 +3840,41 @@ function clickEmailAlert() {
     // Show selected work area
     document.getElementById('work2').style.display = 'flex';
     swapEmails(1);
-    closeEmail();
+    closeAlert("emailAlert");
 }
+
+//teams alert functionality for missed calls specifically
+function clickTeamsAlertPhone() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+     // Show phone section instead of chat
+    const phoneIcon = document.querySelectorAll('.activity-icon')[1];
+    setActive(phoneIcon);
+
+    closeAlert("teamsAlert");
+}
+
+function clickTeamsAlertChat() {
+  for (let i = 1; i <= 3; i++) {
+        document.getElementById(`work${i}`).style.display = 'none';
+    }
+    
+    // Show selected work area
+    document.getElementById('work3').style.display = 'flex';
+
+    closeAlert("teamsAlert");
+}
+
 function initiate() {
-  openEmail();
-  emailArrives();
+  openTeams();
 }
+
+
 
 (function () {
   function loadNote(storageKey, displayClass) {
