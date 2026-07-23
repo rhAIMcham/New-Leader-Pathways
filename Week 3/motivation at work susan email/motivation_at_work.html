@@ -1772,8 +1772,8 @@ audio {
       <div class="lock-overlay" id="lockOverlay">
         <div class="lock-blur"></div>
           <div class="lock-content">
-            <div class="lock-time" id="lockTime">11:17</div>
-            <div class="lock-date" id="lockDate">Thursday</div>
+            <div class="lock-time" id="lockTime">3:45</div>
+            <div class="lock-date" id="lockDate">Friday</div>
             <button class="lock-btn" id="unlockBtn" aria-label="Unlock desktop" onclick="setTimeout(initiate, 3000)">
               <svg class="ti ti-lock" aria-hidden="true" id="lockClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M152 225H72v-72C72 69.2 140.2 1 224 1s152 68.2 152 152v72h-80v-72a72 72 0 0 0-144 0z" class="fa-secondary"/><path d="M400 225H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V273a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
             <svg class="ti ti-lock" id="lockOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M576 152v80a23.94 23.94 0 0 1-24 24h-32a23.94 23.94 0 0 1-24-24v-80a72.11 72.11 0 0 0-72.7-72c-39.6.4-71.3 33.3-71.3 72.9V224h-80v-70.5C272 69.5 339.5.3 423.5 0S576 68 576 152z" class="fa-secondary"/><path d="M400 224H48a48 48 0 0 0-48 48v192a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V272a48 48 0 0 0-48-48zM264 392a40 40 0 0 1-80 0v-48a40 40 0 0 1 80 0z" class="fa-primary"/></svg>
@@ -1825,18 +1825,28 @@ audio {
       <span class="inbox-toolbar-title">Inbox</span>
       <span class="inbox-toolbar-count">1 message</span>
     </div>
-  <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
+          <div class="email-row" id="emailRow1"  onclick="swapEmails(1)" tabindex="0">
       <div class="email-row-top">
-         <span class="unread-dot"></span>
+        <span class="unread-dot"></span>
+        <span class="email-sender">Susan H</span>
+        <span class="email-time">3:35 pm</span>
+      </div>
+      <div class="email-subject">
+      Three weeks in
+      </div>
+      <div class="email-preview">Hey <span class="username">New Leader</span>, Congratulations! You made it...</div>
+    </div>
+  <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+      <div class="email-row-top">
         <span class="email-sender">Lesley E</span>
-        <span class="email-time">10:49 am</span>
+        <span class="email-time">Yesterday</span>
       </div>
       <div class="email-subject">
      Concerning cake
       </div>
       <div class="email-preview">Hi <span class="username">New Leader</span>, I wanted to make yo...</div>
     </div>
-   <div class="email-row" id="emailRow2"  onclick="swapEmails(2)" tabindex="0">
+   <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
         <span class="email-time">Tuesday</span>
@@ -1847,7 +1857,7 @@ audio {
       <div class="email-preview">I've been asked by Rafael from the marketing te...</div>
     </div>
 
-  <div class="email-row" id="emailRow3"  onclick="swapEmails(3)" tabindex="0">
+  <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
         <span class="email-time">Monday</span>
@@ -1858,7 +1868,7 @@ audio {
       <div class="email-preview">Hi Leaders, I hope everyone’s doing wel...</div>
     </div>
 
-      <div class="email-row" id="emailRow4"  onclick="swapEmails(4)" tabindex="0">
+      <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Taylor</span>
         <span class="email-time">Monday</span>
@@ -1869,7 +1879,7 @@ audio {
       <div class="email-preview">Thank you to everyone for the outstanding eff...</div>
     </div>
 
-      <div class="email-row" id="emailRow5"  onclick="swapEmails(5)" tabindex="0">
+      <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Monday</span>
@@ -1880,7 +1890,7 @@ audio {
       <div class="email-preview">Last chance to sign the E-Card before the pa...</div>
     </div>
 
-      <div class="email-row" id="emailRow6"  onclick="swapEmails(6)" tabindex="0">
+      <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Adrian</span>
         <span class="email-time">Saturday</span>
@@ -1891,7 +1901,7 @@ audio {
       <div class="email-preview">I want to extend my sincerely congratulation...</div>
     </div>
 
-      <div class="email-row" id="emailRow7"  onclick="swapEmails(7)" tabindex="0">
+      <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
         <span class="email-time">Friday</span>
@@ -1902,10 +1912,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>. Just wanted to check...</div>
     </div>
 
-      <div class="email-row" id="emailRow8"  onclick="swapEmails(8)" tabindex="0">
+      <div class="email-row" id="emailRow9"  onclick="swapEmails(9)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
       First week wrap-up
@@ -1913,10 +1923,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
 
-      <div class="email-row" id="emailRow9"  onclick="swapEmails(9)" tabindex="0">
+      <div class="email-row" id="emailRow10"  onclick="swapEmails(10)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Susan H</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
       First day on the job
@@ -1924,10 +1934,10 @@ audio {
       <div class="email-preview">Hey <span class="username">New Leader</span>! Welcome to your fi...</div>
     </div>
   
-    <div class="email-row" id="emailRow10"  onclick="swapEmails(10)" tabindex="0">
+    <div class="email-row" id="emailRow11"  onclick="swapEmails(11)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Mark J</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1936,10 +1946,10 @@ audio {
       <div class="email-preview">Hello, Thank you for your email and y...</div>
     </div>
     
-    <div class="email-row" id="emailRow11"  onclick="swapEmails(11)" tabindex="0">
+    <div class="email-row" id="emailRow12"  onclick="swapEmails(12)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Jordan S</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1948,10 +1958,10 @@ audio {
       <div class="email-preview">Hi, Thanks for your email and congr...</div>
     </div>
 
-    <div class="email-row" id="emailRow12"  onclick="swapEmails(12)" tabindex="0">
+    <div class="email-row" id="emailRow13"  onclick="swapEmails(13)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Audrey E</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1960,10 +1970,10 @@ audio {
       <div class="email-preview">Hey! First of all, congratulation...</div>
     </div>
 
-    <div class="email-row" id="emailRow13"  onclick="swapEmails(13)" tabindex="0">
+    <div class="email-row" id="emailRow14"  onclick="swapEmails(14)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Priya D</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">
        New Team Meeting
@@ -1972,19 +1982,19 @@ audio {
       <div class="email-preview">Congratulations. Sounds great. Se...</div>
     </div>
 
-    <div class="email-row" id="emailRow14" onclick="swapEmails(14)" tabindex="0">
+    <div class="email-row" id="emailRow15" onclick="swapEmails(15)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Newsletter</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">Your weekly digest</div>
       <div class="email-preview">Hello Team! This week we’d like to...</div>
     </div>
 
-    <div class="email-row" id="emailRow15" onclick="swapEmails(15)" tabindex="0">
+    <div class="email-row" id="emailRow16" onclick="swapEmails(16)" tabindex="0">
       <div class="email-row-top">
         <span class="email-sender">Eddie F</span>
-        <span class="email-time">Last week</span>
+        <span class="email-time">2 weeks ago</span>
       </div>
       <div class="email-subject">Induction pack</div>
       <div class="email-preview">Dear <span class="username">New Leader</span>, Congratulations on...</div>
@@ -1993,8 +2003,9 @@ audio {
 
   <!-- THREAD PANE -->
   <div class="thread-pane">
+
      <div id="thread1" class="thread-header" tabindex="0">
-      <div class="thread-subject">Concerning cake</div>
+      <div class="thread-subject">Three weeks in</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
@@ -2010,20 +2021,63 @@ audio {
         <div class="message-header">
           <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
           <div class="message-from">
-            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Lesley E</span></div>
-            <div class="message-address">le@organisation.com</div>
+            <div class="message-name"><span class="username">New Leader</span> <span class="message-name-to">to Susan H</span></div>
+            <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
              <button class="compose-send"  id="sendBtn">Send</button>
-          <span class="message-time">11:17 am</span>
+          <span class="message-time">3:50 pm</span>
         </div>
         <div class="message-body">
         <div class="compose-bar">
-      <textarea class="compose-input" type="textarea" placeholder="Reply to manager" id="learnerReplyCakegate" maxlength="50000"></textarea>
+      <textarea class="compose-input" type="textarea" placeholder="Reply to Susan" id="replyToSusan" maxlength="50000"></textarea>
     </div>
 </div>
 </div>
 </div>
+          <div class="message-card">
+        <div class="message-header">
+          <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
+          <div class="message-from">
+            <div class="message-name">Susan H <span class="message-name-to">to <span class="username">New Leader</span></span></div>
+            <div class="message-address">newleader@organisation.com</div>
+          </div>
+          <!-- <span class="private-badge">&#128274; new message</span> -->
+          <span class="message-time">3:40 pm</span>
+        </div>
+        <div class="message-body">
+          <p>Hi <span class="username">New Leader</span>, </p>
+          <p>Congratulations! You made it out the other side!</p>
+          <p>Stepping into a leadership role always comes with new challenges, and you have risen to the occasion. Now that you have practical leadership skills and strategies, you can start applying these techniques to guide your team. While the cake may have disappeared, hopefully the skills you’ve learned about communication, resolving conflict and giving feedback will stick around a little longer!</p>
+          <p>As you settle into your role, I’d encourage you to spend time reflecting on what you’ve learned and how you’ll put it into practice. Consider the kind of leader you want to be, what motivates you, and how you can create an environment where your team feels motivated, supported, and accountable. Leadership isn’t about having all the answers. Instead, prioritise learning, adapting to new situations and helping others succeed.</p>
+          <p>When you have time, answer these questions about your future development and send them back to me. Remember to be honest!</p>
+          <ul>
+            <li>What leadership skills do you feel most confident using?</li>
+            <li>Is there a task or scenario that you feel particularly proud of completing? What did you do well?</li>
+            <li>Looking back, is there any situation you would approach differently now? What have you learned since then?</li>
+            <li>What is one leadership habit or behaviour you would like to develop over the next three months?</li>
+            <li>Reflecting on this experience, what has been your biggest takeaway, and how will it influence the way you lead your team?</li>
+          </ul>
+          <p>I’m looking forward to seeing how you apply these skills as you continue to grow as a leader.</p>
+          <p>Enjoy your weekend, and I’ll see you on Monday.</p>
+          <p>Susan</p>
+          <p>Sent from my iPhone
+</p>
+        </div>
+      </div>
+</div>
+
+     <div id="thread2" class="thread-header" tabindex="0">
+      <div class="thread-subject">Concerning cake</div>
+      <div class="thread-meta">
+        <span class="tag tag-inbox">Inbox</span>
+        <div class="thread-actions">
+        </div>
+      </div>
+    </div>
+
+    <div id="threadBody2" class="thread-body" tabindex="0">
+
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy" id="SH_icon">LE</div>
@@ -2032,7 +2086,7 @@ audio {
             <div class="message-address">newleader@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-          <span class="message-time">Just now</span>
+          <span class="message-time">10:49 am</span>
         </div>
         <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
@@ -2054,7 +2108,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread2" class="thread-header" tabindex="0">
+    <div id="thread3" class="thread-header" tabindex="0">
       <div class="thread-subject">Unavailable for training guide task</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2063,7 +2117,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody2" class="thread-body" tabindex="0">
+    <div id="threadBody3" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="PD_icon" onclick="PDreveal()">PD</div>
@@ -2083,7 +2137,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread3" class="thread-header" tabindex="0">
+     <div id="thread4" class="thread-header" tabindex="0">
       <div class="thread-subject">Policy updates</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2094,7 +2148,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody3" class="thread-body" tabindex="0">
+    <div id="threadBody4" class="thread-body" tabindex="0">
       <div id="replyBody">
  <div class="message-card">
         <div class="message-header">
@@ -2155,7 +2209,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread4" class="thread-header" tabindex="0">
+     <div id="thread5" class="thread-header" tabindex="0">
       <div class="thread-subject">Great work last week</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2164,7 +2218,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody4" class="thread-body" tabindex="0">
+    <div id="threadBody5" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy" id="Taylor_icon">T</div>
@@ -2185,7 +2239,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread5" class="thread-header" tabindex="0">
+     <div id="thread6" class="thread-header" tabindex="0">
       <div class="thread-subject">E-Card reminder</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2194,7 +2248,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody5" class="thread-body" tabindex="0">
+    <div id="threadBody6" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -2214,7 +2268,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread6" class="thread-header" tabindex="0">
+     <div id="thread7" class="thread-header" tabindex="0">
       <div class="thread-subject">Successful product launch</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2223,7 +2277,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody6" class="thread-body" tabindex="0">
+    <div id="threadBody7" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-blue" id="Adrian_icon">A</div>
@@ -2246,7 +2300,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread7" class="thread-header" tabindex="0">
+     <div id="thread8" class="thread-header" tabindex="0">
       <div class="thread-subject">Second week check-in</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2256,7 +2310,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody7" class="thread-body" tabindex="0">
+    <div id="threadBody8" class="thread-body" tabindex="0">
 
           <div class="message-card">
         <div class="message-header">
@@ -2288,7 +2342,7 @@ audio {
       </div>
 </div>
 
-     <div id="thread8" class="thread-header" tabindex="0">
+     <div id="thread9" class="thread-header" tabindex="0">
       <div class="thread-subject">First week wrap-up</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2297,7 +2351,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody8" class="thread-body" tabindex="0">
+    <div id="threadBody9" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue" id="SH_icon" onclick="SHreveal()">SH</div>
@@ -2332,7 +2386,7 @@ audio {
         </div>
       </div>
 </div>
-     <div id="thread9" class="thread-header" tabindex="0">
+     <div id="thread10" class="thread-header" tabindex="0">
       <div class="thread-subject">First day on the job</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2341,7 +2395,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody9" class="thread-body" tabindex="0">
+    <div id="threadBody10" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
           <div class="message-card">
@@ -2391,7 +2445,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread10" class="thread-header" tabindex="0">
+     <div id="thread11" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2400,7 +2454,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody10" class="thread-body" tabindex="0">
+    <div id="threadBody11" class="thread-body" tabindex="0">
 
       <!-- Private reply 1 -->
       <div class="message-card">
@@ -2442,7 +2496,7 @@ audio {
       </div>
     </div>
 
-     <div id="thread11" class="thread-header" tabindex="0">
+     <div id="thread12" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2451,7 +2505,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody11" class="thread-body" tabindex="0">
+    <div id="threadBody12" class="thread-body" tabindex="0">
 
       <!-- Private reply 2 -->
       <div class="message-card">
@@ -2494,7 +2548,7 @@ audio {
 
     </div>
 
-    <div id="thread12" class="thread-header" tabindex="0">
+    <div id="thread13" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2503,7 +2557,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody12" class="thread-body" tabindex="0">
+    <div id="threadBody13" class="thread-body" tabindex="0">
 
       <!-- Private reply 3 -->
       <div class="message-card">
@@ -2544,7 +2598,7 @@ audio {
       </div>
 
     </div>
-   <div id="thread13" class="thread-header" tabindex="0">
+   <div id="thread14" class="thread-header" tabindex="0">
       <div class="thread-subject">New team meeting</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2553,7 +2607,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody13" class="thread-body" tabindex="0">
+    <div id="threadBody14" class="thread-body" tabindex="0">
 
       <!-- Private reply 4 -->
       <div class="message-card">
@@ -2590,7 +2644,7 @@ audio {
       </div>
     </div>
 
-    <div id="thread14" class="thread-header" tabindex="0">
+    <div id="thread15" class="thread-header" tabindex="0">
       <div class="thread-subject">Your weekly digest</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2599,7 +2653,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody14" class="thread-body" tabindex="0">
+    <div id="threadBody15" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-navy"><span class="NL_icon_fill">N</span></div>
@@ -2635,7 +2689,7 @@ audio {
       </div>
 </div>
 
-    <div id="thread15" class="thread-header" tabindex="0">
+    <div id="thread16" class="thread-header" tabindex="0">
       <div class="thread-subject">Induction pack</div>
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
@@ -2644,7 +2698,7 @@ audio {
       </div>
     </div>
 
-    <div id="threadBody15" class="thread-body" tabindex="0">
+    <div id="threadBody16" class="thread-body" tabindex="0">
           <div class="message-card">
         <div class="message-header">
           <div class="avatar avatar-lightblue">EF</div>
@@ -3167,7 +3221,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //update number of emails by increasing cap for for loop you idiot
 function swapEmails(threadNumber) {
     // Hide all thread headers and bodies
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= 16; i++) {
         document.getElementById(`thread${i}`).style.display = 'none';
         document.getElementById(`threadBody${i}`).style.display = 'none';
         document.getElementById(`emailRow${i}`).classList.remove("selected");
@@ -3197,17 +3251,33 @@ function reply() {
    document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
-const STORAGE_KEY_CAKE = 'learnerReplyCakegate';
-const learnerReply = document.getElementById('learnerReplyCakegate');  // ✅ Matches your input id
+const defaultValue = `What leadership skills do you feel most confident using?
+
+Is there a task or scenario that you feel particularly proud of completing? What did you do well?
+
+Looking back, is there any situation you would approach differently now? What have you learned since then?
+
+What is one leadership habit or behaviour you would like to develop over the next three months?
+
+Reflecting on this experience, what has been your biggest takeaway, and how will it influence the way you lead your team?
+`;
+
+
+
+const STORAGE_KEY_FINAL_EMAIL_W3 = 'motivationEmail';
+const learnerReply = document.getElementById('replyToSusan');  // ✅ Matches your input id
 const saveBtn = document.getElementById('sendBtn');
+
+if (localStorage.getItem(STORAGE_KEY_FINAL_EMAIL_W3) === null) 
+ localStorage.setItem(STORAGE_KEY_FINAL_EMAIL_W3, defaultValue);
 
 
 // Load existing note (if any)
-  const savedRUN = localStorage.getItem(STORAGE_KEY_CAKE);
+  const savedRUN = localStorage.getItem(STORAGE_KEY_FINAL_EMAIL_W3);
   if (savedRUN) learnerReply.value = savedRUN;
 
 saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_CAKE, learnerReply.value.trim());
+    localStorage.setItem(STORAGE_KEY_FINAL_EMAIL_W3, learnerReply.value.trim());
     saveBtn.classList.add('sent');
 });
 </script>
@@ -3399,7 +3469,7 @@ saveBtn.addEventListener('click', () => {
       desc: 'Online · She/her · Joined 3 years ago',
       placeholder: 'Message Adrian P',
       html: `
-        <div class="date-divider">Today</div>
+        <div class="date-divider">Wednesday</div>
         <div class="chat-group">
           <div class="chat-avatar av-green">AP</div>
           <div class="chat-content">
@@ -3729,7 +3799,7 @@ saveBtn.addEventListener('click', () => {
           <div class="chat-actions">
             
           </div>
-           <div class="date-divider">Today</div>
+           <div class="date-divider">Yesterday</div>
         <div class="chat-group">
           <div class="chat-avatar av-purple">PD</div>
           <div class="chat-content">
