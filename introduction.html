@@ -386,6 +386,7 @@ svg:hover {
   font-size: 12px;
   color: var(--text-secondary);
   cursor: pointer;
+  margin: 40px;
 }
 
 .btn:hover {
@@ -758,6 +759,7 @@ padding: 20px;
     flex-direction: column; 
     overflow: hidden;
     border-right: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 5px;
   }
 
   .sidebar-header {
@@ -1486,7 +1488,6 @@ audio {
 
 #chatSection {
   display: flex;
-  width: 100%;
 }
 
   #phoneSection {
@@ -1494,13 +1495,9 @@ audio {
   }
 
 .left-sidebar {
-  width: 80px;
   flex-direction: column;
 }
 
-.dm-item {
-    flex-direction: column;
-}
 .chat-pane {
     width: auto;
     overflow: auto;
@@ -1522,37 +1519,54 @@ audio {
   flex-direction: column;
 }
 
-}</style>
+}
+</style>
 <body>
   <div class="intro-display">
     <div id="emailAlert" class="hideMe" onclick="clickEmailAlert()" tabindex="0">
-              <div class="emailAlert  pulse-alert" tabindex="0">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
-                <p>New Email</p>
-              <!-- <button class="btn" onclick="closeEmail()">X</button> -->
-              </div>
+      <div class="emailAlert  pulse-alert" tabindex="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M256.47 352h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V400a48 48 0 0 0 48 48h416a48 48 0 0 0 48-48V183.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52zM464 64H48a48 48 0 0 0-48 48v19a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4 23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131v-19a48 48 0 0 0-48-48z" class="fa-secondary"/><path d="M512 131v52.36c-24.46 19.17-169.4 125.34-173 128.12-22.12 17.1-52.43 40.52-82.53 40.52h-.94c-30.1 0-60.41-23.42-82.54-40.52C169.39 308.7 24.77 202.7 0 183.33V131a24.08 24.08 0 0 0 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7 16.69 12.12 49.75 41.4 72.93 41.4h.94c23.18 0 56.24-29.28 72.93-41.4 132.7-96.3 142.8-104.7 173.4-128.7A23.93 23.93 0 0 0 512 131z" class="fa-primary"/></svg>
+        <p>New Email</p>
+      <!-- <button class="btn" onclick="closeEmail()">X</button> -->
+      </div>
 </div>
-               <button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
+<button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
 
 
 <div id="chatSection">
   <!-- LEFT SIDEBAR CHAT -->
   <div class="left-sidebar">
-        <div class="dm-item active" style="margin-top: 5px;" onclick="loadDM('jordan', this)" tabindex="0">
+        <div class="dm-item active pulse-btn" style="margin-top: 5px;" id="button1" tabindex="0">
       <div class="dm-avatar av-teal">JS<span class="status-dot status-away"></span></div>
       <span class="dm-name">Jordan S</span>
       <span class="dm-unread-count">1</span>
     </div>
 
-    <div class="dm-item" onclick="loadDM('priya', this)" tabindex="0">
+    <div class="dm-item" id="button2" tabindex="0">
       <div class="dm-avatar av-purple">PD<span class="status-dot status-busy"></span></div>
       <span class="dm-name">Priya D</span>
       <span class="dm-unread-count">1</span>
     </div>
-
-
   </div>
-
 </div>
-               </div>
+</div>
 </body>
+<script>
+const button1 = document.getElementById("button1");
+
+const button2 = document.getElementById("button2");
+
+button1.addEventListener('click', () => {
+  button1.classList.toggle('active');
+  button2.classList.toggle('active');
+    button1.classList.toggle('pulse-btn');
+  button2.classList.toggle('pulse-btn');
+});
+
+button2.addEventListener('click', () => {
+  button1.classList.toggle('active');
+  button2.classList.toggle('active');
+      button1.classList.toggle('pulse-btn');
+  button2.classList.toggle('pulse-btn');
+});
+</script>
