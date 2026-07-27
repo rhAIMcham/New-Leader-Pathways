@@ -335,7 +335,9 @@ td > h4 {
     </div>
 
     <script>
-        
+    const emotionalAgilityQuiz = 'emotionalAgilityQuizResult';
+    const testResponse = document.getElementById('results'); 
+
         const ratings = {};
         const questionList = [
             'q1',
@@ -385,23 +387,30 @@ td > h4 {
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
                         <div><p style="padding: 10px 0;">You typically manage your emotional state well at work. You are able to handle complex and stressful situations without carrying that stress forward into the rest of your working day. You are able priotisie a good outcome for all rather than being sidetracked by frustration.</p></div>
-                    `;
+                    `
+                    localStorage.setItem('emotionalAgilityQuiz', testResponse.textContent);
+                    ;
                 } else if (ratingCount === 10 && total > 22 && total < 37){
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
                         <div><p style="padding: 10px 0;">You can maintain your composure at times, but in some areas you struggle to remain focused if things are becoming more difficult or stressful. Challenging situations can create persistent stress.</p></div>
-
-                    `;
+                    `
+                    localStorage.setItem('emotionalAgilityQuiz', testResponse.textContent);
+                    ;
                 }  else if  (ratingCount === 10 && total > 37){
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 26px; margin: 15px 0; font-weight: 500;">Overall Score: ${total}</div>
                         <div><p style="padding: 10px 0;">You are likely struggling to remain composed at work quite frequently. Difficult conversations and emotional challenges can derail your whole day, impacting your wellbeing and functionality at work. Focusing on improving your emotional agility can help reduce some of this discomfort.</p></div>
-                    `;
+                    `
+                    localStorage.setItem('emotionalAgilityQuiz', testResponse.textContent);
+                    ;
                 }  else {
                     document.getElementById('average').innerHTML = `
                         <div style="font-size: 16px;">Complete all ratings to see your total score</div>
                         <div style="margin-top: 8px; font-size: 14px; opacity: 0.9;">${ratingCount} of 10 completed</div>
-                    `;
+                    `
+                    localStorage.setItem('emotionalAgilityQuiz', testResponse.textContent);
+                    ;
                 }
             } else {
                 document.getElementById('results').classList.remove('show');

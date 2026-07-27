@@ -1,5 +1,6 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
+        var ea1 = localStorage.getItem("emotionalAgilityQuiz") || "(no response saved)";
     var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
     var t2 = localStorage.getItem("timeTokensQ2") || "(no response saved)";
     var t3 = localStorage.getItem("timeTokensQ3") || "(no response saved)";
@@ -173,6 +174,7 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
             { title: "Why were certain decisions made?", response: dt1 },
             { title: "What may have triggered stress?", response: dt2 },
             { title: "What was your first instinct? Our first response to stress does not always lead to productive decision-making.", response: dt3 },
+            { title: "Emotional agility quiz", response: ea1 },
             { title: "Reflective email to Susan", response: n1 }
           ];
 
