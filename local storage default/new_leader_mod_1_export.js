@@ -4,6 +4,14 @@ window.InitUserScripts = function() {
     var n2 = localStorage.getItem("learnerReplyTwo") || "(no response saved)";
     var m1 = localStorage.getItem("discReplyOne") || "(no response saved)";
     var m2 = localStorage.getItem("discReplyTwo") || "(no response saved)";
+    var mark1 = localStorage.getItem("MarkChoice") || "(no response saved)";
+    var mark2 = localStorage.getItem("MarkResponse") || "(no response saved)";
+    var audrey1 = localStorage.getItem("AudreyChoice") || "(no response saved)";
+    var audrey2 = localStorage.getItem("AudreyResponse") || "(no response saved)";
+    var jordan1 = localStorage.getItem("JordanChoice") || "(no response saved)";
+    var jordan2 = localStorage.getItem("JordanResponse") || "(no response saved)";
+    var priya1 = localStorage.getItem("PriyaChoice") || "(no response saved)";
+    var priya2 = localStorage.getItem("PriyaResponse") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -26,6 +34,7 @@ window.InitUserScripts = function() {
           var pageH    = 842;
           var maxWidth = pageW - margin * 2;
           var lineH    = 17;
+          var FOOTER_RESERVE = 70;
 
           // ✏️ Brand color, derived from 060732
           var NAVY       = PDFLib.rgb(6 / 255, 7 / 255, 50 / 255);
@@ -67,26 +76,77 @@ window.InitUserScripts = function() {
           });
           y -= 30;
 
-          // ── Wrapped text helper ──────────────────────────────────────
+          // ── Wrapped text helper (page-break safe, supports **bold**) ──
           function drawWrapped(text, startY, size, fontRef, color, page) {
-            var words = text.split(" ");
-            var line  = "";
-            var curY  = startY;
-            for (var i = 0; i < words.length; i++) {
-              var test = line ? line + " " + words[i] : words[i];
-              if (fontRef.widthOfTextAtSize(test, size) > maxWidth && line) {
-                page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
-                curY -= lineH;
-                line = words[i];
-              } else {
-                line = test;
+            var paragraphs = text.split("\n");
+            var curY = startY;
+            var spaceWidth = fontRef.widthOfTextAtSize(" ", size);
+
+            function ensureRoom() {
+              if (curY < FOOTER_RESERVE) {
+                page = addPage();
+                curY = pageH - 60;
               }
             }
-            if (line) {
-              page.drawText(line, { x: margin, y: curY, size: size, font: fontRef, color: color });
+
+            function drawLine(lineWords) {
+              var x = margin;
+              for (var i = 0; i < lineWords.length; i++) {
+                var wFont = lineWords[i].bold ? fontBold : fontRef;
+                page.drawText(lineWords[i].text, { x: x, y: curY, size: size, font: wFont, color: color });
+                x += wFont.widthOfTextAtSize(lineWords[i].text, size) + spaceWidth;
+              }
               curY -= lineH;
+              ensureRoom();
             }
-            return curY;
+
+            for (var p = 0; p < paragraphs.length; p++) {
+              var paragraph = paragraphs[p];
+
+              if (paragraph === "") {
+                curY -= lineH;
+                ensureRoom();
+                continue;
+              }
+
+              // Split on ** markers: even-index segments are normal, odd-index are bold
+              var segments = paragraph.split("**");
+              var words = [];
+              for (var s = 0; s < segments.length; s++) {
+                var isBold = (s % 2 === 1);
+                var segWords = segments[s].split(" ");
+                for (var w = 0; w < segWords.length; w++) {
+                  if (segWords[w].length > 0) {
+                    words.push({ text: segWords[w], bold: isBold });
+                  }
+                }
+              }
+
+              var lineWords = [];
+              var lineWidth = 0;
+
+              for (var i = 0; i < words.length; i++) {
+                var wFont = words[i].bold ? fontBold : fontRef;
+                var wWidth = wFont.widthOfTextAtSize(words[i].text, size);
+                var addWidth = (lineWords.length > 0 ? spaceWidth : 0) + wWidth;
+
+                if (lineWidth + addWidth > maxWidth && lineWords.length > 0) {
+                  drawLine(lineWords);
+                  lineWords = [];
+                  lineWidth = 0;
+                  addWidth = wWidth;
+                }
+
+                lineWords.push(words[i]);
+                lineWidth += addWidth;
+              }
+
+              if (lineWords.length > 0) {
+                drawLine(lineWords);
+              }
+            }
+
+            return { page: page, y: curY };
           }
 
           // ── Section banner helper ───────────────────────────────────
@@ -112,12 +172,18 @@ window.InitUserScripts = function() {
           // ✏️ Update titles to match your exercises
           var exercises = [
             { title: "First email to Susan", response: n1 },
+            { title: "Mark - your choice", response: mark1 },
+            { title: "Mark - his response", response: mark2 },
+            { title: "Audrey - your choice", response: audrey1 },
+            { title: "Audrey - her response", response: audrey2 },
+            { title: "Jordan - your choice", response: jordan1 },
+            { title: "Jordan - their response", response: jordan2 },
+            { title: "Priya - your choice", response: priya1 },
+            { title: "Priya - her response", response: priya2 },
             { title: "Aspects that work in my favour", response: m1 },
             { title: "Aspects that might work against me", response: m2 },
             { title: "Second email to Susan", response: n2 }
           ];
-
-          var FOOTER_RESERVE = 70;
 
           for (var e = 0; e < exercises.length; e++) {
             var ex = exercises[e];
@@ -128,7 +194,11 @@ window.InitUserScripts = function() {
             }
 
             y = drawSectionBanner(ex.title, page, y);
-            y = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
+
+            var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
+            page = result.page;   // pick up whichever page we ended on
+            y = result.y;
+
             y -= 26;
 
             if (y < FOOTER_RESERVE && e < exercises.length - 1) {
