@@ -811,7 +811,7 @@
 </div>
 
 <script>
-  const PEOPLE = ['Mark', 'Audrey', 'Priya', 'Jordan'];
+  const PEOPLE = ['Jordan', 'Mark', 'Audrey', 'Priya'];
   const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const SLOTS = ['AM', 'PM'];
   const IMPORTANCE_LEVELS = ['Not important', 'Important'];
@@ -821,7 +821,7 @@
   const UNAVAILABLE = {
     'Audrey': ['Fri'],
     'Jordan': ['Mon'],
-    'Mark': ['Mon', 'Tue'],
+    'Mark': ['Mon', 'Tue', 'Wed'],
     'Priya': ['Tue', 'Wed'],
   };
 
@@ -830,17 +830,17 @@
   }
 
   const TASKS = [
-    { id: 'a', letter: 'A', name: 'Draft the project brief and define scope', cat: 'Project work / administerial (efficiency)', desc: 'This must be completed before your meetings for the week. Many of the details needed have been compiled already. The team member assigned to this task should be efficient and experienced.' },
-    { id: 'b', letter: 'B', name: 'Write the summary report', cat: 'Project work / administerial (efficiency)', desc: 'This cannot be completed before your meetings for the week. The team member assigned to this task should be experienced and thorough.' },
-    { id: 'c', letter: 'C', name: 'Conduct research and analysis', cat: 'Project work / administerial (efficiency)', desc: 'This may require input during your meetings for the week. The team member assigned to this task should be thorough and experienced.' },
-    { id: 'd', letter: 'D', name: 'Meeting with clients', cat: 'Client meetings / presentations (communication)', desc: 'To impress clients, it is important to prepare and practice your presentation beforehand. The team member assigned to this task should be experienced and communicative.' },
-    { id: 'e', letter: 'E', name: 'Run stakeholder alignment meeting', cat: 'Client meetings / presentations (communication)', desc: 'Presenting yourself and your team in a professional and informative way is crucial for success. The team member assigned to this task should be communicative and efficient.' },
-    { id: 'f', letter: 'F', name: 'Present the pitch for future projects', cat: 'Client meetings / presentations (communication)', desc: 'For this project, it is important to have completed research and industry analysis before presenting. The team member assigned to this task should be communicative and thorough.' },
-    { id: 'g', letter: 'G', name: 'Coordinate team communications', cat: 'Onsite meetings / travel (experience)', desc: 'Aligning different team members across different sites requires significant time-management skills. The team member assigned to this task should be experienced and communicative.' },
-    { id: 'h', letter: 'H', name: 'Conduct onsite inspection and report', cat: 'Onsite meetings / travel (experience)', desc: 'Onsite safety standards and other considerations must be regularly checked and updated. The team member assigned to this task should be thorough and experienced.' },
-    { id: 'i', letter: 'I', name: 'Verify work completion', cat: 'Onsite meetings / travel (experience)', desc: "Final checklists and completion guarantees product meets the client's expectations. The team member assigned to this task should be efficient and experienced." },
+    { id: 'a', letter: 'A', name: 'Draft the project brief and define scope', cat: 'Project work / administerial', desc: 'This must be completed before your meetings for the week. Many of the details needed have been compiled already. The team member assigned to this task should be reliable and persistent.' },
+    { id: 'b', letter: 'B', name: 'Present the pitch for future projects', cat: 'Client meetings / presentations', desc: 'For this project, it is important to have completed research and industry analysis before presenting. The team member assigned to this task should be confident and experienced.' },
+    { id: 'c', letter: 'C', name: 'Conduct research and analysis', cat: 'Project work / administerial', desc: 'This may require input during your meetings for the week. The team member assigned to this task should be detail oriented and motivated.' },
+    { id: 'd', letter: 'D', name: 'Meeting with clients', cat: 'Client meetings / presentations', desc: 'To impress clients, it is important to prepare and practice your presentation beforehand. The team member assigned to this task should be relationship oriented and communicative.' },
+    { id: 'e', letter: 'E', name: 'Coordinate team communications', cat: 'Onsite meetings / travel', desc: 'Aligning different team members across different sites requires significant time-management skills. The team member assigned to this task should be supportive and reliable.' },
+    { id: 'f', letter: 'F', name: 'Verify project completion', cat: 'Onsite meetings / travel', desc: "Final checklists and completion guarantees product meets the client's expectations. The team member assigned to this task should be independent and detail oriented." },
+    { id: 'g', letter: 'G', name: 'Present to leadership team', cat: 'Client meetings / presentations', desc: 'Presenting yourself and your team in a professional and informative way is crucial for success. The team member assigned to this task should be a strong communicator and influential.' },
+    { id: 'h', letter: 'H', name: 'Conduct onsite inspection and report', cat: 'Onsite meetings / travel', desc: 'Onsite safety standards and other considerations must be regularly checked and updated. The team member assigned to this task should be results oriented and experienced.' },
+    { id: 'i', letter: 'I', name: 'Write the summary report', cat: 'Project work / administerial', desc: 'This cannot be completed before your meetings for the week. The team member assigned to this task should be reliable and thorough.' },
   ];
-
+  
   // ---- ANSWER KEY ----
   // Edit these values to whatever the "correct" rating should be for each task.
   // importance: 'Not important' | 'Important'
