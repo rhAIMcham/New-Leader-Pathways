@@ -1,5 +1,6 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
+    var ls1 = localStorage.getItem("leadershipQuiz") || "(no response saved)";
     var n1 = localStorage.getItem("learnerReplyOne") || "(no response saved)";
     var n2 = localStorage.getItem("learnerReplyTwo") || "(no response saved)";
     var m1 = localStorage.getItem("discReplyOne") || "(no response saved)";
@@ -171,6 +172,7 @@ window.InitUserScripts = function() {
 
           // ✏️ Update titles to match your exercises
           var exercises = [
+            { title: "Leadership quiz", response: ls1 },
             { title: "First email to Susan", response: n1 },
             { title: "Mark - your choice", response: mark1 },
             { title: "Mark - his response", response: mark2 },
