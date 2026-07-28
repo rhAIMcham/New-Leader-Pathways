@@ -1814,7 +1814,9 @@ audio {
       <!-- <span class="sidebar-badge">1</span> -->
     </div>
     <div class="sidebar-item"><span class="sidebar-icon">&#10148;</span> Sent</div>
-    <div class="sidebar-item"><span class="sidebar-icon">&#9998;</span> Drafts</div>
+<div class="sidebar-item" onclick="openCompose()" tabindex="0">
+  <span class="sidebar-icon pulse-btn" id="drafts" >&#9998;</span> Drafts
+</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#9707;</span> Archive</div>
     <div class="sidebar-item"><span class="sidebar-icon">&#128465;</span> Trash</div>
   </nav>
@@ -1998,8 +2000,8 @@ audio {
       <div class="thread-meta">
         <span class="tag tag-inbox">Inbox</span>
         <div class="thread-actions">
-          <button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
-          <button class="btn">&#8943;</button>
+          <!-- <button class="btn pulse-btn" id="replyBtn" onclick="reply()" tabindex="0">&#8617; Reply</button>
+          <button class="btn">&#8943;</button> -->
         </div>
       </div>
     </div>
@@ -2679,7 +2681,31 @@ audio {
   </div><!-- end thread-pane -->
 </div>
 </div><!-- end mail-app -->
-
+<div id="composeNewEmail" class="messageHidden" style="position:absolute; top:80px; left:150px; z-index:1000;">
+  <div class="message-card" style="width:550px; background:white;">
+    <div class="message-header">
+      <div class="avatar avatar-teal" id="NL_icon"><span class="NL_icon_fill">N</span></div>
+      <div class="message-from">
+        <div class="message-name">New message</div>
+      </div>
+      <button class="btn" onclick="closeCompose()" style="margin-left:auto;">&#10005;</button>
+    </div>
+    <div class="message-body" style="padding:0;">
+      <div style="display:flex; flex-direction:column; gap:0;">
+        <div style="border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; color:var(--text-primary);">
+          <span style="color:var(--text-muted);">To:</span> Audrey E
+        </div>
+        <div style="border-bottom:1px solid var(--border-subtle); padding:10px 14px; font-size:13px; color:var(--text-primary);">
+          <span style="color:var(--text-muted);">Subject:</span> Disagreement with Kannika
+        </div>
+        <textarea id="composeBody" class="compose-input" placeholder="Write your message..." style="border:none; border-radius:0;"></textarea>
+      </div>
+    </div>
+    <div class="compose-bar" style="justify-content:flex-end; border-top:1px solid var(--border-subtle);">
+      <button class="compose-send" id="composeSendBtn" onclick="sendNewEmail()">Send</button>
+    </div>
+  </div>
+</div>
 <!--Card displaying angry text messages between audrey and Kannika-->
 <div id="text-chain-kannika-audrey_info_card" class="messageHidden" tabindex="0">
 <div class="carousel">
@@ -3197,19 +3223,97 @@ function reply() {
    document.getElementById("replyBtn").classList.remove("pulse-btn");
 }
 
-const STORAGE_KEY_CAKE = 'learnerReplyCakegate';
-const learnerReply = document.getElementById('learnerReplyCakegate');  // ✅ Matches your input id
-const saveBtn = document.getElementById('sendBtn');
+// const STORAGE_KEY_CAKE = 'learnerReplyCakegate';
+// const learnerReply = document.getElementById('learnerReplyCakegate');  // ✅ Matches your input id
+// const saveBtn = document.getElementById('sendBtn');
 
 
-// Load existing note (if any)
-  const savedRUN = localStorage.getItem(STORAGE_KEY_CAKE);
-  if (savedRUN) learnerReply.value = savedRUN;
+// // Load existing note (if any)
+//   const savedRUN = localStorage.getItem(STORAGE_KEY_CAKE);
+//   if (savedRUN) learnerReply.value = savedRUN;
 
-saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_CAKE, learnerReply.value.trim());
-    saveBtn.classList.add('sent');
-});
+// saveBtn.addEventListener('click', () => {
+//     localStorage.setItem(STORAGE_KEY_CAKE, learnerReply.value.trim());
+//     saveBtn.classList.add('sent');
+// });
+
+
+function openCompose() {
+  // Switch to mail work area first
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`work${i}`).style.display = 'none';
+  }
+  document.getElementById('work2').style.display = 'flex';
+
+  // Only the body persists — To/Subject are now static in the HTML
+  const savedBody = localStorage.getItem('draftEmailBody') || '';
+  document.getElementById('composeBody').value = savedBody;
+
+  document.getElementById('composeSendBtn').classList.remove('sent');
+  document.getElementById('composeSendBtn').textContent = 'Send';
+  document.getElementById('composeSendBtn').disabled = false;
+
+  document.getElementById('composeNewEmail').classList.add('messageRevealed');
+
+  document.getElementById('drafts').classList.remove('pulse-btn');
+}
+
+function closeCompose() {
+  const body = document.getElementById('composeBody').value.trim();
+  localStorage.setItem('draftEmailBody', body);
+
+  document.getElementById('composeNewEmail').classList.remove('messageRevealed');
+}
+
+function sendNewEmail() {
+  const body = document.getElementById('composeBody').value.trim();
+
+  document.getElementById('composeSendBtn').textContent = 'Sent';
+  document.getElementById('composeSendBtn').classList.add('sent');
+  document.getElementById('composeSendBtn').disabled = true;
+
+  localStorage.setItem('learnerReplyCakegate', body);
+
+  setTimeout(closeCompose, 900);
+}
+function openCompose() {
+  // Switch to mail work area first
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`work${i}`).style.display = 'none';
+  }
+  document.getElementById('work2').style.display = 'flex';
+
+  // Only the body persists — To/Subject are now static in the HTML
+  const savedBody = localStorage.getItem('draftEmailBody') || '';
+  document.getElementById('composeBody').value = savedBody;
+
+  document.getElementById('composeSendBtn').classList.remove('sent');
+  document.getElementById('composeSendBtn').textContent = 'Send';
+  document.getElementById('composeSendBtn').disabled = false;
+
+  document.getElementById('composeNewEmail').classList.add('messageRevealed');
+
+  document.getElementById('drafts').classList.remove('pulse-btn');
+}
+
+function closeCompose() {
+  const body = document.getElementById('composeBody').value.trim();
+  localStorage.setItem('draftEmailBody', body);
+
+  document.getElementById('composeNewEmail').classList.remove('messageRevealed');
+}
+
+function sendNewEmail() {
+  const body = document.getElementById('composeBody').value.trim();
+
+  document.getElementById('composeSendBtn').textContent = 'Sent';
+  document.getElementById('composeSendBtn').classList.add('sent');
+  document.getElementById('composeSendBtn').disabled = true;
+
+  localStorage.setItem('learnerReplyCakegate', body);
+
+  setTimeout(closeCompose, 900);
+} 
 </script>
 </div>
 </div>
