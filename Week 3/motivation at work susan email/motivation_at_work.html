@@ -103,6 +103,11 @@ svg {
 svg:hover {
   fill: var(--teal);
 }
+
+.white-svg {
+  fill: white !important;
+}
+
 .attached-images > svg {
     fill: var(--navy);
 
@@ -2088,10 +2093,11 @@ audio {
           <!-- <span class="private-badge">&#128274; new message</span> -->
           <span class="message-time">10:49 am</span>
         </div>
-        <div class="message-body">
+       <div class="message-body">
           <p>Hi <span class="username">New Leader</span>, </p>
           <p>I wanted to make you aware of a situation that developed this afternoon between one of your team members and another coworker.</p>
           <p>There seems to have been some disagreement after Kannika from the Sales team took the remaining birthday cake from the breakroom. Unfortunately, what began as a minor issue has escalated into a heated exchange between Kannika and Audrey through the company message chat. I’ve attached the chat log below.</p>
+          <p>I will be discussing this issue with Kannika to better understand what happened from her perspective, and reinforce the importance of respectful communication and appropriate conduct at work, so similar situations can be avoided in the future.</p>
           <p>I’d appreciate it if you could speak with your team member about the situation and help bring the matter to a constructive resolution. While the original issue may seem minor, the tone of the conversation has become unprofessional, and I want to clear the air before it begins to affect the working relationship between teams.</p>
           <p>Please let me know if you’d like to discuss the situation further or if there’s anything I can do to assist.</p>
           <br>
@@ -2102,7 +2108,7 @@ audio {
           <p>See attached images of the cake in question.</p>
           <br>
           <div class="attached-images" onclick="viewAttachments()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M608 0H160a32 32 0 0 0-32 32v96h160V64h192v320h128a32 32 0 0 0 32-32V32a32 32 0 0 0-32-32zM232 103a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9V73a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm352 208a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9v-30a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm0-104a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9v-30a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm0-104a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9V73a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9z" class="fa-secondary"/><path d="M416 160H32a32 32 0 0 0-32 32v288a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32zM96 224a32 32 0 1 1-32 32 32 32 0 0 1 32-32zm288 224H64v-32l64-64 32 32 128-128 96 96z" class="fa-primary"/></svg>
+            <svg id="imageAttach" class="pulse-btn white-svg" style="padding: 4px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><path d="M608 0H160a32 32 0 0 0-32 32v96h160V64h192v320h128a32 32 0 0 0 32-32V32a32 32 0 0 0-32-32zM232 103a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9V73a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm352 208a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9v-30a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm0-104a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9v-30a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9zm0-104a9 9 0 0 1-9 9h-30a9 9 0 0 1-9-9V73a9 9 0 0 1 9-9h30a9 9 0 0 1 9 9z" class="fa-secondary"/><path d="M416 160H32a32 32 0 0 0-32 32v288a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32zM96 224a32 32 0 1 1-32 32 32 32 0 0 1 32-32zm288 224H64v-32l64-64 32 32 128-128 96 96z" class="fa-primary"/></svg>
           </div>
         </div>
       </div>
@@ -2988,7 +2994,7 @@ audio {
   <div class="carousel-controls">
     <div class="carousel-arrow" onclick="carouselMove(-1)" tabindex="0">&#8249;</div>
     <div class="carousel-dots" id="carouselDots"></div>
-    <div class="carousel-arrow" onclick="carouselMove(1)" tabindex="0">&#8250;</div>
+    <div id="arrowBtn1" class="carousel-arrow pulse-btn" onclick="carouselMove(1)" tabindex="0">&#8250;</div>
   </div>
 </div>
   </div>
@@ -3105,8 +3111,11 @@ audio {
 
   window.carouselMove = function (dir) {
     goToSlide(current + dir);
+      var btn = document.getElementById("arrowBtn1");
+  btn.classList.remove('pulse-btn');
   };
 })();
+
 
 function reveal(cardId) {
   const infocard = document.getElementById(cardId);
@@ -3137,6 +3146,9 @@ function SHreveal() {
 
 function viewAttachments() {
    reveal("text-chain-kannika-audrey_info_card");
+   var icon = document.getElementById("imageAttach");
+   icon.classList.remove('pulse-btn');
+   icon.classList.remove('white-svg');
 }
 
 // Close popups when clicking outside
