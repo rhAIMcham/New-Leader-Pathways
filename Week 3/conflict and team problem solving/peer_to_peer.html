@@ -3417,7 +3417,7 @@ function openCompose() {
   document.getElementById('work2').style.display = 'flex';
 
   // Only the body persists — To/Subject are now static in the HTML
-  const savedBody = localStorage.getItem('draftEmailBody') || '';
+  const savedBody = localStorage.getItem('draftCakeEmailBody') || '';
   document.getElementById('composeBody').value = savedBody;
 
   document.getElementById('composeSendBtn').classList.remove('sent');
@@ -3431,7 +3431,7 @@ function openCompose() {
 
 function closeCompose() {
   const body = document.getElementById('composeBody').value.trim();
-  localStorage.setItem('draftEmailBody', body);
+  localStorage.setItem('draftCakeEmailBody', body);
 
   document.getElementById('composeNewEmail').classList.remove('messageRevealed');
 }
@@ -3455,7 +3455,7 @@ function openCompose() {
   document.getElementById('work2').style.display = 'flex';
 
   // Only the body persists — To/Subject are now static in the HTML
-  const savedBody = localStorage.getItem('draftEmailBody') || '';
+  const savedBody = localStorage.getItem('draftCakeEmailBody') || '';
   document.getElementById('composeBody').value = savedBody;
 
   document.getElementById('composeSendBtn').classList.remove('sent');
@@ -3469,7 +3469,7 @@ function openCompose() {
 
 function closeCompose() {
   const body = document.getElementById('composeBody').value.trim();
-  localStorage.setItem('draftEmailBody', body);
+  localStorage.setItem('draftCakeEmailBody', body);
 
   document.getElementById('composeNewEmail').classList.remove('messageRevealed');
 }
