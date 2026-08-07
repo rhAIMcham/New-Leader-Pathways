@@ -167,13 +167,13 @@ function drawWrapped(text, startY, size, fontRef, color, page) {
 
           // ✏️ Update titles to match your exercises
           var exercises = [
-            { title: "How have you naviagted unexpected workload increases in the past?", response: t1 },
-            { title: "How has company culture and team leadership contributed positively or negatively to your ability to navigate these situations in the past?", response: t2 },
-            { title: "How would you support your team in similar situations?", response: t3 },
+            { title: "How did you decide which tasks should be assigned, delayed, or prioritised?", response: t1 },
+            { title: "To what extent did you consider team member’s skills, experience and current workload when assigning tasks?", response: t2 },
+            { title: "How did the unexpected changes affect your approach to time management and prioritisation? What practical strategies could you apply to better manage similar situations in the future?", response: t3 },
             { title: "Decision tree choices", response: dtWhole },
-            { title: "Why were certain decisions made?", response: dt1 },
-            { title: "What may have triggered stress?", response: dt2 },
-            { title: "What was your first instinct? Our first response to stress does not always lead to productive decision-making.", response: dt3 },
+            { title: "What decision gave the strongest emotional response and how did these emotions influence the decisions you made?", response: dt1 },
+            { title: "Reflect on your choices throughout the activity. Were there any points where you could have paused, reframed the situation, or responded differently? How might this have changed the outcome for you or your team?", response: dt2 },
+            { title: "What strategies from this module, such as emotional self-management or delegation, would you use to better manage a situation like this in the future?", response: dt3 },
             { title: "Emotional agility quiz", response: ea1 },
             { title: "Reflective email to Susan", response: n1 }
           ];
