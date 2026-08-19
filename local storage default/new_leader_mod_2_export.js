@@ -1,4 +1,5 @@
-window.InitUserScripts = function() {
+function download1() {
+  window.InitUserScripts = function() {
   window.Script1 = function() {
         var ea1 = localStorage.getItem("emotionalAgilityQuiz") || "(no response saved)";
     var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
@@ -56,11 +57,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 1 AIM", {
+          page.drawText("New Leader Session 2 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 2  ·  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -320,11 +321,11 @@ window.Script1();window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 1 AIM", {
+          page.drawText("New Leader Session 2 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 2  ·  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -527,3 +528,4 @@ for (var e = 0; e < exercises.length; e++) {
 };
 window.InitUserScripts();
 window.Script1();
+}
