@@ -1,5 +1,4 @@
-function download1() {
-  window.InitUserScripts = function() {
+window.InitUserScripts = function() {
   window.Script1 = function() {
         var ea1 = localStorage.getItem("emotionalAgilityQuiz") || "(no response saved)";
     var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
@@ -57,11 +56,11 @@ function download1() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 2 AIM", {
+          page.drawText("New Leader Session 1 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 2  ·  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -321,11 +320,539 @@ window.Script1();window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 2 AIM", {
+          page.drawText("New Leader Session 1 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 2  ·  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
+            x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
+          });
+          y -= 14;
+          page.drawLine({
+            start: { x: margin, y: y },
+            end:   { x: pageW - margin, y: y },
+            thickness: 1.2,
+            color: NAVY
+          });
+          y -= 30;
+
+          // ── Wrapped text helper ──────────────────────────────────────
+function drawWrapped(text, startY, size, fontRef, color, page) {
+  var paragraphs = text.split("\n");
+  var curY = startY;
+  var spaceWidth = fontRef.widthOfTextAtSize(" ", size);
+
+  function ensureRoom() {
+    if (curY < FOOTER_RESERVE) {
+      page = addPage();
+      curY = pageH - 60;
+    }
+  }
+
+  function drawLine(lineWords) {
+    var x = margin;
+    for (var i = 0; i < lineWords.length; i++) {
+      var wFont = lineWords[i].bold ? fontBold : fontRef;
+      page.drawText(lineWords[i].text, { x: x, y: curY, size: size, font: wFont, color: color });
+      x += wFont.widthOfTextAtSize(lineWords[i].text, size) + spaceWidth;
+    }
+    curY -= lineH;
+    ensureRoom();
+  }
+
+  for (var p = 0; p < paragraphs.length; p++) {
+    var paragraph = paragraphs[p];
+
+    if (paragraph === "") {
+      curY -= lineH;
+      ensureRoom();
+      continue;
+    }
+
+    // Split on ** markers: even-index segments are normal, odd-index are bold
+    var segments = paragraph.split("**");
+    var words = [];
+    for (var s = 0; s < segments.length; s++) {
+      var isBold = (s % 2 === 1);
+      var segWords = segments[s].split(" ");
+      for (var w = 0; w < segWords.length; w++) {
+        if (segWords[w].length > 0) {
+          words.push({ text: segWords[w], bold: isBold });
+        }
+      }
+    }
+
+    var lineWords = [];
+    var lineWidth = 0;
+
+    for (var i = 0; i < words.length; i++) {
+      var wFont = words[i].bold ? fontBold : fontRef;
+      var wWidth = wFont.widthOfTextAtSize(words[i].text, size);
+      var addWidth = (lineWords.length > 0 ? spaceWidth : 0) + wWidth;
+
+      if (lineWidth + addWidth > maxWidth && lineWords.length > 0) {
+        drawLine(lineWords);
+        lineWords = [];
+        lineWidth = 0;
+        addWidth = wWidth;
+      }
+
+      lineWords.push(words[i]);
+      lineWidth += addWidth;
+    }
+
+    if (lineWords.length > 0) {
+      drawLine(lineWords);
+    }
+  }
+
+  return { page: page, y: curY };
+}
+
+          // ── Section banner helper ───────────────────────────────────
+          function drawSectionBanner(title, page, startY) {
+            var bannerH = 26;
+            page.drawRectangle({
+              x: margin,
+              y: startY - bannerH + 6,
+              width: maxWidth,
+              height: bannerH,
+              color: NAVY
+            });
+            page.drawText(title, {
+              x: margin + 10,
+              y: startY - bannerH + 14,
+              size: 12.5,
+              font: fontBold,
+              color: WHITE
+            });
+            return startY - bannerH - 12;
+          }
+
+          // ✏️ Update titles to match your exercises
+          var exercises = [
+            { title: "How have you naviagted unexpected workload increases in the past?", response: t1 },
+            { title: "How has company culture and team leadership contributed positively or negatively to your ability to navigate these situations in the past?", response: t2 },
+            { title: "How would you support your team in similar situations?", response: t3 },
+            { title: "Decision tree choices", response: dtWhole },
+            { title: "Why were certain decisions made?", response: dt1 },
+            { title: "What may have triggered stress?", response: dt2 },
+            { title: "What was your first instinct? Our first response to stress does not always lead to productive decision-making.", response: dt3 },
+            { title: "Emotional agility quiz", response: ea1 },
+            { title: "Reflective email to Susan", response: n1 }
+          ];
+
+          var FOOTER_RESERVE = 70;
+
+for (var e = 0; e < exercises.length; e++) {
+  var ex = exercises[e];
+
+  if (y < FOOTER_RESERVE + 60) {
+    page = addPage();
+    y = pageH - 60;
+  }
+
+  y = drawSectionBanner(ex.title, page, y);
+
+  var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
+  page = result.page;   // <-- important: pick up whichever page we ended on
+  y = result.y;
+
+  y -= 26;
+
+  if (y < FOOTER_RESERVE && e < exercises.length - 1) {
+    page = addPage();
+    y = pageH - 60;
+  }
+}
+
+          // ── Footer pass: thin rule + "Page X of Y" on every page ───
+          var total = pages.length;
+          for (var p = 0; p < total; p++) {
+            var pg = pages[p];
+            pg.drawLine({
+              start: { x: margin, y: 46 },
+              end:   { x: pageW - margin, y: 46 },
+              thickness: 0.75,
+              color: NAVY_TINT
+            });
+            var label = "Page " + (p + 1) + " of " + total;
+            var labelSize = 9;
+            var labelWidth = font.widthOfTextAtSize(label, labelSize);
+            pg.drawText(label, {
+              x: pageW - margin - labelWidth,
+              y: 32,
+              size: labelSize,
+              font: font,
+              color: MUTED_GRAY
+            });
+            pg.drawText("New leader program", {
+              x: margin,
+              y: 32,
+              size: labelSize,
+              font: font,
+              color: MUTED_GRAY
+            });
+          }
+
+          pdfDoc.save().then(function(pdfBytes) {
+            var blob = new Blob([pdfBytes], { type: "application/pdf" });
+            var url  = URL.createObjectURL(blob);
+            var a    = document.createElement("a");
+            a.href     = url;
+            a.download = "New Leader Session 2 AIM.pdf";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 5000);
+          });
+        });
+      }).catch(function(err) {
+        console.error("PDF build error:", err);
+      });
+    }
+
+    if (typeof PDFLib !== "undefined") {
+      buildAndDownload();
+    } else {
+      loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js",
+        function() { buildAndDownload(); }
+      );
+    }
+  };
+};
+window.InitUserScripts();
+window.Script1();window.InitUserScripts = function() {
+  window.Script1 = function() {
+        var ea1 = localStorage.getItem("emotionalAgilityQuiz") || "(no response saved)";
+    var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
+    var t2 = localStorage.getItem("timeTokensQ2") || "(no response saved)";
+    var t3 = localStorage.getItem("timeTokensQ3") || "(no response saved)";
+    var dtWhole = localStorage.getItem("studentChoices") || "(no response saved)";
+    var dt1 = localStorage.getItem("decisionTreeQ1") || "(no response saved)";
+    var dt2 = localStorage.getItem("decisionTreeQ2") || "(no response saved)";
+    var dt3 = localStorage.getItem("decisionTreeQ3") || "(no response saved)";
+    var n1 = localStorage.getItem("learnerReplyEmailWeek2") || "(no response saved)";
+
+    function loadScript(src, onload) {
+      var s = document.createElement("script");
+      s.src = src;
+      s.onload = onload;
+      s.onerror = function() { console.error("Failed to load: " + src); };
+      document.head.appendChild(s);
+    }
+
+    function buildAndDownload() {
+      PDFLib.PDFDocument.create().then(function(pdfDoc) {
+        Promise.all([
+          pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica),
+          pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
+        ]).then(function(fonts) {
+          var font     = fonts[0];
+          var fontBold = fonts[1];
+          var margin   = 50;
+          var pageW    = 595;
+          var pageH    = 842;
+          var maxWidth = pageW - margin * 2;
+          var lineH    = 17;
+
+          // ✏️ Brand color, derived from 060732
+          var NAVY       = PDFLib.rgb(6 / 255, 7 / 255, 50 / 255);
+          var NAVY_TINT  = PDFLib.rgb(0.90, 0.90, 0.95);
+          var WHITE      = PDFLib.rgb(1, 1, 1);
+          var BODY_GRAY  = PDFLib.rgb(0.20, 0.20, 0.22);
+          var MUTED_GRAY = PDFLib.rgb(0.45, 0.45, 0.48);
+
+          var pages = [];
+
+          function addPage() {
+            var page = pdfDoc.addPage([pageW, pageH]);
+            pages.push(page);
+            return page;
+          }
+
+          var page = addPage();
+          var y = pageH - 60;
+
+          // ── Cover header (page 1 only) ──────────────────────────────
+          var today = new Date();
+          var dateStr = today.toLocaleDateString("en-GB", {
+            day: "2-digit", month: "long", year: "numeric"
+          });
+
+          page.drawText("New Leader Session 1 AIM", {
+            x: margin, y: y, size: 21, font: fontBold, color: NAVY
+          });
+          y -= 22;
+          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
+            x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
+          });
+          y -= 14;
+          page.drawLine({
+            start: { x: margin, y: y },
+            end:   { x: pageW - margin, y: y },
+            thickness: 1.2,
+            color: NAVY
+          });
+          y -= 30;
+
+          // ── Wrapped text helper ──────────────────────────────────────
+function drawWrapped(text, startY, size, fontRef, color, page) {
+  var paragraphs = text.split("\n");
+  var curY = startY;
+  var spaceWidth = fontRef.widthOfTextAtSize(" ", size);
+
+  function ensureRoom() {
+    if (curY < FOOTER_RESERVE) {
+      page = addPage();
+      curY = pageH - 60;
+    }
+  }
+
+  function drawLine(lineWords) {
+    var x = margin;
+    for (var i = 0; i < lineWords.length; i++) {
+      var wFont = lineWords[i].bold ? fontBold : fontRef;
+      page.drawText(lineWords[i].text, { x: x, y: curY, size: size, font: wFont, color: color });
+      x += wFont.widthOfTextAtSize(lineWords[i].text, size) + spaceWidth;
+    }
+    curY -= lineH;
+    ensureRoom();
+  }
+
+  for (var p = 0; p < paragraphs.length; p++) {
+    var paragraph = paragraphs[p];
+
+    if (paragraph === "") {
+      curY -= lineH;
+      ensureRoom();
+      continue;
+    }
+
+    // Split on ** markers: even-index segments are normal, odd-index are bold
+    var segments = paragraph.split("**");
+    var words = [];
+    for (var s = 0; s < segments.length; s++) {
+      var isBold = (s % 2 === 1);
+      var segWords = segments[s].split(" ");
+      for (var w = 0; w < segWords.length; w++) {
+        if (segWords[w].length > 0) {
+          words.push({ text: segWords[w], bold: isBold });
+        }
+      }
+    }
+
+    var lineWords = [];
+    var lineWidth = 0;
+
+    for (var i = 0; i < words.length; i++) {
+      var wFont = words[i].bold ? fontBold : fontRef;
+      var wWidth = wFont.widthOfTextAtSize(words[i].text, size);
+      var addWidth = (lineWords.length > 0 ? spaceWidth : 0) + wWidth;
+
+      if (lineWidth + addWidth > maxWidth && lineWords.length > 0) {
+        drawLine(lineWords);
+        lineWords = [];
+        lineWidth = 0;
+        addWidth = wWidth;
+      }
+
+      lineWords.push(words[i]);
+      lineWidth += addWidth;
+    }
+
+    if (lineWords.length > 0) {
+      drawLine(lineWords);
+    }
+  }
+
+  return { page: page, y: curY };
+}
+
+          // ── Section banner helper ───────────────────────────────────
+          function drawSectionBanner(title, page, startY) {
+            var bannerH = 26;
+            page.drawRectangle({
+              x: margin,
+              y: startY - bannerH + 6,
+              width: maxWidth,
+              height: bannerH,
+              color: NAVY
+            });
+            page.drawText(title, {
+              x: margin + 10,
+              y: startY - bannerH + 14,
+              size: 12.5,
+              font: fontBold,
+              color: WHITE
+            });
+            return startY - bannerH - 12;
+          }
+
+          // ✏️ Update titles to match your exercises
+          var exercises = [
+            { title: "How did you decide which tasks should be assigned, delayed, or prioritised?", response: t1 },
+            { title: "To what extent did you consider team member’s skills, experience and current workload when assigning tasks?", response: t2 },
+            { title: "How did the unexpected changes affect your approach to time management and prioritisation? What practical strategies could you apply to better manage similar situations in the future?", response: t3 },
+            { title: "Decision tree choices", response: dtWhole },
+            { title: "What decision gave the strongest emotional response and how did these emotions influence the decisions you made?", response: dt1 },
+            { title: "Reflect on your choices throughout the activity. Were there any points where you could have paused, reframed the situation, or responded differently? How might this have changed the outcome for you or your team?", response: dt2 },
+            { title: "What strategies from this module, such as emotional self-management or delegation, would you use to better manage a situation like this in the future?", response: dt3 },
+            { title: "Emotional agility quiz", response: ea1 },
+            { title: "Reflective email to Susan", response: n1 }
+          ];
+
+          var FOOTER_RESERVE = 70;
+
+for (var e = 0; e < exercises.length; e++) {
+  var ex = exercises[e];
+
+  if (y < FOOTER_RESERVE + 60) {
+    page = addPage();
+    y = pageH - 60;
+  }
+
+  y = drawSectionBanner(ex.title, page, y);
+
+  var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
+  page = result.page;   // <-- important: pick up whichever page we ended on
+  y = result.y;
+
+  y -= 26;
+
+  if (y < FOOTER_RESERVE && e < exercises.length - 1) {
+    page = addPage();
+    y = pageH - 60;
+  }
+}
+
+          // ── Footer pass: thin rule + "Page X of Y" on every page ───
+          var total = pages.length;
+          for (var p = 0; p < total; p++) {
+            var pg = pages[p];
+            pg.drawLine({
+              start: { x: margin, y: 46 },
+              end:   { x: pageW - margin, y: 46 },
+              thickness: 0.75,
+              color: NAVY_TINT
+            });
+            var label = "Page " + (p + 1) + " of " + total;
+            var labelSize = 9;
+            var labelWidth = font.widthOfTextAtSize(label, labelSize);
+            pg.drawText(label, {
+              x: pageW - margin - labelWidth,
+              y: 32,
+              size: labelSize,
+              font: font,
+              color: MUTED_GRAY
+            });
+            pg.drawText("New leader program", {
+              x: margin,
+              y: 32,
+              size: labelSize,
+              font: font,
+              color: MUTED_GRAY
+            });
+          }
+
+          pdfDoc.save().then(function(pdfBytes) {
+            var blob = new Blob([pdfBytes], { type: "application/pdf" });
+            var url  = URL.createObjectURL(blob);
+            var a    = document.createElement("a");
+            a.href     = url;
+            a.download = "New Leader Session 2 AIM.pdf";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 5000);
+          });
+        });
+      }).catch(function(err) {
+        console.error("PDF build error:", err);
+      });
+    }
+
+    if (typeof PDFLib !== "undefined") {
+      buildAndDownload();
+    } else {
+      loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js",
+        function() { buildAndDownload(); }
+      );
+    }
+  };
+};
+window.InitUserScripts();
+window.Script1();window.InitUserScripts = function() {
+  window.Script1 = function() {
+        var ea1 = localStorage.getItem("emotionalAgilityQuiz") || "(no response saved)";
+    var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
+    var t2 = localStorage.getItem("timeTokensQ2") || "(no response saved)";
+    var t3 = localStorage.getItem("timeTokensQ3") || "(no response saved)";
+    var dtWhole = localStorage.getItem("studentChoices") || "(no response saved)";
+    var dt1 = localStorage.getItem("decisionTreeQ1") || "(no response saved)";
+    var dt2 = localStorage.getItem("decisionTreeQ2") || "(no response saved)";
+    var dt3 = localStorage.getItem("decisionTreeQ3") || "(no response saved)";
+    var n1 = localStorage.getItem("learnerReplyEmailWeek2") || "(no response saved)";
+
+    function loadScript(src, onload) {
+      var s = document.createElement("script");
+      s.src = src;
+      s.onload = onload;
+      s.onerror = function() { console.error("Failed to load: " + src); };
+      document.head.appendChild(s);
+    }
+
+    function buildAndDownload() {
+      PDFLib.PDFDocument.create().then(function(pdfDoc) {
+        Promise.all([
+          pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica),
+          pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
+        ]).then(function(fonts) {
+          var font     = fonts[0];
+          var fontBold = fonts[1];
+          var margin   = 50;
+          var pageW    = 595;
+          var pageH    = 842;
+          var maxWidth = pageW - margin * 2;
+          var lineH    = 17;
+
+          // ✏️ Brand color, derived from 060732
+          var NAVY       = PDFLib.rgb(6 / 255, 7 / 255, 50 / 255);
+          var NAVY_TINT  = PDFLib.rgb(0.90, 0.90, 0.95);
+          var WHITE      = PDFLib.rgb(1, 1, 1);
+          var BODY_GRAY  = PDFLib.rgb(0.20, 0.20, 0.22);
+          var MUTED_GRAY = PDFLib.rgb(0.45, 0.45, 0.48);
+
+          var pages = [];
+
+          function addPage() {
+            var page = pdfDoc.addPage([pageW, pageH]);
+            pages.push(page);
+            return page;
+          }
+
+          var page = addPage();
+          var y = pageH - 60;
+
+          // ── Cover header (page 1 only) ──────────────────────────────
+          var today = new Date();
+          var dateStr = today.toLocaleDateString("en-GB", {
+            day: "2-digit", month: "long", year: "numeric"
+          });
+
+          page.drawText("New Leader Session 1 AIM", {
+            x: margin, y: y, size: 21, font: fontBold, color: NAVY
+          });
+          y -= 22;
+          page.drawText("New leader programme  ·  Session 1  ·  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -528,4 +1055,3 @@ for (var e = 0; e < exercises.length; e++) {
 };
 window.InitUserScripts();
 window.Script1();
-}
