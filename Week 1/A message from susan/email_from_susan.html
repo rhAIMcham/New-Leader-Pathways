@@ -1810,7 +1810,6 @@ audio {
             <div class="message-address">sh@organisation.com</div>
           </div>
           <!-- <span class="private-badge">&#128274; new message</span> -->
-             <button class="compose-send" id="sendBtn">Send</button>
           <span class="message-time">1:30 pm</span>
         </div>
         <div class="message-body">
@@ -1818,6 +1817,7 @@ audio {
       <textarea tabindex="0" class="compose-input" type="textarea" placeholder="Reply to Susan" id="learnerReplyOne" maxlength="50000"></textarea>
     
     </div>
+     <button class="compose-send" id="sendBtn">Send</button>
 </div>
 </div>
 </div>
@@ -2399,7 +2399,14 @@ if (localStorage.getItem(STORAGE_KEY_REPLY_1) === null)
 saveBtn.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY_REPLY_1, learnerReply.value.trim());
      saveBtn.classList.add('sent');
+     saveBtn.innerHTML = "Sent";
 });
+
+
+  // Optional: auto-save while typing
+  learnerReply.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY_REPLY_1, learnerReply.value.trim());
+  });
 
 </script>
 </div>
