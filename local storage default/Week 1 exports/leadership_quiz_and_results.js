@@ -186,9 +186,11 @@ window.InitUserScripts = function() {
             fieldCounter += 1;
             var fieldName = "reflection_" + fieldCounter;
             var textField = form.createTextField(fieldName);
-            textField.setText("");
             textField.enableMultiline();
-            textField.setFontSize(10.5);
+            // addToPage() must run first — it's what creates the field's
+            // default appearance (/DA) stream. setFontSize()/setText() edit
+            // that stream, so calling them before addToPage throws
+            // "No /DA entry found for field".
             textField.addToPage(page, {
               x: margin,
               y: boxY,
@@ -198,6 +200,8 @@ window.InitUserScripts = function() {
               borderWidth: 1,
               backgroundColor: WHITE
             });
+            textField.setFontSize(10.5);
+            textField.setText("");
 
             return { page: page, y: boxY - 22 };
           }
