@@ -33,6 +33,10 @@ window.InitUserScripts = function() {
           var BODY_GRAY  = PDFLib.rgb(0.20, 0.20, 0.22);
           var MUTED_GRAY = PDFLib.rgb(0.45, 0.45, 0.48);
 
+          // ── Form, for the fillable reflection fields ────────────────
+          var form = pdfDoc.getForm();
+          var fieldCounter = 0;
+
           var pages = [];
 
           function addPage() {
@@ -159,6 +163,45 @@ window.InitUserScripts = function() {
             return startY - bannerH - 12;
           }
 
+          // ── Fillable reflection box helper ──────────────────────────
+          // Draws a label + bordered multiline text field the learner can
+          // type into once the PDF is open in Acrobat/Preview/etc.
+          function drawReflectionField(label, page, startY, boxHeight) {
+            boxHeight = boxHeight || 110;
+            var labelSize = 11;
+
+            // Page-break check: need room for label + box + a little breathing room
+            if (startY - labelSize - 8 - boxHeight < FOOTER_RESERVE) {
+              page = addPage();
+              startY = pageH - 60;
+            }
+
+            page.drawText(label, {
+              x: margin, y: startY, size: labelSize, font: fontBold, color: NAVY
+            });
+
+            var boxTop = startY - 8;
+            var boxY   = boxTop - boxHeight;
+
+            fieldCounter += 1;
+            var fieldName = "reflection_" + fieldCounter;
+            var textField = form.createTextField(fieldName);
+            textField.setText("");
+            textField.enableMultiline();
+            textField.setFontSize(10.5);
+            textField.addToPage(page, {
+              x: margin,
+              y: boxY,
+              width: maxWidth,
+              height: boxHeight,
+              borderColor: NAVY_TINT,
+              borderWidth: 1,
+              backgroundColor: WHITE
+            });
+
+            return { page: page, y: boxY - 22 };
+          }
+
           // ✏️ Update titles to match your exercises
           var exercises = [
             { title: "Leadership quiz result", response: ls1 },
@@ -179,13 +222,26 @@ window.InitUserScripts = function() {
             page = result.page;   // pick up whichever page we ended on
             y = result.y;
 
-            y -= 26;
+            y -= 20;
+
+            // Fillable reflection box for the learner, right under their answer
+            var reflectionResult = drawReflectionField(
+              "Your reflection on this response:", page, y, 110
+            );
+            page = reflectionResult.page;
+            y = reflectionResult.y;
+
+            y -= 14;
 
             if (y < FOOTER_RESERVE && e < exercises.length - 1) {
               page = addPage();
               y = pageH - 60;
             }
           }
+
+          // Make sure the typed-in text actually renders when viewed,
+          // even in readers that don't auto-generate field appearances.
+          form.updateFieldAppearances(font);
 
           // ── Footer pass: thin rule + "Page X of Y" on every page ───
           var total = pages.length;
