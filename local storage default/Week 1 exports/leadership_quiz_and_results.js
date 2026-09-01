@@ -12,11 +12,14 @@ window.InitUserScripts = function() {
     }
 
     function buildAndDownload() {
+      console.log("[LeaderPDF] buildAndDownload start");
       PDFLib.PDFDocument.create().then(function(pdfDoc) {
-        Promise.all([
+        console.log("[LeaderPDF] PDFDocument created");
+        return Promise.all([
           pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica),
           pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
         ]).then(function(fonts) {
+          console.log("[LeaderPDF] fonts embedded");
           var font     = fonts[0];
           var fontBold = fonts[1];
           var margin   = 50;
@@ -292,7 +295,8 @@ window.InitUserScripts = function() {
             });
           }
 
-          pdfDoc.save().then(function(pdfBytes) {
+          return pdfDoc.save().then(function(pdfBytes) {
+            console.log("[LeaderPDF] pdfBytes ready, length:", pdfBytes.length);
             var blob = new Blob([pdfBytes], { type: "application/pdf" });
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
@@ -301,6 +305,7 @@ window.InitUserScripts = function() {
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
+            console.log("[LeaderPDF] download triggered");
             setTimeout(function() {
               document.body.removeChild(a);
               URL.revokeObjectURL(url);
@@ -308,16 +313,20 @@ window.InitUserScripts = function() {
           });
         });
       }).catch(function(err) {
-        console.error("PDF build error:", err);
+        console.error("[LeaderPDF] PDF build error:", err);
       });
     }
 
+    console.log("[LeaderPDF] Script1 invoked, PDFLib defined?", typeof PDFLib !== "undefined");
     if (typeof PDFLib !== "undefined") {
       buildAndDownload();
     } else {
       loadScript(
         "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js",
-        function() { buildAndDownload(); }
+        function() {
+          console.log("[LeaderPDF] pdf-lib loaded from CDN");
+          buildAndDownload();
+        }
       );
     }
   };
