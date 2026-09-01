@@ -206,10 +206,18 @@ window.InitUserScripts = function() {
             return { page: page, y: boxY - 22 };
           }
 
-          // ✏️ Update titles to match your exercises
+          // ✏️ Update titles, intro text, and reflection prompt to match your exercises
           var exercises = [
-            { title: "Leadership quiz result", response: ls1 },
-            { title: "Leadership quiz reflection", response: ls2 }
+            {
+              title: "Leadership quiz result",
+              intro: "Below is the response you gave during this exercise. Read back over it before you write your reflection.",
+              response: ls1
+            },
+            {
+              title: "Leadership quiz reflection",
+              intro: "Below is the response you gave during this exercise. Read back over it before you write your reflection.",
+              response: ls2
+            }
           ];
 
           for (var e = 0; e < exercises.length; e++) {
@@ -221,6 +229,14 @@ window.InitUserScripts = function() {
             }
 
             y = drawSectionBanner(ex.title, page, y);
+
+            // Intro paragraph — plain body text, sits above the learner's response
+            if (ex.intro) {
+              var introResult = drawWrapped(ex.intro, y, 11, font, MUTED_GRAY, page);
+              page = introResult.page;
+              y = introResult.y;
+              y -= 14;
+            }
 
             var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
             page = result.page;   // pick up whichever page we ended on
