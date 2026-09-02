@@ -811,18 +811,18 @@
 </div>
 
 <script>
-  const PEOPLE = ['Jordan', 'Mark', 'Audrey', 'Priya'];
+  const PEOPLE = ['Sam', 'Daniel', 'Imogen', 'Chaya'];
   const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const SLOTS = ['AM', 'PM'];
   const IMPORTANCE_LEVELS = ['Not important', 'Important'];
   const URGENCY_LEVELS = ['Not urgent', 'Urgent'];
 
-  // People who are unavailable on certain days, e.g. { 'Audrey': ['Fri'] }
+  // People who are unavailable on certain days, e.g. { 'Imogen': ['Fri'] }
   const UNAVAILABLE = {
-    'Audrey': ['Fri'],
-    'Jordan': ['Mon'],
-    'Mark': ['Mon', 'Tue', 'Wed'],
-    'Priya': ['Tue', 'Wed'],
+    'Imogen': ['Fri'],
+    'Sam': ['Mon'],
+    'Daniel': ['Mon', 'Tue', 'Wed'],
+    'Chaya': ['Tue', 'Wed'],
   };
 
   function isPersonUnavailable(person, day) {
@@ -847,15 +847,15 @@
   // difficulty (urgency): 'Not urgent' | 'Urgent'
   // eligible: array of names from PEOPLE who SHOULD be marked eligible (order doesn't matter)
   const ANSWER_KEY = {
-    a: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Mark', 'Priya'] },
-    b: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Priya', 'Jordan'] },
-    c: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Priya'] },
-    d: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Mark', 'Audrey'] },
-    e: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Audrey', 'Mark'] },
-    f: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Audrey'] },
-    g: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Mark', 'Audrey'] },
-    h: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Priya', 'Jordan'] },
-    i: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Jordan', 'Mark'] },
+    a: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Daniel', 'Chaya'] },
+    b: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Chaya', 'Sam'] },
+    c: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Chaya'] },
+    d: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Daniel', 'Imogen'] },
+    e: { importance: 'Important',     difficulty: 'Not urgent', eligible: ['Imogen', 'Daniel'] },
+    f: { importance: 'Not important', difficulty: 'Urgent',     eligible: ['Imogen'] },
+    g: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Daniel', 'Imogen'] },
+    h: { importance: 'Important',     difficulty: 'Urgent',     eligible: ['Chaya', 'Sam'] },
+    i: { importance: 'Not important', difficulty: 'Not urgent', eligible: ['Sam', 'Daniel'] },
   };
 
   let ratings = {};
