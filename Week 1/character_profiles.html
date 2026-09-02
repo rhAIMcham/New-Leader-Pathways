@@ -1,161 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>MCQ Single Screen</title>
-  <meta charset="UTF-8" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Character Impressions</title>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 <style>
- *, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* =====================
-    COLOUR TOKENS
-===================== */
-  :root {
-  --AIMblue: #4353A3;
-  --darkBlue: #38416D;
-  --teal: #5DC8B9;
-  --cream: #F1EEDE;
-  --grey: #e7e9ec;
-  --rust: #AF4510;
-  --navy: #12195C;
-  --white: #ffffff;
-  --lightBlue: #AEBAE4;
-  --bg-app:          #f0ede8;
-  --bg-sidebar:      #e8e4de;
-  --bg-activity-pane:#454545;
-  --bg-panel:        #ffffff;
-  --bg-message-head: #f5f3f0;
-  --bg-private-tag:  #fff0ee;
-  --bg-unread-dot:   #378add;
-  --bg-avatar-blue:  #b5d4f4;
-  --bg-avatar-teal:  #9fe1cb;
-  --bg-selected-row: #e6f1fb;
-  --bg-badge:        #d85a30;
-  --bg-input:        #f5f3f0;
-
-  --text-primary:    #1a1a1a;
-  --text-secondary:  #666660;
-  --text-muted:      #999994;
-  --text-avatar-blue:#0c447c;
-  --text-avatar-teal:#085041;
-  --text-private:    #993c1d;
-  --text-badge:      #ffffff;
-  --text-link:       #185fa5;
-
-  --border-subtle:   #dedad3;
-  --border-medium:   #ccc8c0;
-
-  --radius-sm:  6px;
-  --radius-md:  8px;
-  --radius-lg:  12px;
-  --radius-pill:99px;
-
-      --purple-dark: #464775;
-  --purple-mid:  #6264A7;
-  --purple-light:#9EA2D4;
-  --sidebar-bg:  #1b1b2e;
-  --channel-bg:  #252538;
-  --chat-bg:     #ffffff;
-  --text-primary:#1a1a1a;
-  --text-secondary:#555;
-  --text-muted:  #999;
-  --border:      rgba(0,0,0,0.1);
-  --bg-secondary:#f5f5f5;
-  --bg-primary:  #ffffff;
-  --online:      #6EBB8A;
-  --away:        #F4A540;
-  --busy:        #E04D4D;
-  --unread:      #D65B8E;
-  --radius-md:   8px;
-  --radius-lg:   12px;
+  :root{
+    --AIMblue: #4353A3;
+    --darkBlue: #38416D;
+    --teal: #5DC8B9;
+    --cream: #F1EEDE;
+    --grey: #ebebeb;
+    --rust: #AF4510;
+    --navy: #12195C;
+    --white: #ffffff;
+    --lightBlue: #AEBAE4;
   }
 
-body {
-   font-family: "IBM-Plex-Sans", sans-serif;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "IBM Plex Sans", sans-serif;
     padding: 20px;
     min-height: 100vh;
-}
+    background: var(--grey);
+  }
 
-.container {
+  .container {
     max-width: 1200px;
     margin: 0 auto;
     background: white;
     border-radius: 12px;
     padding: 30px;
-    /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); */
-        display: flex;
+    display: flex;
     flex-wrap: wrap;
-}
+    gap: 24px;
+  }
 
-h1 {
+  h1 {
     color: var(--darkBlue);
     margin-bottom: 10px;
     font-size: 28px;
-}
+    width: 100%;
+  }
 
-.character-card {
-    width: 500px;
-}
+  .character-card {
+    width: calc(50% - 12px);
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
+  .character-name {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+  }
+
+  .character-info {
+    color: #4a5568;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 14px;
+    color: var(--darkBlue);
+    border: 2px solid var(--lightBlue);
+    border-radius: 8px;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--AIMblue);
+  }
+
+  button.save-btn {
+    position: relative;
+    align-self: flex-start;
+    color: white;
+    background: var(--navy);
+    width: 140px;
+    border: solid 2px var(--cream);
+    border-radius: 8px;
+    margin-top: 4px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 0.95rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    transition: all 0.2s ease;
+  }
+
+  button.save-btn:hover {
+    background-color: var(--lightBlue);
+    color: var(--navy);
+    border: solid 2px var(--navy);
+  }
+
+  button.save-btn.sent {
+    background-color: var(--teal);
+    border-color: var(--teal);
+    color: var(--navy);
+  }
+
+  @media (max-width: 768px) {
+    .character-card {
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-    <div class="character-card">
-        <div>
-            Daniel J
-        </div>
-        <div>
-            GIven info
-        </div>
-        <div>
-         <textarea placeholder="What is your impression of Daniel?"></textarea>
-        </div>
-    </div>
+  <h1>Character Impressions</h1>
 
-    <div class="character-card">
-        <div>
-            Imogen E
-        </div>
-        <div>
-            GIven info
-        </div>
-        <div>
-         <textarea placeholder="What is your impression of Imogen?"></textarea>
-        </div>
-    </div>
+  <div class="character-card" data-character="daniel">
+    <div class="character-name">Daniel J</div>
+    <div class="character-info">Given info</div>
+    <textarea placeholder="What is your impression of Daniel?"></textarea>
+    <button class="save-btn">Save</button>
+  </div>
 
-    <div class="character-card">
-        <div>
-            Sam S
-        </div>
-        <div>
-            GIven info
-        </div>
-        <div>
-         <textarea placeholder="What is your impression of Sam?"></textarea>
-        </div>
-    </div>
+  <div class="character-card" data-character="imogen">
+    <div class="character-name">Imogen E</div>
+    <div class="character-info">Given info</div>
+    <textarea placeholder="What is your impression of Imogen?"></textarea>
+    <button class="save-btn">Save</button>
+  </div>
 
-    <div class="character-card">
-        <div>
-            Chaya D
-        </div>
-        <div>
-            GIven info
-        </div>
-        <div>
-         <textarea placeholder="What is your impression of Chaya?"></textarea>
-        </div>
-    </div>
+  <div class="character-card" data-character="sam">
+    <div class="character-name">Sam S</div>
+    <div class="character-info">Given info</div>
+    <textarea placeholder="What is your impression of Sam?"></textarea>
+    <button class="save-btn">Save</button>
+  </div>
+
+  <div class="character-card" data-character="chaya">
+    <div class="character-name">Chaya D</div>
+    <div class="character-info">Given info</div>
+    <textarea placeholder="What is your impression of Chaya?"></textarea>
+    <button class="save-btn">Save</button>
+  </div>
 </div>
+
+<script>
+  // In-memory store standing in for localStorage inside this preview
+  // (browser storage isn't available in the artifact sandbox). Drop this
+  // in as your real localStorage in your own environment — the API is
+  // identical, just swap `memoryStore` calls for `localStorage` calls.
+  const storage = {
+    getItem: key => (key in localStorage ? localStorage[key] : null),
+    setItem: (key, value) => { localStorage[key] = value; }
+  };
+
+  document.querySelectorAll('.character-card').forEach(card => {
+    const character = card.dataset.character;
+    const storageKey = `characterImpression_${character}`;
+    const textarea = card.querySelector('textarea');
+    const saveBtn = card.querySelector('.save-btn');
+
+    // Initialize storage if empty
+    if (storage.getItem(storageKey) === null) {
+      storage.setItem(storageKey, '');
+    }
+
+    // Load existing note (if any)
+    const saved = storage.getItem(storageKey);
+    if (saved) textarea.value = saved;
+
+    // Save on button click
+    saveBtn.addEventListener('click', () => {
+      storage.setItem(storageKey, textarea.value.trim());
+      saveBtn.classList.add('sent');
+      saveBtn.textContent = 'Saved';
+      setTimeout(() => {
+        saveBtn.classList.remove('sent');
+        saveBtn.textContent = 'Save';
+      }, 1200);
+    });
+
+    // Auto-save while typing
+    textarea.addEventListener('input', () => {
+      storage.setItem(storageKey, textarea.value.trim());
+    });
+  });
+</script>
 </body>
 </html>
