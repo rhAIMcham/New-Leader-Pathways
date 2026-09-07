@@ -1,7 +1,6 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
-    var ls1 = localStorage.getItem("leadershipQuiz") || "(no response saved)";
-    var ls2 = localStorage.getItem("leadershipQuizReflection") || "(no response saved)";
+    var ls1 = localStorage.getItem("learnerReplyOne") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -57,11 +56,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 1 1/5 AIM", {
+          page.drawText("New Leader Session 1 2/6 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 1  · 1/5  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 1  · 2/6  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -212,14 +211,9 @@ window.InitUserScripts = function() {
           // ✏️ Update titles, intro text, and reflection prompt to match your exercises
           var exercises = [
             {
-              title: "Leadership quiz result",
-              intro: "Below is the response you gave during this exercise. Read back over it before you write your reflection.",
+              title: "Responding to an email from Susan",
+              intro: "Susan sent you a welcome email when you began your week. She prompted you to reflect on yourself, your new team and some potential challenges in this new role.",
               response: ls1
-            },
-            {
-              title: "Leadership quiz reflection",
-              intro: "Below is the response you gave during this exercise. Read back over it before you write your reflection.",
-              response: ls2
             }
           ];
 
@@ -286,7 +280,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader program 1/5", {
+            pg.drawText("New leader program 2/6", {
               x: margin,
               y: 32,
               size: labelSize,
@@ -301,7 +295,7 @@ window.InitUserScripts = function() {
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 1 1/5 AIM.pdf";
+            a.download = "New Leader Session 1 2/6 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
