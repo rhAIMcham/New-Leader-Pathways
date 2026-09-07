@@ -872,7 +872,7 @@
         <button class="ghost-btn" onclick="resetScheduleOnly()">Reset schedule only</button>
         <button class="ghost-btn" onclick="startOver()">Start completely over</button>
       </div>
-      <div class="export-hint">Saves a text summary of your final schedule to this browser's local storage.</div>
+      <div class="export-hint">Continue to the next section to reflect on your choices and save your combined PDF.</div>
     </div>
   </div>
 
@@ -1269,11 +1269,11 @@
     const { numCorrect, total } = scoreSummary();
     let msg;
     if (numCorrect === total) {
-      msg = `Great work — all ${total} tasks matched the suggested importance, urgency, and eligibility calls. You're ready to build the weekly schedule.`;
+      msg = `You rated all ${total} tasks, great work! Assigning tasks is a complex skill and as you get to know your team and their strengths better, the process will get easier. Sometimes there is a clear 'right' choice - for example assigning Imogen to tasks requiring great communication and influence, or Chaya to a task requiring an independent and detail oriented team member. Sometimes a task could be completed by anyone on your team - every project and problem is different. Continue on to scheduling, and return any time to adjust your selections in this section.`;
     } else if (numCorrect >= total * 0.6) {
-      msg = `You rated all ${total} tasks, and ${numCorrect} of them lined up with the suggested answer key. Solid effort — you can head into scheduling now, or go back and take another look first.`;
+      msg = `You rated all ${total} tasks, great work! Assigning tasks is a complex skill and as you get to know your team and their strengths better, the process will get easier. Sometimes there is a clear 'right' choice - for example assigning Imogen to tasks requiring great communication and influence, or Chaya to a task requiring an independent and detail oriented team member. Sometimes a task could be completed by anyone on your team - every project and problem is different. Continue on to scheduling, and return any time to adjust your selections in this section.`;
     } else {
-      msg = `You rated all ${total} tasks. ${numCorrect} of ${total} lined up with the suggested answer key, so it might be worth revisiting a few before scheduling — or just carry on if you're happy with your calls.`;
+      msg = `You rated all ${total} tasks, great work! Assigning tasks is a complex skill and as you get to know your team and their strengths better, the process will get easier. Sometimes there is a clear 'right' choice - for example assigning Imogen to tasks requiring great communication and influence, or Chaya to a task requiring an independent and detail oriented team member. Sometimes a task could be completed by anyone on your team - every project and problem is different. Continue on to scheduling, and return any time to adjust your selections in this section.`;
     }
     document.getElementById('continueModalBody').textContent = msg;
     document.getElementById('continueModal').classList.remove('hidden');
