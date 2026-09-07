@@ -1,9 +1,9 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
-       var mark1 = localStorage.getItem("MarkChoice") || "(no response saved)";
-    var mark2 = localStorage.getItem("MarkResponse") || "(no response saved)";
-    var audrey1 = localStorage.getItem("AudreyChoice") || "(no response saved)";
-    var audrey2 = localStorage.getItem("AudreyResponse") || "(no response saved)";
+       var sam1 = localStorage.getItem("SamChoice") || "(no response saved)";
+    var sam2 = localStorage.getItem("samResponse") || "(no response saved)";
+    var chaya1 = localStorage.getItem("ChayaChoice") || "(no response saved)";
+    var chaya2 = localStorage.getItem("ChayaResponse") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -59,11 +59,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 1 2/6 AIM", {
+          page.drawText("New Leader Session 1 4/6 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 1  · 2/6  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 1  · 4/6  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -214,15 +214,25 @@ window.InitUserScripts = function() {
           // ✏️ Update titles, intro text, and reflection prompt to match your exercises
             var exercises = [
             {
-              title: "Leadership quiz result",
-              intro: "In this section, you completed a self reflection about your leadership skills. This was your score.",
-              response: ls1
+              title: "Response to Sam",
+              intro: "In this interaction, you listened to a voicemail Sam had left. You selected the below response.",
+              response: sam1
             },
             {
-              title: "Leadership quiz reflection",
-              intro: "This was your reflection immediately after completing your self assessment.",
-              response: ls2
-            }
+              title: "Sam's reaction",
+              intro: "Sam replied to your message with the below response.",
+              response: sam2
+            },
+            {
+              title: "Response to Chaya",
+              intro: "In this interaction, you listened to a voicemail Chaya had left. You selected the below response.",
+              response: chaya1
+            },
+            {
+              title: "Chaya's reaction",
+              intro: "Chaya replied to your message with the below response.",
+              response: chaya2
+            }            
           ];
 
           for (var e = 0; e < exercises.length; e++) {
@@ -288,7 +298,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader program 2/6", {
+            pg.drawText("New leader program 4/6", {
               x: margin,
               y: 32,
               size: labelSize,
@@ -303,7 +313,7 @@ window.InitUserScripts = function() {
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 1 2/6 AIM.pdf";
+            a.download = "New Leader Session 1 4/6 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
