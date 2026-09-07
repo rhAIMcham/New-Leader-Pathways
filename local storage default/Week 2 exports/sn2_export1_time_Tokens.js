@@ -219,18 +219,18 @@ window.InitUserScripts = function() {
               response: ttplan
             },
             {
-              title: "How did you decide which tasks should be assigned, delayed, or prioritised?",
-              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
+              title: "Question 1",
+              intro: "How did you decide which tasks should be assigned, delayed, or prioritised? Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t1
             },
             {
-              title: "To what extent did you consider team member’s skills, experience and current workload when assigning tasks?",
-              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
+              title: "Question 2",
+              intro: "To what extent did you consider team member’s skills, experience and current workload when assigning tasks? Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t2
             },
             {
-              title: "How did the unexpected changes affect your approach to time management and prioritisation? What practical strategies could you apply to better manage similar situations in the future?",
-              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
+              title: "Question 3",
+              intro: "How did the unexpected changes affect your approach to time management and prioritisation? What practical strategies could you apply to better manage similar situations in the future? Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t3
             }
           ];
