@@ -1,11 +1,6 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
-    var m1 = localStorage.getItem("discReplyOne") || "(no response saved)";
-    var m2 = localStorage.getItem("discReplyTwo") || "(no response saved)";
-    var c1 = localStorage.getItem("danielProfile") || "(no response saved)";
-    var c2 = localStorage.getItem("imogenProfile") || "(no response saved)";
-    var c3 = localStorage.getItem("samProfile") || "(no response saved)";
-    var c4 = localStorage.getItem("chayaProfile") || "(no response saved)";
+    var ls1 = localStorage.getItem("learnerReplyTwo") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -61,11 +56,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 1 5/6 AIM", {
+          page.drawText("New Leader Session 1 6/6 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 1  · 5/6  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 1  · 6/6  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -216,34 +211,9 @@ window.InitUserScripts = function() {
           // ✏️ Update titles, intro text, and reflection prompt to match your exercises
           var exercises = [
             {
-              title: "Aspects that work in my favour",
-              intro: "In this section, you were asked to reflect on how your DISC profile might influence your behaviour as a leader positively.",
-              response: m1
-            },
-            {
-              title: "Aspects that might work against me",
-              intro: "In this section, you were asked to reflect on how your DISC profile might influence your behaviour as a leader in more challenging ways.",
-              response: m2
-            },
-            {
-              title: "Impressions of Daniel",
-              intro: "Daniel is a senior specialist with more than a decade of experience in the organisation and has built a reputation for delivering results and solving complex problems under pressure. Highly confident in his skill, he is decisive, direct, and comfortable challenging ideas he believes are ineffective. Daniel expected to be promoted into a leadership role, and were disappointed when the opportunity passed to someone he considers less deserving than himself. Below is your impression of Daniel.",
-              response: c1
-            },
-            {
-              title: "Impressions of Imogen",
-              intro: "Imogen is energetic, approachable, and well-liked in the organisation. Having previously worked alongside the team leader as a peer, she naturally falls into familiar conversations and casual interactions. She enjoys working with people and thrives in collaborative environments, often prioritising relationships over structure and process. Below is your impression of Imogen.",
-              response: c2
-            },
-            {
-              title: "Impressions of Sam",
-              intro: "Sam is dependable, patient, and consistently supportive of others, even to the detriment of their own comfort at work. Recent organisational changes and increased workloads have left them feeling overwhelmed, yet they rarely outwardly express concern or ask for assistance from leadership. Below is your impression of Sam.",
-              response: c3
-            },
-            {
-              title: "Impressions of Chaya",
-              intro: "Chaya is largely self-sufficient and prefers minimal oversight with clear expectations over frequent discussions with her team leader. Her focus is on completing work to a high standard rather than engaging in workplace relationships or other organisational politics. Below is your impression of Chaya.",
-              response: c4
+              title: "Responding to an email from Susan",
+              intro: "Susan sent you a second email at the end of your first week. She asked about how you had been finding the new role, and how you felt about leading the new team. She also asked you about how your DISC profile intersects with your management style.",
+              response: ls1
             }
           ];
 
@@ -310,7 +280,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader program 5/6", {
+            pg.drawText("New leader program 6/6", {
               x: margin,
               y: 32,
               size: labelSize,
@@ -325,7 +295,7 @@ window.InitUserScripts = function() {
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 1 5/6 AIM.pdf";
+            a.download = "New Leader Session 1 6/6 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
