@@ -469,6 +469,59 @@
     background: var(--white);
     border-color: var(--gray-400);
   }
+  .ghost-btn.sent {
+    background: var(--teal);
+    color: var(--white);
+    border-color: var(--teal);
+  }
+  .ghost-btn.sent:hover {
+    background: var(--teal);
+  }
+  .export-hint {
+    font-size: 11.5px;
+    color: var(--gray-400);
+    margin-top: 6px;
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 25, 92, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal-overlay.hidden {
+    display: none;
+  }
+  .modal-box {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 28px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(18, 25, 92, 0.25);
+  }
+  .modal-box h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .modal-box p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
 
   /* ---------- Phase 2 ---------- */
   #phase2View {
@@ -720,6 +773,18 @@
     border-top: 0.5px solid var(--gray-100);
     margin-top: 6px;
   }
+  .feedback-summary {
+    font-size: 13px;
+    color: var(--gray-800);
+    line-height: 1.7;
+    background: var(--bg-selected-row);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+  .feedback-summary strong {
+    color: var(--navy);
+  }
   .result-actions {
     display: flex;
     gap: 10px;
@@ -794,20 +859,46 @@
 
     <div class="footer" style="margin-top:24px;">
       <div class="progress-text" id="progressText2"></div>
-      <button class="primary-btn" id="planBtn" onclick="showWeeklyPlan()" disabled>View weekly plan</button>
+      <button class="primary-btn" id="planBtn" onclick="submitWeeklyPlan()" disabled>Submit</button>
     </div>
 
     <div class="result-panel" id="resultPanel">
       <h2>Your week is planned</h2>
       <div id="dayBlocks"></div>
       <div class="workload-summary" id="workloadSummary"></div>
+      <div class="feedback-summary" id="feedbackSummary"></div>
       <div class="result-actions">
+        <button class="ghost-btn" id="exportBtn" onclick="exportScheduleToStorage()">Export schedule</button>
         <button class="ghost-btn" onclick="resetScheduleOnly()">Reset schedule only</button>
         <button class="ghost-btn" onclick="startOver()">Start completely over</button>
       </div>
+      <div class="export-hint">Saves a text summary of your final schedule to this browser's local storage.</div>
     </div>
   </div>
 
+</div>
+
+<!-- Popup shown when moving from ratings to scheduling -->
+<div class="modal-overlay hidden" id="continueModal">
+  <div class="modal-box">
+    <h2>Nice work rating your tasks</h2>
+    <p id="continueModalBody"></p>
+    <div class="modal-actions">
+      <button class="ghost-btn" onclick="closeContinueModal()">Go back</button>
+      <button class="primary-btn" onclick="proceedToPhase2()">Continue to scheduling</button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup shown after submitting the finished weekly plan -->
+<div class="modal-overlay hidden" id="submitModal">
+  <div class="modal-box">
+    <h2>Plan submitted</h2>
+    <p id="submitModalBody"></p>
+    <div class="modal-actions">
+      <button class="primary-btn" onclick="closeSubmitModal()">Got it</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -864,6 +955,13 @@
   let activeScheduleTaskId = null;
   let draft = { assignee: null, day: null, slot: null };
   let checked = false; // whether "Check my answers" has been run
+
+  // ---- Local storage export (words of the final schedule) ----
+  const STORAGE_KEY_SCHEDULE = 'weeklyScheduleExport';
+  const defaultScheduleValue = '';
+
+  if (localStorage.getItem(STORAGE_KEY_SCHEDULE) === null)
+    localStorage.setItem(STORAGE_KEY_SCHEDULE, defaultScheduleValue);
 
   // Card keyboard-nav state
   let focusedCardId = null;         // which card currently has DOM focus (survives re-render)
@@ -1165,8 +1263,29 @@
     renderHeaderSummary();
   }
 
+  // Step 1 of moving to scheduling: show a feedback popup on how the ratings went.
   function continueToPhase2() {
     if (ratedCount() !== TASKS.length) return;
+    const { numCorrect, total } = scoreSummary();
+    let msg;
+    if (numCorrect === total) {
+      msg = `Great work — all ${total} tasks matched the suggested importance, urgency, and eligibility calls. You're ready to build the weekly schedule.`;
+    } else if (numCorrect >= total * 0.6) {
+      msg = `You rated all ${total} tasks, and ${numCorrect} of them lined up with the suggested answer key. Solid effort — you can head into scheduling now, or go back and take another look first.`;
+    } else {
+      msg = `You rated all ${total} tasks. ${numCorrect} of ${total} lined up with the suggested answer key, so it might be worth revisiting a few before scheduling — or just carry on if you're happy with your calls.`;
+    }
+    document.getElementById('continueModalBody').textContent = msg;
+    document.getElementById('continueModal').classList.remove('hidden');
+  }
+
+  function closeContinueModal() {
+    document.getElementById('continueModal').classList.add('hidden');
+  }
+
+  // Step 2: user confirms in the popup, so actually switch to the phase 2 view.
+  function proceedToPhase2() {
+    document.getElementById('continueModal').classList.add('hidden');
     phase = 2;
     document.getElementById('phase1View').style.display = 'none';
     document.getElementById('phase2View').style.display = 'block';
@@ -1335,7 +1454,9 @@
     renderHeaderSummary();
   }
 
-  function showWeeklyPlan() {
+  // Builds the day-by-day plan and a generic, always-encouraging feedback blurb,
+  // then shows both the results panel and a confirmation popup.
+  function submitWeeklyPlan() {
     if (schedule.length !== TASKS.length) return;
     const panel = document.getElementById('resultPanel');
     const dayBlocks = document.getElementById('dayBlocks');
@@ -1359,8 +1480,83 @@
       .join(' · ');
     document.getElementById('workloadSummary').innerHTML = `<strong>Workload:</strong> ${workloadLines || '—'}`;
 
+    const activePeople = PEOPLE.filter(p => workload[p] > 0);
+    const loads = activePeople.map(p => workload[p]);
+    const maxLoad = Math.max(...loads);
+    const minLoad = Math.min(...loads);
+    const balanced = (maxLoad - minLoad) <= 2;
+    const busiestDay = DAYS.map(d => ({ day: d, count: schedule.filter(a => a.day === d).length }))
+      .sort((a, b) => b.count - a.count)[0];
+
+    const feedbackLines = [
+      `You've placed all ${TASKS.length} tasks onto the calendar across ${activePeople.length} team member${activePeople.length !== 1 ? 's' : ''}.`,
+      balanced
+        ? `Workload looks fairly even across the team.`
+        : `Workload is a bit lopsided — some team members are carrying noticeably more than others.`,
+      busiestDay && busiestDay.count > 0
+        ? `${busiestDay.day} is the busiest day, with ${busiestDay.count} task${busiestDay.count !== 1 ? 's' : ''} scheduled.`
+        : ''
+    ].filter(Boolean);
+
+    document.getElementById('feedbackSummary').innerHTML = `<strong>Feedback:</strong> ${feedbackLines.join(' ')}`;
+
     panel.classList.add('show');
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.getElementById('submitModalBody').textContent =
+      `Your weekly plan has been submitted. ${feedbackLines.join(' ')}`;
+    document.getElementById('submitModal').classList.remove('hidden');
+
+    // Auto-save the words of the final schedule as soon as it's complete.
+    localStorage.setItem(STORAGE_KEY_SCHEDULE, buildScheduleText().trim());
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+      exportBtn.classList.remove('sent');
+      exportBtn.innerHTML = 'Export schedule';
+    }
+  }
+
+  function closeSubmitModal() {
+    document.getElementById('submitModal').classList.add('hidden');
+  }
+
+  // Builds a plain-text, human-readable version of the final schedule —
+  // day by day, then the workload and feedback lines.
+  function buildScheduleText() {
+    const lines = [];
+    DAYS.forEach(day => {
+      const entries = schedule.filter(a => a.day === day);
+      lines.push(`${day}:`);
+      if (entries.length === 0) {
+        lines.push('  —');
+      } else {
+        entries.forEach(a => {
+          const t = taskById(a.taskId);
+          lines.push(`  ${t.name} — ${a.assignee}`);
+        });
+      }
+    });
+
+    const workload = {};
+    PEOPLE.forEach(p => workload[p] = 0);
+    schedule.forEach(a => { workload[a.assignee] += a.slots.length; });
+    const workloadLine = PEOPLE.filter(p => workload[p] > 0)
+      .map(p => `${p}: ${(workload[p] / 2).toFixed(1)} day${workload[p] !== 2 ? 's' : ''}`)
+      .join(', ');
+    if (workloadLine) {
+      lines.push('');
+      lines.push(`Workload: ${workloadLine}`);
+    }
+
+    return lines.join('\n');
+  }
+
+  function exportScheduleToStorage() {
+    if (schedule.length !== TASKS.length) return;
+    localStorage.setItem(STORAGE_KEY_SCHEDULE, buildScheduleText().trim());
+    const exportBtn = document.getElementById('exportBtn');
+    exportBtn.classList.add('sent');
+    exportBtn.innerHTML = 'Exported';
   }
 
   function resetScheduleOnly() {

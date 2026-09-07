@@ -1,5 +1,6 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
+    var ttplan =localStorage.getItem("weeklyScheduleExport") || "(no response saved)";
     var t1 = localStorage.getItem("timeTokensQ1") || "(no response saved)";
     var t2 = localStorage.getItem("timeTokensQ2") || "(no response saved)";
     var t3 = localStorage.getItem("timeTokensQ3") || "(no response saved)";
@@ -211,20 +212,25 @@ window.InitUserScripts = function() {
           }
 
           // ✏️ Update titles, intro text, and reflection prompt to match your exercises
-          var exercises = [
+          var exercises = [ 
+            {
+              title: "Your weekly schedule",
+              intro: "Below is a record of who you assigned to each task, and how you scheduled each task.",
+              response: ttplan
+            },
             {
               title: "How did you decide which tasks should be assigned, delayed, or prioritised?",
-              intro: "You were asked to assign tasks to ech ",
+              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t1
             },
             {
-              title: "Leadership quiz reflection",
-              intro: "This was your reflection immediately after completing your self assessment.",
+              title: "To what extent did you consider team member’s skills, experience and current workload when assigning tasks?",
+              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t2
             },
             {
-              title: "Leadership quiz reflection",
-              intro: "This was your reflection immediately after completing your self assessment.",
+              title: "How did the unexpected changes affect your approach to time management and prioritisation? What practical strategies could you apply to better manage similar situations in the future?",
+              intro: "Reflect on how you responded in the moment. With the benefit of time, would you have made any different choices?",
               response: t3
             }
           ];
