@@ -121,6 +121,34 @@
     color: var(--navy);
   }
 
+
+   .saved {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 0.5rem;
+ }
+
+ .savedMsg {
+ font-size: 0.9rem;
+color: var(--lightBlue);
+ opacity: 0;
+ transition: opacity 0.4s ease;
+ margin: 0;
+ min-width: 60px;   
+ }
+
+ .saveBtn {
+background-color: var(--navy); 
+color: white; 
+border: none; 
+border-radius: 6px;
+      padding: 0.5rem 1.25rem; 
+      font-size: 1rem; 
+      cursor: pointer;
+ }
+
+ 
   @media (max-width: 768px) {
     .character-card {
       width: 100%;
@@ -146,8 +174,11 @@
             <li>Attitude: Sceptical and competitive
         </ul>
     </div>
-    <textarea placeholder="What is your impression of Daniel?"></textarea>
-    <button class="save-btn">Save</button>
+    <textarea placeholder="What is your impression of Daniel?" id="notes1"></textarea>
+      <div class="saved" >
+    <p id="statusMsg1" class="savedMsg">Saved!</p>
+    <button id="saveBtn1" class="saveBtn">Save</button>
+  </div>
   </div>
 
   <div class="character-card" data-character="imogen">
@@ -156,8 +187,11 @@
         <p>Imogen is energetic, approachable, and well-liked in the organisation. Having previously worked alongside the team leader as a peer, she naturally falls into familiar conversations and casual interactions. She enjoys working with people and thrives in collaborative environments, often prioritising relationships over structure and process.
         </p>
     </div>
-    <textarea placeholder="What is your impression of Imogen?"></textarea>
-    <button class="save-btn">Save</button>
+    <textarea placeholder="What is your impression of Imogen?" id="notes2"></textarea>
+     <div class="saved" >
+    <p id="statusMsg2" class="savedMsg">Saved!</p>
+    <button id="saveBtn2" class="saveBtn">Save</button>
+  </div>
   </div>
 
   <div class="character-card" data-character="sam">
@@ -165,8 +199,11 @@
     <div class="character-info">
         <p>Sam is dependable, patient, and consistently supportive of others, even to the detriment of their own comfort at work. Recent organisational changes and increased workloads have left them feeling overwhelmed, yet they rarely outwardly express concern or ask for assistance from leadership.</p>
     </div>
-    <textarea placeholder="What is your impression of Sam?"></textarea>
-    <button class="save-btn">Save</button>
+    <textarea placeholder="What is your impression of Sam?"  id="notes3"></textarea>
+     <div class="saved" >
+    <p id="statusMsg3" class="savedMsg">Saved!</p>
+    <button id="saveBtn3" class="saveBtn">Save</button>
+  </div>
   </div>
 
   <div class="character-card" data-character="chaya">
@@ -175,8 +212,11 @@
         <p>Chaya is largely self-sufficient and prefers minimal oversight with clear expectations over frequent discussions with her team leader. Her focus is on completing work to a high standard rather than engaging in workplace relationships or other organisational politics.
         </p>
     </div>
-    <textarea placeholder="What is your impression of Chaya?"></textarea>
-    <button class="save-btn">Save</button>
+    <textarea placeholder="What is your impression of Chaya?"  id="notes4"></textarea>
+     <div class="saved" >
+    <p id="statusMsg4" class="savedMsg">Saved!</p>
+    <button id="saveBtn4" class="saveBtn">Save</button>
+  </div>
   </div>
 </div>
 
@@ -185,42 +225,36 @@
   // (browser storage isn't available in the artifact sandbox). Drop this
   // in as your real localStorage in your own environment — the API is
   // identical, just swap `memoryStore` calls for `localStorage` calls.
-  const storage = {
-    getItem: key => (key in localStorage ? localStorage[key] : null),
-    setItem: (key, value) => { localStorage[key] = value; }
-  };
+  function initCharacterBox(inputId, btnId, msgId, storageKey) {
+  const textArea = document.getElementById(inputId);
+  const saveBtn = document.getElementById(btnId);
+  const statusMsg = document.getElementById(msgId);
 
-  document.querySelectorAll('.character-card').forEach(card => {
-    const character = card.dataset.character;
-    const storageKey = `characterImpression_${character}`;
-    const textarea = card.querySelector('textarea');
-    const saveBtn = card.querySelector('.save-btn');
+  const STORAGE_KEY = storageKey;
 
-    // Initialize storage if empty
-    if (storage.getItem(storageKey) === null) {
-      storage.setItem(storageKey, '');
-    }
+  // Load existing note (if any)
+  const savedNote = localStorage.getItem(STORAGE_KEY);
+  if (savedNote) textArea.value = savedNote;
 
-    // Load existing note (if any)
-    const saved = storage.getItem(storageKey);
-    if (saved) textarea.value = saved;
+  // Save on button click
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
 
-    // Save on button click
-    saveBtn.addEventListener('click', () => {
-      storage.setItem(storageKey, textarea.value.trim());
-      saveBtn.classList.add('sent');
-      saveBtn.textContent = 'Saved';
-      setTimeout(() => {
-        saveBtn.classList.remove('sent');
-        saveBtn.textContent = 'Save';
-      }, 1200);
-    });
-
-    // Auto-save while typing
-    textarea.addEventListener('input', () => {
-      storage.setItem(storageKey, textarea.value.trim());
-    });
+    // Fade in "Saved!"
+    statusMsg.style.opacity = '1';
+    setTimeout(() => statusMsg.style.opacity = '0', 1500);
   });
+
+  // Optional: auto-save while typing
+  textArea.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, textArea.value.trim());
+  });textArea
+}
+
+initCharacterBox('notes1', 'saveBtn1', 'statusMsg1', 'danielProfile');
+initCharacterBox('notes2', 'saveBtn2', 'statusMsg2', 'imogenProfile');
+initCharacterBox('notes3', 'saveBtn3', 'statusMsg3', 'samProfile');
+initCharacterBox('notes4', 'saveBtn4', 'statusMsg4', 'chayaProfile');
 </script>
 </body>
 </html>
