@@ -1,12 +1,9 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
-    var settingExpectations = localStorage.getItem("settingExpectationsEmail") || "(no response saved)";
-    var priyaEmail = localStorage.getItem("priyaEmailSent") || "(no response saved)";
-    var mark1 = localStorage.getItem("MarkChoiceM3") || "(no response saved)";
-    var mark2 = localStorage.getItem("MarkResponseM3") || "(no response saved)";
-    var markMishap = localStorage.getItem("markMishapEmail") || "(no response saved)";
-    var cakeGate = localStorage.getItem("draftCakeEmailBody") || "(no response saved)";
-    var motivationEmail = localStorage.getItem("motivationEmail") || "(no response saved)";
+
+    var daniel1 = localStorage.getItem("DanielChoiceM3") || "(no response saved)";
+    var daniel2 = localStorage.getItem("DanielResponseM3") || "(no response saved)";
+    var danielMishap = localStorage.getItem("danielMishapEmail") || "(no response saved)";
 
     function loadScript(src, onload) {
       var s = document.createElement("script");
@@ -17,11 +14,14 @@ window.InitUserScripts = function() {
     }
 
     function buildAndDownload() {
+      console.log("[LeaderPDF] buildAndDownload start");
       PDFLib.PDFDocument.create().then(function(pdfDoc) {
-        Promise.all([
+        console.log("[LeaderPDF] PDFDocument created");
+        return Promise.all([
           pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica),
           pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
         ]).then(function(fonts) {
+          console.log("[LeaderPDF] fonts embedded");
           var font     = fonts[0];
           var fontBold = fonts[1];
           var margin   = 50;
@@ -37,6 +37,10 @@ window.InitUserScripts = function() {
           var WHITE      = PDFLib.rgb(1, 1, 1);
           var BODY_GRAY  = PDFLib.rgb(0.20, 0.20, 0.22);
           var MUTED_GRAY = PDFLib.rgb(0.45, 0.45, 0.48);
+
+          // ── Form, for the fillable reflection fields ────────────────
+          var form = pdfDoc.getForm();
+          var fieldCounter = 0;
 
           var pages = [];
 
@@ -55,11 +59,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 3 AIM", {
+          page.drawText("New Leader Session 3 1/4 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 3  ·  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 3  · 1/4  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -164,15 +168,66 @@ window.InitUserScripts = function() {
             return startY - bannerH - 12;
           }
 
-          // ✏️ Update titles to match your exercises
+          // ── Fillable reflection box helper ──────────────────────────
+          // Draws a label + bordered multiline text field the learner can
+          // type into once the PDF is open in Acrobat/Preview/etc.
+          function drawReflectionField(label, page, startY, boxHeight) {
+            boxHeight = boxHeight || 110;
+            var labelSize = 11;
+
+            // Page-break check: need room for label + box + a little breathing room
+            if (startY - labelSize - 8 - boxHeight < FOOTER_RESERVE) {
+              page = addPage();
+              startY = pageH - 60;
+            }
+
+            page.drawText(label, {
+              x: margin, y: startY, size: labelSize, font: fontBold, color: NAVY
+            });
+
+            var boxTop = startY - 8;
+            var boxY   = boxTop - boxHeight;
+
+            fieldCounter += 1;
+            var fieldName = "reflection_" + fieldCounter;
+            var textField = form.createTextField(fieldName);
+            textField.enableMultiline();
+            // addToPage() must run first — it's what creates the field's
+            // default appearance (/DA) stream. setFontSize()/setText() edit
+            // that stream, so calling them before addToPage throws
+            // "No /DA entry found for field".
+            textField.addToPage(page, {
+              x: margin,
+              y: boxY,
+              width: maxWidth,
+              height: boxHeight,
+              borderColor: NAVY_TINT,
+              borderWidth: 1,
+              backgroundColor: WHITE
+            });
+            textField.setFontSize(10.5);
+            textField.setText("");
+
+            return { page: page, y: boxY - 22 };
+          }
+
+          // ✏️ Update titles, intro text, and reflection prompt to match your exercises
           var exercises = [
-            { title: "Setting expectations email", response: settingExpectations },
-            { title: "Email sent regarding Priya", response: priyaEmail },
-            { title: "Mark - your choice", response: mark1 },
-            { title: "Mark - his response", response: mark2 },
-            { title: "Email addressing Mark's mishap", response: markMishap },
-            { title: "Cake - your response", response: cakeGate },
-            { title: "Motivational email", response: motivationEmail }
+            {
+              title: "Responding to Daniel",
+              intro: "In this activity you were asked to respond to Daniel directly about a concerning message from another manager. How you chose to approach him controlled how positively or negatively he engaged with you and explained the situation. This was your message.",
+              response: daniel1
+            },
+           {
+              title: "Daniel's response",
+              intro: "This was Daniel's reply to your message.",
+              response: daniel2
+            },
+            {
+              title: "Putting it into an email",
+              intro: "After sending the messages above, you were asked to write an email delivering feedback to Daniel and a professional and constructive manner. Your email is below.",
+              response: danielMishap
+            }
           ];
 
           for (var e = 0; e < exercises.length; e++) {
@@ -185,17 +240,38 @@ window.InitUserScripts = function() {
 
             y = drawSectionBanner(ex.title, page, y);
 
+            // Intro paragraph — plain body text, sits above the learner's response
+            if (ex.intro) {
+              var introResult = drawWrapped(ex.intro, y, 11, font, MUTED_GRAY, page);
+              page = introResult.page;
+              y = introResult.y;
+              y -= 14;
+            }
+
             var result = drawWrapped(ex.response, y, 11.5, font, BODY_GRAY, page);
             page = result.page;   // pick up whichever page we ended on
             y = result.y;
 
-            y -= 26;
+            y -= 20;
+
+            // Fillable reflection box for the learner, right under their answer
+            var reflectionResult = drawReflectionField(
+              "Your reflection on this response:", page, y, 110
+            );
+            page = reflectionResult.page;
+            y = reflectionResult.y;
+
+            y -= 14;
 
             if (y < FOOTER_RESERVE && e < exercises.length - 1) {
               page = addPage();
               y = pageH - 60;
             }
           }
+
+          // Make sure the typed-in text actually renders when viewed,
+          // even in readers that don't auto-generate field appearances.
+          form.updateFieldAppearances(font);
 
           // ── Footer pass: thin rule + "Page X of Y" on every page ───
           var total = pages.length;
@@ -217,7 +293,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader program", {
+            pg.drawText("New leader program 1/4", {
               x: margin,
               y: 32,
               size: labelSize,
@@ -226,15 +302,17 @@ window.InitUserScripts = function() {
             });
           }
 
-          pdfDoc.save().then(function(pdfBytes) {
+          return pdfDoc.save().then(function(pdfBytes) {
+            console.log("[LeaderPDF] pdfBytes ready, length:", pdfBytes.length);
             var blob = new Blob([pdfBytes], { type: "application/pdf" });
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 3 AIM.pdf";
+            a.download = "New Leader Session 3 1/4 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();
+            console.log("[LeaderPDF] download triggered");
             setTimeout(function() {
               document.body.removeChild(a);
               URL.revokeObjectURL(url);
@@ -242,16 +320,20 @@ window.InitUserScripts = function() {
           });
         });
       }).catch(function(err) {
-        console.error("PDF build error:", err);
+        console.error("[LeaderPDF] PDF build error:", err);
       });
     }
 
+    console.log("[LeaderPDF] Script1 invoked, PDFLib defined?", typeof PDFLib !== "undefined");
     if (typeof PDFLib !== "undefined") {
       buildAndDownload();
     } else {
       loadScript(
         "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js",
-        function() { buildAndDownload(); }
+        function() {
+          console.log("[LeaderPDF] pdf-lib loaded from CDN");
+          buildAndDownload();
+        }
       );
     }
   };
