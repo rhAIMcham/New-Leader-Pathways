@@ -90,13 +90,32 @@ window.InitUserScripts = function() {
               }
             }
 
-            function drawLine(lineWords) {
-              var x = margin;
+            function drawLine(lineWords, isListItem, drawBullet) {
+              var indent = isListItem ? 16 : 0;
+              var x = margin + indent;
+
+              if (drawBullet) {
+                page.drawText("•", {
+                  x: margin,
+                  y: curY,
+                  size: size,
+                  font: fontRef,
+                  color: color
+                });
+              }
+
               for (var i = 0; i < lineWords.length; i++) {
                 var wFont = lineWords[i].bold ? fontBold : fontRef;
-                page.drawText(lineWords[i].text, { x: x, y: curY, size: size, font: wFont, color: color });
+                page.drawText(lineWords[i].text, {
+                  x: x,
+                  y: curY,
+                  size: size,
+                  font: wFont,
+                  color: color
+                });
                 x += wFont.widthOfTextAtSize(lineWords[i].text, size) + spaceWidth;
               }
+
               curY -= lineH;
               ensureRoom();
             }
@@ -108,6 +127,12 @@ window.InitUserScripts = function() {
                 curY -= lineH;
                 ensureRoom();
                 continue;
+              }
+
+              var isListItem = /^\s*(?:[-*]|•)\s+/.test(paragraph);
+
+              if (isListItem) {
+                paragraph = paragraph.replace(/^\s*(?:[-*]|•)\s+/, "");
               }
 
               // Split on ** markers: even-index segments are normal, odd-index are bold
@@ -125,14 +150,17 @@ window.InitUserScripts = function() {
 
               var lineWords = [];
               var lineWidth = 0;
+              var firstLine = true;
+              var availableWidth = maxWidth - (isListItem ? 16 : 0);
 
               for (var i = 0; i < words.length; i++) {
                 var wFont = words[i].bold ? fontBold : fontRef;
                 var wWidth = wFont.widthOfTextAtSize(words[i].text, size);
                 var addWidth = (lineWords.length > 0 ? spaceWidth : 0) + wWidth;
 
-                if (lineWidth + addWidth > maxWidth && lineWords.length > 0) {
-                  drawLine(lineWords);
+                if (lineWidth + addWidth > availableWidth && lineWords.length > 0) {
+                  drawLine(lineWords, isListItem, firstLine);
+                  firstLine = false;
                   lineWords = [];
                   lineWidth = 0;
                   addWidth = wWidth;
@@ -143,7 +171,7 @@ window.InitUserScripts = function() {
               }
 
               if (lineWords.length > 0) {
-                drawLine(lineWords);
+                drawLine(lineWords, isListItem, firstLine);
               }
             }
 
@@ -227,7 +255,7 @@ window.InitUserScripts = function() {
             },
             {
               title: "Impressions of Daniel",
-              intro: "Daniel is a senior specialist with more than a decade of experience in the organisation and has built a reputation for delivering results and solving complex problems under pressure. Highly confident in his skill, he is decisive, direct, and comfortable challenging ideas he believes are ineffective. Daniel expected to be promoted into a leadership role, and were disappointed when the opportunity passed to someone he considers less deserving than himself. Below is your impression of Daniel.",
+              intro: "Daniel is a senior specialist with more than a decade of experience in the organisation and has built a reputation for delivering results and solving complex problems under pressure. Highly confident in his skill, he is decisive, direct, and comfortable challenging ideas he believes are ineffective. Daniel expected to be promoted into a leadership role, and were disappointed when the opportunity passed to someone he considers less deserving than himself. \n\nDISC profile: D (dominace) \n- Primary motivation: Recognition, influence, and achievement \n-Strengths: Decisive action, experience, confidence \n-Development areas: Accepting feedback, collaboration, emotional intelligence \n-Attitude: Sceptical and competitive \nBelow is your impression of Daniel.",
               response: c1
             },
             {
