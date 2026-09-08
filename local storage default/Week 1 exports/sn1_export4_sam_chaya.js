@@ -1,7 +1,7 @@
 window.InitUserScripts = function() {
   window.Script1 = function() {
        var sam1 = localStorage.getItem("SamChoice") || "(no response saved)";
-    var sam2 = localStorage.getItem("samResponse") || "(no response saved)";
+    var sam2 = localStorage.getItem("SamResponse") || "(no response saved)";
     var chaya1 = localStorage.getItem("ChayaChoice") || "(no response saved)";
     var chaya2 = localStorage.getItem("ChayaResponse") || "(no response saved)";
 

@@ -3061,6 +3061,7 @@ function useDraftInReply() {
     localStorage.setItem('chayaEmailSent', sent);
     const sendDraft = document.getElementById("useDraftBtn");
     sendDraft.classList.add('sent');
+    sendDraft.innerHTML = "Sent";
 }
 
 function saveDraft() {
