@@ -94,7 +94,7 @@ window.InitUserScripts = function() {
               var indent = isListItem ? 16 : 0;
               var x = margin + indent;
 
-              if (drawBullet) {
+              if (drawBullet && isListItem) {
                 page.drawText("•", {
                   x: margin,
                   y: curY,
@@ -260,17 +260,17 @@ window.InitUserScripts = function() {
             },
             {
               title: "Impressions of Imogen",
-              intro: "Imogen is energetic, approachable, and well-liked in the organisation. Having previously worked alongside the team leader as a peer, she naturally falls into familiar conversations and casual interactions. She enjoys working with people and thrives in collaborative environments, often prioritising relationships over structure and process. Below is your impression of Imogen.",
+              intro: "Imogen is energetic, approachable, and well-liked in the organisation. Having previously worked alongside the team leader as a peer, she naturally falls into familiar conversations and casual interactions. She enjoys working with people and thrives in collaborative environments, often prioritising relationships over structure and process. \n\n-DISC profile: I (Influence) \n-Primary motivation: Connection, collaboration, recognition \n-Strengths: Positive, enthusiastic, persuasive, team-oriented \n-Development areas: Accountability, professional boundaries \n-Attitude: Friendly, informal, overly familiar \nBelow is your impression of Imogen.",
               response: c2
             },
             {
               title: "Impressions of Sam",
-              intro: "Sam is dependable, patient, and consistently supportive of others, even to the detriment of their own comfort at work. Recent organisational changes and increased workloads have left them feeling overwhelmed, yet they rarely outwardly express concern or ask for assistance from leadership. Below is your impression of Sam.",
+              intro: "Sam is dependable, patient, and consistently supportive of others, even to the detriment of their own comfort at work. Recent organisational changes and increased workloads have left them feeling overwhelmed, yet they rarely outwardly express concern or ask for assistance from leadership. \n\n-DISC profile: S (Steadiness) \n-Primary motivation: Stability, teamwork, and reliability \n-Strengths: Loyal, dependable, patient, supportive \n-Development areas: Communication, advocacy, assertiveness \n-Attitude towards participant: Cautious and reserved \n Below is your impression of Sam.",
               response: c3
             },
             {
               title: "Impressions of Chaya",
-              intro: "Chaya is largely self-sufficient and prefers minimal oversight with clear expectations over frequent discussions with her team leader. Her focus is on completing work to a high standard rather than engaging in workplace relationships or other organisational politics. Below is your impression of Chaya.",
+              intro: "Chaya is largely self-sufficient and prefers minimal oversight with clear expectations over frequent discussions with her team leader. Her focus is on completing work to a high standard rather than engaging in workplace relationships or other organisational politics. \n\n-DISC profile: C (Conscientiousness) \n-Primary motivation: Accuracy, quality, predictability \n-Strengths: Methodical, independent, reliable \n-Development areas: Adaptability, collaboration, communication \n-Attitude towards participant: Professional but distant \n Below is your impression of Chaya.",
               response: c4
             }
           ];
