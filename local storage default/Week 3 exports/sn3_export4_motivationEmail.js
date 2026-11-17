@@ -56,11 +56,11 @@ window.InitUserScripts = function() {
             day: "2-digit", month: "long", year: "numeric"
           });
 
-          page.drawText("New Leader Session 3 1/4 AIM", {
+          page.drawText("New Leader Session 3 4/4 AIM", {
             x: margin, y: y, size: 21, font: fontBold, color: NAVY
           });
           y -= 22;
-          page.drawText("New leader programme  ·  Session 3  · 1/4  " + dateStr, {
+          page.drawText("New leader programme  ·  Session 3  · 4/4  " + dateStr, {
             x: margin, y: y, size: 11, font: font, color: MUTED_GRAY
           });
           y -= 14;
@@ -280,7 +280,7 @@ window.InitUserScripts = function() {
               font: font,
               color: MUTED_GRAY
             });
-            pg.drawText("New leader program 1/4", {
+            pg.drawText("New leader program 4/4", {
               x: margin,
               y: 32,
               size: labelSize,
@@ -295,7 +295,7 @@ window.InitUserScripts = function() {
             var url  = URL.createObjectURL(blob);
             var a    = document.createElement("a");
             a.href     = url;
-            a.download = "New Leader Session 3 1/4 AIM.pdf";
+            a.download = "New Leader Session 3 4/4 AIM.pdf";
             a.style.display = "none";
             document.body.appendChild(a);
             a.click();

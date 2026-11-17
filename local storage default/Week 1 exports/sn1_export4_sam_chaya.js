@@ -215,7 +215,7 @@ window.InitUserScripts = function() {
             var exercises = [
             {
               title: "Response to Sam",
-              intro: "In this interaction, you listened to a voicemail Sam had left. You selected the below response.",
+              intro: "In this interaction, you recieved a message from your team member. You selected the below response.",
               response: sam1
             },
             {
@@ -225,7 +225,7 @@ window.InitUserScripts = function() {
             },
             {
               title: "Response to Chaya",
-              intro: "In this interaction, you listened to a voicemail Chaya had left. You selected the below response.",
+              intro: "In this interaction, you recieved a message from your team member. You selected the below response.",
               response: chaya1
             },
             {
