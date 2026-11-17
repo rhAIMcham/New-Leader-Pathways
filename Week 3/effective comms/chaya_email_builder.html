@@ -3066,10 +3066,10 @@ function useDraftInReply() {
 
 function saveDraft() {
   const text = document.getElementById('draftPreview').textContent;
-  localStorage.setItem('draftEmailContent', text);
-  const msg = document.getElementById('draftSavedMsg');
-  msg.style.display = 'inline';
-  setTimeout(() => msg.style.display = 'none', 2500);
+  localStorage.setItem('chayaEmailSent', text);
+  // const msg = document.getElementById('draftSavedMsg');
+  // msg.style.display = 'inline';
+  // setTimeout(() => msg.style.display = 'none', 2500);
 }
 
 // Wire up sidebar Inbox / Drafts switching
@@ -3117,13 +3117,39 @@ const saveBtn = document.getElementById('sendBtn');
 
 
 // Load existing note (if any)
-  const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
-  if (savedRUN) learnerReply.value = savedRUN;
+//   const savedRUN = localStorage.getItem(STORAGE_KEY_REPLY_2);
+//   if (savedRUN) learnerReply.value = savedRUN;
 
-saveBtn.addEventListener('click', () => {
-    localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
-    saveBtn.classList.add('sent');
-});
+// saveBtn.addEventListener('click', () => {
+//     localStorage.setItem(STORAGE_KEY_REPLY_2, learnerReply.value.trim());
+//     saveBtn.classList.add('sent');
+// });
+(function () {
+  const preview = document.getElementById('draftPreview');
+  if (!preview) return;
+
+  const CONTENT_KEY = 'chayaEmailSent'; // same key saveDraft() uses
+  const PLACEHOLDER = 'Your draft will appear here as you make selections.';
+
+  const observer = new MutationObserver(function () {
+    const text = preview.textContent.trim();
+    try {
+      if (text && text !== PLACEHOLDER) {
+        localStorage.setItem(CONTENT_KEY, text);
+      } else {
+        localStorage.removeItem(CONTENT_KEY); // all dropdowns cleared
+      }
+    } catch (e) {
+      console.warn('Autosave failed:', e);
+    }
+  });
+
+  observer.observe(preview, {
+    childList: true,      // fires when textContent replaces the text node
+    characterData: true,
+    subtree: true
+  });
+})();
 </script>
 </div>
 </div>

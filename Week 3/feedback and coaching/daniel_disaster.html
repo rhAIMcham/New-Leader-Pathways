@@ -3013,7 +3013,7 @@ function openCompose() {
   document.getElementById('work2').style.display = 'flex';
 
   const composeBody = document.getElementById('composeBody');
-  const savedBody = localStorage.getItem('draftEmailBodyDaniel') || '';
+  const savedBody = localStorage.getItem('danielMishapEmail') || '';
   composeBody.value = savedBody;
 
   document.getElementById('composeSendBtn').classList.remove('sent');
@@ -3025,13 +3025,13 @@ function openCompose() {
 
   // Auto-save while typing — reads live value, and only attaches once
   composeBody.oninput = () => {
-    localStorage.setItem('draftEmailBodyDaniel', composeBody.value.trim());
+    localStorage.setItem('danielMishapEmail', composeBody.value.trim());
   };
 } 
 
 function closeCompose() {
   const body = document.getElementById('composeBody').value.trim();
-  localStorage.setItem('draftEmailBodyDaniel', body);
+  localStorage.setItem('danielMishapEmail', body);
 
   document.getElementById('composeNewEmail').classList.remove('messageRevealed');
 }
